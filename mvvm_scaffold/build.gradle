@@ -1,0 +1,66 @@
+import com.bsnl.buildsrc.*
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+// JitPack Maven
+apply plugin: 'com.github.dcendents.android-maven'
+// Your Group
+group='com.github.blank-space'
+
+android {
+    compileSdkVersion BuildConfig.compileSdkVersion
+    buildToolsVersion BuildConfig.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion BuildConfig.minSdkVersion
+        targetSdkVersion BuildConfig.targetSdkVersion
+        versionCode BuildConfig.versionCode
+        versionName BuildConfig.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    api Kt.stdlibJdk8
+    api AndroidX.coreKtx
+    api AndroidX.appcompat
+    api Retrofit.runtime
+    api Retrofit.gson
+    api Retrofit.logging
+    api Glide.runtime
+    kapt Glide.compiler
+    api AndroidX.constraintlayout
+    api AndroidX.recyclerview
+    api AndroidX.viewpager2
+    api LifeCycle.viewModel
+    api LifeCycle.liveData
+    api LifeCycle.commonJava8
+    api Tencent.mmkv
+    api Depend.permissionx
+    api Depend.liveEventBus
+    api Depend.timber
+    debugImplementation Depend.leakCanary
+
+
+}

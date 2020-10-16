@@ -1,0 +1,4 @@
+
+include ':mvvm_scaffold'
+include ':app'
+rootProject.name = "mvvm_scaffold"
