@@ -18,7 +18,7 @@ object L {
      * 在[Application#onCreate()]里调用该方法
      */
     fun init() {
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.LOG_DEBUG) {
             Timber.plant(DebugTree())
         }
     }

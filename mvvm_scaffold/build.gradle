@@ -1,30 +1,35 @@
-import com.bsnl.buildsrc.*
-
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-// JitPack Maven
-apply plugin: 'com.github.dcendents.android-maven'
-// Your Group
-group='com.github.blank-space'
+apply from: 'maven_push.gradle'
 
 android {
-    compileSdkVersion BuildConfig.compileSdkVersion
-    buildToolsVersion BuildConfig.buildToolsVersion
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    useLibrary 'org.apache.http.legacy'
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
 
     defaultConfig {
-        minSdkVersion BuildConfig.minSdkVersion
-        targetSdkVersion BuildConfig.targetSdkVersion
-        versionCode BuildConfig.versionCode
-        versionName BuildConfig.versionName
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
     }
 
     buildTypes {
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
         release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -40,27 +45,28 @@ android {
     }
 }
 
+
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    api Kt.stdlibJdk8
-    api AndroidX.coreKtx
-    api AndroidX.appcompat
-    api Retrofit.runtime
-    api Retrofit.gson
-    api Retrofit.logging
-    api Glide.runtime
-    kapt Glide.compiler
-    api AndroidX.constraintlayout
-    api AndroidX.recyclerview
-    api AndroidX.viewpager2
-    api LifeCycle.viewModel
-    api LifeCycle.liveData
-    api LifeCycle.commonJava8
-    api Tencent.mmkv
-    api Depend.permissionx
-    api Depend.liveEventBus
-    api Depend.timber
-    debugImplementation Depend.leakCanary
-
+    api rootProject.ext.dependencies["kotlin-stdlib-jdk8"]
+    api rootProject.ext.dependencies["core-ktx"]
+    api rootProject.ext.dependencies["appcompat"]
+    api rootProject.ext.dependencies["retrofit"]
+    api rootProject.ext.dependencies["converter-gson"]
+    api rootProject.ext.dependencies["logging-interceptor"]
+    api rootProject.ext.dependencies["glide"]
+    kapt rootProject.ext.dependencies["glide-compiler"]
+    api rootProject.ext.dependencies["constraintlayout"]
+    api rootProject.ext.dependencies["recyclerview"]
+    api rootProject.ext.dependencies["viewmodel"]
+    api rootProject.ext.dependencies["livedata"]
+    api rootProject.ext.dependencies["lifecycle-common-java8"]
+    api rootProject.ext.dependencies["mmkv"]
+    api rootProject.ext.dependencies["permissionx"]
+    api rootProject.ext.dependencies["liveEventBus"]
+    api rootProject.ext.dependencies["timber"]
+    api rootProject.ext.dependencies["leakcanary"]
+    api rootProject.ext.dependencies["viewpager2"]
 
 }

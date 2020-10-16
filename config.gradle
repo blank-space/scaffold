@@ -1,0 +1,87 @@
+ext {
+
+    android = [
+            compileSdkVersion: 29,
+            buildToolsVersion: "29.0.3",
+            minSdkVersion    : 19,
+            targetSdkVersion : 29,
+            versionCode      : 1,
+            versionName      : "1.0.0"
+    ]
+
+    version = [
+            androidSupportSdkVersion: "28.0.0",
+            retrofit                : "2.9.0",
+            okhttpLogging           : "3.9.0",
+            appcompat               : "1.1.0",
+            coreKtx                 : "1.3.1",
+            constraintlayout        : "2.0.1",
+            paging                  : "3.0.0-alpha02",
+            timber                  : "4.7.1",
+            kotlin                  : "1.3.72",
+            koin                    : "2.1.5",
+            work                    : "2.2.0",
+            room                    : "2.3.0-alpha01",
+            cardview                : "1.0.0",
+            recyclerview            : "1.0.0",
+            fragment                : "1.3.0-alpha06",
+            anko                    : "0.10.8",
+            swiperefreshlayout      : "1.0.0",
+            hit                     : "2.28-alpha",
+            hitViewModule           : "1.0.0-alpha01",
+            appStartup              : "1.0.0-alpha01",
+            material                : "1.2.0-alpha06",
+            glide                   : "4.11.0",
+            mars                    : "1.2.4",
+            viewpager2              : "1.0.0",
+            lifecycle_version       : "2.2.0",
+            mmkv                    : "1.2.2",
+            permissionx             : "1.4.0",
+            liveEventBus            : "1.7.2",
+            leakCanary              : "2.5",
+
+            viewpager2              : "1.0.0"
+    ]
+
+    dependencies = [
+            "kotlin-stdlib-jdk8"    : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${version.kotlin}",
+
+            "core-ktx"              : "androidx.core:core-ktx:${version.coreKtx}",
+
+            "appcompat"             : "androidx.appcompat:appcompat:${version.appcompat}",
+
+            "retrofit"              : "com.squareup.retrofit2:retrofit:${version.retrofit}",
+
+            "converter-gson"        : "com.squareup.retrofit2:converter-gson:${version.retrofit}",
+
+            "logging-interceptor"   : "com.squareup.okhttp3:logging-interceptor:${version.okhttpLogging}",
+
+            "glide"                 : "com.github.bumptech.glide:glide:${version.glide}",
+
+            "glide-compiler"        : "com.github.bumptech.glide:compiler:${version.glide}",
+
+            "constraintlayout"      : "androidx.constraintlayout:constraintlayout:${version.constraintlayout}",
+
+            "recyclerview"          : "androidx.recyclerview:recyclerview:${version.recyclerview}",
+
+            "viewmodel"             : "androidx.lifecycle:lifecycle-viewmodel-ktx:${version.lifecycle_version}",
+
+            "livedata"              : "androidx.lifecycle:lifecycle-livedata-ktx:${version.lifecycle_version}",
+
+            "lifecycle-common-java8": "androidx.lifecycle:lifecycle-common-java8:${version.lifecycle_version}",
+
+            "mmkv"                  : "com.tencent:mmkv-static:${version.mmkv}",
+
+            "permissionx"           : "com.permissionx.guolindev:permissionx:${version.permissionx}",
+
+            "liveEventBus"          : "com.jeremyliao:live-event-bus-x:${version.liveEventBus}",
+
+            "timber"                : "com.jakewharton.timber:timber:${version.timber}",
+
+            "leakcanary"            : "com.squareup.leakcanary:leakcanary-android:${version.leakCanary}",
+
+            "viewpager2"            : "androidx.viewpager2:viewpager2:${version.viewpager2}"
+
+    ]
+
+}
