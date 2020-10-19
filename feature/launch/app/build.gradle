@@ -1,0 +1,7 @@
+apply plugin: 'kotlin-kapt'
+
+
+
+dependencies {
+    //api Config.depConfig.mvvm_scaffold
+}

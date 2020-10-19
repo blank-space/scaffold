@@ -1,0 +1,25 @@
+dependencies {
+
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    api Config.depConfig.kotlin.dep
+    api Config.depConfig.coreKtx.dep
+    api Config.depConfig.appcompat.dep
+    api Config.depConfig.multidex.dep
+    api Config.depConfig.gson.dep
+    api Config.depConfig.retrofit_runtime.dep
+    api Config.depConfig.okhttp_logging.dep
+    api Config.depConfig.convert_gson.dep
+    api Config.depConfig.constraintlayout.dep
+    api Config.depConfig.recyclerview.dep
+    api Config.depConfig.viewpager2.dep
+    api Config.depConfig.viewModel.dep
+    api Config.depConfig.liveData.dep
+    api Config.depConfig.commonJava8.dep
+    api Config.depConfig.mmkv.dep
+    api Config.depConfig.permissionx.dep
+    api Config.depConfig.timber.dep
+    api Config.depConfig.glide_runtime.dep
+    kapt Config.depConfig.glide_compiler.dep
+
+
+}

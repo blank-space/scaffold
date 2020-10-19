@@ -1,21 +1,33 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 apply from: "config.gradle"
 buildscript {
-    ext.kotlin_version = "1.4.10"
+    ext {
+        kotlin_version = '1.3.72'
+    }
+    ConfigUtils.init(gradle)
     repositories {
+        // use for debug plugin local
+        if (Config.depConfig.plugin_bus.useLocal || Config.depConfig.plugin_api.useLocal) {
+            maven() { url uri("${project.rootDir.path}/mavenLocal") }
+        }
         google()
         jcenter()
     }
+
+
     dependencies {
-        classpath "com.android.tools.build:gradle:4.0.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        for (def entrySet : ConfigUtils.getApplyPlugins().entrySet()) {
+            classpath entrySet.value.dep
+        }
     }
 }
 
 allprojects {
+
     repositories {
+        maven() { url uri("${project.rootDir.path}/mavenLocal") }
+        maven { url "https://jitpack.io" }
         google()
         jcenter()
         maven {
@@ -34,6 +46,17 @@ allprojects {
                 password 'OX29m8K837Nb'
             }
             url 'https://packages.aliyun.com/maven/repository/2042300-snapshot-7Fuyed/'
+        }
+    }
+
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+
+        resolutionStrategy.eachDependency {
+            if (it.requested.group == 'com.android.support'
+                    && !it.requested.name.contains('multidex')) {
+                it.useVersion Config.supportVersion
+            }
         }
     }
 }
