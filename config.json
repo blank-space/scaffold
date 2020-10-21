@@ -36,6 +36,16 @@
       "isApply": true,
       "useLocal": true,
       "localPath": ":feature:launch:app"
+    },
+    {
+      "isApply": true,
+      "useLocal": true,
+      "localPath": ":feature:sample:pkg"
+    },
+    {
+      "isApply": true,
+      "useLocal": true,
+      "localPath": ":feature:sample:export"
     }
   ]
 }

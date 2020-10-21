@@ -72,7 +72,7 @@ dependencies {
         api entrySet.value.dep
     }
 
-    api Config.depConfig.lib_base.dep
+
 
 
 //    if (Config.depConfig.feature_mock.isApply) {
@@ -80,11 +80,21 @@ dependencies {
 //    }
 }
 
+
+/**
+ * 获取前缀
+ * @return
+ */
 def getSuffix() {
     if (project.name == "feature_launcher_app") return ""
     return "." + project.name.substring("feature_".length(), project.name.length() - "_app".length())
 }
 
+
+/**
+ * 配置签名
+ * @return
+ */
 def configSigning() {
 
     File signPropertiesFile = file("${rootDir.path}/sign/keystore.properties")
@@ -107,6 +117,11 @@ def configSigning() {
     GLog.d("${project.toString()} sign end...")
 }
 
+
+/**
+ * 配置apk命名
+ * @return
+ */
 def configApkName() {
     project.android.applicationVariants.all { variant ->
         if (variant.buildType.name != "debug") {

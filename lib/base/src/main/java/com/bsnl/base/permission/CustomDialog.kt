@@ -14,10 +14,10 @@ import android.view.View
 import android.widget.TextView
 import com.bsnl.base.R
 import com.permissionx.guolindev.dialog.RationaleDialog
-import kotlinx.android.synthetic.main.custom_dialog_layout.*
+import kotlinx.android.synthetic.main.lib_base_custom_dialog_layout.*
 
 @TargetApi(30)
-class CustomDialog(context: Context, val message: String, val permissions: List<String>) : RationaleDialog(context, R.style.CustomDialog) {
+class CustomDialog(context: Context, val message: String, val permissions: List<String>) : RationaleDialog(context, R.style.lib_base_CustomDialog) {
 
     private val permissionMap = mapOf(Manifest.permission.READ_CALENDAR to Manifest.permission_group.CALENDAR,
         Manifest.permission.WRITE_CALENDAR to Manifest.permission_group.CALENDAR,
@@ -55,7 +55,7 @@ class CustomDialog(context: Context, val message: String, val permissions: List<
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.custom_dialog_layout)
+        setContentView(R.layout.lib_base_custom_dialog_layout)
         messageText.text = message
         buildPermissionsLayout()
         window?.let {
@@ -82,7 +82,7 @@ class CustomDialog(context: Context, val message: String, val permissions: List<
         for (permission in permissions) {
             val permissionGroup = permissionMap[permission]
             if (permissionGroup != null && !groupSet.contains(permissionGroup)) {
-                val textView = LayoutInflater.from(context).inflate(R.layout.permissions_item, permissionsLayout, false) as TextView
+                val textView = LayoutInflater.from(context).inflate(R.layout.lib_base_permissions_item, permissionsLayout, false) as TextView
                 textView.text = context.packageManager.getPermissionGroupInfo(permissionGroup, 0).loadLabel(context.packageManager)
                 permissionsLayout.addView(textView)
                 groupSet.add(permissionGroup)

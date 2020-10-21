@@ -1,4 +1,3 @@
-include ':feature:launch:app'
 import groovy.json.JsonSlurper
 
 /**

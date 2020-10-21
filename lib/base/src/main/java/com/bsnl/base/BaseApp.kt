@@ -2,11 +2,13 @@ package com.bsnl.base
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.multidex.MultiDex
 import com.bsnl.base.imageloader.BaseImageLoaderStrategy
 import com.bsnl.base.imageloader.ImageLoader
 import com.bsnl.base.imageloader.glide.GlideImageLoaderStrategy
@@ -30,6 +32,11 @@ open class BaseApp : Application(), ViewModelStoreOwner {
 
     private lateinit var mAppViewModelStore: ViewModelStore
 
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
+    }
+
     override fun onCreate() {
         super.onCreate()
         application = this
@@ -37,10 +44,7 @@ open class BaseApp : Application(), ViewModelStoreOwner {
         MMKV.initialize(this)
         //日志框架
         L.init()
-
-
         mAppViewModelStore = ViewModelStore()
-
         registerActivityLifecycleCallbacks()
         //配置Glide加载策略
         ImageLoader.loadImgStrategy = GlideImageLoaderStrategy() as BaseImageLoaderStrategy<Any>

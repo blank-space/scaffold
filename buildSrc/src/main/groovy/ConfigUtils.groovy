@@ -31,7 +31,6 @@ class ConfigUtils {
                 config.dep = config.pluginPath
             } else {
                 if (config.useLocal) {
-                    GLog.d(" config.dep ="+ gradle.rootProject.findProject(config.projectPath))
                     config.dep = gradle.rootProject.findProject(config.projectPath)
                 } else {
                     config.dep = config.remotePath

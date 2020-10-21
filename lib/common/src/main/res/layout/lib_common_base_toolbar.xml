@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bsnl.common.ui.titlebar.ToolbarTitleView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:id="@+id/toolbar"
+    android:background="@color/lib_common_background_color"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/top_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+       >
+
+        <LinearLayout
+            android:id="@+id/toolbar_left_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/toolbar_left_imgv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:clickable="true"
+                android:scaleType="center"
+                android:src="@drawable/common_ic_nav_back"
+                android:tag="@string/lib_common_component_dispatch"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/toolbar_left_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="11dp"
+                android:text="取消"
+                android:textColor="@color/color_white"
+                android:textSize="16sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/toolbar_right_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" />
+
+        <!--标题-->
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="260dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textColor="@color/color_white"
+            android:textSize="17sp"
+            android:textStyle="normal"
+            tools:text="标题" />
+
+        <ViewStub
+            android:id="@+id/stub_center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true" />
+
+        <ViewStub
+            android:id="@+id/stub_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+</com.bsnl.common.ui.titlebar.ToolbarTitleView>

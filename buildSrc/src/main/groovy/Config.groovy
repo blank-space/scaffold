@@ -31,6 +31,8 @@ class Config {
             lib_base                   : new DepConfig(true , true , ":lib:base"),
             lib_common                 : new DepConfig(true , true , ":lib:common"),
             feature_launch_app         : new DepConfig(true , true , ":feature:launch:app"),
+            feature_sample_pkg         : new DepConfig(true , true , ":feature:sample:pkg"),
+            feature_sample_export      : new DepConfig(true , true , ":feature:sample:export"),
             /*Never delete this line*/
             plugin_gradle            : new DepConfig(pluginPath: "com.android.tools.build:gradle:$gradlePluginVersion"),
             plugin_kotlin            : new DepConfig(pluginPath: "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"),
@@ -58,9 +60,7 @@ class Config {
             commonJava8              : new DepConfig("androidx.lifecycle:lifecycle-common-java8:${Versions.lifecycle_version}"),
             glide_runtime            : new DepConfig("com.github.bumptech.glide:glide:${Versions.glide}"),
             glide_compiler           : new DepConfig("com.github.bumptech.glide:compiler:${Versions.glide}"),
-
-            kotlin                     : new DepConfig("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$Versions.kotlin"),
-
+            kotlin                   : new DepConfig("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$Versions.kotlin"),
             retrofit_runtime         : new DepConfig("com.squareup.retrofit2:retrofit:${Versions.retrofit}"),
             convert_gson             : new DepConfig("com.squareup.retrofit2:converter-gson:${Versions.retrofit}"),
             okhttp_logging           : new DepConfig("com.squareup.okhttp3:logging-interceptor:${Versions.okhttpLogging}"),
@@ -69,7 +69,7 @@ class Config {
             mmkv                     : new DepConfig("com.tencent:mmkv-static:${Versions.mmkv}"),
             leakcanary               : new DepConfig("com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"),
             gson                     : new DepConfig("com.google.code.gson:gson:${Versions.gson}"),
-            commons_io                 : new DepConfig("commons-io:commons-io:2.6"),
-            test_junit                 : new DepConfig("junit:junit:4.12"),
+            commons_io               : new DepConfig("commons-io:commons-io:2.6"),
+            test_junit               : new DepConfig("junit:junit:4.12"),
     ]
 }

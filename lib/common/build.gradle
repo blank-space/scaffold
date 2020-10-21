@@ -1,8 +1,11 @@
-
-
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api Config.depConfig.lib_base.dep
 
-
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-
+    api 'com.scwang.smart:refresh-layout-kernel:2.0.1'
+    api 'com.scwang.smart:refresh-header-classics:2.0.1'
+    api 'com.scwang.smart:refresh-footer-classics:2.0.1'
+    //沉浸式状态栏
+    api 'com.jaeger.statusbarutil:library:1.5.1'
+    api 'com.drakeet.multitype:multitype:4.2.0'
 }

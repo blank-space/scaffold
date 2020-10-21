@@ -6,6 +6,8 @@ apply {
 
 android {
     compileSdkVersion Config.compileSdkVersion
+    resourcePrefix suffix
+
     defaultConfig {
         minSdkVersion Config.minSdkVersion
         versionCode Config.versionCode
@@ -40,9 +42,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-//    viewBinding {
-//        enabled = true
-//    }
+
+    dataBinding {
+        enabled = true
+    }
 
 //    flavorDimensions "region"
 //
@@ -55,4 +58,12 @@ android {
 //            dimension "region"
 //        }
 //    }
+}
+
+/**
+ * 获取前缀
+ * @return
+ */
+def getSuffix() {
+    return project.name+"_"
 }
