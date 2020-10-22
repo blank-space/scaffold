@@ -72,9 +72,6 @@ dependencies {
         api entrySet.value.dep
     }
 
-
-
-
 //    if (Config.depConfig.feature_mock.isApply) {
 //        api Config.depConfig.feature_mock.dep
 //    }

@@ -1,11 +1,10 @@
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api Config.depConfig.lib_base.dep
+    api Config.depConfig.refresh_layout_kernel.dep
+    api Config.depConfig.refresh_layout_footer.dep
+    api Config.depConfig.refresh_layout_header.dep
+    api Config.depConfig.statusbarutil.dep
+    api Config.depConfig.multitype.dep
 
-    api 'com.scwang.smart:refresh-layout-kernel:2.0.1'
-    api 'com.scwang.smart:refresh-header-classics:2.0.1'
-    api 'com.scwang.smart:refresh-footer-classics:2.0.1'
-    //沉浸式状态栏
-    api 'com.jaeger.statusbarutil:library:1.5.1'
-    api 'com.drakeet.multitype:multitype:4.2.0'
 }

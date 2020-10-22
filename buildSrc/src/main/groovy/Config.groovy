@@ -71,5 +71,11 @@ class Config {
             gson                     : new DepConfig("com.google.code.gson:gson:${Versions.gson}"),
             commons_io               : new DepConfig("commons-io:commons-io:2.6"),
             test_junit               : new DepConfig("junit:junit:4.12"),
+            multitype    : new DepConfig("com.drakeet.multitype:multitype:$Versions.multitype"),
+            refresh_layout_kernel  : new DepConfig("com.scwang.smart:refresh-layout-kernel:$Versions.smartRefreshLayout"),
+            refresh_layout_header  : new DepConfig("com.scwang.smart:refresh-header-classics:$Versions.smartRefreshLayout"),
+            refresh_layout_footer  : new DepConfig("com.scwang.smart:refresh-footer-classics:$Versions.smartRefreshLayout"),
+            statusbarutil : new DepConfig("com.jaeger.statusbarutil:library:$Versions.statusBarUtil"),
+
     ]
 }

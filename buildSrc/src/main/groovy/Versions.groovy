@@ -36,6 +36,9 @@ class Versions {
     static leakCanary = "2.5"
     static gson = "2.8.5"
     static  multidex ="2.0.1"
+    static  multitype="4.2.0"
+    static  smartRefreshLayout="2.0.1"
+    static statusBarUtil ="1.5.1"
 }
 
 

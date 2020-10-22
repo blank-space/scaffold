@@ -3,7 +3,7 @@ package com.bsnl.sample.pkg.feature.view
 import android.content.Context
 import com.bsnl.common.dataBinding.BaseListDataBindingActivity
 import com.bsnl.common.dataBinding.DataBindingConfig
-import com.bsnl.common.iface.ViewState
+import com.bsnl.common.ui.titlebar.ToolbarTitleView
 import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.startActivity
 import com.bsnl.sample.pkg.BR
@@ -11,8 +11,6 @@ import com.bsnl.sample.pkg.R
 import com.bsnl.sample.pkg.feature.itemViewBinder.PokemonItemViewBinder
 import com.bsnl.sample.pkg.feature.viewmodel.SampleViewModel
 import com.drakeet.multitype.MultiTypeAdapter
-import kotlinx.android.synthetic.main.feature_sample_pkg_activity_sample.*
-import kotlinx.android.synthetic.main.lib_common_base_toolbar.*
 
 /**
  * @author : LeeZhaoXing
@@ -35,7 +33,7 @@ class SampleActivity : BaseListDataBindingActivity<SampleViewModel>() {
 
     override fun initView() {
         super.initView()
-        mTitleView = toolbar
+        mTitleView = findViewById<ToolbarTitleView>(R.id.toolbar)
         initTitle(TAG)
     }
 
