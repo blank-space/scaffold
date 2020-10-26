@@ -39,6 +39,7 @@ open class BaseApp : Application(), ViewModelStoreOwner {
 
     override fun onCreate() {
         super.onCreate()
+
         application = this
         //本地Key-value存储
         MMKV.initialize(this)
@@ -119,4 +120,9 @@ open class BaseApp : Application(), ViewModelStoreOwner {
     }
 
 
+
+
+
 }
+
+
