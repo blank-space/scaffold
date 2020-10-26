@@ -3,20 +3,27 @@ package com.bsnl.common.dataBinding
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
+import androidx.annotation.AnimRes
+import androidx.annotation.AnimatorRes
+import androidx.core.view.isInvisible
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
+import androidx.transition.Slide
+import androidx.transition.TransitionManager
 import com.bsnl.common.iface.ITrack
 import com.bsnl.common.iface.IViewState
 import com.bsnl.common.iface.ViewState
 import com.bsnl.common.ui.viewStatus.Gloading
+import com.bsnl.common.utils.doOnMainThreadIdle
 import com.bsnl.common.viewmodel.BaseViewModel
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import java.lang.ref.WeakReference
@@ -27,7 +34,7 @@ import java.lang.ref.WeakReference
  * @desc   :
  */
 abstract class DataBindingFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState {
-    private val HANDLER = Handler()
+    protected var mActivityFragmentManager: FragmentManager? = null
     protected var mAnimationLoaded = false
     var mActivity: WeakReference<Activity>? = null
     private lateinit var mBinding: ViewDataBinding
@@ -37,19 +44,6 @@ abstract class DataBindingFragment<T : BaseViewModel> : Fragment(), ITrack, IVie
 
     protected var mHolder: Gloading.Holder? = null
 
-    /**
-     * make a Gloading.Holder wrap with current activity by default
-     * override this method in subclass to do special initialization
-     * <p>
-    Gloading specialGloading = Gloading.from(new SpecialAdapter());
-    mHolder = specialGloading.wrap(this).withRetry(new Runnable() {
-    @Override
-    public void run() {
-    onLoadRetry();
-    }
-    });
-     *</p>
-     */
 
     protected fun onLoadRetry() {
         initData()
@@ -98,7 +92,7 @@ abstract class DataBindingFragment<T : BaseViewModel> : Fragment(), ITrack, IVie
         savedInstanceState: Bundle?
     ): View? {
         val dataBindingConfig = initBindingConfig(getLayoutId())
-
+        mActivityFragmentManager = activity?.supportFragmentManager
         if (dataBindingConfig != null) {
             val binding: ViewDataBinding =
                 DataBindingUtil.inflate(inflater, dataBindingConfig.layout, container, false)
@@ -153,18 +147,49 @@ abstract class DataBindingFragment<T : BaseViewModel> : Fragment(), ITrack, IVie
         return true
     }
 
-    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
-        // 错开动画转场与 UI 刷新的时机，避免掉帧卡顿的现象
-        HANDLER.postDelayed(Runnable {
-            if (!mAnimationLoaded) {
-                mAnimationLoaded = true
-                initView()
-                initListener()
-                initData()
 
-            }
-        }, 200)
-        return super.onCreateAnimation(transit, enter, nextAnim)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        initListener()
+        initData()
+        val targetLayout = view
+        //先隐藏
+        targetLayout.isInvisible = true
+        //实现流畅的转场动画
+        doOnMainThreadIdle({
+            TransitionManager.beginDelayedTransition(
+                targetLayout.parent as ViewGroup,
+                Slide(Gravity.BOTTOM).apply {
+                    addTarget(targetLayout)
+                })
+            //动画执行结束后显示view
+            targetLayout.isInvisible = false
+        }, 100)
+    }
+
+
+    fun hideSelf(@AnimatorRes @AnimRes enter: Int, @AnimatorRes @AnimRes exit: Int) {
+        try {
+            val fragmentTransaction: FragmentTransaction =
+                this.mActivityFragmentManager!!.beginTransaction()
+            fragmentTransaction.setCustomAnimations(enter, exit)
+            fragmentTransaction.hide(this).commitAllowingStateLoss()
+        } catch (var4: Exception) {
+            var4.printStackTrace()
+        }
+    }
+
+
+    fun showSelf(@AnimatorRes @AnimRes enter: Int, @AnimatorRes @AnimRes exit: Int) {
+        try {
+            val fragmentTransaction: FragmentTransaction =
+                this.mActivityFragmentManager!!.beginTransaction()
+            fragmentTransaction.setCustomAnimations(enter, exit)
+            fragmentTransaction.show(this).commitAllowingStateLoss()
+        } catch (var4: Exception) {
+            var4.printStackTrace()
+        }
     }
 
 
@@ -175,7 +200,7 @@ abstract class DataBindingFragment<T : BaseViewModel> : Fragment(), ITrack, IVie
 
     abstract fun getLayoutId(): Int
 
-    abstract fun initBindingConfig(layoutId: Int): DataBindingConfig
+    abstract fun initBindingConfig(layoutId: Int): DataBindingConfig?
 
     abstract fun initViewModel(): T
 

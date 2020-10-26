@@ -1,7 +1,9 @@
-package com.qiqingsong.redian.base.base.iface
+package com.bsnl.common.iface
 
 import android.view.View
 
 interface OnItemClickListener {
-    fun onItemClick(v: View?, position: Int)
+    fun onItemClick(v: View, position: Int)
+
+    fun onChildClick(v: View,position: Int)
 }

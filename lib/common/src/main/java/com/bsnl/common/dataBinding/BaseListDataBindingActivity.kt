@@ -1,6 +1,7 @@
 package com.bsnl.common.dataBinding
 
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.bsnl.common.iface.IRefreshLayout
 import com.bsnl.common.iface.OnRefreshAndLoadMoreListener
 import com.bsnl.common.iface.RefreshType
@@ -26,7 +27,11 @@ abstract class BaseListDataBindingActivity<T : BaseViewModel> : DataBindingActiv
         val vm = mViewModel as BaseListViewModel
         MultiTypeAdapter(vm.providerData())
     }
+
+    var mRecyclerView: RecyclerView? = null
+
     var mRefreshLayout: RefreshLayoutProxy? = null
+
     abstract fun registerItem(adapter: MultiTypeAdapter)
 
     override fun initView() {
@@ -34,6 +39,7 @@ abstract class BaseListDataBindingActivity<T : BaseViewModel> : DataBindingActiv
     }
 
     private fun initRecyclerView() {
+        mRecyclerView = recyclerview
         registerItem(mAdapter)
         RecyclerViewUtil.initRecyclerView(recyclerview, mAdapter)
     }

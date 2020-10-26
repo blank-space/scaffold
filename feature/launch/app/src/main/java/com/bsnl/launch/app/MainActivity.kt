@@ -144,7 +144,7 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
     override fun initData() {
         showLoading()
         //模拟请求
-        ivAvatar.postDelayed({ setState(ViewState.STATE_COMPLETED) }, 2000)
+        ivAvatar.postDelayed({ setState(ViewState.STATE_COMPLETED) }, 500)
 
     }
 

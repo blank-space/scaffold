@@ -27,10 +27,14 @@ inline fun <reified T> startActivity(context: Context, block: Intent.() -> Unit)
     context.startActivity(intent)
 }
 
-inline fun <reified T> startActivityForResult(context: FragmentActivity, block: Intent.() -> Unit,requestCode:Int) {
+inline fun <reified T> startActivityForResult(
+    context: FragmentActivity,
+    block: Intent.() -> Unit,
+    requestCode: Int
+) {
     val intent = Intent(context, T::class.java)
     intent.block()
-    context.startActivityForResult(intent,requestCode)
+    context.startActivityForResult(intent, requestCode)
 }
 
 
@@ -50,14 +54,23 @@ inline fun <T, R> T.doWithTry(block: (T) -> R) {
 /**
  * 简化获取flow获取liveData的流程
  */
-inline fun <T> fetchLiveData(flow: Flow<BaseHttpResult<T?>?>, isFirstTimeLoad: Boolean = true, viewState: MutableLiveData<ViewStateWithMsg>,
-                             crossinline block: (T) -> Unit): LiveData<T?> = liveData {
+inline fun <T> fetchLiveData(
+    flow: Flow<BaseHttpResult<T?>?>,
+    isFirstTimeLoad: Boolean = true,
+    viewState: MutableLiveData<ViewStateWithMsg>,
+    crossinline block: (T) -> Unit
+): LiveData<T?> = liveData {
     flow.onStart {
 
         if (isFirstTimeLoad) {
-            viewState.postValue(ViewStateWithMsg(msg = "",state = ViewState.STATE_LOADING))
+            viewState.postValue(ViewStateWithMsg(msg = "", state = ViewState.STATE_LOADING))
         } else {
-            viewState.postValue(ViewStateWithMsg(msg = "",state = ViewState.STATE_SHOW_LOADING_DIALOG))
+            viewState.postValue(
+                ViewStateWithMsg(
+                    msg = "",
+                    state = ViewState.STATE_SHOW_LOADING_DIALOG
+                )
+            )
         }
 
     }.catch {
@@ -67,7 +80,7 @@ inline fun <T> fetchLiveData(flow: Flow<BaseHttpResult<T?>?>, isFirstTimeLoad: B
     }.collectLatest {
 
         if (it?.isSuccessFul()!! && it?.data != null) {
-            viewState.postValue(ViewStateWithMsg(msg = it?.msg,state = ViewState.STATE_COMPLETED))
+            viewState.postValue(ViewStateWithMsg(msg = it?.msg, state = ViewState.STATE_COMPLETED))
             block(it?.data!!)
             emit(it?.data)
         } else {
@@ -78,12 +91,13 @@ inline fun <T> fetchLiveData(flow: Flow<BaseHttpResult<T?>?>, isFirstTimeLoad: B
     }
 }
 
-inline fun <T> fetchLiveData(flow: Flow<BaseHttpResult<T?>?>): LiveData<BaseHttpResult<T?>?> = liveData {
-    flow.collectLatest {
+inline fun <T> fetchLiveData(flow: Flow<BaseHttpResult<T?>?>): LiveData<BaseHttpResult<T?>?> =
+    liveData {
+        flow.collectLatest {
             emit(it)
 
+        }
     }
-}
 
 inline fun <T> createFlow(crossinline block: () -> BaseHttpResult<T?>?): Flow<BaseHttpResult<T?>?> {
     return flow { emit(block()) }.flowOn(Dispatchers.IO)

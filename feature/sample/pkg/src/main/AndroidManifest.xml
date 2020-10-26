@@ -4,5 +4,6 @@
 
     <application>
         <activity android:name=".feature.view.SampleActivity" />
+        <activity android:name=".feature.view.FirstActivity" />
     </application>
 </manifest>

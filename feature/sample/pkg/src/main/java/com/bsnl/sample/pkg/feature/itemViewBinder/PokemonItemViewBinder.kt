@@ -8,6 +8,7 @@ import com.bsnl.common.dataBinding.viewHolder.BaseViewHolder
 import com.bsnl.sample.pkg.R
 import com.bsnl.sample.pkg.databinding.FeatureSamplePkgRecycleItemPokemonBinding
 import com.bsnl.sample.pkg.feature.model.ListingData
+import com.bsnl.sample.pkg.feature.view.FirstActivity
 import com.drakeet.multitype.ItemViewBinder
 
 /**
@@ -33,6 +34,7 @@ class PokemonItemViewBinder : ItemViewBinder<ListingData, MyHolder>() {
 }
 
 class MyHolder(view: View) : BaseViewHolder<ListingData>(view) {
+
 
     private val binding: FeatureSamplePkgRecycleItemPokemonBinding by viewHolderBinding(view)
     override fun bindData(data: ListingData, position: Int) {
