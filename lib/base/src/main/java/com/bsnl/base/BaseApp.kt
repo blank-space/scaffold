@@ -1,10 +1,12 @@
 package com.bsnl.base
 
+import android.R
 import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
@@ -16,6 +18,7 @@ import com.bsnl.base.log.L
 
 import com.bsnl.base.utils.ActivitysManager.addActivity
 import com.bsnl.base.utils.ActivitysManager.removeActivity
+import com.bsnl.base.widget.ShowFps
 import com.tencent.mmkv.MMKV
 import timber.log.Timber
 
@@ -31,6 +34,11 @@ open class BaseApp : Application(), ViewModelStoreOwner {
     }
 
     private lateinit var mAppViewModelStore: ViewModelStore
+
+    private val mParams = ViewGroup.LayoutParams(
+        ViewGroup.LayoutParams.WRAP_CONTENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT
+    )
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
@@ -72,15 +80,26 @@ open class BaseApp : Application(), ViewModelStoreOwner {
 
             override fun onActivityResumed(activity: Activity) {
                 L.v("${activity::class.java.name}#onActivityResumed ")
+                if(BuildConfig.LOG_DEBUG) {
+                    (activity.findViewById<View>(R.id.content) as ViewGroup).addView(
+                        ShowFps.instance,
+                        mParams
+                    )
+                }
 
             }
 
             override fun onActivityPaused(activity: Activity) {
                 L.v("${activity::class.java.name}#onActivityPaused ")
+                if(BuildConfig.LOG_DEBUG) {
+                    (activity.findViewById<View>(R.id.content) as ViewGroup).removeView(ShowFps.instance)
+                }
+
             }
 
             override fun onActivityStopped(activity: Activity) {
                 L.v("${activity::class.java.name}#onActivityStopped ")
+
             }
 
             override fun onActivityDestroyed(activity: Activity) {

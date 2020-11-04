@@ -2,10 +2,13 @@ package com.bsnl.base.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.bsnl.base.BaseApp;
 
 import java.lang.reflect.Method;
 
@@ -39,7 +42,7 @@ public class DisplayUtils {
     public static  int getBottomStatusHeight(Context context){
         int totalHeight = getOriginalHeight(context);
 
-        int contentHeight = getScreenHeight(context);
+        int contentHeight = getScreenHeight();
 
         return totalHeight  - contentHeight;
     }
@@ -55,10 +58,9 @@ public class DisplayUtils {
     /**
      * 获得状态栏的高度
      *
-     * @param context
      * @return
      */
-    public static int getStatusHeight(Context context)
+    public static int getStatusHeight()
     {
 
         int statusHeight = -1;
@@ -68,7 +70,7 @@ public class DisplayUtils {
             Object object = clazz.newInstance();
             int height = Integer.parseInt(clazz.getField("status_bar_height")
                     .get(object).toString());
-            statusHeight = context.getResources().getDimensionPixelSize(height);
+            statusHeight = BaseApp.application.getResources().getDimensionPixelSize(height);
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -80,20 +82,19 @@ public class DisplayUtils {
     /**
      * 获得屏幕高度
      *
-     * @param context
      * @return
      */
-    public static int getScreenHeight(Context context)
+    public static int getScreenHeight()
     {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager wm = (WindowManager) BaseApp.application.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
         return outMetrics.heightPixels;
     }
 
-    public static int getScreenWidth(Context context)
+    public static int getScreenWidth()
     {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager wm = (WindowManager) BaseApp.application.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
         return outMetrics.widthPixels;
@@ -141,6 +142,15 @@ public class DisplayUtils {
     public static int sp2px(Context context, float spValue) {
         float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (spValue * fontScale + 0.5f);
+    }
+
+    /**
+     *
+     * @return 是否是竖平
+     */
+    public static boolean isPortrait() {
+        return BaseApp.application.getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_PORTRAIT;
     }
 
 }

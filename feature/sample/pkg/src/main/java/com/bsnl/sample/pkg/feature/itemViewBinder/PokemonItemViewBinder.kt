@@ -31,6 +31,10 @@ class PokemonItemViewBinder : ItemViewBinder<ListingData, MyHolder>() {
         )
     }
 
+    override fun getItemId(item: ListingData): Long {
+        return item.hashCode().toLong()
+    }
+
 }
 
 class MyHolder(view: View) : BaseViewHolder<ListingData>(view) {

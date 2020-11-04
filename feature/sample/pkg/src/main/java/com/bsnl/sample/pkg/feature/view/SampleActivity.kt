@@ -32,6 +32,7 @@ class SampleActivity : BaseListDataBindingActivity<SampleViewModel>() {
     override fun registerItem(adapter: MultiTypeAdapter) {
         adapter.register(PokemonItemViewBinder())
 
+        adapter.setHasStableIds(true)
     }
 
 

@@ -11,4 +11,6 @@ import com.bsnl.base.utils.ApiUtils
 abstract class SampleApi : ApiUtils.BaseApi() {
 
     abstract fun startSampleActivity(context: Context)
+
+    abstract fun startFpsMonitorActivity(context: Context)
 }

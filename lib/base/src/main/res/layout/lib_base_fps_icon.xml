@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--parent type is RelativeLayout-->
+
+    <TextView
+        android:id="@+id/tvFps"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:textColor="#ffffff"
+       android:background="@color/colorAccent"
+        android:textSize="14sp"
+         />
+
+</merge>

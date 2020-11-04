@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import com.bsnl.base.BaseApp
@@ -16,6 +17,7 @@ import com.bsnl.base.dsl.*
 import com.bsnl.base.log.L
 import com.bsnl.base.permission.PermissionHelper
 import com.bsnl.base.utils.*
+import com.bsnl.base.widget.ShowFps
 import com.bsnl.base.window.KeyboardStatePopupWindow
 import com.bsnl.common.dataBinding.DataBindingActivity
 import com.bsnl.common.dataBinding.DataBindingConfig
@@ -40,6 +42,8 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
     private var editTextBot = 0
     private var invisibleWindow: KeyboardStatePopupWindow? = null
     private var scrollY = 0f
+    private var tvFps: TextView? = null
+    private var isOpenFpsMonitor = false
 
     private val rootView by lazy {
         ConstraintLayout {
@@ -116,13 +120,31 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
 
             mEt = EditText {
                 layout_height = 300
+                layout_id = "edit"
                 layout_width = match_parent
-                margin_top = 200
+                margin_top = 20
                 gravity = Gravity.TOP
                 textSize = 16f
                 top_toBottomOf = "iv_start_activity"
                 start_toStartOf = parent_id
 
+            }
+
+            tvFps = TextView {
+                margin_top = 10
+                layout_id = "tv_open_fps"
+                layout_height = 40
+                layout_width = match_parent
+                textSize = 16f
+                textStyle = bold
+                gravity = gravity_center
+                background_color = "#eeeeee"
+                top_toBottomOf = "edit"
+                start_toStartOf = parent_id
+                text = "Hide FpsMonitor"
+                onClick = {
+                  ShowFps.setVisibility(isShow = false)
+                }
             }
 
         }
@@ -146,6 +168,8 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
     override fun initBindingConfig(layoutId: Int): DataBindingConfig? {
         return null
     }
+
+
 
     override fun initViewModel(): MainViewModel = getVm()
 
@@ -171,7 +195,6 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
         )
 
         mEt?.post {
-
             editTextTop = mEt!!.top
             editTextBot = mEt!!.bottom
         }
@@ -199,7 +222,7 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
                 //光标在屏幕中的位置
                 val realY = currentCursorY - scrollY + editTextTop
                 //偏移量
-                val offset = (realY + h - DisplayUtils.getScreenHeight(BaseApp.application)).toInt()
+                val offset = (realY + h - DisplayUtils.getScreenHeight()).toInt()
                 //光标在软键盘底下,让文字向上位移
                 if (offset > 0) {
                     mEt?.scrollY = offset

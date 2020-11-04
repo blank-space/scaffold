@@ -40,6 +40,10 @@ object MMKVUtil {
         return mKv.decodeInt(k, 0)
     }
 
+    fun getInt(k: String?,v :Int): Int {
+        return mKv.decodeInt(k, v)
+    }
+
     fun getBoolean(k: String?): Boolean {
         return mKv.decodeBool(k, false)
     }

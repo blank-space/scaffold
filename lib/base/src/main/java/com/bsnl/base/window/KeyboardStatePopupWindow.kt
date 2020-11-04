@@ -53,7 +53,7 @@ class KeyboardStatePopupWindow(var context: Context, anchorView: View) : PopupWi
             mMaxHeight = rect.bottom
         }
 
-        val screenHeight: Int = DisplayUtils.getScreenHeight(context)
+        val screenHeight: Int = DisplayUtils.getScreenHeight()
         val keyboardHeight = mMaxHeight - rect.bottom
         //键盘是否可见
         val visibility = keyboardHeight > screenHeight / 4
