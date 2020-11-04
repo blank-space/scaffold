@@ -40,7 +40,7 @@ class WebViewPool private constructor() {
                 webView.settings.useWideViewPort = true
                 webView.settings.javaScriptCanOpenWindowsAutomatically = true
                 webView.settings.domStorageEnabled = true
-               // webView.loadUrl("about:blank")
+                webView.loadUrl("about:blank")
                 return webView
             }
         }
@@ -129,7 +129,7 @@ class WebViewPool private constructor() {
     }
 
     companion object {
-        private const val DEMO_URL = "https://www.baidu.com"
+        private const val DEMO_URL = "about:blank"
         private var available: MutableList<WebView?> = ArrayList()
         private var inUse: MutableList<WebView?> = ArrayList()
         private val lock = byteArrayOf()
