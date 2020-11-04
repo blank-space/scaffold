@@ -23,6 +23,7 @@ import com.bsnl.common.dataBinding.DataBindingActivity
 import com.bsnl.common.dataBinding.DataBindingConfig
 import com.bsnl.common.iface.ViewState
 import com.bsnl.common.utils.getVm
+import com.bsnl.launch.app.webview.WebViewActivity
 import com.bsnl.sample.export.api.SampleApi
 import java.lang.ref.WeakReference
 
@@ -44,6 +45,8 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
     private var scrollY = 0f
     private var tvFps: TextView? = null
     private var isOpenFpsMonitor = false
+    private var mUrls = arrayListOf<String>("https://www.baidu.com","https://www.jianshu.com/")
+    private var count =0
 
     private val rootView by lazy {
         ConstraintLayout {
@@ -145,6 +148,29 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
                 onClick = {
                   ShowFps.setVisibility(isShow = false)
                 }
+            }
+
+            TextView {
+
+                layout_id = "tv_web"
+                layout_height = 40
+                layout_width = match_parent
+                textSize = 16f
+                textStyle = bold
+                gravity = gravity_center
+                background_color = "#eeeeee"
+                top_toBottomOf = "tv_open_fps"
+                start_toStartOf = parent_id
+                text = "webView"
+                onClick = {
+                 if(count % 2==0){
+                     WebViewActivity.startAction(context,mUrls[0])
+                 }else{
+                     WebViewActivity.startAction(context,mUrls[1])
+                 }
+                    ++count
+                }
+                margin_top = 10
             }
 
         }

@@ -8,6 +8,7 @@ import com.bsnl.base.net.ServiceCreator
 import com.bsnl.base.utils.GlobalHandler
 import com.bsnl.common.ui.viewStatus.Gloading
 import com.bsnl.common.ui.viewStatus.adapter.GlobalAdapter
+import com.bsnl.launch.app.webview.WebViewPool
 
 /**
  * @author : LeeZhaoXing
@@ -22,6 +23,7 @@ class App : BaseApp() {
         ServiceCreator.initRetrofit()
         Gloading.debug(BuildConfig.LOG_DEBUG)
         Gloading.initDefault(GlobalAdapter())
+        WebViewPool.init()
         loop()
     }
 
