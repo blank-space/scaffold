@@ -1,13 +1,6 @@
-## 感谢以下开源库
+### Feature
 
-- 1.[AndroidUtilcode](https://github.com/Blankj/AndroidUtilCode)
-
-- 2.[PermissionX](https://github.com/guolindev/PermissionX)
-
-- 3.[Gloading](https://github.com/luckybilly/Gloading)
-
-- 4.[Layout_DSL](https://github.com/wisdomtl/Layout_DSL)
-
-还有很多没列举出来的，再次感谢...
-
+1.使用AucFrame实现组件化
+2. kotlin+MVVM
+3.一些有趣的功能（全局Fps,WebViewPool）、黑科技（持续添加中）
 

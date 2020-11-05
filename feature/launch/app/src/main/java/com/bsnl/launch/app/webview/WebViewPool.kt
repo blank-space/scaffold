@@ -1,5 +1,7 @@
 package com.bsnl.launch.app.webview
 
+import android.os.Build
+import android.os.Build.VERSION_CODES.KITKAT
 import android.view.ViewGroup
 import android.webkit.WebSettings
 
@@ -7,16 +9,22 @@ import android.webkit.WebView
 
 import android.widget.LinearLayout
 import com.bsnl.base.BaseApp
+import com.bsnl.base.log.L
 
 
 class WebViewPool private constructor() {
-    private var currentSize = 0//设置 缓存模式(true);
+    init {
+        available = ArrayList()
+        inUse = ArrayList()
+    }
+
+    private var currentSize = 0//设置 缓存模式(true)
 
     /**
      * 获取webview
      *
      */
-    val webView: WebView?
+    val mWebView: WebView?
         get() {
             synchronized(lock) {
                 val webView: WebView?
@@ -27,20 +35,10 @@ class WebViewPool private constructor() {
                     inUse.add(webView)
                 } else {
                     webView = WebView(BaseApp.application)
+                    setupWebView(webView)
                     inUse.add(webView)
                     currentSize++
                 }
-                val params: ViewGroup.LayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT)
-                webView!!.layoutParams = params
-                webView.settings.javaScriptEnabled = true
-                webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE //设置 缓存模式(true);
-                webView.settings.setAppCacheEnabled(false)
-                webView.settings.setSupportZoom(false)
-                webView.settings.useWideViewPort = true
-                webView.settings.javaScriptCanOpenWindowsAutomatically = true
-                webView.settings.domStorageEnabled = true
-                webView.loadUrl("about:blank")
                 return webView
             }
         }
@@ -52,34 +50,27 @@ class WebViewPool private constructor() {
      */
     fun removeWebView(webView: WebView?) {
         var webView = webView
-        webView!!.loadUrl("about:blank")
-        webView.stopLoading()
-        webView.setWebChromeClient(null)
-        webView.webViewClient = null
-        webView.clearCache(true)
-        webView.clearHistory()
-        webView.settings.javaScriptEnabled = true
-        webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE //设置 缓存模式(true);
-        webView.settings.setAppCacheEnabled(false)
-        webView.settings.setSupportZoom(false)
-        webView.settings.useWideViewPort = true
-        webView.settings.javaScriptCanOpenWindowsAutomatically = true
-        webView.settings.domStorageEnabled = true
-        webView.settings.builtInZoomControls = false
-        webView.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NORMAL
-        webView.settings.loadWithOverviewMode = false
-        webView.settings.setUserAgentString("android_client")
-        webView.settings.defaultTextEncodingName = "UTF-8"
-        webView.settings.defaultFontSize = 16
-        synchronized(lock) {
-            inUse.remove(webView)
-            if (available.size < maxSize) {
-                available.add(webView)
-            } else {
-                webView = null
+
+        webView?.apply {
+            loadUrl("about:blank")
+            stopLoading()
+            setWebChromeClient(null)
+            webViewClient = null
+            clearCache(true)
+            clearHistory()
+
+            synchronized(lock) {
+                inUse.remove(this)
+                if (available.size < maxSize) {
+                    available.add(this)
+                } else {
+                    webView = null
+                }
+                currentSize--
             }
-            currentSize--
+
         }
+
     }
 
     /**
@@ -87,37 +78,30 @@ class WebViewPool private constructor() {
      * @param webView 需要被回收的webview
      *
      */
-    fun removeWebView(view: ViewGroup, webView: WebView?) {
-        var webView = webView
-        view.removeView(webView)
-        webView!!.loadUrl("about:blank")
-        webView.stopLoading()
-        webView.setWebChromeClient(null)
-        webView.webViewClient = null
-        webView.clearCache(true)
-        webView.clearHistory()
-        webView.settings.javaScriptEnabled = true
-        webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE //设置 缓存模式(true);
-        webView.settings.setAppCacheEnabled(false)
-        webView.settings.setSupportZoom(false)
-        webView.settings.useWideViewPort = true
-        webView.settings.javaScriptCanOpenWindowsAutomatically = true
-        webView.settings.domStorageEnabled = true
-        webView.settings.builtInZoomControls = false
-        webView.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NORMAL
-        webView.settings.loadWithOverviewMode = false
-        webView.settings.setUserAgentString("android_client")
-        webView.settings.defaultTextEncodingName = "UTF-8"
-        webView.settings.defaultFontSize = 16
-        synchronized(lock) {
-            inUse.remove(webView)
-            if (available.size < maxSize) {
-                available.add(webView)
-            } else {
-                webView = null
+    fun removeWebView(view: ViewGroup?, web: WebView?) {
+        var webView = web
+        webView?.apply {
+            view?.removeView(this)
+            loadUrl("about:blank")
+            stopLoading()
+            setWebChromeClient(null)
+            webViewClient = null
+            clearCache(true)
+            clearHistory()
+
+            synchronized(lock) {
+                inUse.remove(this)
+                if (available.size < maxSize) {
+                    available.add(this)
+                } else {
+                    webView = null
+                }
+                currentSize--
             }
-            currentSize--
+
         }
+
+
     }
 
     /**
@@ -156,24 +140,50 @@ class WebViewPool private constructor() {
         fun init() {
             for (i in 0 until maxSize) {
                 val webView = WebView(BaseApp.application)
-                val params: ViewGroup.LayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT)
-                webView.layoutParams = params
-                webView.settings.javaScriptEnabled = true
-                webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE //设置 缓存模式(true);
-                webView.settings.setAppCacheEnabled(false)
-                webView.settings.setSupportZoom(false)
-                webView.settings.useWideViewPort = true
-                webView.settings.javaScriptCanOpenWindowsAutomatically = true
-                webView.settings.domStorageEnabled = true
-                webView.loadUrl(DEMO_URL)
+                setupWebView(webView)
                 available.add(webView)
             }
         }
+
+
+        fun setupWebView(webView: WebView) {
+            val params: ViewGroup.LayoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            webView.layoutParams = params
+            webView.settings.javaScriptEnabled = true
+            //设置自适应屏幕，两者合用
+            webView.settings.setUseWideViewPort(true) //将图片调整到适合webview的大小
+            webView.settings.setLoadWithOverviewMode(true) // 缩放至屏幕的大小
+            //缩放操作
+            webView.settings.setSupportZoom(true) //支持缩放，默认为true。是下面那个的前提。
+            webView.settings.setBuiltInZoomControls(true) //设置内置的缩放控件。若为false，则该WebView不可缩放
+            webView.settings.setDisplayZoomControls(false) //隐藏原生的缩放控件
+            webView.settings.domStorageEnabled = true
+
+            if (Build.VERSION.SDK_INT >= KITKAT) {
+                //4.4以上系统在onPageFinished时再恢复图片加载
+                webView.getSettings().setLoadsImagesAutomatically(true)
+            } else {
+                //设置网页在加载的时候暂时不加载图片
+                webView.getSettings().setLoadsImagesAutomatically(false)
+            }
+
+            //设置是否开启密码保存功能，不建议开启，默认已经做了处理，存在盗取密码的危险
+            webView.getSettings().setSavePassword(false)
+
+            // 处理https当中不能加载http资源
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+            }
+            webView.getSettings().setBlockNetworkImage(false)
+
+            webView.canGoBack()
+
+
+        }
     }
 
-    init {
-        available = ArrayList()
-        inUse = ArrayList()
-    }
+
 }

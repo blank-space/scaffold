@@ -4,7 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/webview_root_fl"
-  >
+
+    >
+
+    <FrameLayout
+        android:id="@+id/webview_root_fl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+         
+
+    <ProgressBar
+        android:id="@+id/pb_web"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3dp" />
+
+
+             
+
 
 </FrameLayout>

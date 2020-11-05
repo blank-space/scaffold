@@ -45,8 +45,10 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
     private var scrollY = 0f
     private var tvFps: TextView? = null
     private var isOpenFpsMonitor = false
-    private var mUrls = arrayListOf<String>("https://www.baidu.com","https://www.jianshu.com/")
+
+    private var mUrls = arrayListOf("https://m.toutiao.com/")
     private var count =0
+
 
     private val rootView by lazy {
         ConstraintLayout {
@@ -166,7 +168,7 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
                  if(count % 2==0){
                      WebViewActivity.startAction(context,mUrls[0])
                  }else{
-                     WebViewActivity.startAction(context,mUrls[1])
+                     WebViewActivity.startAction(context,mUrls[0])
                  }
                     ++count
                 }

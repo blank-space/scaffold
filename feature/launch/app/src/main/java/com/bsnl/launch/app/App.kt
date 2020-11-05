@@ -24,7 +24,7 @@ class App : BaseApp() {
         Gloading.debug(BuildConfig.LOG_DEBUG)
         Gloading.initDefault(GlobalAdapter())
         WebViewPool.init()
-        loop()
+       // loop()
     }
 
 
