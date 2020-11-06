@@ -18,7 +18,7 @@ class WebViewPool private constructor() {
         inUse = ArrayList()
     }
 
-    private var currentSize = 0//设置 缓存模式(true)
+    private var currentSize = 0
 
     /**
      * 获取webview
@@ -161,6 +161,7 @@ class WebViewPool private constructor() {
             webView.settings.setBuiltInZoomControls(true) //设置内置的缩放控件。若为false，则该WebView不可缩放
             webView.settings.setDisplayZoomControls(false) //隐藏原生的缩放控件
             webView.settings.domStorageEnabled = true
+            webView.settings.setCacheMode(WebSettings.LOAD_DEFAULT)
 
             if (Build.VERSION.SDK_INT >= KITKAT) {
                 //4.4以上系统在onPageFinished时再恢复图片加载

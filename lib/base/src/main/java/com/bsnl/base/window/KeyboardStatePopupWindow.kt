@@ -72,6 +72,7 @@ class KeyboardStatePopupWindow(var context: Context, anchorView: View) : PopupWi
 
     fun release() {
         contentView.viewTreeObserver.removeOnGlobalLayoutListener(this)
+
     }
 
     fun setOnKeyboardStateChangerListener(listener: OnKeyboardStateChangerListener) {

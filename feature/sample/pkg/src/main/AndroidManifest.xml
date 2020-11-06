@@ -5,6 +5,8 @@
     <application>
         <activity android:name=".feature.view.SampleActivity" />
         <activity android:name=".feature.view.FirstActivity" />
-        <activity android:name=".feature.view.fps.FpsMonitorActivity" />
+        <activity android:name=".feature.view.fps.LoginActivity"
+            android:windowSoftInputMode="adjustNothing"
+            />
     </application>
 </manifest>

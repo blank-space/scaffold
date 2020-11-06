@@ -12,5 +12,7 @@ abstract class SampleApi : ApiUtils.BaseApi() {
 
     abstract fun startSampleActivity(context: Context)
 
-    abstract fun startFpsMonitorActivity(context: Context)
+    abstract fun startLoginActivity(context: Context)
+
+
 }

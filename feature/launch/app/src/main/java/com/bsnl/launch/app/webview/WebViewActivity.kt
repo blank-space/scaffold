@@ -7,6 +7,7 @@ import android.net.http.SslError
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.KeyEvent
 import android.view.View
 import android.webkit.*
 import android.widget.FrameLayout
@@ -25,20 +26,17 @@ class WebViewActivity : AppCompatActivity() {
     protected var mWebviewRoot: FrameLayout? = null
     protected var mWebView: WebView? = null
     private lateinit var mUrl: String
+    private var startUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.feature_launch_app_activity_web)
         mWebviewRoot = findViewById(R.id.webview_root_fl)
         mWebView = WebViewPool.instance?.mWebView
-
         mWebviewRoot!!.addView(mWebView)
         mWebView?.visibility = View.GONE
-
         getData()
-
         initClient()
-
         initUrl()
     }
 
@@ -55,6 +53,12 @@ class WebViewActivity : AppCompatActivity() {
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
                 pb_web.visibility = View.VISIBLE
+
+                //重定向后url不一致
+                if(!url!!.startsWith(startUrl!!)){
+                    finish()
+                }
+
             }
 
             override fun onReceivedError(
@@ -90,11 +94,10 @@ class WebViewActivity : AppCompatActivity() {
             }
 
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                mUrl =url
-
-                return false;
+                mUrl = url
+                L.d("mUrl:${mUrl}")
+                return false
             }
-
 
 
             @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -102,78 +105,78 @@ class WebViewActivity : AppCompatActivity() {
                 view: WebView?,
                 request: WebResourceRequest?
             ): WebResourceResponse? {
-                L.d("mUrl:${mUrl}")
-                //未完成，暂时使用默认方法
+
+
                 return super.shouldInterceptRequest(view, request)
-                    val builder = Request.Builder()
-                    L.d("request?.method:${request?.method.toString()}")
-                    builder.url(mUrl).method(request?.method, null)
-                    val requestHeaders = request?.getRequestHeaders()
-                    if (!requestHeaders.isNullOrEmpty()) {
-                        for ((index, e) in requestHeaders) {
-                            builder.addHeader(index, e)
-                        }
+               /* val builder = Request.Builder()
+                L.d("request?.method:${request?.method.toString()}")
+                builder.url(mUrl).method(request?.method, null)
+                val requestHeaders = request?.getRequestHeaders()
+                if (!requestHeaders.isNullOrEmpty()) {
+                    for ((index, e) in requestHeaders) {
+                        builder.addHeader(index, e)
                     }
-                    val okHttpClient = OkHttpClient.Builder()
-                        .followRedirects(false) // 不follow重定向
-                        .followSslRedirects(false)
-                        .connectTimeout(15, TimeUnit.SECONDS)
-                        .build()
-                    val synCall = okHttpClient.newCall(builder.build())
-                    val response = synCall.execute()
-                    val code = response?.code()
+                }
+                val okHttpClient = OkHttpClient.Builder()
+                    .followRedirects(false) // 不follow重定向
+                    .followSslRedirects(false)
+                    .connectTimeout(15, TimeUnit.SECONDS)
+                    .build()
+                val synCall = okHttpClient.newCall(builder.build())
+                val response = synCall.execute()
+                val code = response?.code()
 
-                    code?.let {
-                        if (it > 299 && it < 400) {
-                            //重定向
-                            return super.shouldInterceptRequest(view, request)
-                        }
+                code?.let {
+                    if (it > 299 && it < 400) {
+                        //重定向
+                        return super.shouldInterceptRequest(view, request)
                     }
+                }
 
-                    response?.let {
-                        val body = it.body()
-                        val map = mutableMapOf<String, String>()
-                        for (index in 0..it.headers().size() - 1) {
-                            map[it.headers().name(index)] = it.headers().value(index)
-                        }
-                        var mimeType = MimeTypeMap.getSingleton()
-                            .getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(mUrl))
-                        val contentType = response.headers()["Content-Type"]
-                        var encoding = "utf-8"
+                response?.let {
+                    val body = it.body()
+                    val map = mutableMapOf<String, String>()
+                    for (index in 0..it.headers().size() - 1) {
+                        map[it.headers().name(index)] = it.headers().value(index)
+                    }
+                    var mimeType = MimeTypeMap.getSingleton()
+                        .getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(mUrl))
+                    val contentType = response.headers()["Content-Type"]
+                    var encoding = "utf-8"
 
-                        //获取ContentType和编码格式
-                        if (contentType != null && !"".equals(contentType)) {
-                            if (contentType.contains(";")) {
+                    //获取ContentType和编码格式
+                    if (contentType != null && !"".equals(contentType)) {
+                        if (contentType.contains(";")) {
 
-                                val args = contentType.split(";")
-                                mimeType = args[0]
-                                val args2 = args[1].trim().split("=")
-                                if (args.size == 2 && args2[0].trim().toLowerCase()
-                                        .equals("charset")
-                                ) {
-                                    encoding = args2[1].trim();
-                                }
-                            } else {
-                                mimeType = contentType;
+                            val args = contentType.split(";")
+                            mimeType = args[0]
+                            val args2 = args[1].trim().split("=")
+                            if (args.size == 2 && args2[0].trim().toLowerCase()
+                                    .equals("charset")
+                            ) {
+                                encoding = args2[1].trim();
                             }
+                        } else {
+                            mimeType = contentType;
                         }
-
-                        val webResourceResponse =
-                            WebResourceResponse(mimeType, encoding, body?.byteStream());
-                        var message = response?.message()
-
-                        if (TextUtils.isEmpty(message) && code == 200) {
-                            //message不能为空
-                            message = "OK"
-                        }
-
-                        webResourceResponse.setStatusCodeAndReasonPhrase(code!!, message);
-                        webResourceResponse.setResponseHeaders(map)
-                        return webResourceResponse
                     }
 
+                    val webResourceResponse =
+                        WebResourceResponse(mimeType, encoding, body?.byteStream());
+                    var message = response?.message()
 
-                return super.shouldInterceptRequest(view, request)
+                    if (TextUtils.isEmpty(message) && code == 200) {
+                        //message不能为空
+                        message = "OK"
+                    }
+
+                    webResourceResponse.setStatusCodeAndReasonPhrase(code!!, message);
+                    webResourceResponse.setResponseHeaders(map)
+                    return webResourceResponse
+                }
+
+
+                return super.shouldInterceptRequest(view, request)*/
 
             }
 
@@ -200,6 +203,7 @@ class WebViewActivity : AppCompatActivity() {
 
     private fun getData() {
         mUrl = intent.getStringExtra(URL)
+        startUrl =  intent.getStringExtra(URL)
     }
 
     private fun initUrl() {
@@ -221,14 +225,21 @@ class WebViewActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        if (mWebView?.canGoBack()!!) {
-            mWebView?.goBack()
-            return
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mWebView?.canGoBack()!!) {
+                //当WebView不是处于第一页面时，返回上一个页面
+                mWebView?.settings?.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK)
+                mWebView?.goBack()
+                return true
+            } else {
+                //当WebView处于第一页面时,直接退出
+                finish()
+            }
         }
-        super.onBackPressed()
-
+        return super.onKeyDown(keyCode, event)
     }
+
 
     override fun onDestroy() {
         mWebviewRoot?.let { WebViewPool.instance?.removeWebView(it, mWebView) }

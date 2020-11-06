@@ -25,6 +25,7 @@ import com.bsnl.common.iface.ViewState
 import com.bsnl.common.utils.getVm
 import com.bsnl.launch.app.webview.WebViewActivity
 import com.bsnl.sample.export.api.SampleApi
+import com.bsnl.sample.pkg.feature.view.fps.LoginActivity
 import java.lang.ref.WeakReference
 
 /**
@@ -34,20 +35,15 @@ import java.lang.ref.WeakReference
  */
 class MainActivity : DataBindingActivity<MainViewModel>() {
 
-
     private var weakReference: WeakReference<FragmentActivity>? = null
     private val coinUrl = "https://gank.io/images/b140f015a16e444aad6d76262f676a78"
     private lateinit var ivAvatar: ImageView
-    private var mEt: EditText? = null
-    private var editTextTop = 0
-    private var editTextBot = 0
-    private var invisibleWindow: KeyboardStatePopupWindow? = null
-    private var scrollY = 0f
+
     private var tvFps: TextView? = null
     private var isOpenFpsMonitor = false
 
-    private var mUrls = arrayListOf("https://m.toutiao.com/")
-    private var count =0
+    private var mUrls = arrayListOf("https://m.toutiao.com/", "https://juejin.im/")
+    private var count = 0
 
 
     private val rootView by lazy {
@@ -56,7 +52,19 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
             layout_height = match_parent
 
             TextView {
-                margin_top = 10
+                layout_height = 40
+                layout_width = match_parent
+                textSize = 16f
+                textStyle = bold
+                text = "scaffold"
+                gravity = gravity_center
+                layout_id = "tv_title"
+                top_toTopOf = parent_id
+                start_toStartOf = parent_id
+
+            }
+
+            TextView {
                 layout_height = 40
                 layout_width = match_parent
                 textSize = 16f
@@ -70,7 +78,8 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
                         permission = mutableListOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
                     )
                 }
-                top_toTopOf = parent_id
+                top_toBottomOf = "tv_title"
+                margin_top = 10
                 start_toStartOf = parent_id
                 background_color = "#eeeeee"
 
@@ -111,9 +120,9 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
                 margin_top = 10
                 textSize = 16f
                 textStyle = bold
-                text = "跳转到其他页面"
+                text = "ListItem Page"
                 gravity = gravity_center
-                layout_id = "iv_start_activity"
+                layout_id = "tv_list_page"
                 onClick = {
                     ApiUtils.getApi(SampleApi::class.java).startSampleActivity(this@MainActivity)
                 }
@@ -123,37 +132,25 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
 
             }
 
-            mEt = EditText {
-                layout_height = 300
-                layout_id = "edit"
-                layout_width = match_parent
-                margin_top = 20
-                gravity = Gravity.TOP
-                textSize = 16f
-                top_toBottomOf = "iv_start_activity"
-                start_toStartOf = parent_id
-
-            }
 
             tvFps = TextView {
-                margin_top = 10
                 layout_id = "tv_open_fps"
                 layout_height = 40
                 layout_width = match_parent
+                margin_top = 10
                 textSize = 16f
                 textStyle = bold
                 gravity = gravity_center
                 background_color = "#eeeeee"
-                top_toBottomOf = "edit"
+                top_toBottomOf = "tv_list_page"
                 start_toStartOf = parent_id
                 text = "Hide FpsMonitor"
                 onClick = {
-                  ShowFps.setVisibility(isShow = false)
+                    ShowFps.setVisibility(isShow = false)
                 }
             }
 
             TextView {
-
                 layout_id = "tv_web"
                 layout_height = 40
                 layout_width = match_parent
@@ -165,12 +162,29 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
                 start_toStartOf = parent_id
                 text = "webView"
                 onClick = {
-                 if(count % 2==0){
-                     WebViewActivity.startAction(context,mUrls[0])
-                 }else{
-                     WebViewActivity.startAction(context,mUrls[0])
-                 }
+                    if (count % 2 == 0) {
+                        WebViewActivity.startAction(context, mUrls[0])
+                    } else {
+                        WebViewActivity.startAction(context, mUrls[1])
+                    }
                     ++count
+                }
+                margin_top = 10
+            }
+
+            TextView {
+                layout_id = "tv_login"
+                layout_height = 40
+                layout_width = match_parent
+                textSize = 16f
+                textStyle = bold
+                gravity = gravity_center
+                background_color = "#eeeeee"
+                top_toBottomOf = "tv_web"
+                start_toStartOf = parent_id
+                text = "log in"
+                onClick = {
+                    ApiUtils.getApi(SampleApi::class.java).startLoginActivity(this@MainActivity)
                 }
                 margin_top = 10
             }
@@ -191,12 +205,10 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
         return rootView
     }
 
-    override fun getLayoutId() = 0
 
     override fun initBindingConfig(layoutId: Int): DataBindingConfig? {
         return null
     }
-
 
 
     override fun initViewModel(): MainViewModel = getVm()
@@ -204,73 +216,11 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
     override fun initData() {
         showLoading()
         //模拟请求
-        ivAvatar.postDelayed({ setState(ViewState.STATE_COMPLETED) }, 500)
-        mEt?.setText(
-            """
-1. 熟练掌握 Java，包括注解、反射、泛型、异常等相关知识，熟悉其在 JVM 的实现原理
-2. 熟悉 Java/Android 中常见的集合源码，包括 List、Set、Map、Queue/Deque 等
-3. 对 Java 并发有一定理解，熟悉 synchronized、volatile、原子类等实现原理
-4. 熟悉 JVM 相关知识，包括内存区域、内存模型、GC、类加载机制、编译优化等
-5. 熟练掌握 Android 应用层开发相关知识，熟悉四大组件、动画的使用
-6. 熟悉 View 相关体系，包括 View 绘制流程、事件分发、刷新机制
-7. 熟悉 Binder 进程间通信机制，熟悉其通信模型以及完整的通信流程
-8. 熟悉 Android 的系统启动流程，Activity、Service 启动流程、Handler 消息机制、SP 源码等
-9. 熟悉 Gradle 相关知识，包括自定义 Task、编译打包流程、自定义 Gradle Plugin、编译优化等
-10. 熟悉插件化的实现原理，静态代理式和 Hook 式；了解热修复的实现原理
-11. 了解常见的性能优化手段，做过包体积优化、布局优化、内存优化等
-12. 熟悉计算机网络相关协议，包括 TCP/IP、HTTP/1.x、HTTP2、HTTPS 等
-        """
-        )
+        ivAvatar.postDelayed({ setState(ViewState.STATE_COMPLETED) }, 200)
 
-        mEt?.post {
-            editTextTop = mEt!!.top
-            editTextBot = mEt!!.bottom
-        }
-
-        mEt?.viewTreeObserver?.addOnScrollChangedListener(object :
-            ViewTreeObserver.OnScrollChangedListener {
-            override fun onScrollChanged() {
-                scrollY = mEt?.scaleY!!
-            }
-        })
     }
 
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        invisibleWindow = KeyboardStatePopupWindow(this, ivAvatar)
-        invisibleWindow?.setOnKeyboardStateChangerListener(object :
-            KeyboardStatePopupWindow.OnKeyboardStateChangerListener {
-            override fun onClose() {
-            }
-
-            override fun onOpen(h: Int) {
-                //光标在EditText中的位置
-                val currentCursorY = getCurrentCursorY(mEt!!)
-                //光标在屏幕中的位置
-                val realY = currentCursorY - scrollY + editTextTop
-                //偏移量
-                val offset = (realY + h - DisplayUtils.getScreenHeight()).toInt()
-                //光标在软键盘底下,让文字向上位移
-                if (offset > 0) {
-                    mEt?.scrollY = offset
-
-                }
-            }
-        })
-    }
-
-    /**
-     * 获取当前光标的Y轴坐标
-     */
-    fun getCurrentCursorY(editText: EditText): Int {
-        val selectionStart = Selection.getSelectionStart(editText.text)
-        val layout = editText.layout
-        val bound = Rect()
-        val line = layout.getLineForOffset(selectionStart)
-        layout.getLineBounds(line, bound)
-        return bound.bottom
-    }
+    override fun getLayoutId(): Int = 0
 
 
 }

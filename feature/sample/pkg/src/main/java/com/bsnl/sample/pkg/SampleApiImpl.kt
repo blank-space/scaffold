@@ -4,7 +4,7 @@ import android.content.Context
 import com.bsnl.base.utils.ApiUtils
 import com.bsnl.sample.export.api.SampleApi
 import com.bsnl.sample.pkg.feature.view.SampleActivity
-import com.bsnl.sample.pkg.feature.view.fps.FpsMonitorActivity
+import com.bsnl.sample.pkg.feature.view.fps.LoginActivity
 
 /**
  * @author : LeeZhaoXing
@@ -19,7 +19,7 @@ class SampleApiImpl : SampleApi() {
         SampleActivity.actionStart(context)
     }
 
-    override fun startFpsMonitorActivity(context: Context) {
-        FpsMonitorActivity.startAction(context)
+    override fun startLoginActivity(context: Context) {
+        LoginActivity.startAction(context)
     }
 }

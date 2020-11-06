@@ -69,7 +69,7 @@ dependencies {
 
     // 根据 Config.pkgConfig 来依赖所有 pkg
     for (def entrySet : ConfigUtils.getApplyPkgs().entrySet()) {
-        api entrySet.value.dep
+        implementation entrySet.value.dep
     }
 
 //    if (Config.depConfig.feature_mock.isApply) {
