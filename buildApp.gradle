@@ -72,6 +72,10 @@ dependencies {
         implementation entrySet.value.dep
     }
 
+    if(Config.depConfig.lib_faster!=null ){
+        implementation Config.depConfig.lib_faster.dep
+    }
+
 //    if (Config.depConfig.feature_mock.isApply) {
 //        api Config.depConfig.feature_mock.dep
 //    }

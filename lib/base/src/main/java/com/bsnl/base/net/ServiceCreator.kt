@@ -21,7 +21,7 @@ import kotlin.jvm.Throws
  * @desc   : Retrofit封装类，获取Service
  */
 object ServiceCreator {
-    var BASE_URL = "https://www.wanandroid.com/"
+    var BASE_URL = "https://pokeapi.co/api/v2/"
     private const val TIME_OUT_SECONDS = 20
 
     //不同的项目或许需要不同的拦截器，自行扩展即可

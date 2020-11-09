@@ -7,7 +7,7 @@
 
     <application
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_logo"
         android:label="@string/name"
         android:name=".App"
         android:theme="@style/lib_base_AppTheme"

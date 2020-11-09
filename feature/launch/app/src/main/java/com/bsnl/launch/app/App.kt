@@ -2,12 +2,15 @@ package com.bsnl.launch.app
 
 import android.os.Looper
 import android.util.Log
+import com.bsnl.base.ActivityLifecycleCallback
 import com.bsnl.base.BaseApp
 import com.bsnl.base.log.L
 import com.bsnl.base.net.ServiceCreator
 import com.bsnl.base.utils.GlobalHandler
 import com.bsnl.common.ui.viewStatus.Gloading
 import com.bsnl.common.ui.viewStatus.adapter.GlobalAdapter
+import com.bsnl.faster.TaskDispatcher
+import com.bsnl.launch.app.task.*
 import com.bsnl.launch.app.webview.WebViewPool
 
 /**
@@ -19,12 +22,21 @@ class App : BaseApp() {
 
     override fun onCreate() {
         super.onCreate()
-        ServiceCreator.BASE_URL = "https://pokeapi.co/api/v2/"
-        ServiceCreator.initRetrofit()
-        Gloading.debug(BuildConfig.LOG_DEBUG)
-        Gloading.initDefault(GlobalAdapter())
-        WebViewPool.init()
-       // loop()
+        initTasks()
+        registerActivityLifecycleCallbacks(ActivityLifecycleCallback())
+//        loop()
+    }
+
+
+    private fun initTasks() {
+        TaskDispatcher.init(this)
+        val dispatcher: TaskDispatcher = TaskDispatcher.createInstance()
+        dispatcher?.addTask(InitLogTask())
+            ?.addTask(InitMVVMTask())
+            ?.addTask(InitViewStateChangeTask())
+            ?.addTask(InitImageLoaderTask())
+            ?.addTask(InitWebViewTask())
+            ?.start()
     }
 
 
@@ -40,7 +52,8 @@ class App : BaseApp() {
                     } catch (e: Throwable) {
                         val stack = Log.getStackTraceString(e)
                         if (stack.contains("Toast")
-                            || stack.contains("SelectionHandleView")) {
+                            || stack.contains("SelectionHandleView")
+                        ) {
                             L.e("捕获到异常，在线程${Thread.currentThread().name}, 在${e.stackTrace[0].className}")
                         } else {
                             //不可接受的异常，让他crash

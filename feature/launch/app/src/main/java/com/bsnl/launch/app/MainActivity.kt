@@ -54,12 +54,14 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
             TextView {
                 layout_height = 40
                 layout_width = match_parent
-                textSize = 16f
+                textSize = 18f
                 textStyle = bold
                 text = "scaffold"
                 gravity = gravity_center
                 layout_id = "tv_title"
                 top_toTopOf = parent_id
+                background_color ="#000000"
+                textColor ="#ffffff"
                 start_toStartOf = parent_id
 
             }

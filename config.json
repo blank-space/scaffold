@@ -46,6 +46,10 @@
       "isApply": true,
       "useLocal": true,
       "localPath": ":feature:sample:export"
+    }, {
+      "isApply": true,
+      "useLocal": true,
+      "localPath": ":lib:faster"
     }
   ]
 }
