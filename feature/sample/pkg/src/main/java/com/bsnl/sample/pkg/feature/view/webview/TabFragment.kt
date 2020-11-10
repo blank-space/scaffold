@@ -34,6 +34,17 @@ class TabFragment : BaseListDataBindingFragment<TabViewModel>() {
 
     }
 
+    override fun initData() {
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(mViewModel.providerData().isNullOrEmpty()) {
+            mRefreshLayout?.autoRefresh()
+        }
+    }
+
     override fun getLayoutId(): Int = R.layout.feature_sample_pkg_fragment_tab
 
     override fun initBindingConfig(layoutId: Int): DataBindingConfig? = null
