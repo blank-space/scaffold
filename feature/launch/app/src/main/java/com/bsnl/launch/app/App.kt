@@ -5,13 +5,9 @@ import android.util.Log
 import com.bsnl.base.ActivityLifecycleCallback
 import com.bsnl.base.BaseApp
 import com.bsnl.base.log.L
-import com.bsnl.base.net.ServiceCreator
 import com.bsnl.base.utils.GlobalHandler
-import com.bsnl.common.ui.viewStatus.Gloading
-import com.bsnl.common.ui.viewStatus.adapter.GlobalAdapter
 import com.bsnl.faster.TaskDispatcher
 import com.bsnl.launch.app.task.*
-import com.bsnl.launch.app.webview.WebViewPool
 
 /**
  * @author : LeeZhaoXing

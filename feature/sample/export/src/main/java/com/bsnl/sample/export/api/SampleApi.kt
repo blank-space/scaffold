@@ -14,5 +14,9 @@ abstract class SampleApi : ApiUtils.BaseApi() {
 
     abstract fun startLoginActivity(context: Context)
 
+    abstract fun startWebViewActivity(context: Context,url :String )
+
+    abstract fun startViewPagerActivity(context: Context)
+
 
 }

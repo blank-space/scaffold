@@ -6,13 +6,16 @@ import com.bsnl.base.utils.showToast
 import com.bsnl.common.dataBinding.BaseListDataBindingActivity
 import com.bsnl.common.dataBinding.DataBindingConfig
 import com.bsnl.common.iface.OnItemClickListener
+import com.bsnl.common.iface.RefreshType
 import com.bsnl.common.ui.titlebar.ToolbarTitleView
 import com.bsnl.common.utils.RecyclerViewUtil
 import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.startActivity
+import com.bsnl.common.viewmodel.RequestType
 import com.bsnl.sample.pkg.BR
 import com.bsnl.sample.pkg.R
 import com.bsnl.sample.pkg.feature.itemViewBinder.PokemonItemViewBinder
+import com.bsnl.sample.pkg.feature.itemViewBinder.StringItemViewBinder
 import com.bsnl.sample.pkg.feature.viewmodel.SampleViewModel
 import com.drakeet.multitype.MultiTypeAdapter
 
@@ -30,8 +33,8 @@ class SampleActivity : BaseListDataBindingActivity<SampleViewModel>() {
     }
 
     override fun registerItem(adapter: MultiTypeAdapter) {
+        adapter.register(StringItemViewBinder())
         adapter.register(PokemonItemViewBinder())
-
         adapter.setHasStableIds(true)
     }
 
@@ -62,5 +65,12 @@ class SampleActivity : BaseListDataBindingActivity<SampleViewModel>() {
                 FirstActivity.actionStart(this@SampleActivity)
             }
         }, R.id.name, R.id.avator)
+    }
+
+    override fun onLoadDataFinish(data: Any?) {
+        super.onLoadDataFinish(data)
+        if (mViewModel.mRequestType == RequestType.REFRESH) {
+            mViewModel.providerData().add(0, "MultiType")
+        }
     }
 }

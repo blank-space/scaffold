@@ -8,5 +8,6 @@
         <activity android:name=".feature.view.fps.LoginActivity"
             android:windowSoftInputMode="adjustNothing"
             />
+        <activity android:name=".feature.view.viewpager.ViewPagerActivity" />
     </application>
 </manifest>

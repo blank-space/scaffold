@@ -1,31 +1,20 @@
 package com.bsnl.launch.app
 
 import android.Manifest
-import android.graphics.Rect
-import android.os.Build
-import android.text.Selection
-import android.view.Gravity
 import android.view.View
-import android.view.ViewTreeObserver
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
-import com.bsnl.base.BaseApp
 import com.bsnl.base.dsl.*
-import com.bsnl.base.log.L
 import com.bsnl.base.permission.PermissionHelper
 import com.bsnl.base.utils.*
 import com.bsnl.base.widget.ShowFps
-import com.bsnl.base.window.KeyboardStatePopupWindow
 import com.bsnl.common.dataBinding.DataBindingActivity
 import com.bsnl.common.dataBinding.DataBindingConfig
 import com.bsnl.common.iface.ViewState
 import com.bsnl.common.utils.getVm
-import com.bsnl.launch.app.webview.WebViewActivity
+import com.bsnl.sample.pkg.feature.view.webview.WebViewActivity
 import com.bsnl.sample.export.api.SampleApi
-import com.bsnl.sample.pkg.feature.view.fps.LoginActivity
 import java.lang.ref.WeakReference
 
 /**
@@ -60,8 +49,8 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
                 gravity = gravity_center
                 layout_id = "tv_title"
                 top_toTopOf = parent_id
-                background_color ="#000000"
-                textColor ="#ffffff"
+                background_color = "#000000"
+                textColor = "#ffffff"
                 start_toStartOf = parent_id
 
             }
@@ -164,12 +153,7 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
                 start_toStartOf = parent_id
                 text = "webView"
                 onClick = {
-                    if (count % 2 == 0) {
-                        WebViewActivity.startAction(context, mUrls[0])
-                    } else {
-                        WebViewActivity.startAction(context, mUrls[1])
-                    }
-                    ++count
+                    ApiUtils.getApi(SampleApi::class.java).startWebViewActivity(context, mUrls[0])
                 }
                 margin_top = 10
             }
@@ -187,6 +171,25 @@ class MainActivity : DataBindingActivity<MainViewModel>() {
                 text = "log in"
                 onClick = {
                     ApiUtils.getApi(SampleApi::class.java).startLoginActivity(this@MainActivity)
+                }
+                margin_top = 10
+            }
+
+
+
+            TextView {
+                layout_id = "tv_viewpager"
+                layout_height = 40
+                layout_width = match_parent
+                textSize = 16f
+                textStyle = bold
+                gravity = gravity_center
+                background_color = "#eeeeee"
+                top_toBottomOf = "tv_login"
+                start_toStartOf = parent_id
+                text = "viewPager"
+                onClick = {
+                    ApiUtils.getApi(SampleApi::class.java).startViewPagerActivity(this@MainActivity)
                 }
                 margin_top = 10
             }

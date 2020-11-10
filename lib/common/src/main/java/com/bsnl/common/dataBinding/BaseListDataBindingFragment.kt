@@ -1,6 +1,7 @@
 package com.bsnl.common.dataBinding
 
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.bsnl.common.dataBinding.DataBindingFragment
 import com.bsnl.common.iface.IRefreshLayout
 import com.bsnl.common.iface.OnRefreshAndLoadMoreListener
@@ -23,19 +24,25 @@ import kotlinx.android.synthetic.main.lib_common_refreshlayout.*
  *
  */
 abstract class BaseListDataBindingFragment<T : BaseViewModel> : DataBindingFragment<T>() {
+    val mAdapter by lazy {
+        val vm = mViewModel as BaseListViewModel
+        MultiTypeAdapter(vm.providerData())
+    }
+    var mRecyclerView: RecyclerView? = null
 
-    val mAdapter by lazy { MultiTypeAdapter() }
     var mRefreshLayout: RefreshLayoutProxy? = null
 
     abstract fun registerItem(adapter: MultiTypeAdapter)
 
     override fun initView() {
+        mRecyclerView =recyclerview
         initRecyclerView()
     }
 
     private fun initRecyclerView() {
         registerItem(mAdapter)
         RecyclerViewUtil.initRecyclerView(recyclerview, mAdapter)
+
     }
 
 
@@ -141,13 +148,12 @@ abstract class BaseListDataBindingFragment<T : BaseViewModel> : DataBindingFragm
         if (mViewModel is BaseListViewModel) {
             val vm = mViewModel as BaseListViewModel
             vm.fetchListData(requestType)?.observe(viewLifecycleOwner, Observer {
-
                 onLoadDataFinish(it?.data)
             })
         }
     }
 
-    abstract fun onLoadDataFinish(data: Any?)
+    protected open fun onLoadDataFinish(data: Any?){}
 
     /**
      * @param requestType   根据刷新类型设置是否可以刷新或加载更多

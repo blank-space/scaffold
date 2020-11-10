@@ -102,8 +102,6 @@ abstract class BaseListDataBindingActivity<T : BaseViewModel> : DataBindingActiv
                 }
             })
         }
-
-
     }
 
 

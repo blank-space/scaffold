@@ -5,6 +5,8 @@ import com.bsnl.base.utils.ApiUtils
 import com.bsnl.sample.export.api.SampleApi
 import com.bsnl.sample.pkg.feature.view.SampleActivity
 import com.bsnl.sample.pkg.feature.view.fps.LoginActivity
+import com.bsnl.sample.pkg.feature.view.viewpager.ViewPagerActivity
+import com.bsnl.sample.pkg.feature.view.webview.WebViewActivity
 
 /**
  * @author : LeeZhaoXing
@@ -21,5 +23,13 @@ class SampleApiImpl : SampleApi() {
 
     override fun startLoginActivity(context: Context) {
         LoginActivity.startAction(context)
+    }
+
+    override fun startWebViewActivity(context: Context, url: String) {
+        WebViewActivity.startAction(context, url)
+    }
+
+    override fun startViewPagerActivity(context: Context) {
+        ViewPagerActivity.startAction(context)
     }
 }

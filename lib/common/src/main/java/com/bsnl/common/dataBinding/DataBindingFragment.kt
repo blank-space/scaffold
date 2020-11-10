@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.transition.Slide
 import androidx.transition.TransitionManager
+import com.bsnl.base.manager.KeyboardStateManager
 import com.bsnl.common.iface.ITrack
 import com.bsnl.common.iface.IViewState
 import com.bsnl.common.iface.ViewState
@@ -91,6 +92,9 @@ abstract class DataBindingFragment<T : BaseViewModel> : Fragment(), ITrack, IVie
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        lifecycle.addObserver(KeyboardStateManager)
+
         val dataBindingConfig = initBindingConfig(getLayoutId())
         mActivityFragmentManager = activity?.supportFragmentManager
         if (dataBindingConfig != null) {
@@ -114,8 +118,7 @@ abstract class DataBindingFragment<T : BaseViewModel> : Fragment(), ITrack, IVie
             }
 
             if (isWrapped()) {
-                mHolder =
-                    Gloading.default?.wrap(mBinding?.root!!)?.withRetry(Runnable { onLoadRetry() })
+                mHolder = Gloading.default?.wrap(mBinding?.root!!)?.withRetry(Runnable { onLoadRetry() })
                 return mHolder?.wrapper
             } else {
                 return mBinding?.root

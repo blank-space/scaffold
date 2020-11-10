@@ -32,19 +32,17 @@ class ToolbarTitleView : LinearLayout, ITitleView {
     private var mToolbarRightLayout: LinearLayout? = null
     private var mTitleTv: TextView? = null
 
-    constructor(context: Context?) : super(context) {}
+    constructor(context: Context?) : super(context)
     constructor(
         context: Context?,
         @Nullable attrs: AttributeSet?
-    ) : super(context, attrs) {
-    }
+    ) : super(context, attrs)
 
     constructor(
         context: Context?,
         @Nullable attrs: AttributeSet?,
         defStyleAttr: Int
-    ) : super(context, attrs, defStyleAttr) {
-    }
+    ) : super(context, attrs, defStyleAttr)
 
     override fun onFinishInflate() {
         super.onFinishInflate()

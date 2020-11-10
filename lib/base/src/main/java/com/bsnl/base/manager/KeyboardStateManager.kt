@@ -1,9 +1,14 @@
 package com.bsnl.base.manager
 
 import android.app.Activity
+import android.app.Application
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import com.bsnl.base.BaseApp
+import com.bsnl.base.log.L
 import com.bsnl.base.utils.KeyboardUtils
 
 /**
@@ -14,12 +19,50 @@ import com.bsnl.base.utils.KeyboardUtils
 object KeyboardStateManager : DefaultLifecycleObserver {
 
     override fun onStop(owner: LifecycleOwner) {
-        if(owner is Fragment){
+        L.d("KeyboardStateManager#onStop")
+        if (owner is Fragment) {
             owner.activity?.let { KeyboardUtils.hideSoftInput(it) }
-        }else if(owner is Activity) {
+        } else if (owner is Activity) {
             KeyboardUtils.hideSoftInput(owner)
         }
         super.onStop(owner)
+    }
+
+    override fun onDestroy(owner: LifecycleOwner) {
+        L.d("KeyboardStateManager#onDestroy")
+
+        if (owner is Activity) {
+            fixSoftInputLeaks(owner)
+        } else if (owner is Fragment) {
+            fixSoftInputLeaks(owner.activity)
+        }
+        super.onDestroy(owner)
+    }
+
+    private fun fixSoftInputLeaks(activity: Activity?) {
+        if (activity == null) {
+            return
+        }
+        val imm =
+            BaseApp.application.getSystemService(Application.INPUT_METHOD_SERVICE) as InputMethodManager
+                ?: return
+        val leakViews = arrayOf("mLastSrvView", "mCurRootView", "mServedView", "mNextServedView")
+        for (leakView in leakViews) {
+            try {
+                val leakViewField =
+                    InputMethodManager::class.java.getDeclaredField(leakView) ?: continue
+
+                if (!leakViewField.isAccessible) {
+                    leakViewField.isAccessible = true
+                }
+                val obj = leakViewField[imm] as? View ?: continue
+                if (obj.rootView === activity.window.decorView.rootView) {
+                    leakViewField[imm] = null
+                }
+            } catch (ignore: Throwable) {
+                /**/
+            }
+        }
     }
 
 

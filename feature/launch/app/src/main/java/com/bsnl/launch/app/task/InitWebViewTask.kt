@@ -1,11 +1,7 @@
 package com.bsnl.launch.app.task
 
-import com.bsnl.base.BaseApp
-import com.bsnl.base.log.L
 import com.bsnl.faster.MainTask
-import com.bsnl.faster.Task
-import com.bsnl.launch.app.webview.WebViewPool
-import com.tencent.mmkv.MMKV
+import com.bsnl.base.webview.WebViewPool
 
 /**
  * @author : LeeZhaoXing

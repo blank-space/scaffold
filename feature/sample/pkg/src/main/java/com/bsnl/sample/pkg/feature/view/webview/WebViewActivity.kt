@@ -1,4 +1,4 @@
-package com.bsnl.launch.app.webview
+package com.bsnl.sample.pkg.feature.view.webview
 
 
 import android.content.Context
@@ -6,7 +6,6 @@ import android.graphics.Bitmap
 import android.net.http.SslError
 import android.os.Build
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
 import android.webkit.*
@@ -14,12 +13,10 @@ import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.bsnl.base.log.L
+import com.bsnl.base.webview.WebViewPool
 import com.bsnl.common.utils.startActivity
-import com.bsnl.launch.app.R
-import kotlinx.android.synthetic.main.feature_launch_app_activity_web.*
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import java.util.concurrent.TimeUnit
+import com.bsnl.sample.pkg.R
+import kotlinx.android.synthetic.main.feature_sample_pkg_activity_web.*
 
 
 class WebViewActivity : AppCompatActivity() {
@@ -30,7 +27,7 @@ class WebViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.feature_launch_app_activity_web)
+        setContentView(R.layout.feature_sample_pkg_activity_web)
         mWebviewRoot = findViewById(R.id.webview_root_fl)
         mWebView = WebViewPool.instance?.mWebView
         mWebviewRoot!!.addView(mWebView)

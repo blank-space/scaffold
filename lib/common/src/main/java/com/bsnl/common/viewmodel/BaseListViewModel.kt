@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.collectLatest
 abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
 
     @RefreshType.Val
-    protected var mRequestType = 0
+    var mRequestType = 0
     protected var pageNo = DEFAULT_START_PAGE_INDEX
     protected var pageSize: Int = DEFAULT_PAGE_SIZE
     protected var mData: MutableList<Any> = mutableListOf()

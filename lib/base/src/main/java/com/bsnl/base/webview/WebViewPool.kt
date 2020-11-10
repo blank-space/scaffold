@@ -1,4 +1,4 @@
-package com.bsnl.launch.app.webview
+package com.bsnl.base.webview
 
 import android.os.Build
 import android.os.Build.VERSION_CODES.KITKAT
@@ -9,7 +9,6 @@ import android.webkit.WebView
 
 import android.widget.LinearLayout
 import com.bsnl.base.BaseApp
-import com.bsnl.base.log.L
 
 
 class WebViewPool private constructor() {
@@ -35,7 +34,9 @@ class WebViewPool private constructor() {
                     inUse.add(webView)
                 } else {
                     webView = WebView(BaseApp.application)
-                    setupWebView(webView)
+                    setupWebView(
+                        webView
+                    )
                     inUse.add(webView)
                     currentSize++
                 }

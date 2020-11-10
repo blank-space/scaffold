@@ -23,30 +23,7 @@ class ActivityLifecycleCallback:Application.ActivityLifecycleCallbacks {
         ViewGroup.LayoutParams.WRAP_CONTENT
     )
 
-    private fun fixSoftInputLeaks(activity: Activity?) {
-        if (activity == null) {
-            return
-        }
-        val imm = BaseApp.application.getSystemService(Application.INPUT_METHOD_SERVICE) as InputMethodManager
-            ?: return
-        val leakViews = arrayOf("mLastSrvView", "mCurRootView", "mServedView", "mNextServedView")
-        for (leakView in leakViews) {
-            try {
-                val leakViewField =
-                    InputMethodManager::class.java.getDeclaredField(leakView) ?: continue
 
-                if (!leakViewField.isAccessible) {
-                    leakViewField.isAccessible = true
-                }
-                val obj = leakViewField[imm] as? View ?: continue
-                if (obj.rootView === activity.window.decorView.rootView) {
-                    leakViewField[imm] = null
-                }
-            } catch (ignore: Throwable) {
-                /**/
-            }
-        }
-    }
 
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -89,7 +66,6 @@ class ActivityLifecycleCallback:Application.ActivityLifecycleCallbacks {
 
     override fun onActivityDestroyed(activity: Activity) {
         L.v("${activity::class.java.name}#onActivityDestroyed ")
-        fixSoftInputLeaks(activity)
         ActivitysManager.removeActivity(activity)
     }
 
