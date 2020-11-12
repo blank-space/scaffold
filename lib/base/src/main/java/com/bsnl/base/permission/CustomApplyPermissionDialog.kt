@@ -3,7 +3,7 @@ package com.bsnl.base.permission
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/10/12
- * @desc   :
+ * @desc   : 申请权限Dlg
  */
 import android.Manifest
 import android.annotation.TargetApi
@@ -17,7 +17,7 @@ import com.permissionx.guolindev.dialog.RationaleDialog
 import kotlinx.android.synthetic.main.lib_base_custom_dialog_layout.*
 
 @TargetApi(30)
-class CustomDialog(context: Context, val message: String, val permissions: List<String>) : RationaleDialog(context, R.style.lib_base_CustomDialog) {
+class CustomApplyPermissionDialog(context: Context, val message: String, val permissions: List<String>) : RationaleDialog(context, R.style.lib_base_CustomDialog) {
 
     private val permissionMap = mapOf(Manifest.permission.READ_CALENDAR to Manifest.permission_group.CALENDAR,
         Manifest.permission.WRITE_CALENDAR to Manifest.permission_group.CALENDAR,

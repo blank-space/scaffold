@@ -54,11 +54,11 @@ object ServiceCreator {
             .connectTimeout(TIME_OUT_SECONDS.toLong(), TimeUnit.SECONDS)
             .readTimeout(TIME_OUT_SECONDS.toLong(), TimeUnit.SECONDS)
             .readTimeout(TIME_OUT_SECONDS.toLong(), TimeUnit.SECONDS)
-            //.addInterceptor(RetryInterceptor())
+            .addInterceptor(RetryInterceptor())
             .addInterceptor(getLogInterceptor())
 
         if (interceptors.isNotEmpty()) {
-            for (index in 0..interceptors.size - 1) {
+            for (index in 0 until interceptors.size) {
                 builder.addInterceptor(interceptors[index])
             }
         }

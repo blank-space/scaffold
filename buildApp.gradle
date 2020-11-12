@@ -69,7 +69,7 @@ dependencies {
 
     // 根据 Config.pkgConfig 来依赖所有 pkg
     for (def entrySet : ConfigUtils.getApplyPkgs().entrySet()) {
-        implementation entrySet.value.dep
+        api entrySet.value.dep
     }
 
     if(Config.depConfig.lib_faster!=null ){

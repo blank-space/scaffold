@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy
  * @date   : 2020/10/13
  * @desc   : 缓存策略
  */
-open interface CacheStrategy {
+interface CacheStrategy {
     @IntDef(ALL, NONE, RESOURCE, DATA, AUTOMATIC)
     @Retention(RetentionPolicy.SOURCE)
     annotation class Strategy
