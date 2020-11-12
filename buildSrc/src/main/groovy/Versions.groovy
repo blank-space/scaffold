@@ -20,7 +20,7 @@ class Versions {
     static work = "2.2.0"
     static room = "2.3.0-alpha01"
     static cardview = "1.0.0"
-    static recyclerview = "1.1.0@aar"
+    static recyclerview = "1.1.0"
     static fragment = "1.3.0-alpha06"
     static anko = "0.10.8"
     static swiperefreshlayout = "1.0.0"
