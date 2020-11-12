@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.bsnl.base.log.L
 
 /**
  * @author : LeeZhaoXing
@@ -46,9 +47,10 @@ class CustomerViewpager : ViewPager {
     private val fragmentList: SparseArray<Fragment>? = null
 
     inner class MyViewPagerAdapter(fm: FragmentManager, behavior: Int) :
-        FragmentStatePagerAdapter(fm, behavior) {
+        FragmentPagerAdapter(fm, behavior) {
 
         override fun getItem(position: Int): Fragment {
+            //L.d("getItem=$position")
             onInitFragmentListener?.let {
                 return it.getFragment(position)
             }
@@ -69,6 +71,7 @@ class CustomerViewpager : ViewPager {
         }
 
         override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+            //L.d("destroyItem=$position")
             fragmentList?.remove(position)
             super.destroyItem(container, position, `object`)
         }

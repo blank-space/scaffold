@@ -1,14 +1,16 @@
 package com.bsnl.sample.pkg.feature.view.webview
 
-import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bsnl.base.log.L
 import com.bsnl.base.utils.showToast
-import com.bsnl.common.dataBinding.BaseListDataBindingFragment
+import com.bsnl.common.dataBinding.ListDataBindingFragment
 import com.bsnl.common.dataBinding.DataBindingConfig
+import com.bsnl.common.dataBinding.LazyListDataBindingFragment
 import com.bsnl.common.iface.OnItemClickListener
 import com.bsnl.common.utils.RecyclerViewUtil
 import com.bsnl.common.utils.getVm
+import com.bsnl.common.utils.newFrgInstance
 import com.bsnl.sample.pkg.R
 import com.bsnl.sample.pkg.feature.constant.Bundle_TITLE
 import com.bsnl.sample.pkg.feature.itemViewBinder.PokemonItemViewBinder
@@ -19,32 +21,25 @@ import com.drakeet.multitype.MultiTypeAdapter
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/11/10
- * @desc   :
+ * @desc   : 使用RecycledViewPool优化内存和渲染速度
+ * /验证如下：每个tab滑动一下，出现加载更多，然后切换tab再滑动，直到最后一个tab，使用pool时，创建了13个MyHolder，不使用pool，创建了21个MyHolder
  */
-class TabFragment : BaseListDataBindingFragment<TabViewModel>() {
+class TabFragment : LazyListDataBindingFragment<TabViewModel>() {
 
-    override fun registerItem(adapter: MultiTypeAdapter) {
-        //优化内存和渲染
+    override fun registerItem(adapter: MultiTypeAdapter?) {
+        adapter?.register(PokemonItemViewBinder(arguments?.getString(Bundle_TITLE, "1")!!))
+
         (activity as ViewPagerActivity).getRvPool()?.let {
-            L.d("setRecycledViewPool")
-            mRecyclerView?.setRecycledViewPool(it)
+            getRecyclerView()?.setRecycledViewPool(it)
         }
-        adapter.register(PokemonItemViewBinder(arguments?.getString(Bundle_TITLE,"1")!!))
-        adapter.setHasStableIds(true)
 
-    }
+        getRecyclerView()?.let {
+            val lm = LinearLayoutManager(it.context)
+            lm.recycleChildrenOnDetach = true
+            it.layoutManager = lm
 
-    override fun initData() {
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if(mViewModel.providerData().isNullOrEmpty()) {
-            mRefreshLayout?.autoRefresh()
         }
     }
-
     override fun getLayoutId(): Int = R.layout.feature_sample_pkg_fragment_tab
 
     override fun initBindingConfig(layoutId: Int): DataBindingConfig? = null
@@ -53,7 +48,7 @@ class TabFragment : BaseListDataBindingFragment<TabViewModel>() {
 
     override fun initListener() {
         super.initListener()
-        RecyclerViewUtil.setOnItemClickListener(mRecyclerView, object : OnItemClickListener {
+        RecyclerViewUtil.setOnItemClickListener(getRecyclerView(), object : OnItemClickListener {
             override fun onItemClick(v: View, position: Int) {
                 v.id.toString().showToast()
             }
@@ -66,13 +61,8 @@ class TabFragment : BaseListDataBindingFragment<TabViewModel>() {
     }
 
     companion object {
-        fun newInstance(title: String): TabFragment {
-            val args = Bundle().apply {
-                putString(Bundle_TITLE, title)
-            }
-            val fragment = TabFragment()
-            fragment.arguments = args
-            return fragment
+        fun newInstance(title: String) = newFrgInstance<TabFragment> {
+            putString(Bundle_TITLE, title)
         }
     }
 

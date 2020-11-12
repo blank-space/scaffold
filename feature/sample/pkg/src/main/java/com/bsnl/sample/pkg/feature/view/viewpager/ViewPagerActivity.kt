@@ -19,20 +19,26 @@ import kotlinx.android.synthetic.main.feature_sample_pkg_activity_viewpager.*
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/11/10
- * @desc   :
+ * @desc   : ViewPager+Fragment+RecyclerView+RecyclerViewPool的示例
  */
 class ViewPagerActivity : DataBindingActivity<StubViewModel>() {
     private val tabs = arrayOf("tab1", "tab2", "tab3")
-    private var recycledViewPool: RecycledViewPool? = null
 
+    private var recycledViewPool: RecycledViewPool? =  RecycledViewPool()
+
+    /**
+     * MultiTypeAdapter没提供设置viewType的api,viewType等于该VH在的添加到集合时候的位置(index),所以这边写 "0"
+     *
+     * 备注:不建议把RecycledViewPool放置在ViewModel中提供给V层，ViewModel不应该持有跟Context引用，避免内存泄漏
+     */
     fun getRvPool(): RecycledViewPool? {
         if(recycledViewPool==null) {
             recycledViewPool = RecycledViewPool()
-            // MultiTypeAdapter没提供设置viewType的api,viewType等于该VH在的添加到集合时候的位置(index),所以这边写"0"
             recycledViewPool!!.setMaxRecycledViews(0, 8)
         }
         return recycledViewPool
     }
+
 
     override fun initView() {
         mTitleView = findViewById<ToolbarTitleView>(R.id.toolbar)
@@ -43,11 +49,11 @@ class ViewPagerActivity : DataBindingActivity<StubViewModel>() {
             tab_layout.addTab(tab_layout.newTab().setText(tabs[i]))
         }
 
+        //设置Title和创建Fragment
         view_pager.setInitFragmentListener(object : CustomerViewpager.OnInitFragmentListener {
             override fun getFragment(position: Int): Fragment {
                 return TabFragment.newInstance("Tab_${position}")
             }
-
             override fun getTabs(): Array<String> = tabs
         }, supportFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
 
@@ -62,7 +68,6 @@ class ViewPagerActivity : DataBindingActivity<StubViewModel>() {
     override fun initViewModel(): StubViewModel = getVm()
 
     override fun initData() {
-
     }
 
     companion object {

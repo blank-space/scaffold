@@ -19,18 +19,16 @@ import com.bsnl.common.iface.OnItemClickListener
 object RecyclerViewUtil {
 
     fun initRecyclerView(recyclerView: RecyclerView?, adapter: RecyclerView.Adapter<*>?) {
-
         requireNotNull(recyclerView, { "recyclerView cannot null" })
         requireNotNull(adapter, { "adapter cannot null" })
-
-        recyclerView.also {
-            (it.itemAnimator as SimpleItemAnimator?)!!.supportsChangeAnimations = false
-            if (it.layoutManager == null) {
-                it.layoutManager = LinearLayoutManager(recyclerView.context)
+        recyclerView?.apply {
+            (itemAnimator as SimpleItemAnimator?)!!.supportsChangeAnimations = false
+            if (layoutManager == null) {
+                layoutManager = LinearLayoutManager(recyclerView.context)
             }
-            it.setHasFixedSize(true)
-            it.adapter = adapter
-            adapter.notifyDataSetChanged()
+            setHasFixedSize(true)
+            this.adapter = adapter
+           // adapter?.notifyDataSetChanged()
         }
 
     }

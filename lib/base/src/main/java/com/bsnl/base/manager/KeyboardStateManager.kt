@@ -21,21 +21,19 @@ object KeyboardStateManager : DefaultLifecycleObserver {
     override fun onStop(owner: LifecycleOwner) {
         L.d("KeyboardStateManager#onStop")
         if (owner is Fragment) {
-            owner.activity?.let { KeyboardUtils.hideSoftInput(it) }
+            owner.activity?.let { KeyboardUtils.hideSoftInput(it)
+                fixSoftInputLeaks(it)}
         } else if (owner is Activity) {
             KeyboardUtils.hideSoftInput(owner)
+            fixSoftInputLeaks(owner)
         }
+
         super.onStop(owner)
     }
 
     override fun onDestroy(owner: LifecycleOwner) {
         L.d("KeyboardStateManager#onDestroy")
 
-        if (owner is Activity) {
-            fixSoftInputLeaks(owner)
-        } else if (owner is Fragment) {
-            fixSoftInputLeaks(owner.activity)
-        }
         super.onDestroy(owner)
     }
 

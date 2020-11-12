@@ -9,7 +9,6 @@ import com.bsnl.common.dataBinding.viewHolder.BaseViewHolder
 import com.bsnl.sample.pkg.R
 import com.bsnl.sample.pkg.databinding.FeatureSamplePkgRecycleItemPokemonBinding
 import com.bsnl.sample.pkg.feature.model.ListingData
-import com.bsnl.sample.pkg.feature.view.FirstActivity
 import com.drakeet.multitype.ItemViewBinder
 
 /**
@@ -17,32 +16,28 @@ import com.drakeet.multitype.ItemViewBinder
  * @date   : 2020/10/21
  * @desc   :
  */
-class PokemonItemViewBinder(val title: String = "") : ItemViewBinder<ListingData, MyHolder>() {
+class PokemonItemViewBinder( val title: String = "") :
+    ItemViewBinder<ListingData, MyHolder>() {
     override fun onBindViewHolder(holder: MyHolder, item: ListingData) {
         holder.bindData(item, holder.adapterPosition)
-        L.e(" ${title} ,onBindViewHolder")
+        L.d(" ${title} ==onBindViewHolder,position=${holder.adapterPosition}")
     }
 
     override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): MyHolder {
-        L.e(" onCreateViewHolder")
-        return MyHolder(
-            (inflater.inflate(
-                R.layout.feature_sample_pkg_recycle_item_pokemon,
-                parent,
-                false
-            ))
-        )
+        L.d(" onCreateViewHolder")
+        return MyHolder((inflater.inflate(R.layout.feature_sample_pkg_recycle_item_pokemon, parent, false)))
     }
 
     override fun getItemId(item: ListingData): Long {
         return item.hashCode().toLong()
     }
 
+
+
 }
 
 class MyHolder(view: View) : BaseViewHolder<ListingData>(view) {
     private val binding: FeatureSamplePkgRecycleItemPokemonBinding by viewHolderBinding(view)
-
 
     override fun bindData(data: ListingData, position: Int) {
         binding.apply {

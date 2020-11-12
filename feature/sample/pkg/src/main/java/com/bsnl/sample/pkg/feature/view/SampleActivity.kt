@@ -3,10 +3,9 @@ package com.bsnl.sample.pkg.feature.view
 import android.content.Context
 import android.view.View
 import com.bsnl.base.utils.showToast
-import com.bsnl.common.dataBinding.BaseListDataBindingActivity
+import com.bsnl.common.dataBinding.ListDataBindingActivity
 import com.bsnl.common.dataBinding.DataBindingConfig
 import com.bsnl.common.iface.OnItemClickListener
-import com.bsnl.common.iface.RefreshType
 import com.bsnl.common.ui.titlebar.ToolbarTitleView
 import com.bsnl.common.utils.RecyclerViewUtil
 import com.bsnl.common.utils.getVm
@@ -24,7 +23,7 @@ import com.drakeet.multitype.MultiTypeAdapter
  * @date   : 2020/10/21
  * @desc   :
  */
-class SampleActivity : BaseListDataBindingActivity<SampleViewModel>() {
+class SampleActivity : ListDataBindingActivity<SampleViewModel>() {
 
     companion object {
         fun actionStart(context: Context) {
@@ -32,10 +31,12 @@ class SampleActivity : BaseListDataBindingActivity<SampleViewModel>() {
         }
     }
 
-    override fun registerItem(adapter: MultiTypeAdapter) {
-        adapter.register(StringItemViewBinder())
-        adapter.register(PokemonItemViewBinder())
-        adapter.setHasStableIds(true)
+    override fun registerItem(adapter: MultiTypeAdapter?) {
+        adapter?.apply {
+            register(StringItemViewBinder())
+            register(PokemonItemViewBinder())
+            setHasStableIds(true)
+        }
     }
 
 
@@ -55,7 +56,7 @@ class SampleActivity : BaseListDataBindingActivity<SampleViewModel>() {
 
     override fun initListener() {
         super.initListener()
-        RecyclerViewUtil.setOnItemClickListener(mRecyclerView, object : OnItemClickListener {
+        RecyclerViewUtil.setOnItemClickListener(getRecyclerView(), object : OnItemClickListener {
             override fun onItemClick(v: View, position: Int) {
                 FirstActivity.actionStart(this@SampleActivity)
             }
@@ -67,8 +68,8 @@ class SampleActivity : BaseListDataBindingActivity<SampleViewModel>() {
         }, R.id.name, R.id.avator)
     }
 
-    override fun onLoadDataFinish(data: Any?) {
-        super.onLoadDataFinish(data)
+    override fun onGetDataFinish(data: Any?) {
+        super.onGetDataFinish(data)
         if (mViewModel.mRequestType == RequestType.REFRESH) {
             mViewModel.providerData().add(0, "MultiType")
         }

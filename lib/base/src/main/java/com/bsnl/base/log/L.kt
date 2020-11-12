@@ -12,7 +12,7 @@ import timber.log.Timber.DebugTree
  */
 object L {
 
-    private val TAG = "TAG"
+    private val TAG = "@@"
 
     /**
      * 在[Application#onCreate()]里调用该方法
