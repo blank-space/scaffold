@@ -1,10 +1,8 @@
-package com.bsnl.sample.pkg.feature.view.webview
+package com.bsnl.sample.pkg.feature.view.viewpager
 
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bsnl.base.log.L
 import com.bsnl.base.utils.showToast
-import com.bsnl.common.dataBinding.ListDataBindingFragment
 import com.bsnl.common.dataBinding.DataBindingConfig
 import com.bsnl.common.dataBinding.LazyListDataBindingFragment
 import com.bsnl.common.iface.OnItemClickListener
@@ -14,7 +12,6 @@ import com.bsnl.common.utils.newFrgInstance
 import com.bsnl.sample.pkg.R
 import com.bsnl.sample.pkg.feature.constant.Bundle_TITLE
 import com.bsnl.sample.pkg.feature.itemViewBinder.PokemonItemViewBinder
-import com.bsnl.sample.pkg.feature.view.viewpager.ViewPagerActivity
 import com.bsnl.sample.pkg.feature.viewmodel.TabViewModel
 import com.drakeet.multitype.MultiTypeAdapter
 

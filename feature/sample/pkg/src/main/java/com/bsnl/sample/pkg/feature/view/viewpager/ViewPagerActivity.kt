@@ -12,7 +12,6 @@ import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.startActivity
 import com.bsnl.common.viewmodel.StubViewModel
 import com.bsnl.sample.pkg.R
-import com.bsnl.sample.pkg.feature.view.webview.TabFragment
 import kotlinx.android.synthetic.main.feature_sample_pkg_activity_viewpager.*
 
 

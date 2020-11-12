@@ -97,6 +97,7 @@ abstract class DataBindingFragment<T : BaseViewModel> : Fragment(), ITrack, IVie
 
         val dataBindingConfig = initBindingConfig(getLayoutId())
         mActivityFragmentManager = activity?.supportFragmentManager
+
         if (dataBindingConfig != null) {
             val binding: ViewDataBinding =
                 DataBindingUtil.inflate(inflater, dataBindingConfig.layout, container, false)
