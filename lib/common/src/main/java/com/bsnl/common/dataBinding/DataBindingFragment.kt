@@ -20,6 +20,7 @@ import androidx.lifecycle.Observer
 import androidx.transition.Slide
 import androidx.transition.TransitionManager
 import com.bsnl.base.manager.KeyboardStateManager
+import com.bsnl.base.manager.NetworkStateManager
 import com.bsnl.common.iface.ITrack
 import com.bsnl.common.iface.IViewState
 import com.bsnl.common.iface.ViewState
@@ -94,6 +95,7 @@ abstract class DataBindingFragment<T : BaseViewModel> : Fragment(), ITrack, IVie
     ): View? {
 
         lifecycle.addObserver(KeyboardStateManager)
+        //lifecycle.addObserver(NetworkStateManager)
 
         val dataBindingConfig = initBindingConfig(getLayoutId())
         mActivityFragmentManager = activity?.supportFragmentManager

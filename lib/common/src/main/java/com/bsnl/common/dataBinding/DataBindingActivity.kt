@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import com.bsnl.base.manager.KeyboardStateManager
+import com.bsnl.base.manager.NetworkStateManager
 import com.bsnl.common.iface.ITitleView
 import com.bsnl.common.iface.ITrack
 import com.bsnl.common.iface.IViewState
@@ -99,6 +100,7 @@ abstract class DataBindingActivity<T : BaseViewModel> : AppCompatActivity(), ITr
         getIntentData()
 
         lifecycle.addObserver(KeyboardStateManager)
+        lifecycle.addObserver(NetworkStateManager)
 
         val dataBindingConfig = initBindingConfig(getLayoutId())
         if (dataBindingConfig != null) {

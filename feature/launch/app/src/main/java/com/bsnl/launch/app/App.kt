@@ -20,7 +20,7 @@ class App : BaseApp() {
         super.onCreate()
         initTasks()
         registerActivityLifecycleCallbacks(ActivityLifecycleCallback())
-//        loop()
+        loop()
     }
 
 
