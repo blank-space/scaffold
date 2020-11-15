@@ -44,15 +44,15 @@ abstract class DataBindingActivity<T : BaseViewModel> : AppCompatActivity(), ITr
     /**
      * make a Gloading.Holder wrap with current activity by default
      * override this method in subclass to do special initialization
-     * <p>
-    Gloading specialGloading = Gloading.from(new SpecialAdapter());
-    mHolder = specialGloading.wrap(this).withRetry(new Runnable() {
-    @Override
-    public void run() {
-    onLoadRetry();
-    }
-    });
-     *</p>
+     *
+    <li>    Gloading specialGloading = Gloading.from(new SpecialAdapter());      </li>
+    <li>    mHolder = specialGloading.wrap(this).withRetry(new Runnable() {      </li>
+    <li>        @Override                                                        </li>
+    <li>        public void run() {                                              </li>
+    <li>            onLoadRetry();                                               </li>
+    <li>        }                                                                </li>
+    <li>    });                                                                  </li>
+     *
      */
     protected open fun initLoadingStatusViewIfNeed() {
         if (mHolder == null) {

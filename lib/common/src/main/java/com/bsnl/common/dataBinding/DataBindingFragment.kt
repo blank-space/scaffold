@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.transition.Slide
 import androidx.transition.TransitionManager
+import com.bsnl.base.log.L
 import com.bsnl.base.manager.KeyboardStateManager
 import com.bsnl.base.manager.NetworkStateManager
 import com.bsnl.common.iface.ITrack
@@ -121,10 +122,10 @@ abstract class DataBindingFragment<T : BaseViewModel> : Fragment(), ITrack, IVie
             }
 
             if (isWrapped()) {
-                mHolder = Gloading.default?.wrap(mBinding?.root!!)?.withRetry(Runnable { onLoadRetry() })
+                mHolder = Gloading.default?.wrap(mBinding.root)?.withRetry(Runnable { onLoadRetry() })
                 return mHolder?.wrapper
             } else {
-                return mBinding?.root
+                return mBinding.root
             }
         } else {
 
@@ -261,6 +262,11 @@ abstract class DataBindingFragment<T : BaseViewModel> : Fragment(), ITrack, IVie
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mHolder= null
+    }
+
     protected open fun getRefreshLayout(): SmartRefreshLayout? {
         return null
     }
@@ -270,4 +276,5 @@ abstract class DataBindingFragment<T : BaseViewModel> : Fragment(), ITrack, IVie
 
     protected fun hideLoadingDlg() {
     }
+
 }

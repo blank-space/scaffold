@@ -250,6 +250,5 @@ class WebViewActivity : AppCompatActivity() {
                 putExtra(URL, url)
             }
         }
-
     }
 }

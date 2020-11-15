@@ -31,8 +31,8 @@ class RefreshLayoutProxy(val mRefreshLayout: SmartRefreshLayout? = null, var lis
                 listener?.onRefresh(this@RefreshLayoutProxy)
             }
         })
-        mRefreshLayout?.setRefreshHeader(ClassicsHeader(mRefreshLayout?.context))
-        mRefreshLayout?.setRefreshFooter(ClassicsFooter(mRefreshLayout?.context))
+        mRefreshLayout?.setRefreshHeader(ClassicsHeader(mRefreshLayout.context))
+        mRefreshLayout?.setRefreshFooter(ClassicsFooter(mRefreshLayout.context))
 
     }
 

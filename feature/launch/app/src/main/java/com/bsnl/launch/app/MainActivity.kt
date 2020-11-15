@@ -22,7 +22,8 @@ import java.lang.ref.WeakReference
  * @date   : 2020/10/19
  * @desc   :
  */
-class MainActivity : DataBindingActivity<MainViewModel>() {
+class
+MainActivity : DataBindingActivity<MainViewModel>() {
 
     private var weakReference: WeakReference<FragmentActivity>? = null
     private val coinUrl = "https://gank.io/images/b140f015a16e444aad6d76262f676a78"

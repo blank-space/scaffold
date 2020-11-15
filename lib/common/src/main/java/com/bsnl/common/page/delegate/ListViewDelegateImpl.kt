@@ -39,7 +39,8 @@ class ListViewDelegateImpl(val viewModel: BaseListViewModel, private val owner: 
 
 
     override fun setupRefreshLayout(smartRefreshLayout: SmartRefreshLayout?) {
-        mRefreshLayout = RefreshLayoutProxy(smartRefreshLayout, object : OnRefreshAndLoadMoreListener {
+        mRefreshLayout =
+            RefreshLayoutProxy(smartRefreshLayout, object : OnRefreshAndLoadMoreListener {
                 override fun onRefresh(refreshLayout: IRefreshLayout?) {
                     loadData(RequestType.REFRESH)
                 }

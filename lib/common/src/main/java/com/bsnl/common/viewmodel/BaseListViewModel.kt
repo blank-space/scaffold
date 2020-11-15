@@ -34,27 +34,32 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
     /**
      * 结束刷新动作
      */
-    val finishRefresh: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val _finishRefresh = MutableLiveData(false)
+    val finishRefresh: LiveData<Boolean> = _finishRefresh
 
     /**
      * 结束加载更多动作
      */
-    val finishLoadMore: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val _finishLoadMore = MutableLiveData(false)
+    val finishLoadMore: LiveData<Boolean> = _finishLoadMore
 
     /**
      * adapter更新数据
      */
-    val notifyDataChange: MutableLiveData<Int> = MutableLiveData(0)
+    private val _notifyDataChange = MutableLiveData(0)
+    val notifyDataChange: LiveData<Int> = _notifyDataChange
 
     /**
      * 是否可以加载更多
      */
-    val enableLoadMore: MutableLiveData<Boolean> = MutableLiveData(true)
+    private val _enableLoadMore = MutableLiveData(true)
+    val enableLoadMore: LiveData<Boolean> = _enableLoadMore
 
     /**
      * 没有更多数据
      */
-    val noMoreData: MutableLiveData<Boolean> = MutableLiveData()
+    private val _noMoreData = MutableLiveData(false)
+    val noMoreData: LiveData<Boolean> = _noMoreData
 
     /**
      * 请求入口
@@ -100,7 +105,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
                 } else {
                     errMsg?.showToast()
                 }
-                finishRefresh.postValue(true)
+                _finishRefresh.postValue(true)
             }
             RequestType.LOAD_MORE -> {
                 pageNo--
@@ -109,7 +114,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
                 } else {
                     errMsg?.showToast()
                 }
-                finishLoadMore.postValue(true)
+                _finishLoadMore.postValue(true)
             }
         }
     }
@@ -129,11 +134,11 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
                 initView(t, mRequestType)
             }
             RequestType.REFRESH -> {
-                finishRefresh.postValue(true)
+                _finishRefresh.postValue(true)
                 initView(t, mRequestType)
             }
             RequestType.LOAD_MORE -> {
-                finishLoadMore.postValue(true)
+                _finishLoadMore.postValue(true)
                 processLoadMoreData(t)
             }
         }
@@ -153,7 +158,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
                 mData?.addAll(data.getDataList()!!)
                 processInitLoadMoreState(data)
                 pageNo++
-                notifyDataChange.postValue(0)
+                _notifyDataChange.postValue(0)
             } else {
                 processEmptyState()
             }
@@ -171,7 +176,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
         if (isLoadMoreNoData(baseList)) {
             finishLoadMoreWithNoMoreData()
         } else {
-            enableLoadMore.postValue(true)
+            _enableLoadMore.postValue(true)
         }
     }
 
@@ -179,8 +184,8 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
      * 处理没有更多数据
      */
     protected open fun finishLoadMoreWithNoMoreData() {
-        enableLoadMore.postValue(false)
-        noMoreData.postValue(true)
+        _enableLoadMore.postValue(false)
+        _noMoreData.postValue(true)
 
     }
 
@@ -217,7 +222,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
             } else {
                 finishLoadMoreWithNoMoreData()
             }
-            notifyDataChange.postValue(insertP)
+            _notifyDataChange.postValue(insertP)
         } else {
             throw  RuntimeException("列表数据必须实现IBaseList接口")
         }
@@ -247,7 +252,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
     }
 
     private fun setState(msg: String? = "", value: ViewState) {
-        viewState.postValue(ViewStateWithMsg(msg, value))
+        _viewState.postValue(ViewStateWithMsg(msg, value))
     }
 
 

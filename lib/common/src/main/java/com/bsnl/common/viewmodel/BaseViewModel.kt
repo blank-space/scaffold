@@ -1,5 +1,6 @@
 package com.bsnl.common.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bsnl.common.iface.ViewState
@@ -15,7 +16,7 @@ abstract class BaseViewModel : ViewModel() {
     /**
      * 切换页面状态
      */
-    val viewState: MutableLiveData<ViewStateWithMsg> = MutableLiveData(ViewStateWithMsg(msg = "",state = ViewState.STATE_IDLE))
-
+    protected val _viewState = MutableLiveData(ViewStateWithMsg(msg = "", state = ViewState.STATE_IDLE))
+    val viewState: LiveData<ViewStateWithMsg> = _viewState
 
 }

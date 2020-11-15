@@ -21,14 +21,13 @@ object RecyclerViewUtil {
     fun initRecyclerView(recyclerView: RecyclerView?, adapter: RecyclerView.Adapter<*>?) {
         requireNotNull(recyclerView, { "recyclerView cannot null" })
         requireNotNull(adapter, { "adapter cannot null" })
-        recyclerView?.apply {
+        recyclerView.apply {
             (itemAnimator as SimpleItemAnimator?)!!.supportsChangeAnimations = false
             if (layoutManager == null) {
                 layoutManager = LinearLayoutManager(recyclerView.context)
             }
             setHasFixedSize(true)
             this.adapter = adapter
-           // adapter?.notifyDataSetChanged()
         }
 
     }

@@ -2,6 +2,7 @@ package com.bsnl.common.dataBinding
 
 import android.os.Bundle
 import com.bsnl.base.log.L
+import com.bsnl.common.viewmodel.BaseListViewModel
 import com.bsnl.common.viewmodel.BaseViewModel
 
 
@@ -10,7 +11,7 @@ import com.bsnl.common.viewmodel.BaseViewModel
  * @date   : 2020/9/16
  * @desc   : 懒加载列表
  */
-abstract class LazyListDataBindingFragment<T : BaseViewModel> : ListDataBindingFragment<T>() {
+abstract class LazyListDataBindingFragment<T : BaseListViewModel> : ListDataBindingFragment<T>() {
     private var mHasInit = false
 
 
@@ -30,7 +31,10 @@ abstract class LazyListDataBindingFragment<T : BaseViewModel> : ListDataBindingF
             setupListViewDelegate()
             setupLiveDataCallback()
             setupRefreshCallback()
-            fetchData()
+
+            if(mViewModel.providerData().isNullOrEmpty()) {
+                fetchData()
+            }
         }
     }
 

@@ -32,9 +32,9 @@ fun doOnMainThreadIdle(action: () -> Unit, timeout: Long? = null) {
             handler.postDelayed({
                 queue.removeIdleHandler(idleHandler)
                 action()
-                //if(BuildConfig.LOG_DEBUG) {
+                if(BuildConfig.LOG_DEBUG) {
                     Log.e("TAG","${timeout}ms timeOut! ")
-               // }
+                }
 
             }, timeout)
         }

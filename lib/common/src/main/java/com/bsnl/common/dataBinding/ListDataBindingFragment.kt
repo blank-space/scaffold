@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.lib_common_refreshlayout.*
  * @desc   : 基础列表fragment ， 子类布局文件必须include lib_common_refreshlayout.xml
  *
  */
-abstract class ListDataBindingFragment<T : BaseViewModel> : DataBindingFragment<T>() {
+abstract class ListDataBindingFragment<T : BaseListViewModel> : DataBindingFragment<T>() {
 
     private var mListViewDelegate: ListViewDelegateImpl? = null
 
@@ -54,7 +54,7 @@ abstract class ListDataBindingFragment<T : BaseViewModel> : DataBindingFragment<
     }
 
     protected fun fetchData() {
-        mListViewDelegate?.getRefreshLayoutProxy()?.autoRefresh()
+        mListViewDelegate?.loadData(RequestType.INIT)
     }
 
     override fun initData() {

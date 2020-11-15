@@ -20,20 +20,15 @@ class PokemonItemViewBinder( val title: String = "") :
     ItemViewBinder<ListingData, MyHolder>() {
     override fun onBindViewHolder(holder: MyHolder, item: ListingData) {
         holder.bindData(item, holder.adapterPosition)
-        L.d(" ${title} ==onBindViewHolder,position=${holder.adapterPosition}")
     }
 
     override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): MyHolder {
-        L.d(" onCreateViewHolder")
         return MyHolder((inflater.inflate(R.layout.feature_sample_pkg_recycle_item_pokemon, parent, false)))
     }
 
     override fun getItemId(item: ListingData): Long {
         return item.hashCode().toLong()
     }
-
-
-
 }
 
 class MyHolder(view: View) : BaseViewHolder<ListingData>(view) {
