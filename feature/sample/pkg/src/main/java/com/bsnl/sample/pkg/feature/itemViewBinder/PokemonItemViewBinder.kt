@@ -19,6 +19,7 @@ import com.drakeet.multitype.ItemViewBinder
 class PokemonItemViewBinder( val title: String = "") :
     ItemViewBinder<ListingData, MyHolder>() {
     override fun onBindViewHolder(holder: MyHolder, item: ListingData) {
+        L.d("onBindViewHolder")
         holder.bindData(item, holder.adapterPosition)
     }
 

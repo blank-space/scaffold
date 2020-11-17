@@ -27,12 +27,12 @@ class App : BaseApp() {
     private fun initTasks() {
         TaskDispatcher.init(this)
         val dispatcher: TaskDispatcher = TaskDispatcher.createInstance()
-        dispatcher?.addTask(InitLogTask())
-            ?.addTask(InitMVVMTask())
-            ?.addTask(InitViewStateChangeTask())
-            ?.addTask(InitImageLoaderTask())
-            ?.addTask(InitWebViewTask())
-            ?.start()
+        dispatcher.addTask(InitLogTask())
+            .addTask(InitMVVMTask())
+            .addTask(InitViewStateChangeTask())
+            .addTask(InitImageLoaderTask())
+            .addTask(InitWebViewTask())
+            .start()
     }
 
 

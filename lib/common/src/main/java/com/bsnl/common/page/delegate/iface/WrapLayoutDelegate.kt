@@ -1,11 +1,14 @@
-package com.bsnl.common.iface
+package com.bsnl.common.page.delegate.iface
 
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
+import com.bsnl.common.iface.IRefreshLayout
 import com.bsnl.common.iface.ITitleView
+import com.bsnl.common.iface.ViewState
+import com.bsnl.common.refreshLayout.RefreshLayoutProxy
 
 /**
  * @author : LeeZhaoXing
@@ -42,7 +45,7 @@ interface WrapLayoutDelegate {
 
     fun getViewState(): ViewState?
 
-    fun getRefreshLayout(): IRefreshLayout?
+    fun getRefreshLayout(): RefreshLayoutProxy?
 
     fun getTitleView(isImmersionBarEnable: Boolean, isContentUnderTitleBar: Boolean): ITitleView?
 }

@@ -64,14 +64,15 @@ subprojects {
                 details.useVersion "2.1.0"
             }
             if (details.requested.group == 'androidx.fragment') {
-                details.useVersion "1.1.0"
+               //  GLog.d("-------- "+details.requested.toString())
+                details.useVersion "1.2.5"
             }
             if (details.requested.group == 'androidx.constraintlayout') {
                 details.useVersion "2.0.1"
             }
             if (details.requested.group == 'androidx.recyclerview') {
                 details.useVersion "1.1.0"
-               // GLog.d("-------- "+details.requested.toString())
+
             }
             if (details.requested.group == 'androidx.transition') {
                 details.useVersion "1.2.0"

@@ -3,9 +3,11 @@ package com.bsnl.common.page.delegate
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.bsnl.base.log.L
 import com.bsnl.common.iface.IRefreshLayout
 import com.bsnl.common.iface.OnRefreshAndLoadMoreListener
 import com.bsnl.common.iface.RefreshType
+import com.bsnl.common.page.delegate.iface.IListViewDelegate
 import com.bsnl.common.refreshLayout.RefreshLayoutProxy
 import com.bsnl.common.utils.RecyclerViewUtil
 import com.bsnl.common.viewmodel.BaseListViewModel
@@ -53,6 +55,10 @@ class ListViewDelegateImpl(val viewModel: BaseListViewModel, private val owner: 
         processRefreshType(getRefreshType())
     }
 
+    override fun setRefreshProxy(proxy: RefreshLayoutProxy?) {
+        mRefreshLayout = proxy
+    }
+
     override fun observeLiveDataCallback() {
         //完成刷新
         viewModel.finishRefresh.observe(owner, Observer {
@@ -82,6 +88,7 @@ class ListViewDelegateImpl(val viewModel: BaseListViewModel, private val owner: 
             if (it > 0) {
                 mAdapter?.notifyItemInserted(it)
             } else {
+                L.d("adapter size:${mAdapter.items.size}")
                 mAdapter?.notifyDataSetChanged()
             }
         })

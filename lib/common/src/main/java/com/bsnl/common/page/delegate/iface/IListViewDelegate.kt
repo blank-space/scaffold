@@ -1,6 +1,7 @@
-package com.bsnl.common.page.delegate
+package com.bsnl.common.page.delegate.iface
 
 import androidx.recyclerview.widget.RecyclerView
+import com.bsnl.common.iface.IRefreshLayout
 import com.bsnl.common.iface.RefreshType
 import com.bsnl.common.refreshLayout.RefreshLayoutProxy
 import com.drakeet.multitype.MultiTypeAdapter
@@ -16,12 +17,14 @@ interface IListViewDelegate {
     /**
      * 设置RV
      */
-    fun initRecyclerView(rv:RecyclerView?)
+    fun initRecyclerView(rv: RecyclerView?)
 
     /**
      * 设置刷新、加载更多的回调
      */
     fun setupRefreshLayout(smartRefreshLayout: SmartRefreshLayout?)
+    fun setRefreshProxy(proxy: RefreshLayoutProxy?)
+
 
     /**
      * 监听LiveData的通知
@@ -34,13 +37,13 @@ interface IListViewDelegate {
     fun processRefreshType(@RefreshType.Val refreshType: Int)
 
 
-    fun getAdapter():MultiTypeAdapter
+    fun getAdapter(): MultiTypeAdapter
 
-    fun getRefreshType():Int
+    fun getRefreshType(): Int
 
     fun loadData(@RefreshType.Val requestType: Int)
 
-    fun getRecyclerView():RecyclerView?
+    fun getRecyclerView(): RecyclerView?
 
     fun getRefreshLayoutProxy(): RefreshLayoutProxy?
 
@@ -48,10 +51,10 @@ interface IListViewDelegate {
     /**
      * 通过接口回调对外部提供拓展
      */
-    interface IDoExtendListener{
+    interface IDoExtendListener {
 
         fun onLoadDataFinish(data: Any?)
     }
 
-    fun setILoadDataFinishListener(lsn:IDoExtendListener)
+    fun setILoadDataFinishListener(lsn: IDoExtendListener)
 }

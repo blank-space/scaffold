@@ -28,6 +28,7 @@ object RecyclerViewUtil {
             }
             setHasFixedSize(true)
             this.adapter = adapter
+            adapter.notifyDataSetChanged()
         }
 
     }

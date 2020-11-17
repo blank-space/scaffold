@@ -1,24 +1,27 @@
-package com.bsnl.common.dataBinding
+package com.bsnl.common.page.base
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.bsnl.common.R
+import com.bsnl.common.iface.IRefreshLayout
 import com.bsnl.common.iface.RefreshType
-import com.bsnl.common.page.delegate.iface.IListViewDelegate
 import com.bsnl.common.page.delegate.ListViewDelegateImpl
+import com.bsnl.common.page.delegate.iface.IListViewDelegate
 import com.bsnl.common.viewmodel.BaseListViewModel
 import com.bsnl.common.viewmodel.BaseViewModel
+import com.bsnl.common.viewmodel.RequestType
 import com.drakeet.multitype.MultiTypeAdapter
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
-import kotlinx.android.synthetic.main.lib_common_refreshlayout.*
+import kotlinx.android.synthetic.main.lib_common_recycerview.*
 
 
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/9/16
- * @desc   : 基础列表Activity ， 子类布局文件必须include lib_common_refreshlayout.xml
+ * @desc   : 基础列表Activity
  *
  */
-abstract class ListDataBindingActivity<T : BaseViewModel> : DataBindingActivity<T>() {
-
+abstract class BaseListActivity<T : BaseViewModel> : BaseActivity<T>() {
     private var mListViewDelegate: ListViewDelegateImpl? = null
 
     abstract fun registerItem(adapter: MultiTypeAdapter?)
@@ -33,7 +36,8 @@ abstract class ListDataBindingActivity<T : BaseViewModel> : DataBindingActivity<
             }
         })
         registerItem(mListViewDelegate?.getAdapter())
-        mListViewDelegate?.initRecyclerView(recyclerview)
+        mListViewDelegate?.initRecyclerView(rv)
+        mListViewDelegate?.setRefreshProxy(getLayoutDelegateImpl().getRefreshLayout())
 
     }
 
@@ -42,20 +46,19 @@ abstract class ListDataBindingActivity<T : BaseViewModel> : DataBindingActivity<
 
     fun getAdapter(): MultiTypeAdapter? = mListViewDelegate?.getAdapter()
 
+    override fun getLayoutId(): Int = R.layout.lib_common_recycerview
 
     override fun getRefreshLayout(): SmartRefreshLayout? {
-        return refreshLayout
+        return getLayoutDelegateImpl().getRefreshLayout()?.getSmartRefreshLayout()
     }
 
 
     override fun initData() {
-        mListViewDelegate?.getRefreshLayoutProxy()?.autoRefresh()
+        mListViewDelegate?.loadData(RequestType.INIT)
     }
 
     override fun initListener() {
         super.initListener()
-        //设置刷新、加载更多
-        mListViewDelegate?.setupRefreshLayout(getRefreshLayout())
         //监听LiveData的通知
         mListViewDelegate?.observeLiveDataCallback()
     }
@@ -66,7 +69,7 @@ abstract class ListDataBindingActivity<T : BaseViewModel> : DataBindingActivity<
      *
      * @return RefreshType
      */
-    protected open fun getRefreshType(): Int {
+    override fun getRefreshType(): Int {
         mListViewDelegate?.apply {
             return getRefreshType()
         }
@@ -78,6 +81,18 @@ abstract class ListDataBindingActivity<T : BaseViewModel> : DataBindingActivity<
      * 提供给外部做一些额外的处理
      */
     protected open fun onGetDataFinish(data: Any?) {}
+
+    override fun processLoadMore(refreshLayout: IRefreshLayout?) {
+        mListViewDelegate?.loadData(RequestType.LOAD_MORE)
+    }
+
+    override fun processRefresh(refreshLayout: IRefreshLayout?) {
+        mListViewDelegate?.loadData(RequestType.REFRESH)
+    }
+
+    override fun onPageReload(v: View?) {
+        mListViewDelegate?.loadData(RequestType.INIT)
+    }
 
 
 }

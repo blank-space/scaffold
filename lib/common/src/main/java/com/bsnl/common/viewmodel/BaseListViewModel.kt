@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.bsnl.base.BaseApp
+import com.bsnl.base.log.L
 import com.bsnl.base.utils.showToast
 import com.bsnl.common.BaseHttpResult
 import com.bsnl.common.iface.IList
@@ -252,6 +253,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
     }
 
     private fun setState(msg: String? = "", value: ViewState) {
+        L.d("BaseListModel#setState:${value}")
         _viewState.postValue(ViewStateWithMsg(msg, value))
     }
 

@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
 
-    <data>
-
-        <variable
-            name="viewModel"
-            type="com.bsnl.sample.pkg.feature.viewmodel.SampleViewModel" />
-    </data>
-
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ffffff"
-        android:orientation="vertical">
+        android:layout_height="match_parent" />
 
-        <include layout="@layout/lib_common_base_toolbar" />
+</LinearLayout>
 
-        <include layout="@layout/lib_common_refreshlayout" />
-
-    </LinearLayout>
-</layout>

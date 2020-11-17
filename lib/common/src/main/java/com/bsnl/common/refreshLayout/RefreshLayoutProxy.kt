@@ -70,5 +70,7 @@ class RefreshLayoutProxy(val mRefreshLayout: SmartRefreshLayout? = null, var lis
         mRefreshLayout?.setNoMoreData(boolean)
     }
 
+    override fun getSmartRefreshLayout(): SmartRefreshLayout? =mRefreshLayout
+
 
 }

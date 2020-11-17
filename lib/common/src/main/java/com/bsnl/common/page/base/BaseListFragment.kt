@@ -1,6 +1,9 @@
-package com.bsnl.common.dataBinding
+package com.bsnl.common.page.base
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.bsnl.common.R
+import com.bsnl.common.iface.IRefreshLayout
 import com.bsnl.common.iface.RefreshType
 import com.bsnl.common.page.delegate.iface.IListViewDelegate
 import com.bsnl.common.page.delegate.ListViewDelegateImpl
@@ -10,22 +13,22 @@ import com.bsnl.common.viewmodel.RequestType
 import com.drakeet.multitype.MultiTypeAdapter
 
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
-import kotlinx.android.synthetic.main.lib_common_refreshlayout.*
+import kotlinx.android.synthetic.main.lib_common_recycerview.*
 
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/9/16
- * @desc   : 基础列表fragment ， 子类布局文件必须include lib_common_refreshlayout.xml
+ * @desc   : 基础列表fragment
  *
  */
-abstract class ListDataBindingFragment<T : BaseListViewModel> : DataBindingFragment<T>() {
+abstract class BaseListFragment<T : BaseListViewModel> : BaseFragment<T>() {
 
     private var mListViewDelegate: ListViewDelegateImpl? = null
 
     abstract fun registerItem(adapter: MultiTypeAdapter?)
 
     //初始化代理
-    protected fun setupListViewDelegate(){
+    protected fun setupListViewDelegate() {
         mListViewDelegate = ListViewDelegateImpl(mViewModel as BaseListViewModel, this)
         mListViewDelegate?.setILoadDataFinishListener(object :
             IListViewDelegate.IDoExtendListener {
@@ -33,16 +36,19 @@ abstract class ListDataBindingFragment<T : BaseListViewModel> : DataBindingFragm
                 onGetDataFinish(data)
             }
         })
-        mListViewDelegate?.initRecyclerView(recyclerview)
+        mListViewDelegate?.initRecyclerView(rv)
         registerItem(mListViewDelegate?.getAdapter())
+        mListViewDelegate?.setRefreshProxy(getLayoutDelegateImpl().getRefreshLayout())
     }
 
+    override fun getLayoutId(): Int = R.layout.lib_common_recycerview
+
     override fun initView() {
-       setupListViewDelegate()
+        setupListViewDelegate()
     }
 
     override fun getRefreshLayout(): SmartRefreshLayout? {
-        return refreshLayout
+        return getLayoutDelegateImpl().getRefreshLayout()?.getSmartRefreshLayout()
     }
 
     protected fun fetchData() {
@@ -53,23 +59,16 @@ abstract class ListDataBindingFragment<T : BaseListViewModel> : DataBindingFragm
         fetchData()
     }
 
-    /**
-     * 设置刷新、加载更多
-     */
-    protected fun setupRefreshCallback(){
-        mListViewDelegate?.setupRefreshLayout(getRefreshLayout())
-    }
 
     /**
      * 监听LiveData的通知
      */
-    protected fun setupLiveDataCallback(){
+    protected fun setupLiveDataCallback() {
         mListViewDelegate?.observeLiveDataCallback()
     }
 
     override fun initListener() {
         super.initListener()
-        setupRefreshCallback()
         setupLiveDataCallback()
     }
 
@@ -79,7 +78,7 @@ abstract class ListDataBindingFragment<T : BaseListViewModel> : DataBindingFragm
      *
      * @return RefreshType
      */
-    protected open fun getRefreshType(): Int {
+    protected override fun getRefreshType(): Int {
         mListViewDelegate?.apply {
             return getRefreshType()
         }
@@ -93,6 +92,18 @@ abstract class ListDataBindingFragment<T : BaseListViewModel> : DataBindingFragm
 
 
     fun getAdapter(): MultiTypeAdapter? = mListViewDelegate?.getAdapter()
+
+    override fun processLoadMore(refreshLayout: IRefreshLayout?) {
+        mListViewDelegate?.loadData(RequestType.LOAD_MORE)
+    }
+
+    override fun processRefresh(refreshLayout: IRefreshLayout?) {
+        mListViewDelegate?.loadData(RequestType.REFRESH)
+    }
+
+    override fun onPageReload(v: View?) {
+        mListViewDelegate?.loadData(RequestType.INIT)
+    }
 
 
 }

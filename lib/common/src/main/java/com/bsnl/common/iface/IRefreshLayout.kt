@@ -1,5 +1,7 @@
 package com.bsnl.common.iface
 
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
+
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/8/18
@@ -13,4 +15,5 @@ interface IRefreshLayout {
     fun finishLoadMore()
     fun setNoMoreData(boolean: Boolean)
     fun autoRefresh()
+    fun getSmartRefreshLayout():SmartRefreshLayout?
 }

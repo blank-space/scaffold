@@ -1,6 +1,7 @@
-package com.bsnl.common.iface
+package com.bsnl.common.page.delegate.iface
 
 import android.view.View
+import com.bsnl.common.iface.IRefreshLayout
 
 /**
  * @author : LeeZhaoXing
