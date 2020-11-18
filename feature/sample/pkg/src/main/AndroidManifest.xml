@@ -5,7 +5,7 @@
     <application>
         <activity android:name=".feature.view.SampleActivity" />
         <activity android:name=".feature.view.FirstActivity" />
-        <activity android:name=".feature.view.fps.LoginActivity"
+        <activity android:name=".feature.view.login.LoginActivity"
             android:windowSoftInputMode="adjustNothing"
             />
         <activity android:name=".feature.view.viewpager.ViewPagerActivity" />

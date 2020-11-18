@@ -1,4 +1,4 @@
-package com.bsnl.common.dataBinding
+package com.bsnl.databinding
 
 import android.app.Activity
 import android.content.Context
@@ -226,7 +226,7 @@ abstract class DataBindingFragment<T : BaseViewModel> : Fragment(), ITrack, IVie
     protected open fun initListener() {
         mViewModel.viewState.observe(requireActivity(), Observer {
             msg = it.msg
-            setState(it.state)
+            it.state?.let { it1 -> setState(it1) }
         })
 
     }

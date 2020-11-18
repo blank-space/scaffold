@@ -5,13 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bsnl.base.log.L
-import com.bsnl.base.utils.load
-import com.bsnl.common.dataBinding.viewHolder.BaseViewHolder
+import com.bsnl.databinding.viewHolder.BaseViewHolder
 import com.bsnl.sample.pkg.R
-import com.bsnl.sample.pkg.databinding.FeatureSamplePkgRecycleItemPokemonBinding
-import com.bsnl.sample.pkg.feature.model.ListingData
-import com.bsnl.sample.pkg.feature.view.FirstActivity
 import com.drakeet.multitype.ItemViewBinder
 
 /**

@@ -1,4 +1,4 @@
-package com.bsnl.common.dataBinding.viewHolder
+package com.bsnl.databinding.viewHolder
 
 import android.view.View
 import androidx.databinding.DataBindingUtil

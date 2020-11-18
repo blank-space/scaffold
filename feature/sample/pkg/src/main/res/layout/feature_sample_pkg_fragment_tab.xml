@@ -5,10 +5,7 @@
     android:layout_height="match_parent">
 
 
-    <include
-        layout="@layout/lib_common_refreshlayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

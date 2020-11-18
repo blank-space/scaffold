@@ -37,7 +37,7 @@ abstract class BaseListActivity<T : BaseViewModel> : BaseActivity<T>() {
         })
         registerItem(mListViewDelegate?.getAdapter())
         mListViewDelegate?.initRecyclerView(rv)
-        mListViewDelegate?.setRefreshProxy(getLayoutDelegateImpl().getRefreshLayout())
+        mListViewDelegate?.setRefreshProxy(getLayoutDelegateImpl()?.getRefreshLayout())
 
     }
 
@@ -49,7 +49,7 @@ abstract class BaseListActivity<T : BaseViewModel> : BaseActivity<T>() {
     override fun getLayoutId(): Int = R.layout.lib_common_recycerview
 
     override fun getRefreshLayout(): SmartRefreshLayout? {
-        return getLayoutDelegateImpl().getRefreshLayout()?.getSmartRefreshLayout()
+        return getLayoutDelegateImpl()?.getRefreshLayout()?.getSmartRefreshLayout()
     }
 
 

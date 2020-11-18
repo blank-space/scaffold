@@ -3,9 +3,7 @@ package com.bsnl.sample.pkg.feature.itemViewBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bsnl.base.log.L
 import com.bsnl.base.utils.load
-import com.bsnl.common.dataBinding.viewHolder.BaseViewHolder
 import com.bsnl.sample.pkg.R
 import com.bsnl.sample.pkg.databinding.FeatureSamplePkgRecycleItemPokemonBinding
 import com.bsnl.sample.pkg.feature.model.ListingData
@@ -19,7 +17,6 @@ import com.drakeet.multitype.ItemViewBinder
 class PokemonItemViewBinder( val title: String = "") :
     ItemViewBinder<ListingData, MyHolder>() {
     override fun onBindViewHolder(holder: MyHolder, item: ListingData) {
-        L.d("onBindViewHolder")
         holder.bindData(item, holder.adapterPosition)
     }
 
@@ -32,7 +29,7 @@ class PokemonItemViewBinder( val title: String = "") :
     }
 }
 
-class MyHolder(view: View) : BaseViewHolder<ListingData>(view) {
+class MyHolder(view: View) : com.bsnl.databinding.viewHolder.BaseViewHolder<ListingData>(view) {
     private val binding: FeatureSamplePkgRecycleItemPokemonBinding by viewHolderBinding(view)
 
     override fun bindData(data: ListingData, position: Int) {

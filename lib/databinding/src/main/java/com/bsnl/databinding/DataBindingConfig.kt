@@ -1,4 +1,4 @@
-package com.bsnl.common.dataBinding
+package com.bsnl.databinding
 
 import android.util.SparseArray
 import androidx.lifecycle.ViewModel

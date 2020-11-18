@@ -4,7 +4,7 @@ import android.content.Context
 import com.bsnl.base.utils.ApiUtils
 import com.bsnl.sample.export.api.SampleApi
 import com.bsnl.sample.pkg.feature.view.SampleActivity
-import com.bsnl.sample.pkg.feature.view.fps.LoginActivity
+import com.bsnl.sample.pkg.feature.view.login.LoginActivity
 import com.bsnl.sample.pkg.feature.view.viewpager.ViewPagerActivity
 import com.bsnl.sample.pkg.feature.view.webview.WebViewActivity
 

@@ -3,9 +3,10 @@ package com.bsnl.sample.pkg.feature.view.viewpager
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bsnl.base.utils.showToast
-import com.bsnl.common.dataBinding.DataBindingConfig
-import com.bsnl.common.dataBinding.LazyListDataBindingFragment
+import com.bsnl.databinding.DataBindingConfig
+import com.bsnl.databinding.LazyListDataBindingFragment
 import com.bsnl.common.iface.OnItemClickListener
+import com.bsnl.common.page.base.LazyListFragment
 import com.bsnl.common.utils.RecyclerViewUtil
 import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.newFrgInstance
@@ -21,15 +22,13 @@ import com.drakeet.multitype.MultiTypeAdapter
  * @desc   : 使用RecycledViewPool优化内存和渲染速度
  * /验证如下：每个tab滑动一下，出现加载更多，然后切换tab再滑动，直到最后一个tab，使用pool时，创建了13个MyHolder，不使用pool，创建了21个MyHolder
  */
-class TabFragment : LazyListDataBindingFragment<TabViewModel>() {
+class TabFragment : LazyListFragment<TabViewModel>() {
 
     override fun registerItem(adapter: MultiTypeAdapter?) {
         adapter?.register(PokemonItemViewBinder(arguments?.getString(Bundle_TITLE, "1")!!))
-
         (activity as ViewPagerActivity).getRvPool()?.let {
             getRecyclerView()?.setRecycledViewPool(it)
         }
-
         getRecyclerView()?.let {
             val lm = LinearLayoutManager(it.context)
             lm.recycleChildrenOnDetach = true
@@ -37,9 +36,7 @@ class TabFragment : LazyListDataBindingFragment<TabViewModel>() {
 
         }
     }
-    override fun getLayoutId(): Int = R.layout.feature_sample_pkg_fragment_tab
 
-    override fun initBindingConfig(layoutId: Int): DataBindingConfig? = null
 
     override fun initViewModel(): TabViewModel = getVm()
 

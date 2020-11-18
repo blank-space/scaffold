@@ -16,7 +16,7 @@ abstract class BaseViewModel : ViewModel() {
     /**
      * 切换页面状态
      */
-    protected val _viewState = MutableLiveData(ViewStateWithMsg(msg = "", state = ViewState.STATE_IDLE))
+    protected val _viewState = MutableLiveData(ViewStateWithMsg(msg = null, state = null))
     val viewState: LiveData<ViewStateWithMsg> = _viewState
 
 }

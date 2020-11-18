@@ -38,7 +38,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState 
     lateinit var mViewModel: T
     private val TAG by lazy { javaClass.simpleName }
     private var msg: String? = null
-    private lateinit var layoutDelegateImpl: WrapLayoutDelegateImpl
+    private  var layoutDelegateImpl: WrapLayoutDelegateImpl?=null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -66,7 +66,8 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState 
             mRefreshType = getRefreshType(),
             mOnViewStateListener = MyViewStateListener()
         )
-        val view = getLayout() ?: layoutDelegateImpl.setup()
+        val view = getLayout() ?: layoutDelegateImpl?.setup()
+
         val parent = view?.getParent()
         if (parent != null) {
             parent as ViewGroup
@@ -186,13 +187,13 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState 
     protected open fun initListener() {
         mViewModel.viewState.observe(requireActivity(), Observer {
             msg = it.msg
-            setState(it.state)
+            it.state?.let { it1 -> setState(it1) }
         })
 
     }
 
     override fun setState(state: ViewState) {
-
+        layoutDelegateImpl?.showState(state, true, true)
     }
 
     override fun onDestroyView() {

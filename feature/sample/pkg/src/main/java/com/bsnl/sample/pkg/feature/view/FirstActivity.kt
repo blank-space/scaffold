@@ -1,20 +1,19 @@
 package com.bsnl.sample.pkg.feature.view
 
 import android.content.Context
-import com.bsnl.common.dataBinding.DataBindingActivity
-import com.bsnl.common.dataBinding.DataBindingConfig
+import com.bsnl.common.page.base.BaseActivity
 import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.startActivity
 import com.bsnl.sample.pkg.R
 import com.bsnl.sample.pkg.feature.viewmodel.TestViewModel
-import kotlinx.android.synthetic.main.feature_sample_pkg_fragment_first.*
+import kotlinx.android.synthetic.main.feature_sample_pkg_activity_main.*
 
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/10/26
  * @desc   :
  */
-class FirstActivity : DataBindingActivity<TestViewModel>() {
+class FirstActivity : BaseActivity<TestViewModel>() {
     private var isShow = true
     private lateinit var firstFragment: FirstFragment
     companion object{
@@ -33,9 +32,6 @@ class FirstActivity : DataBindingActivity<TestViewModel>() {
 
     override fun getLayoutId(): Int = R.layout.feature_sample_pkg_activity_main
 
-    override fun initBindingConfig(layoutId: Int): DataBindingConfig? {
-        return null
-    }
 
     override fun initViewModel(): TestViewModel = getVm()
 

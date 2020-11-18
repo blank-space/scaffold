@@ -1,4 +1,4 @@
-package com.bsnl.common.dataBinding
+package com.bsnl.databinding
 
 import android.app.Activity
 import android.content.Context
@@ -18,7 +18,6 @@ import com.bsnl.common.ui.viewStatus.Gloading
 import com.bsnl.common.viewmodel.BaseViewModel
 import com.jaeger.library.StatusBarUtil
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
-import kotlinx.android.synthetic.main.lib_common_base_toolbar.*
 import java.lang.ref.WeakReference
 
 
@@ -160,7 +159,7 @@ abstract class DataBindingActivity<T : BaseViewModel> : AppCompatActivity(), ITr
         mViewModel.viewState.observe(this, Observer
         {
             msg = it.msg
-            setState(it.state)
+            it.state?.let { it1 -> setState(it1) }
         })
     }
 

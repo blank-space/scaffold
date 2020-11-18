@@ -8,6 +8,10 @@ dependencies {
             api entrySet.value.dep
         }
     } else if (project.name.endsWith("_export")) {
-        api Config.depConfig.lib_common.dep
+        if (Config.depConfig.lib_databinding != null && Config.depConfig.lib_databinding.isApply) {
+            api Config.depConfig.lib_databinding.dep
+        } else {
+            api Config.depConfig.lib_common.dep
+        }
     }
 }

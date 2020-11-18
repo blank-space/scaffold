@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
-import com.bsnl.common.dataBinding.DataBindingActivity
-import com.bsnl.common.dataBinding.DataBindingConfig
-import com.bsnl.common.ui.titlebar.ToolbarTitleView
+import com.bsnl.databinding.DataBindingActivity
+import com.bsnl.databinding.DataBindingConfig
+import com.bsnl.common.page.base.BaseActivity
 import com.bsnl.common.ui.viewpager.CustomerViewpager
 import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.startActivity
@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.feature_sample_pkg_activity_viewpager.*
  * @date   : 2020/11/10
  * @desc   : ViewPager+Fragment+RecyclerView+RecyclerViewPool的示例
  */
-class ViewPagerActivity : DataBindingActivity<StubViewModel>() {
+class ViewPagerActivity : BaseActivity<StubViewModel>() {
     private val tabs = arrayOf("tab1", "tab2", "tab3")
 
     private var recycledViewPool: RecycledViewPool? =  RecycledViewPool()
@@ -40,8 +40,7 @@ class ViewPagerActivity : DataBindingActivity<StubViewModel>() {
 
 
     override fun initView() {
-        mTitleView = findViewById<ToolbarTitleView>(R.id.toolbar)
-        initTitle(TAG)
+    getTitleView()?.setTitleText(TAG)
 
         //添加tab
         for (i in 0 until tabs.size) {
@@ -62,7 +61,7 @@ class ViewPagerActivity : DataBindingActivity<StubViewModel>() {
 
     override fun getLayoutId(): Int = R.layout.feature_sample_pkg_activity_viewpager
 
-    override fun initBindingConfig(layoutId: Int): DataBindingConfig? = null
+   // override fun initBindingConfig(layoutId: Int): DataBindingConfig? = null
 
     override fun initViewModel(): StubViewModel = getVm()
 

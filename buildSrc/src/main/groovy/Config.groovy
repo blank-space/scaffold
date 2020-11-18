@@ -34,6 +34,7 @@ class Config {
             feature_sample_pkg         : new DepConfig(true , true , ":feature:sample:pkg"),
             feature_sample_export      : new DepConfig(true , true , ":feature:sample:export"),
             lib_faster                 : new DepConfig(true , true , ":lib:faster"),
+            lib_databinding            : new DepConfig(true , true , ":lib:databinding"),
             /*Never delete this line*/
             plugin_gradle            : new DepConfig(pluginPath: "com.android.tools.build:gradle:$gradlePluginVersion"),
             plugin_kotlin            : new DepConfig(pluginPath: "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"),

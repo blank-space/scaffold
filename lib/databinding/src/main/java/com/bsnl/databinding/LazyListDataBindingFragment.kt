@@ -1,9 +1,6 @@
-package com.bsnl.common.dataBinding
+package com.bsnl.databinding
 
-import android.os.Bundle
-import com.bsnl.base.log.L
 import com.bsnl.common.viewmodel.BaseListViewModel
-import com.bsnl.common.viewmodel.BaseViewModel
 
 
 /**

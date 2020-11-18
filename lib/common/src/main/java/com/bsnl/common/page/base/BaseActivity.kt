@@ -29,7 +29,7 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity(), ITrack, IV
     private var msg: String? = null
     lateinit var mContext: Context
     var mActivity: WeakReference<Activity>? = null
-    private lateinit var layoutDelegateImpl: WrapLayoutDelegateImpl
+    private  var layoutDelegateImpl: WrapLayoutDelegateImpl?=null
 
 
     override fun onAttachedToWindow() {
@@ -54,7 +54,7 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity(), ITrack, IV
                 mRefreshType = getRefreshType(),
                 mOnViewStateListener = MyViewStateListener()
             )
-            layoutDelegateImpl.setup()
+            layoutDelegateImpl?.setup()
         }
         initView()
         initListener()
@@ -80,7 +80,7 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity(), ITrack, IV
     private fun ensureTitleView(isContentUnderTitleBar: Boolean) {
         if (mTitleView == null) {
             mTitleView =
-                layoutDelegateImpl.getTitleView(isFinalImmersionBarEnable(), isContentUnderTitleBar)
+                layoutDelegateImpl?.getTitleView(isFinalImmersionBarEnable(), isContentUnderTitleBar)
         }
         if (mTitleView != null) {
             if (mTitleView!!.getToolbar() != null) {
@@ -133,7 +133,7 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity(), ITrack, IV
     protected open fun initListener() {
         mViewModel.viewState.observe(this, Observer {
             msg = it.msg
-            setState(it.state)
+            it.state?.let { it1 -> setState(it1) }
         })
     }
 
@@ -145,7 +145,7 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity(), ITrack, IV
     fun getLayoutDelegateImpl() = layoutDelegateImpl
 
     override fun setState(state: ViewState) {
-        layoutDelegateImpl.showState(state, true, true)
+        layoutDelegateImpl?.showState(state, true, true)
 
     }
 

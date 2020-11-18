@@ -1,23 +1,15 @@
-package com.bsnl.sample.pkg.feature.view.fps
+package com.bsnl.sample.pkg.feature.view.login
 
 import android.content.Context
-import android.graphics.Rect
-import android.os.Bundle
-import android.text.Selection
-import android.view.*
-import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.NestedScrollView
-import com.bsnl.base.dsl.dp
-import com.bsnl.base.log.L
+import android.view.MotionEvent
+import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import com.bsnl.base.utils.DisplayUtils
 import com.bsnl.base.utils.GlobalHandler
 import com.bsnl.base.utils.KeyboardUtils
 import com.bsnl.base.utils.load
 import com.bsnl.base.window.KeyboardStatePopupWindow
-import com.bsnl.common.dataBinding.DataBindingActivity
-import com.bsnl.common.dataBinding.DataBindingConfig
-import com.bsnl.common.ui.titlebar.ToolbarTitleView
+import com.bsnl.common.page.base.BaseActivity
 import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.startActivity
 import com.bsnl.common.viewmodel.StubViewModel
@@ -29,7 +21,7 @@ import kotlinx.android.synthetic.main.feature_sample_pkg_activity_login.*
  * @date   : 2020/11/4
  * @desc   :
  */
-class LoginActivity : DataBindingActivity<StubViewModel>() {
+class LoginActivity : BaseActivity<StubViewModel>() {
 
 
     companion object {
@@ -47,8 +39,7 @@ class LoginActivity : DataBindingActivity<StubViewModel>() {
     private val avatar = "https://gank.io/images/b140f015a16e444aad6d76262f676a78"
 
     override fun initView() {
-        mTitleView = findViewById<ToolbarTitleView>(R.id.title)
-        mTitleView?.setTitleText("Log In")
+        getTitleView()?.setTitleText(TAG)
 
         et_name?.post {
             editTextTop = et_name!!.top
@@ -69,19 +60,18 @@ class LoginActivity : DataBindingActivity<StubViewModel>() {
 
     override fun getLayoutId(): Int = R.layout.feature_sample_pkg_activity_login
 
-    override fun initBindingConfig(layoutId: Int): DataBindingConfig? = null
 
     override fun initViewModel(): StubViewModel = getVm()
 
     override fun initData() {
         iv_header.load {
-            this.url =avatar
+            this.url = avatar
         }
     }
 
     override fun initListener() {
         super.initListener()
-        scrollView.setOnTouchListener { v, event ->
+        scrollView.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 KeyboardUtils.hideSoftInput(et_name)
             }
@@ -97,7 +87,7 @@ class LoginActivity : DataBindingActivity<StubViewModel>() {
             KeyboardStatePopupWindow.OnKeyboardStateChangerListener {
             override fun onClose() {
                 isSystemHandler = true
-                GlobalHandler.postDelayed(Runnable {    scrollView.smoothScrollTo(0, 0)  },100)
+                GlobalHandler.postDelayed(Runnable { scrollView.smoothScrollTo(0, 0) }, 100)
 
             }
 
@@ -106,14 +96,14 @@ class LoginActivity : DataBindingActivity<StubViewModel>() {
                 if (needJust(h)) {
                     val offset = editTextBot - h
                     val lp = space.layoutParams as ViewGroup.MarginLayoutParams
-                    if (lp != null) {
-                        lp.height = offset * 2
-                        space.layoutParams = lp
-                        scrollView.postDelayed({
-                            scrollView.smoothScrollTo(0, offset / 2)
-                        }, 100)
 
-                    }
+                    lp.height = offset * 2
+                    space.layoutParams = lp
+                    scrollView.postDelayed({
+                        scrollView.smoothScrollTo(0, offset / 2)
+                    }, 100)
+
+
                 }
             }
         })

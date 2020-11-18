@@ -9,11 +9,10 @@ import com.bsnl.base.dsl.*
 import com.bsnl.base.permission.PermissionHelper
 import com.bsnl.base.utils.*
 import com.bsnl.base.widget.ShowFps
-import com.bsnl.common.dataBinding.DataBindingActivity
-import com.bsnl.common.dataBinding.DataBindingConfig
+
 import com.bsnl.common.iface.ViewState
+import com.bsnl.common.page.base.BaseActivity
 import com.bsnl.common.utils.getVm
-import com.bsnl.sample.pkg.feature.view.webview.WebViewActivity
 import com.bsnl.sample.export.api.SampleApi
 import java.lang.ref.WeakReference
 
@@ -23,7 +22,7 @@ import java.lang.ref.WeakReference
  * @desc   :
  */
 class
-MainActivity : DataBindingActivity<MainViewModel>() {
+MainActivity : BaseActivity<MainViewModel>() {
 
     private var weakReference: WeakReference<FragmentActivity>? = null
     private val coinUrl = "https://gank.io/images/b140f015a16e444aad6d76262f676a78"
@@ -212,15 +211,13 @@ MainActivity : DataBindingActivity<MainViewModel>() {
     }
 
 
-    override fun initBindingConfig(layoutId: Int): DataBindingConfig? {
-        return null
-    }
+
 
 
     override fun initViewModel(): MainViewModel = getVm()
 
     override fun initData() {
-        showLoading()
+        setState(ViewState.STATE_LOADING)
         //模拟请求
         ivAvatar.postDelayed({ setState(ViewState.STATE_COMPLETED) }, 200)
 

@@ -38,7 +38,7 @@ abstract class BaseListFragment<T : BaseListViewModel> : BaseFragment<T>() {
         })
         mListViewDelegate?.initRecyclerView(rv)
         registerItem(mListViewDelegate?.getAdapter())
-        mListViewDelegate?.setRefreshProxy(getLayoutDelegateImpl().getRefreshLayout())
+        mListViewDelegate?.setRefreshProxy(getLayoutDelegateImpl()?.getRefreshLayout())
     }
 
     override fun getLayoutId(): Int = R.layout.lib_common_recycerview
@@ -48,7 +48,7 @@ abstract class BaseListFragment<T : BaseListViewModel> : BaseFragment<T>() {
     }
 
     override fun getRefreshLayout(): SmartRefreshLayout? {
-        return getLayoutDelegateImpl().getRefreshLayout()?.getSmartRefreshLayout()
+        return getLayoutDelegateImpl()?.getRefreshLayout()?.getSmartRefreshLayout()
     }
 
     protected fun fetchData() {

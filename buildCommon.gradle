@@ -44,7 +44,13 @@ android {
     }
 
     dataBinding {
-        enabled = true
+        if (applyDataBinding() && Config.depConfig.lib_databinding.isApply) {
+            enabled = true
+        } else if (startWithFeature() && Config.depConfig.lib_databinding!=null) {
+            enabled = true
+        } else {
+            enabled = false
+        }
     }
 
 
@@ -55,5 +61,13 @@ android {
  * @return
  */
 def getSuffix() {
-    return project.name+"_"
+    return project.name + "_"
+}
+
+def applyDataBinding() {
+    return project.name.equals("lib_databinding")
+}
+
+def startWithFeature() {
+    return project.name.startsWith("feature_")
 }
