@@ -67,7 +67,6 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState 
             mOnViewStateListener = MyViewStateListener()
         )
         val view = getLayout() ?: layoutDelegateImpl?.setup()
-
         val parent = view?.getParent()
         if (parent != null) {
             parent as ViewGroup
@@ -178,7 +177,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState 
 
     }
 
-
+    @Deprecated("只满足基础显示，暂不支持页面切换以及下拉刷新等feature")
     protected open fun getLayout(): View? {
         return null
     }
@@ -196,10 +195,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState 
         layoutDelegateImpl?.showState(state, true, true)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
 
-    }
 
     protected open fun getRefreshLayout(): SmartRefreshLayout? {
         return null

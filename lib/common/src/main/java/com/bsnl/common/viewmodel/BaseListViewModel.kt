@@ -248,12 +248,11 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
      * 初始化数据前的逻辑处理(子类可重写)
      */
     protected open fun processPreInitData() {
-        pageNo = 1
+        pageNo = DEFAULT_START_PAGE_INDEX
         setState("", ViewState.STATE_LOADING)
     }
 
     private fun setState(msg: String? = "", value: ViewState) {
-        L.d("BaseListModel#setState:${value}")
         _viewState.postValue(ViewStateWithMsg(msg, value))
     }
 

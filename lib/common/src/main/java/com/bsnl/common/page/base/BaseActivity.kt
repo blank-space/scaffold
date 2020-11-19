@@ -112,6 +112,7 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity(), ITrack, IV
     }
 
 
+    @Deprecated("只满足基础显示，暂不支持页面切换以及下拉刷新等feature")
     protected open fun getLayout(): View? {
         return null
     }

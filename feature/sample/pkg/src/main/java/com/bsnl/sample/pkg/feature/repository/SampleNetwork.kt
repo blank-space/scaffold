@@ -11,6 +11,6 @@ import com.bsnl.sample.pkg.feature.apiService.PokemonService
 object SampleNetwork {
     private val service = ServiceCreator.create<PokemonService>()
 
-    suspend fun fetchPokemonList(pageNo: Int) = service.fetchPokemonList(offset = pageNo)
+    suspend fun fetchPokemonList(pageNo: Int) = service.fetchPokemonList(offset = pageNo*20)
 
 }

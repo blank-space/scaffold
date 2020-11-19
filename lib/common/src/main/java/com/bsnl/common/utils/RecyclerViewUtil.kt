@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.bsnl.base.log.L
 import com.bsnl.common.iface.OnItemClickListener
+import com.bumptech.glide.Glide
 
 
 /**
@@ -27,8 +27,17 @@ object RecyclerViewUtil {
                 layoutManager = LinearLayoutManager(recyclerView.context)
             }
             setHasFixedSize(true)
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        Glide.with(context).resumeRequests()
+                    } else {
+                        Glide.with(context).pauseRequests()
+                    }
+                }
+            })
             this.adapter = adapter
-            adapter.notifyDataSetChanged()
+            //adapter.notifyDataSetChanged()
         }
 
     }
@@ -128,4 +137,6 @@ object RecyclerViewUtil {
         }
         return clickView
     }
+
+
 }

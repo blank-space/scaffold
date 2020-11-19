@@ -9,7 +9,7 @@ package com.bsnl.common.constant
 /**
  * 默认起始页下标
  */
-const val DEFAULT_START_PAGE_INDEX = 1
+const val DEFAULT_START_PAGE_INDEX = 0
 
 /**
  * 默认分页大小
