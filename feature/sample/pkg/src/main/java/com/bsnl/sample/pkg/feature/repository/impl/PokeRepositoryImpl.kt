@@ -25,19 +25,23 @@ class PokeRepositoryImpl(
     val network: PokemonNetwork,
     val db: AppDataBase,
 ) : IPokeRepository {
-    var localPage=1;
+    var localPage = 1
 
     /**
      * 尝试做数据转换
      */
     override fun fetchPokemonList(pageNo: Int): Flow<PokemonListResponse> {
-
+        if(pageNo==0){
+            localPage = 1
+        }
+        //L.d("pageNo:$pageNo,localPage:$localPage")
         return flow {
             var response: PokemonListResponse? = null
             var model = mutableListOf<PokeItemModel>()
             val dao = db.pokeDao()
             //先判断DB上是否有需要的数据，若无，从服务器请求，并缓存到DB
             if (dao.getPokemonList(pageNo).isNullOrEmpty()) {
+                L.d("remote data")
                 response = network.fetchPokemonList(pageNo)
                 model.addAll(response.results)
                 model?.apply {
@@ -54,9 +58,10 @@ class PokeRepositoryImpl(
                     }
                 }
             } else {
-                response= PokemonListResponse(results = model)
+                L.d("local data")
+                response = PokemonListResponse(results = model)
                 val allSize = dao.getPokemonAllList()
-                if(allSize.size / DEFAULT_PAGE_SIZE >= localPage){
+                if (allSize.size / DEFAULT_PAGE_SIZE >= localPage) {
                     val item = dao.getPokemonList(pageNo).map {
                         PokeItemModel(
                             page = it.page,
