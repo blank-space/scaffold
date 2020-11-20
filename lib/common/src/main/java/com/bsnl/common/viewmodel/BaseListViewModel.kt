@@ -70,7 +70,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
         mRequestType = requestType
         when (requestType) {
             RequestType.INIT -> processPreInitData()
-            RequestType.REFRESH -> pageNo = 1
+            RequestType.REFRESH -> pageNo = DEFAULT_START_PAGE_INDEX
             RequestType.LOAD_MORE -> {
             }
         }
@@ -98,6 +98,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
      * 处理错误
      */
     private fun processError(errMsg: String?, isNetError: Boolean) {
+        L.e("processError,errMsg:$errMsg")
         when (mRequestType) {
             RequestType.INIT -> processInitDataError(errMsg)
             RequestType.REFRESH -> {
@@ -155,8 +156,8 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
         if (listResponseBean?.getData() is IBaseList) {
             val data: IBaseList = listResponseBean?.getData() as IBaseList
             if (data != null && !data.getDataList().isNullOrEmpty()) {
-                mData?.clear()
-                mData?.addAll(data.getDataList()!!)
+                mData.clear()
+                mData.addAll(data.getDataList()!!)
                 processInitLoadMoreState(data)
                 pageNo++
                 _notifyDataChange.postValue(0)
@@ -230,7 +231,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
     }
 
     /**
-     *  通过pageSize加载更多没有后续数据
+     *  通过pageSize判断更多没有后续数据
      */
     private fun judgeLoadMoreNoDataByPageSize(baseList: IBaseList?): Boolean {
         return baseList?.getDataList()?.size!! < pageSize

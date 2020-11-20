@@ -1,5 +1,4 @@
 dependencies {
-
     implementation fileTree(dir: "libs", include: ["*.jar"])
     api Config.depConfig.kotlin.dep
     api Config.depConfig.coreKtx.dep
@@ -20,6 +19,4 @@ dependencies {
     api Config.depConfig.timber.dep
     api Config.depConfig.glide_runtime.dep
     kapt Config.depConfig.glide_compiler.dep
-
-
 }

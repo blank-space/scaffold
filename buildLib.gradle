@@ -1,5 +1,6 @@
 apply plugin: "com.android.library"
 apply from: "${rootDir.path}/buildCommon.gradle"
+apply plugin: "dagger.hilt.android.plugin"
 
 dependencies {
     if (project.name.endsWith("_pkg") || project.name.endsWith("_mock")) {
@@ -14,4 +15,12 @@ dependencies {
             api Config.depConfig.lib_common.dep
         }
     }
+    api Config.depConfig.hilt_daggerRuntime.dep
+    api Config.depConfig.hilt_viewModule.dep
+    kapt Config.depConfig.hilt_compiler.dep
+    kapt Config.depConfig.hilt_daggerCompiler.dep
+
+    api Config.depConfig.room_runtime.dep
+    api Config.depConfig.room_ktx.dep
+    kapt Config.depConfig.room_compiler.dep
 }

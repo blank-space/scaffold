@@ -14,12 +14,14 @@ import com.bsnl.sample.pkg.feature.itemViewBinder.PokemonItemViewBinder
 import com.bsnl.sample.pkg.feature.itemViewBinder.StringItemViewBinder
 import com.bsnl.sample.pkg.feature.viewmodel.SampleViewModel
 import com.drakeet.multitype.MultiTypeAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/10/21
  * @desc   :
  */
+@AndroidEntryPoint
 class SampleActivity : BaseListActivity<SampleViewModel>() {
 
     companion object {
@@ -27,6 +29,7 @@ class SampleActivity : BaseListActivity<SampleViewModel>() {
             startActivity<SampleActivity>(context)
         }
     }
+
 
     override fun registerItem(adapter: MultiTypeAdapter?) {
         adapter?.apply {

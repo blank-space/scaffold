@@ -10,7 +10,6 @@ import java.io.Serializable;
 public class BaseHttpResult<T> implements Serializable {
     private static final long serialVersionUID = 2690553609250007325L;
     public static final int SUCCESS_CODE = 0;
-
     public int code;
     public String msg;
 

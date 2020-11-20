@@ -16,7 +16,7 @@
 
 package com.bsnl.sample.pkg.feature.apiService
 
-import com.bsnl.sample.pkg.feature.model.ListingResponse
+import com.bsnl.sample.pkg.feature.data.model.PokemonListResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -27,5 +27,5 @@ interface PokemonService {
     suspend fun fetchPokemonList(
         @Query("limit") limit: Int = 20,
         @Query("offset") offset: Int = 0
-    ): ListingResponse
+    ): PokemonListResponse
 }

@@ -86,10 +86,9 @@ class ListViewDelegateImpl(val viewModel: BaseListViewModel, private val owner: 
         //刷新数据
         viewModel.notifyDataChange.observe(owner, Observer {
             if (it > 0) {
-                mAdapter?.notifyItemInserted(it)
+                mAdapter.notifyItemInserted(it)
             } else {
-                L.d("adapter size:${mAdapter.items.size}")
-                mAdapter?.notifyDataSetChanged()
+                mAdapter.notifyDataSetChanged()
             }
         })
     }

@@ -9,12 +9,14 @@ import com.bsnl.base.log.L
 import com.bsnl.base.utils.GlobalHandler
 import com.bsnl.faster.TaskDispatcher
 import com.bsnl.launch.app.task.*
+import dagger.hilt.android.HiltAndroidApp
 
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/10/21
  * @desc   :
  */
+@HiltAndroidApp
 class App : BaseApp() {
 
     override fun onCreate() {

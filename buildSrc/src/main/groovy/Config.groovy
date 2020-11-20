@@ -73,11 +73,19 @@ class Config {
             gson                     : new DepConfig("com.google.code.gson:gson:${Versions.gson}"),
             commons_io               : new DepConfig("commons-io:commons-io:2.6"),
             test_junit               : new DepConfig("junit:junit:4.12"),
-            multitype    : new DepConfig("com.drakeet.multitype:multitype:$Versions.multitype"),
-            refresh_layout_kernel  : new DepConfig("com.scwang.smart:refresh-layout-kernel:$Versions.smartRefreshLayout"),
-            refresh_layout_header  : new DepConfig("com.scwang.smart:refresh-header-classics:$Versions.smartRefreshLayout"),
-            refresh_layout_footer  : new DepConfig("com.scwang.smart:refresh-footer-classics:$Versions.smartRefreshLayout"),
-            statusbarutil : new DepConfig("com.jaeger.statusbarutil:library:$Versions.statusBarUtil"),
+            multitype                : new DepConfig("com.drakeet.multitype:multitype:$Versions.multitype"),
+            refresh_layout_kernel    : new DepConfig("com.scwang.smart:refresh-layout-kernel:$Versions.smartRefreshLayout"),
+            refresh_layout_header    : new DepConfig("com.scwang.smart:refresh-header-classics:$Versions.smartRefreshLayout"),
+            refresh_layout_footer    : new DepConfig("com.scwang.smart:refresh-footer-classics:$Versions.smartRefreshLayout"),
+            statusbarutil            : new DepConfig("com.jaeger.statusbarutil:library:$Versions.statusBarUtil"),
+            room_ktx                 : new DepConfig("androidx.room:room-ktx:$Versions.room"),
+            room_compiler            : new DepConfig("androidx.room:room-compiler:$Versions.room"),
+            room_runtime             : new DepConfig("androidx.room:room-runtime:${Versions.room}"),
+            hilt_daggerRuntime       : new DepConfig("com.google.dagger:hilt-android:${Versions.hit}"),
+            hilt_daggerCompiler      : new DepConfig("com.google.dagger:hilt-android-compiler:${Versions.hit}"),
+            hilt_viewModule          : new DepConfig("androidx.hilt:hilt-lifecycle-viewmodel:${Versions.hitViewModule}"),
+            hilt_compiler            : new DepConfig("androidx.hilt:hilt-compiler:${Versions.hitViewModule}"),
+
 
     ]
 }

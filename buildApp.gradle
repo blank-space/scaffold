@@ -7,6 +7,8 @@ apply {
     if (Config.depConfig.plugin_bus.isApply) {
         plugin Config.depConfig.plugin_bus.pluginId
     }
+
+     plugin "dagger.hilt.android.plugin"
 }
 
 configSigning()
@@ -75,7 +77,14 @@ dependencies {
     if(Config.depConfig.lib_faster!=null ){
         implementation Config.depConfig.lib_faster.dep
     }
+    api Config.depConfig.hilt_daggerRuntime.dep
+    api Config.depConfig.hilt_viewModule.dep
+    kapt Config.depConfig.hilt_compiler.dep
+    kapt Config.depConfig.hilt_daggerCompiler.dep
 
+    api Config.depConfig.room_runtime.dep
+    api Config.depConfig.room_ktx.dep
+    kapt Config.depConfig.room_compiler.dep
 //    if (Config.depConfig.feature_mock.isApply) {
 //        api Config.depConfig.feature_mock.dep
 //    }

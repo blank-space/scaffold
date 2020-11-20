@@ -8,7 +8,7 @@ import com.bsnl.sample.pkg.feature.apiService.PokemonService
  * @date   : 2020/10/21
  * @desc   :
  */
-object SampleNetwork {
+object PokemonNetwork {
     private val service = ServiceCreator.create<PokemonService>()
 
     suspend fun fetchPokemonList(pageNo: Int) = service.fetchPokemonList(offset = pageNo*20)

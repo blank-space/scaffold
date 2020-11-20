@@ -25,7 +25,7 @@ class
 MainActivity : BaseActivity<MainViewModel>() {
 
     private var weakReference: WeakReference<FragmentActivity>? = null
-    private val coinUrl = "https://gank.io/images/b140f015a16e444aad6d76262f676a78"
+    private val coinUrl = "https://gank.io/images/e0088b6b0773408bace28e102af9f8ee"
     private lateinit var ivAvatar: ImageView
 
     private var tvFps: TextView? = null

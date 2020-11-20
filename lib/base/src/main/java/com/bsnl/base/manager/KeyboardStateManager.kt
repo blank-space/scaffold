@@ -19,7 +19,6 @@ import com.bsnl.base.utils.KeyboardUtils
 object KeyboardStateManager : DefaultLifecycleObserver {
 
     override fun onStop(owner: LifecycleOwner) {
-        L.d("KeyboardStateManager#onStop")
         if (owner is Fragment) {
             owner.activity?.let { KeyboardUtils.hideSoftInput(it)
                 fixSoftInputLeaks(it)}
@@ -32,8 +31,6 @@ object KeyboardStateManager : DefaultLifecycleObserver {
     }
 
     override fun onDestroy(owner: LifecycleOwner) {
-        L.d("KeyboardStateManager#onDestroy")
-
         super.onDestroy(owner)
     }
 

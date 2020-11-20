@@ -36,7 +36,7 @@ class LoginActivity : BaseActivity<StubViewModel>() {
     private var scrollY = 0f
     private var spaceViewOriginHeight = 0
     private var isSystemHandler = false
-    private val avatar = "https://gank.io/images/b140f015a16e444aad6d76262f676a78"
+    private val avatar = "https://gank.io/images/e0088b6b0773408bace28e102af9f8ee"
 
     override fun initView() {
         getTitleView()?.setTitleText(TAG)
