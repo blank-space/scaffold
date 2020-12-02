@@ -33,7 +33,6 @@ class SampleActivity : BaseListActivity<SampleViewModel>() {
 
     override fun registerItem(adapter: MultiTypeAdapter?) {
         adapter?.apply {
-            register(StringItemViewBinder())
             register(PokemonItemViewBinder())
             setHasStableIds(true)
         }
@@ -42,6 +41,7 @@ class SampleActivity : BaseListActivity<SampleViewModel>() {
     override fun initView() {
         super.initView()
         getTitleView()?.setTitleText(TAG)
+
     }
 
     override fun initViewModel(): SampleViewModel = getVm()
@@ -60,10 +60,5 @@ class SampleActivity : BaseListActivity<SampleViewModel>() {
         }, R.id.name, R.id.avator)
     }
 
-    override fun onGetDataFinish(data: Any?) {
-        super.onGetDataFinish(data)
-        if (mViewModel.mRequestType == RequestType.REFRESH) {
-            mViewModel.providerData().add(0, "MultiType")
-        }
-    }
+
 }

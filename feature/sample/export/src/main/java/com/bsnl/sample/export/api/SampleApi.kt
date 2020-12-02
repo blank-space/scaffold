@@ -18,5 +18,7 @@ abstract class SampleApi : ApiUtils.BaseApi() {
 
     abstract fun startViewPagerActivity(context: Context)
 
+    abstract  fun  startAsyncCreateViewActivity(context: Context)
+
 
 }

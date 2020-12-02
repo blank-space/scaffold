@@ -21,7 +21,8 @@ import timber.log.Timber
  * @date   : 2020/11/9
  * @desc   :
  */
-class ActivityLifecycleCallback:Application.ActivityLifecycleCallbacks, FragmentManager.FragmentLifecycleCallbacks() {
+class ActivityLifecycleCallback : Application.ActivityLifecycleCallbacks,
+    FragmentManager.FragmentLifecycleCallbacks() {
     private val mParams = ViewGroup.LayoutParams(
         ViewGroup.LayoutParams.WRAP_CONTENT,
         ViewGroup.LayoutParams.WRAP_CONTENT
@@ -30,7 +31,10 @@ class ActivityLifecycleCallback:Application.ActivityLifecycleCallbacks, Fragment
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         Timber.v("${activity::class.java.name}#onActivityCreated ")
         ActivitysManager.addActivity(activity)
-        (activity as? FragmentActivity)?.supportFragmentManager?.registerFragmentLifecycleCallbacks(this, false);
+        (activity as? FragmentActivity)?.supportFragmentManager?.registerFragmentLifecycleCallbacks(
+            this,
+            false
+        );
     }
 
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
@@ -44,7 +48,7 @@ class ActivityLifecycleCallback:Application.ActivityLifecycleCallbacks, Fragment
 
     override fun onActivityResumed(activity: Activity) {
         L.v("${activity::class.java.name}#onActivityResumed ")
-        if(BuildConfig.LOG_DEBUG) {
+        if (BuildConfig.LOG_DEBUG && activity.findViewById<View>(R.id.content) != null) {
             (activity.findViewById<View>(R.id.content) as ViewGroup).addView(
                 ShowFps.instance,
                 mParams
@@ -54,7 +58,7 @@ class ActivityLifecycleCallback:Application.ActivityLifecycleCallbacks, Fragment
 
     override fun onActivityPaused(activity: Activity) {
         L.v("${activity::class.java.name}#onActivityPaused ")
-        if(BuildConfig.LOG_DEBUG) {
+        if (BuildConfig.LOG_DEBUG && activity.findViewById<View>(R.id.content) != null) {
             (activity.findViewById<View>(R.id.content) as ViewGroup).removeView(ShowFps.instance)
         }
 
@@ -68,7 +72,9 @@ class ActivityLifecycleCallback:Application.ActivityLifecycleCallbacks, Fragment
     override fun onActivityDestroyed(activity: Activity) {
         L.v("${activity::class.java.name}#onActivityDestroyed ")
         ActivitysManager.removeActivity(activity)
-        (activity as? FragmentActivity)?.supportFragmentManager?.unregisterFragmentLifecycleCallbacks(this);
+        (activity as? FragmentActivity)?.supportFragmentManager?.unregisterFragmentLifecycleCallbacks(
+            this
+        );
     }
 
     override fun onFragmentCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
@@ -80,7 +86,6 @@ class ActivityLifecycleCallback:Application.ActivityLifecycleCallbacks, Fragment
         L.v("${f::class.java.name}#onFragmentViewDestroyed ")
         super.onFragmentViewDestroyed(fm, f)
     }
-
 
 
 }

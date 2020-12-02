@@ -31,11 +31,7 @@
             android:id="@+id/stub_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-        <!-- 该页面需要登录提示-->
-        <ViewStub
-            android:id="@+id/stub_login"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+
         <ViewStub
             android:id="@+id/stub_content"
             android:layout_width="match_parent"

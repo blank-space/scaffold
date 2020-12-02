@@ -22,7 +22,7 @@ object RecyclerViewUtil {
         requireNotNull(recyclerView, { "recyclerView cannot null" })
         requireNotNull(adapter, { "adapter cannot null" })
         recyclerView.apply {
-            (itemAnimator as SimpleItemAnimator?)!!.supportsChangeAnimations = false
+            (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
             if (layoutManager == null) {
                 layoutManager = LinearLayoutManager(recyclerView.context)
             }

@@ -15,6 +15,7 @@ import com.bsnl.sample.pkg.feature.constant.Bundle_TITLE
 import com.bsnl.sample.pkg.feature.itemViewBinder.PokemonItemViewBinder
 import com.bsnl.sample.pkg.feature.viewmodel.TabViewModel
 import com.drakeet.multitype.MultiTypeAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * @author : LeeZhaoXing
@@ -22,6 +23,7 @@ import com.drakeet.multitype.MultiTypeAdapter
  * @desc   : 使用RecycledViewPool优化内存和渲染速度
  * /验证如下：每个tab滑动一下，出现加载更多，然后切换tab再滑动，直到最后一个tab，使用pool时，创建了13个MyHolder，不使用pool，创建了21个MyHolder
  */
+@AndroidEntryPoint
 class TabFragment : LazyListFragment<TabViewModel>() {
 
     override fun registerItem(adapter: MultiTypeAdapter?) {
@@ -33,7 +35,6 @@ class TabFragment : LazyListFragment<TabViewModel>() {
             val lm = LinearLayoutManager(it.context)
             lm.recycleChildrenOnDetach = true
             it.layoutManager = lm
-
         }
     }
 

@@ -194,6 +194,25 @@ MainActivity : BaseActivity<MainViewModel>() {
                 margin_top = 10
             }
 
+
+
+            TextView {
+                layout_id = "tv_async"
+                layout_height = 40
+                layout_width = match_parent
+                textSize = 16f
+                textStyle = bold
+                gravity = gravity_center
+                background_color = "#eeeeee"
+                top_toBottomOf = "tv_viewpager"
+                start_toStartOf = parent_id
+                text = "异步创建View"
+                onClick = {
+                    ApiUtils.getApi(SampleApi::class.java).startAsyncCreateViewActivity(this@MainActivity)
+                }
+                margin_top = 10
+            }
+
         }
     }
 
@@ -209,10 +228,6 @@ MainActivity : BaseActivity<MainViewModel>() {
     override fun getLayout(): View? {
         return rootView
     }
-
-
-
-
 
     override fun initViewModel(): MainViewModel = getVm()
 

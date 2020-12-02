@@ -9,5 +9,6 @@
             android:windowSoftInputMode="adjustNothing"
             />
         <activity android:name=".feature.view.viewpager.ViewPagerActivity" />
+        <activity android:name=".feature.view.async.AsyncCreateViewActivity" />
     </application>
 </manifest>
