@@ -9,7 +9,7 @@ import com.bsnl.common.viewmodel.BaseListViewModel
  * @desc   : 懒加载列表
  */
 abstract class LazyListFragment<T : BaseListViewModel> : BaseListFragment<T>() {
-    private var mHasInit = false
+    protected var mHasInit = false
 
 
     override fun initData() {
@@ -27,12 +27,15 @@ abstract class LazyListFragment<T : BaseListViewModel> : BaseListFragment<T>() {
             mHasInit = true
             setupListViewDelegate()
             setupLiveDataCallback()
+            lazyInitListener()
             if(mViewModel.providerData().isNullOrEmpty()) {
                 fetchData()
             }
         }
     }
 
+
+    protected open fun lazyInitListener(){}
 
     override fun onDestroyView() {
         mHasInit=false

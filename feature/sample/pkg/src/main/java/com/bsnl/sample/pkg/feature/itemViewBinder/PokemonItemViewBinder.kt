@@ -37,6 +37,7 @@ class MyHolder(view: View) : com.bsnl.databinding.viewHolder.BaseViewHolder<Poke
             pokemon = data
             executePendingBindings()
         }
+
         binding.avator.load {
             this.url = data.getImageUrl()
             this.fallback = R.color.colorAccent

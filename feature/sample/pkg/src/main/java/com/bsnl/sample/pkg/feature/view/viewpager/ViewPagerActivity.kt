@@ -52,7 +52,7 @@ class ViewPagerActivity : BaseActivity<StubViewModel>() {
         //设置Title和创建Fragment
         view_pager.setInitFragmentListener(object : CustomerViewpager.OnInitFragmentListener {
             override fun getFragment(position: Int): Fragment {
-                return TabFragment.newInstance("Tab_${position}")
+                return TabFragment.newInstance("Tab_${System.currentTimeMillis()}")
             }
             override fun getTabs(): Array<String> = tabs
         }, supportFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)

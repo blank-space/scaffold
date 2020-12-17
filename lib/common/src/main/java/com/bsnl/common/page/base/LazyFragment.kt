@@ -34,9 +34,12 @@ abstract class LazyFragment<T : BaseViewModel> : BaseFragment<T>() {
         if (!mHasInit) {
             mHasInit = true
             lazyInitView()
+            lazyInitListener()
             lazyInitData()
         }
     }
+
+    protected open fun lazyInitListener(){}
 
     override fun onDestroyView() {
         super.onDestroyView()

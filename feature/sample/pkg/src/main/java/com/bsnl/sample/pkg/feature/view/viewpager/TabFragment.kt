@@ -2,6 +2,7 @@ package com.bsnl.sample.pkg.feature.view.viewpager
 
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bsnl.base.log.L
 import com.bsnl.base.utils.showToast
 import com.bsnl.databinding.DataBindingConfig
 import com.bsnl.databinding.LazyListDataBindingFragment
@@ -41,15 +42,17 @@ class TabFragment : LazyListFragment<TabViewModel>() {
 
     override fun initViewModel(): TabViewModel = getVm()
 
-    override fun initListener() {
-        super.initListener()
+
+    override fun lazyInitListener() {
+        val title = arguments?.getString(Bundle_TITLE, "1")
+        L.e("title:${title}")
         RecyclerViewUtil.setOnItemClickListener(getRecyclerView(), object : OnItemClickListener {
             override fun onItemClick(v: View, position: Int) {
-                v.id.toString().showToast()
+                title?.showToast()
             }
 
             override fun onChildClick(v: View, position: Int) {
-                v.id.toString().showToast()
+                title?.showToast()
 
             }
         }, R.id.name, R.id.avator)

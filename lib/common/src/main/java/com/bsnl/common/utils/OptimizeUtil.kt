@@ -17,6 +17,7 @@ import com.bsnl.base.utils.ReflectUtils
 
 /**
  * @see MessageQueue.IdleHandler.queueIdle
+ * @note 适合用于非首屏冷启动就可以见到的Fragment
  */
 @JvmOverloads
 fun doOnMainThreadIdle(action: () -> Unit, timeout: Long? = null) {
