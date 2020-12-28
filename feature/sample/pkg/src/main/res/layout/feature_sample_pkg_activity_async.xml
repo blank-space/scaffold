@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_main"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent">
 
     <ImageView
@@ -11,4 +12,4 @@
         android:background="@color/colorPrimary"
         android:layout_height="200dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

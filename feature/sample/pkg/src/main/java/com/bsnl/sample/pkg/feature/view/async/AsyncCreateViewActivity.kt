@@ -2,21 +2,22 @@ package com.bsnl.sample.pkg.feature.view.async
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.bsnl.base.log.L
-import com.bsnl.common.page.base.BaseActivity
-import com.bsnl.common.utils.getVm
+import androidx.core.util.Pools
+import androidx.core.view.postDelayed
+import com.bsnl.base.utils.showToast
 import com.bsnl.common.utils.replaceLooperWithMainThreadQueue
 import com.bsnl.common.utils.startActivity
-import com.bsnl.common.viewmodel.StubViewModel
 import com.bsnl.sample.pkg.R
+import com.bsnl.sample.pkg.feature.view.async.pool.AsyncLayoutUtil
+import kotlinx.android.synthetic.main.feature_sample_pkg_activity_async.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * @author : LeeZhaoXing
@@ -34,12 +35,37 @@ class AsyncCreateViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Thread{
+        setContentView(R.layout.feature_sample_pkg_activity_async)
+        GlobalScope.launch(Dispatchers.IO){
             if (replaceLooperWithMainThreadQueue(false)) {
-                setContentView(R.layout.feature_sample_pkg_activity_async)
+                val textView = TextView(this@AsyncCreateViewActivity)
+                val btn =Button(this@AsyncCreateViewActivity)
+
                 replaceLooperWithMainThreadQueue(true)
+                textView.setText("textView")
+                btn.setText("jump")
+                btn.setOnClickListener {
+                    AsyncCreateView2Activity.startAction(this@AsyncCreateViewActivity)
+                    finish()
+                }
+                textView.postDelayed(1000){
+                    textView.setText("it's textView")
+
+                }
+                AsyncLayoutUtil.mRequestPool.release(textView)
+                AsyncLayoutUtil.mRequestPool.release(btn)
+
+
+                runOnUiThread {
+                    root_main.addView(textView)
+                    root_main.addView(btn)
+                }
+
+
+
             }
-        }.start()
+        }
+
     }
 
 

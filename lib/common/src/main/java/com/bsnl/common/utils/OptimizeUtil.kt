@@ -73,9 +73,7 @@ fun replaceLooperWithMainThreadQueue(reset: Boolean): Boolean {
         // 1、获取子线程的ThreadLocal实例
         val threadLocal: ThreadLocal<Looper> =
             ReflectUtils.reflect(Looper::class.java).field("sThreadLocal").get()
-        if (threadLocal == null) {
-            false
-        } else {
+        run {
             var looper: Looper? = null
             if (!reset) {
                 Looper.prepare()

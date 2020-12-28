@@ -8,6 +8,7 @@ import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.*
+import com.bsnl.base.dsl.dp
 import com.bsnl.base.utils.showToast
 import com.bsnl.common.BaseHttpResult
 import com.bsnl.common.iface.ViewState
@@ -55,7 +56,7 @@ inline fun <reified T> startActivity(context: Context) {
 /**
  * 创建Fragment
  */
-inline fun <reified T:Fragment> newFrgInstance(block: Bundle.() -> Unit): T {
+inline fun <reified T : Fragment> newFrgInstance(block: Bundle.() -> Unit): T {
     val clazz = T::class.java.newInstance()
     val args = Bundle().apply(block)
     clazz.arguments = args
@@ -149,6 +150,9 @@ val Float.dp
         this,
         Resources.getSystem().displayMetrics
     )
+
+val Int.dp
+    get() = this.toFloat().dp
 
 
 

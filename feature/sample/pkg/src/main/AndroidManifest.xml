@@ -10,5 +10,6 @@
             />
         <activity android:name=".feature.view.viewpager.ViewPagerActivity" />
         <activity android:name=".feature.view.async.AsyncCreateViewActivity" />
+        <activity android:name=".feature.view.async.AsyncCreateView2Activity" />
     </application>
 </manifest>
