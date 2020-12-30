@@ -1,18 +1,13 @@
 package com.bsnl.sample.pkg.feature.di
 
 import com.bsnl.base.net.ServiceCreator
-import com.bsnl.sample.pkg.feature.apiService.PokemonService
 import com.bsnl.sample.pkg.feature.repository.PokemonNetwork
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 /**
@@ -42,4 +37,6 @@ object NetWorkModule {
     fun providePokemonNetwork(): PokemonNetwork {
         return PokemonNetwork
     }
+
+
 }

@@ -49,17 +49,14 @@ class ActivityLifecycleCallback : Application.ActivityLifecycleCallbacks,
     override fun onActivityResumed(activity: Activity) {
         L.v("${activity::class.java.name}#onActivityResumed ")
         if (BuildConfig.LOG_DEBUG && activity.findViewById<View>(R.id.content) != null) {
-            (activity.findViewById<View>(R.id.content) as ViewGroup).addView(
-                ShowFps.instance,
-                mParams
-            )
+            //(activity.findViewById<View>(R.id.content) as ViewGroup).addView(ShowFps.instance, mParams)
         }
     }
 
     override fun onActivityPaused(activity: Activity) {
         L.v("${activity::class.java.name}#onActivityPaused ")
         if (BuildConfig.LOG_DEBUG && activity.findViewById<View>(R.id.content) != null) {
-            (activity.findViewById<View>(R.id.content) as ViewGroup).removeView(ShowFps.instance)
+            //(activity.findViewById<View>(R.id.content) as ViewGroup).removeView(ShowFps.instance)
         }
 
     }
