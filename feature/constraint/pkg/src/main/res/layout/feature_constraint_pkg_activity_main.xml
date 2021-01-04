@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black"
+    tools:context=".feature.ConstraintDemoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/color_progress_3"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="居中布局"
+            android:textColor="@color/white"
+
+
+            />
+
+
+        <TextView
+            android:id="@+id/tv_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/color_progress_3"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="权重"
+            android:textColor="@color/white"
+
+
+            />
+
+
+        <TextView
+            android:id="@+id/tv_baseline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/color_progress_3"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="文字基准线对齐"
+            android:textColor="@color/white"
+
+
+            />
+
+
+        <TextView
+            android:id="@+id/tv_constraint_limit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/color_progress_3"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="约束限制"
+            android:textColor="@color/white"
+
+
+            />
+
+        <TextView
+            android:id="@+id/tv_bias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/color_progress_3"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="偏向"
+            android:textColor="@color/white"
+
+
+            />
+
+        <TextView
+            android:id="@+id/tv_chain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/color_progress_3"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="约束链"
+            android:textColor="@color/white"
+
+
+            />
+
+        <TextView
+            android:id="@+id/tv_gone_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/color_progress_3"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="gone margin"
+            android:textColor="@color/white"
+
+
+            />
+
+
+        <TextView
+            android:id="@+id/tv_w_h"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/color_progress_3"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="宽高比"
+            android:textColor="@color/white"
+
+
+            />
+
+        <TextView
+            android:id="@+id/tv_percent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/color_progress_3"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="百分比布局"
+            android:textColor="@color/white"
+
+
+            />
+
+
+        <TextView
+            android:id="@+id/tv_guide_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/color_progress_3"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="辅助线"
+            android:textColor="@color/white"
+
+
+            />
+
+
+        <TextView
+            android:id="@+id/tv_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/color_progress_3"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="group"
+            android:textColor="@color/white"
+
+
+            />
+
+        <TextView
+            android:id="@+id/tv_layer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/color_progress_3"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="layer"
+            android:textColor="@color/white"
+
+
+            />
+
+        <TextView
+            android:id="@+id/tv_barrier"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/color_progress_3"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="barrier"
+            android:textColor="@color/white"
+
+
+            />
+
+        <TextView
+            android:id="@+id/tv_flow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/color_progress_3"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="flow"
+            android:textColor="@color/white"
+
+
+            />
+
+
+        <TextView
+            android:id="@+id/tv_constraintSet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/color_progress_3"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="constraintSet"
+            android:textColor="@color/white"
+
+
+            />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

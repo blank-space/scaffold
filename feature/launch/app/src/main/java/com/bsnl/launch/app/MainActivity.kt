@@ -13,6 +13,7 @@ import com.bsnl.base.widget.ShowFps
 import com.bsnl.common.iface.ViewState
 import com.bsnl.common.page.base.BaseActivity
 import com.bsnl.common.utils.getVm
+import com.bsnl.constraint.export.api.ConstrainApi
 import com.bsnl.sample.export.api.SampleApi
 import java.lang.ref.WeakReference
 
@@ -209,6 +210,24 @@ MainActivity : BaseActivity<MainViewModel>() {
                 text = "异步创建View"
                 onClick = {
                     ApiUtils.getApi(SampleApi::class.java).startAsyncCreateViewActivity(this@MainActivity)
+                }
+                margin_top = 10
+            }
+
+
+            TextView {
+                layout_id = "tv_constraint"
+                layout_height = 40
+                layout_width = match_parent
+                textSize = 16f
+                textStyle = bold
+                gravity = gravity_center
+                background_color = "#eeeeee"
+                top_toBottomOf = "tv_async"
+                start_toStartOf = parent_id
+                text = "ConstraintLayout"
+                onClick = {
+                    ApiUtils.getApi(ConstrainApi::class.java).startSampleActivity(this@MainActivity)
                 }
                 margin_top = 10
             }

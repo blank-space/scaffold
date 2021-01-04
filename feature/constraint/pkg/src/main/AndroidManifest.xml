@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.bsnl.constraint.pkg">
+<application>
+
+    <activity android:name=".feature.BarrierActivity" />
+    <activity android:name=".feature.BaseLineActivity" />
+    <activity android:name=".feature.BiasActivity" />
+    <activity android:name=".feature.CenterActivity" />
+    <activity android:name=".feature.ChainActivity" />
+    <activity android:name=".feature.ConstraintSetActivity" />
+    <activity android:name=".feature.FlowActivity" />
+    <activity android:name=".feature.GroupActivity" />
+    <activity android:name=".feature.GuideLineActivity" />
+    <activity android:name=".feature.LayerActivity" />
+    <activity android:name=".feature.PercentActivity" />
+    <activity android:name=".feature.WeightActivity" />
+    <activity android:name=".feature.WHActivity" />
+    <activity android:name=".feature.ConstraintLimitActivity" />
+    <activity android:name=".feature.GoneMarginActivity" />
+    <activity android:name=".feature.ConstraintDemoActivity" />
+
+</application>
+</manifest>

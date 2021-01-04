@@ -9,7 +9,7 @@
 class Config {
 
     static applicationId = 'com.bsnl.scaffold'
-    static appName = 'NewScaffold'
+    static appName = 'scaffold'
 
     static compileSdkVersion = 29
     static minSdkVersion = 19
@@ -35,6 +35,8 @@ class Config {
             feature_sample_export      : new DepConfig(true , true , ":feature:sample:export"),
             lib_faster                 : new DepConfig(true , true , ":lib:faster"),
             lib_databinding            : new DepConfig(true , true , ":lib:databinding"),
+            feature_constraint_pkg     : new DepConfig(true , true , ":feature:constraint:pkg"),
+            feature_constraint_export  : new DepConfig(true , true , ":feature:constraint:export"),
             /*Never delete this line*/
             plugin_gradle            : new DepConfig(pluginPath: "com.android.tools.build:gradle:$gradlePluginVersion"),
             plugin_kotlin            : new DepConfig(pluginPath: "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"),

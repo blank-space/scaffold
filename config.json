@@ -55,6 +55,16 @@
       "isApply": true,
       "useLocal": true,
       "localPath": ":lib:databinding"
+    },
+    {
+      "isApply": true,
+      "useLocal": true,
+      "localPath": ":feature:constraint:pkg"
+    },
+    {
+      "isApply": true,
+      "useLocal": true,
+      "localPath": ":feature:constraint:export"
     }
   ]
 }

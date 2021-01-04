@@ -29,4 +29,6 @@
     <color name="color_progress_5">#7ba7f2</color>
     <color name="color_white">#FFFFFF</color>
     <color name="head_bg_red">#FA6555</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
 </resources>

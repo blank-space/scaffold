@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/black"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="tv_1,tv_2" />
+
+    <TextView
+        android:id="@+id/tv_1"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/white"
+        android:layout_marginRight="4dp"
+        android:gravity="center"
+        android:text="通过设置⼀组3423efdsfsdfsdfsdfsfsdfsdfs"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="4dp"
+        android:background="@color/color_light_teal"
+        app:layout_constraintLeft_toRightOf="@id/barrier"
+        app:layout_constraintTop_toTopOf="@id/tv_1"
+        app:layout_goneMarginLeft="16dp" />
+
+    <TextView
+        android:id="@+id/tv_2"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/white"
+        android:layout_marginRight="4dp"
+        android:gravity="center"
+        android:text="通，避免嵌套"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_1" />
+
+    <ImageView
+        android:id="@+id/iv_2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@color/color_light_teal"
+        app:layout_constraintLeft_toLeftOf="@id/barrier"
+        app:layout_constraintTop_toTopOf="@id/tv_2"
+        app:layout_goneMarginLeft="16dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
