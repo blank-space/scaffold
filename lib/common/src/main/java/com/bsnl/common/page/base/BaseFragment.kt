@@ -2,6 +2,8 @@ package com.bsnl.common.page.base
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -9,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.AnimRes
 import androidx.annotation.AnimatorRes
+import androidx.annotation.RequiresApi
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -38,7 +41,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState 
     lateinit var mViewModel: T
     private val TAG by lazy { javaClass.simpleName }
     private var msg: String? = null
-    private  var layoutDelegateImpl: WrapLayoutDelegateImpl?=null
+    private var layoutDelegateImpl: WrapLayoutDelegateImpl? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -76,9 +79,10 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState 
     }
 
 
-
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initStatusBarColor(getStatusBarColor())
         initView()
         initListener()
         initData()
@@ -96,6 +100,18 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState 
             targetLayout.isInvisible = false
         }, 100)
     }
+
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private  fun initStatusBarColor(colorId: Int) {
+        if (colorId != Color.TRANSPARENT) mActivity?.get()?.window?.setStatusBarColor(colorId)
+    }
+
+    /**
+     * 设置状态栏的颜色
+     */
+    protected open fun getStatusBarColor()= Color.TRANSPARENT
+
 
     protected open fun getRefreshType(): Int {
         return RefreshType.NONE
@@ -194,7 +210,6 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState 
     override fun setState(state: ViewState) {
         layoutDelegateImpl?.showState(state, true, true)
     }
-
 
 
     protected open fun getRefreshLayout(): SmartRefreshLayout? {

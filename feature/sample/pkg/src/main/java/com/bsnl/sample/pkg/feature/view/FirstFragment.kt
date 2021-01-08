@@ -1,5 +1,8 @@
 package com.bsnl.sample.pkg.feature.view
 
+import android.graphics.Color
+import android.os.Bundle
+import android.view.View
 import com.bsnl.databinding.DataBindingConfig
 import com.bsnl.databinding.DataBindingFragment
 import com.bsnl.common.page.base.BaseFragment
@@ -26,4 +29,7 @@ class FirstFragment : BaseFragment<TestViewModel>() {
     override fun initViewModel(): TestViewModel = getVm()
 
 
+    override fun getStatusBarColor(): Int {
+        return Color.parseColor("#ff1122")
+    }
 }

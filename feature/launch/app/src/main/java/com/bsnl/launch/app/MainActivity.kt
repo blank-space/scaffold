@@ -50,8 +50,8 @@ MainActivity : BaseActivity<MainViewModel>() {
                 gravity = gravity_center
                 layout_id = "tv_title"
                 top_toTopOf = parent_id
-                background_color = "#000000"
-                textColor = "#ffffff"
+                background_color = "#ffffff"
+                textColor = "#000000"
                 start_toStartOf = parent_id
 
             }

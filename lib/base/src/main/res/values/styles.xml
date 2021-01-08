@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimaryDark</item>
+        <!--背景颜色及和透明程度-->
+        <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
 
 
