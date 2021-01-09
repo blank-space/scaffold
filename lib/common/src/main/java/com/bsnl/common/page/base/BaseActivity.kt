@@ -8,11 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bsnl.base.manager.KeyboardStateManager
 import com.bsnl.base.manager.NetworkStateManager
+import com.bsnl.base.utils.DisplayUtils
 import com.bsnl.common.iface.*
 import com.bsnl.common.page.delegate.WrapLayoutDelegateImpl
 import com.bsnl.common.page.delegate.iface.OnViewStateListener
 import com.bsnl.common.viewmodel.BaseViewModel
-import com.jaeger.library.StatusBarUtil
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import java.lang.ref.WeakReference
 
@@ -59,7 +59,7 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity(), ITrack, IV
         initView()
         initListener()
         initData()
-        setStatusBar()
+        initStatusBar()
     }
 
 
@@ -138,9 +138,9 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity(), ITrack, IV
         })
     }
 
-    open fun setStatusBar() {
-        StatusBarUtil.setLightMode(this)
-        StatusBarUtil.setTransparent(this)
+    open fun initStatusBar() {
+       /* StatusBarUtil.setLightMode(this)*/
+        DisplayUtils.setFitsSystemWindows(mActivity?.get(),true)
     }
 
     fun getLayoutDelegateImpl() = layoutDelegateImpl

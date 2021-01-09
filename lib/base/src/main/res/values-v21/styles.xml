@@ -9,6 +9,7 @@
         <!--背景颜色及和透明程度-->
         <item name="android:windowBackground">@color/colorPrimary</item>
         <item name="android:statusBarColor">#00000000</item>
-        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 </resources>

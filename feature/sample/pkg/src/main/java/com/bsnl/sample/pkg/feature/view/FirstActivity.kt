@@ -1,6 +1,8 @@
 package com.bsnl.sample.pkg.feature.view
 
 import android.content.Context
+import android.view.WindowManager
+import com.bsnl.base.utils.DisplayUtils
 import com.bsnl.common.page.base.BaseActivity
 import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.startActivity
@@ -16,11 +18,14 @@ import kotlinx.android.synthetic.main.feature_sample_pkg_activity_main.*
 class FirstActivity : BaseActivity<TestViewModel>() {
     private var isShow = true
     private lateinit var firstFragment: FirstFragment
-    companion object{
-        fun actionStart(context: Context){
+
+    companion object {
+        fun actionStart(context: Context) {
             startActivity<FirstActivity>(context)
         }
     }
+
+
     override fun initView() {
         firstFragment = FirstFragment()
         supportFragmentManager.beginTransaction().apply {
@@ -30,27 +35,28 @@ class FirstActivity : BaseActivity<TestViewModel>() {
 
     }
 
+    override fun initStatusBar() {
+        //重写该方法，非纯色沉浸式
+    }
+
     override fun getLayoutId(): Int = R.layout.feature_sample_pkg_activity_main
 
 
     override fun initViewModel(): TestViewModel = getVm()
 
-    override fun initData() {
-    }
-
+    override fun initData() {}
 
     override fun initListener() {
         super.initListener()
         tv.setOnClickListener {
-            if(isShow){
+            if (isShow) {
                 tv.setText("显示")
-                firstFragment.hideSelf(R.anim.lib_common_no_anim,R.anim.lib_common_push_bottom_out)
-            }else{
+                firstFragment.hideSelf(R.anim.lib_common_no_anim, R.anim.lib_common_push_bottom_out)
+            } else {
                 tv.setText("隐藏")
-                firstFragment.showSelf(R.anim.lib_common_push_bottom_in,R.anim.lib_common_no_anim)
+                firstFragment.showSelf(R.anim.lib_common_push_bottom_in, R.anim.lib_common_no_anim)
             }
             isShow = !isShow
-
         }
     }
 }

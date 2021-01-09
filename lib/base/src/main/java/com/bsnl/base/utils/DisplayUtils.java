@@ -3,8 +3,11 @@ package com.bsnl.base.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Display;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -100,49 +103,6 @@ public class DisplayUtils {
         return outMetrics.widthPixels;
     }
 
-    /**
-     * 将px值转换为dip或dp值，保证尺寸大小不变
-     * @param context
-     * @param pxValue
-     * @return
-     */
-    public static int px2dip(Context context, float pxValue) {
-        float density = context.getResources().getDisplayMetrics().density;
-        return (int) (pxValue / density + 0.5f);
-    }
-
-    /**
-     * 将dip或dp值转换为px值，保证尺寸大小不变
-     * @param context
-     * @param dipValue
-     * @return
-     */
-    public static int dip2px(Context context, float dipValue) {
-        float density = context.getResources().getDisplayMetrics().density;
-        return (int) (dipValue * density + 0.5f);
-    }
-
-    /**
-     * 将px值转换为sp值，保证文字大小不变
-     * @param context
-     * @param pxValue
-     * @return
-     */
-    public static int px2sp(Context context, float pxValue) {
-        float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-        return (int) (pxValue / fontScale + 0.5f);
-    }
-
-    /**
-     * 将sp值转换为px值，保证文字大小不变
-     * @param context
-     * @param spValue
-     * @return
-     */
-    public static int sp2px(Context context, float spValue) {
-        float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-        return (int) (spValue * fontScale + 0.5f);
-    }
 
     /**
      *
@@ -151,6 +111,19 @@ public class DisplayUtils {
     public static boolean isPortrait() {
         return BaseApp.application.getResources().getConfiguration().orientation
                 == Configuration.ORIENTATION_PORTRAIT;
+    }
+
+    /**
+     * 设置页面最外层布局 FitsSystemWindows 属性
+     * @param activity
+     * @param value
+     */
+    public static void setFitsSystemWindows(Activity activity, boolean value) {
+        ViewGroup contentFrameLayout = (ViewGroup) activity.findViewById(android.R.id.content);
+        View parentView = contentFrameLayout.getChildAt(0);
+        if (parentView != null && Build.VERSION.SDK_INT >= 14) {
+            parentView.setFitsSystemWindows(value);
+        }
     }
 
 }

@@ -29,7 +29,7 @@ class FirstFragment : BaseFragment<TestViewModel>() {
     override fun initViewModel(): TestViewModel = getVm()
 
 
-    override fun getStatusBarColor(): Int {
-        return Color.parseColor("#ff1122")
-    }
+//    override fun getStatusBarColor(): Int {
+//        return Color.parseColor("#ff1122")
+//    }
 }
