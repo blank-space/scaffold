@@ -31,7 +31,7 @@
                 android:layout_marginLeft="8dp"
                 android:clickable="true"
                 android:scaleType="center"
-                android:src="@drawable/common_ic_nav_back"
+                android:src="@drawable/lib_common_common_ic_nav_back"
                 android:tag="@string/lib_common_component_dispatch"
                 android:visibility="visible" />
 

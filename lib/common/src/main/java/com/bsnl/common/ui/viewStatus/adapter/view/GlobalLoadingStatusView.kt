@@ -41,17 +41,17 @@ class GlobalLoadingStatusView(
             Gloading.STATUS_LOADING -> str = R.string.lib_common_loading
             Gloading.STATUS_LOAD_FAILED -> {
                 str = R.string.lib_common_load_failed
-                image = R.drawable.icon_failed
+                image = R.drawable.lib_common_icon_failed
                 val networkConn: Boolean = NetworkUtils.isConnected(BaseApp.application)
                 if (networkConn != null && !networkConn) {
                     str = R.string.lib_common_load_failed_no_network
-                    image = R.drawable.icon_no_wifi
+                    image = R.drawable.lib_common_icon_no_wifi
                 }
                 onClickListener = this
             }
             Gloading.STATUS_EMPTY_DATA -> {
                 str = R.string.lib_common_empty
-                image = R.drawable.icon_empty
+                image = R.drawable.lib_common_icon_empty
             }
             else -> {
             }

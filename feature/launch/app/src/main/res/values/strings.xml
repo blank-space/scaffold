@@ -1,3 +1,3 @@
-<resources>
-    <string name="name">scaffold</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="name" tools:ignore="ResourceName">scaffold</string>
 </resources>

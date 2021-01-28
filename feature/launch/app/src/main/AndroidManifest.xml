@@ -7,7 +7,7 @@
 
     <application
         android:allowBackup="false"
-        android:icon="@drawable/ic_logo"
+        android:icon="@drawable/feature_launch_app_ic_logo"
         android:label="@string/name"
         android:name=".App"
         android:theme="@style/lib_base_AppTheme"

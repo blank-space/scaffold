@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/icon_failed"
+        android:src="@drawable/lib_common_icon_failed"
         app:layout_constraintBottom_toTopOf="@+id/tv_reload"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

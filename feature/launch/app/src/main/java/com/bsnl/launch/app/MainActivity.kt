@@ -1,15 +1,24 @@
 package com.bsnl.launch.app
 
 import android.Manifest
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
+import android.os.SystemClock
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.HandlerCompat
+import androidx.core.os.MessageCompat
 import androidx.fragment.app.FragmentActivity
 import com.bsnl.base.dsl.*
+import com.bsnl.base.log.L
 import com.bsnl.base.permission.PermissionHelper
-import com.bsnl.base.utils.*
+import com.bsnl.base.utils.ApiUtils
+import com.bsnl.base.utils.GlobalAsyncHandler
+import com.bsnl.base.utils.load
 import com.bsnl.base.widget.ShowFps
-
 import com.bsnl.common.iface.ViewState
 import com.bsnl.common.page.base.BaseActivity
 import com.bsnl.common.utils.getVm
@@ -22,8 +31,7 @@ import java.lang.ref.WeakReference
  * @date   : 2020/10/19
  * @desc   :
  */
-class
-MainActivity : BaseActivity<MainViewModel>() {
+class MainActivity : BaseActivity<MainViewModel>() {
 
     private var weakReference: WeakReference<FragmentActivity>? = null
     private val coinUrl = "https://gank.io/images/e0088b6b0773408bace28e102af9f8ee"
@@ -209,7 +217,8 @@ MainActivity : BaseActivity<MainViewModel>() {
                 start_toStartOf = parent_id
                 text = "异步创建View"
                 onClick = {
-                    ApiUtils.getApi(SampleApi::class.java).startAsyncCreateViewActivity(this@MainActivity)
+                    ApiUtils.getApi(SampleApi::class.java)
+                        .startAsyncCreateViewActivity(this@MainActivity)
                 }
                 margin_top = 10
             }
@@ -236,6 +245,11 @@ MainActivity : BaseActivity<MainViewModel>() {
     }
 
 
+
+
+
+
+
     override fun initView() {
         weakReference = WeakReference(this)
         ivAvatar.load {
@@ -254,7 +268,6 @@ MainActivity : BaseActivity<MainViewModel>() {
         setState(ViewState.STATE_LOADING)
         //模拟请求
         ivAvatar.postDelayed({ setState(ViewState.STATE_COMPLETED) }, 200)
-
     }
 
     override fun getLayoutId(): Int = 0
