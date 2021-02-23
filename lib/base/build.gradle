@@ -19,4 +19,5 @@ dependencies {
     api Config.depConfig.timber.dep
     api Config.depConfig.glide_runtime.dep
     kapt Config.depConfig.glide_compiler.dep
+    api Config.depConfig.epic.dep
 }

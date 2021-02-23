@@ -39,6 +39,7 @@ class Versions {
     static  multitype="4.2.0"
     static  smartRefreshLayout="2.0.1"
     static statusBarUtil ="1.5.1"
+    static epic ="0.11.0"
 }
 
 

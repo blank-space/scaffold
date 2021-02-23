@@ -1,6 +1,7 @@
 package com.bsnl.launch.app
 
 import android.Manifest
+import android.graphics.BitmapFactory
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
@@ -110,7 +111,6 @@ class MainActivity : BaseActivity<MainViewModel>() {
                 layout_height = 180
                 align_horizontal_to = parent_id
                 top_toBottomOf = "tv_img"
-                visibility = gone
                 margin_top = 10
             }
 
@@ -245,17 +245,11 @@ class MainActivity : BaseActivity<MainViewModel>() {
     }
 
 
-
-
-
-
-
     override fun initView() {
         weakReference = WeakReference(this)
-        ivAvatar.load {
-            this.url = coinUrl
-            this.isCircle = true
-        }
+        val bitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_mouton)
+        ivAvatar.setImageBitmap(bitmap)
+
     }
 
     override fun getLayout(): View? {

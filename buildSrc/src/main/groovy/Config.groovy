@@ -12,7 +12,7 @@ class Config {
     static appName = 'scaffold'
 
     static compileSdkVersion = 29
-    static minSdkVersion = 19
+    static minSdkVersion = 21
     static targetSdkVersion = 29
     static versionCode = 1_0_0
     static versionName = '1.0.0'
@@ -87,6 +87,7 @@ class Config {
             hilt_daggerCompiler      : new DepConfig("com.google.dagger:hilt-android-compiler:${Versions.hit}"),
             hilt_viewModule          : new DepConfig("androidx.hilt:hilt-lifecycle-viewmodel:${Versions.hitViewModule}"),
             hilt_compiler            : new DepConfig("androidx.hilt:hilt-compiler:${Versions.hitViewModule}"),
+            epic                     : new DepConfig("me.weishu:epic:${Versions.epic}")
 
 
     ]

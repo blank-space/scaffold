@@ -1,15 +1,23 @@
 
 package com.bsnl.launch.app
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Looper
 import android.util.Log
+import android.widget.ImageView
 import com.bsnl.base.ActivityLifecycleCallback
 import com.bsnl.base.BaseApp
 import com.bsnl.base.log.L
 import com.bsnl.base.utils.GlobalHandler
 import com.bsnl.faster.TaskDispatcher
 import com.bsnl.launch.app.task.*
+import com.bsnl.sample.pkg.feature.hook.BitmapsHook
+import com.bsnl.sample.pkg.feature.hook.DrawableHook
 import dagger.hilt.android.HiltAndroidApp
+import de.robv.android.xposed.DexposedBridge
+import de.robv.android.xposed.XC_MethodHook
+
 
 /**
  * @author : LeeZhaoXing
@@ -23,6 +31,10 @@ class App : BaseApp() {
         super.onCreate()
         initTasks()
         registerActivityLifecycleCallbacks(ActivityLifecycleCallback())
+L.e("app >>>> onCreate")
+        DexposedBridge.findAndHookMethod(ImageView::class.java, "setImageBitmap", Bitmap::class.java, BitmapsHook())
+        DexposedBridge.findAndHookMethod(ImageView::class.java, "setImageDrawable", Drawable::class.java, DrawableHook())
+
         loop()
     }
 
@@ -44,7 +56,7 @@ class App : BaseApp() {
      */
     fun loop() {
         GlobalHandler.post(
-            Runnable {
+            {
                 while (true) {
                     try {
                         Looper.loop()
