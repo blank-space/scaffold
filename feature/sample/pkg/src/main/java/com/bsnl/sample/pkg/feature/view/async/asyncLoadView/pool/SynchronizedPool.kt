@@ -14,15 +14,15 @@ class SynchronizedPool<T>(maxPoolSize: Int) : SimplePool<T>(maxPoolSize) {
         }
     }
 
-    override fun release(layoutId: Int?, instance: T): Boolean {
+    override fun put(layoutId: Int?, instance: T): Boolean {
         synchronized(mLock) {
-            return super.release(layoutId, instance)
+            return super.put(layoutId, instance)
         }
     }
 
-    override fun acquire(layoutId: Int?): T? {
+    override fun get(layoutId: Int?): T? {
         synchronized(mLock) {
-            return super.acquire(layoutId)
+            return super.get(layoutId)
         }
     }
 }

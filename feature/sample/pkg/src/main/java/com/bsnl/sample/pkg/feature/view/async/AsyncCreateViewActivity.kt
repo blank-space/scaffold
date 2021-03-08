@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.bsnl.base.BaseApp
 import com.bsnl.common.utils.startActivity
 import com.bsnl.sample.pkg.R
 import com.bsnl.sample.pkg.feature.view.async.asyncLoadView.ViewHelper
@@ -31,6 +32,11 @@ class AsyncCreateViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.feature_sample_pkg_activity_async)
+        viewHelper.getViewContext()?.let {
+            if(it.getCurrentContext()==null){
+                viewHelper.refreshCurrentActivity(this)
+            }
+        }
         viewHelper.asyncPreLoadView(R.layout.feature_sample_pkg_fragment_first)
         val btn = Button(this)
         btn.setText("jump")

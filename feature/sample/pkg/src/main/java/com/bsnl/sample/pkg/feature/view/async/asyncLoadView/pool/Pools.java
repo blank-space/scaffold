@@ -41,7 +41,7 @@ public final class Pools {
 
         @Override
         @SuppressWarnings("unchecked")
-        public T acquire(Integer layoutId) {
+        public T get(Integer layoutId) {
             if (layoutId == null || layoutId <= 0) {
                 return null;
             }
@@ -54,7 +54,7 @@ public final class Pools {
         }
 
         @Override
-        public boolean release(Integer layoutId, @NonNull T instance) {
+        public boolean put(Integer layoutId, @NonNull T instance) {
             if (layoutId == null || layoutId <= 0) {
                 return false;
             }

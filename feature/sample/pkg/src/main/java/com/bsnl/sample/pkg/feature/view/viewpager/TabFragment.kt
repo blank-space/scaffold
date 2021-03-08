@@ -28,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class TabFragment : LazyListFragment<TabViewModel>() {
 
     override fun registerItem(adapter: MultiTypeAdapter?) {
-        adapter?.register(PokemonItemViewBinder(arguments?.getString(Bundle_TITLE, "1")!!))
+        adapter?.register(PokemonItemViewBinder())
         (activity as ViewPagerActivity).getRvPool()?.let {
             getRecyclerView()?.setRecycledViewPool(it)
         }

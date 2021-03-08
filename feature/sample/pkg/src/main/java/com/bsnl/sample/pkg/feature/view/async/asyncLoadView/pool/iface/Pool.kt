@@ -9,7 +9,7 @@ open interface Pool<T> {
     /**
      * 从缓存池取出
      */
-    fun acquire(layoutId: Int?): T?
+    fun get(layoutId: Int?): T?
 
     /**
      * 放入缓存池
@@ -18,7 +18,7 @@ open interface Pool<T> {
      * @return Whether the instance was put in the pool.
      * @throws IllegalStateException If the instance is already in the pool.
      */
-    fun release(layoutId: Int?, instance: T): Boolean
+    fun put(layoutId: Int?, instance: T): Boolean
 
     /**
      * 从缓存池取出并移除

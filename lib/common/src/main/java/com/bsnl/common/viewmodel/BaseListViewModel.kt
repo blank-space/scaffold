@@ -155,7 +155,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
     ) {
         if (listResponseBean?.getData() is IBaseList) {
             val data: IBaseList = listResponseBean?.getData() as IBaseList
-            if (data != null && !data.getDataList().isNullOrEmpty()) {
+            if (!data.getDataList().isNullOrEmpty()) {
                 mData.clear()
                 mData.addAll(data.getDataList()!!)
                 processInitLoadMoreState(data)
@@ -215,7 +215,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
         if (listResponseBean?.data is IBaseList) {
             val data: IBaseList = listResponseBean?.getData() as IBaseList
             val insertP = mData!!.size
-            if (data != null && !data.getDataList().isNullOrEmpty()) {
+            if (!data.getDataList().isNullOrEmpty()) {
                 mData!!.addAll(data.getDataList()!!)
                 if (isLoadMoreNoData(data)) {
                     finishLoadMoreWithNoMoreData()

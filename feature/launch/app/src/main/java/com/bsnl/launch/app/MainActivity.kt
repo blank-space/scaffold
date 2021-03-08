@@ -25,13 +25,19 @@ import com.bsnl.common.page.base.BaseActivity
 import com.bsnl.common.utils.getVm
 import com.bsnl.constraint.export.api.ConstrainApi
 import com.bsnl.sample.export.api.SampleApi
+import com.bsnl.sample.export.api.SampleParam
+import com.bsnl.sample.pkg.R
+import com.bsnl.sample.pkg.feature.view.async.asyncLoadView.ViewHelper
+import dagger.hilt.android.AndroidEntryPoint
 import java.lang.ref.WeakReference
+import javax.inject.Inject
 
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/10/19
  * @desc   :
  */
+@AndroidEntryPoint
 class MainActivity : BaseActivity<MainViewModel>() {
 
     private var weakReference: WeakReference<FragmentActivity>? = null
@@ -43,6 +49,9 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
     private var mUrls = arrayListOf("https://m.toutiao.com/", "https://juejin.im/")
     private var count = 0
+
+    @Inject
+    lateinit var viewHelper: ViewHelper
 
 
     private val rootView by lazy {
@@ -112,6 +121,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
                 align_horizontal_to = parent_id
                 top_toBottomOf = "tv_img"
                 margin_top = 10
+                visibility = gone
             }
 
             TextView {
@@ -247,9 +257,11 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
     override fun initView() {
         weakReference = WeakReference(this)
-        val bitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_mouton)
-        ivAvatar.setImageBitmap(bitmap)
-
+        ivAvatar.load {
+            this.url = coinUrl
+            this.isCircle = true
+        }
+        viewHelper.asyncPreLoadView(R.layout.feature_sample_pkg_recycle_item_pokemon)
     }
 
     override fun getLayout(): View? {
@@ -265,6 +277,8 @@ class MainActivity : BaseActivity<MainViewModel>() {
     }
 
     override fun getLayoutId(): Int = 0
+
+
 
 
 }

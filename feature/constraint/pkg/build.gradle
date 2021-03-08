@@ -1,1 +1,3 @@
-
+dependencies {
+    implementation project(':feature_sample_pkg')
+}

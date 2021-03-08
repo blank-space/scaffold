@@ -34,7 +34,6 @@ allprojects {
 
     configurations.all {
         resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-
         resolutionStrategy.eachDependency {
             if (it.requested.group == 'com.android.support'
                     && !it.requested.name.contains('multidex')) {
@@ -74,7 +73,6 @@ subprojects {
             if (details.requested.group == 'androidx.transition') {
                 details.useVersion "1.2.0"
             }
-
             if (details.requested.group == 'androidx.localbroadcastmanager') {
                 details.useVersion "1.0.0-rc01"
             }

@@ -51,10 +51,9 @@ class ViewHelper private constructor() {
     fun asyncPreLoadView(layoutId: Int, listener: IAsyncLoadView? = null) {
         GlobalScope.launch(Dispatchers.IO) {
             if (replaceLooperWithMainThreadQueue(false)) {
-                val view =
-                    LayoutInflater.from(viewContext?.getCurrentContext()).inflate(layoutId, null)
+                val view = LayoutInflater.from(viewContext?.getCurrentContext()).inflate(layoutId, null)
                 replaceLooperWithMainThreadQueue(true)
-                mViewPool.release(layoutId, view)
+                mViewPool.put(layoutId, view)
                 listener?.generatedView(view)
 
             }
@@ -65,7 +64,7 @@ class ViewHelper private constructor() {
      * 通过layoutId获取缓存view
      */
     fun getView(layoutId: Int): View? {
-        return mViewPool.acquire(layoutId)
+        return mViewPool.get(layoutId)
     }
 
     /**
@@ -76,5 +75,7 @@ class ViewHelper private constructor() {
         view = null
     }
 
+
+    fun getViewContext(): ViewContext? = viewContext
 
 }

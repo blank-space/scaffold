@@ -3,6 +3,7 @@ package com.bsnl.sample.pkg
 import android.content.Context
 import com.bsnl.base.utils.ApiUtils
 import com.bsnl.sample.export.api.SampleApi
+import com.bsnl.sample.export.api.SampleParam
 import com.bsnl.sample.pkg.feature.view.SampleActivity
 import com.bsnl.sample.pkg.feature.view.async.AsyncCreateViewActivity
 import com.bsnl.sample.pkg.feature.view.login.LoginActivity
@@ -36,5 +37,9 @@ class SampleApiImpl : SampleApi() {
 
     override fun startAsyncCreateViewActivity(context: Context) {
         AsyncCreateViewActivity.startAction(context)
+    }
+
+    override fun getSampleParam(): SampleParam {
+        return  SampleParam("sample")
     }
 }

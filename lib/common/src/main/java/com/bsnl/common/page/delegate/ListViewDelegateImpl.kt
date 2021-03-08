@@ -14,6 +14,7 @@ import com.bsnl.common.viewmodel.BaseListViewModel
 import com.bsnl.common.viewmodel.RequestType
 import com.drakeet.multitype.MultiTypeAdapter
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**
  * @author : LeeZhaoXing
@@ -40,6 +41,7 @@ class ListViewDelegateImpl(val viewModel: BaseListViewModel, private val owner: 
     }
 
 
+    @ExperimentalCoroutinesApi
     override fun setupRefreshLayout(smartRefreshLayout: SmartRefreshLayout?) {
         mRefreshLayout =
             RefreshLayoutProxy(smartRefreshLayout, object : OnRefreshAndLoadMoreListener {
@@ -125,6 +127,7 @@ class ListViewDelegateImpl(val viewModel: BaseListViewModel, private val owner: 
         return RefreshType.REFRESH_AND_LOAD_MORE
     }
 
+    @ExperimentalCoroutinesApi
     override fun loadData(requestType: Int) {
         viewModel.fetchListData(requestType)?.observe(owner, Observer {
             mILoadDataFinishListener?.apply {

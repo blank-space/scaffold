@@ -1,5 +1,6 @@
 package com.bsnl.sample.pkg.feature.view.async.asyncLoadView.pool
 
+import com.bsnl.base.log.L
 import com.bsnl.sample.pkg.feature.view.async.asyncLoadView.pool.iface.Pool
 import java.util.*
 
@@ -9,7 +10,7 @@ import java.util.*
  * @desc   : 使用HashMap维持索引的对象池
  */
 open class SimplePool<T>(maxPoolSize: Int) : Pool<T> {
-    var mPool: HashMap<Int, T>? = null
+    var mPool: HashMap<Int, T>
     private var mPoolSize = 0
     private var mMaxSize = 0
     init {
@@ -18,24 +19,27 @@ open class SimplePool<T>(maxPoolSize: Int) : Pool<T> {
         mPool = HashMap()
     }
 
-    override fun acquire(layoutId: Int?): T? {
+    override fun get(layoutId: Int?): T? {
         if (layoutId == null || layoutId <= 0) {
             return null
         }
-        if (mPoolSize > 0) {
+        if (mPool.size > 0) {
             mPoolSize--
             return mPool!![layoutId]
         }
         return null
     }
 
-    override fun release(layoutId: Int?, instance: T): Boolean {
+    override fun put(layoutId: Int?, instance: T): Boolean {
         if (layoutId == null || layoutId <= 0) {
             return false
         }
-        check(!isInPool(layoutId)) { "Already in the pool!" }
+        if(isInPool(layoutId)){
+            L.e( "Already in the pool!" )
+            return false
+        }
         if (mPoolSize < mMaxSize) {
-            mPool!![layoutId] = instance
+            mPool[layoutId] = instance
             mPoolSize++
             return true
         }
@@ -43,7 +47,7 @@ open class SimplePool<T>(maxPoolSize: Int) : Pool<T> {
     }
 
     private fun isInPool(layoutId: Int): Boolean {
-        for (key in mPool!!.keys) {
+        for (key in mPool.keys) {
             if (key == layoutId) {
                 return true
             }
@@ -56,7 +60,7 @@ open class SimplePool<T>(maxPoolSize: Int) : Pool<T> {
         }
         if (mPoolSize > 0) {
             mPoolSize--
-            return mPool!!.remove(layoutId)
+            return mPool.remove(layoutId)
         }
         return null
     }

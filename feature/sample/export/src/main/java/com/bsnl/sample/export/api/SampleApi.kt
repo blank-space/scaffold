@@ -14,11 +14,17 @@ abstract class SampleApi : ApiUtils.BaseApi() {
 
     abstract fun startLoginActivity(context: Context)
 
-    abstract fun startWebViewActivity(context: Context,url :String )
+    abstract fun startWebViewActivity(context: Context, url: String)
 
     abstract fun startViewPagerActivity(context: Context)
 
     abstract  fun  startAsyncCreateViewActivity(context: Context)
 
+    abstract fun getSampleParam():SampleParam
+
 
 }
+
+class SampleParam(var name: String)
+
+class SampleResult(var name: String)

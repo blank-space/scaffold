@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import com.bsnl.base.BaseApp
 import com.bsnl.base.log.L
 import com.bsnl.common.utils.startActivity
 import com.bsnl.sample.pkg.R
@@ -24,6 +25,7 @@ class AsyncCreateView2Activity : AppCompatActivity() {
             startActivity<AsyncCreateView2Activity>(context)
         }
     }
+
 
     @Inject
     lateinit var viewHelper: ViewHelper
@@ -48,7 +50,6 @@ class AsyncCreateView2Activity : AppCompatActivity() {
     override fun onDestroy() {
         root_main.removeAllViews()
         viewHelper.recycleView(R.layout.feature_sample_pkg_fragment_first)
-
         super.onDestroy()
     }
 }

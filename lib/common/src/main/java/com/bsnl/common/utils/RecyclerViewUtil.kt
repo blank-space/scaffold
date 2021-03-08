@@ -30,14 +30,14 @@ object RecyclerViewUtil {
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        Glide.with(context).resumeRequests()
+                      //  Glide.with(context).resumeRequests()
                     } else {
-                        Glide.with(context).pauseRequests()
+                      //  Glide.with(context).pauseRequests()
                     }
                 }
             })
             this.adapter = adapter
-            //adapter.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
         }
 
     }
