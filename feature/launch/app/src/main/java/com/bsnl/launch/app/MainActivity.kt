@@ -116,12 +116,13 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
             ivAvatar = ImageView {
                 layout_id = "iv_show"
-                layout_width = 180
-                layout_height = 180
+                layout_width = 100
+                layout_height = 100
                 align_horizontal_to = parent_id
                 top_toBottomOf = "tv_img"
                 margin_top = 10
-                visibility = gone
+                visibility = View.GONE
+
             }
 
             TextView {
@@ -187,9 +188,9 @@ class MainActivity : BaseActivity<MainViewModel>() {
                 background_color = "#eeeeee"
                 top_toBottomOf = "tv_web"
                 start_toStartOf = parent_id
-                text = "log in"
+                text = "双向绑定sample"
                 onClick = {
-                    ApiUtils.getApi(SampleApi::class.java).startLoginActivity(this@MainActivity)
+                    ApiUtils.getApi(SampleApi::class.java).startDataBindingActivity(this@MainActivity)
                 }
                 margin_top = 10
             }

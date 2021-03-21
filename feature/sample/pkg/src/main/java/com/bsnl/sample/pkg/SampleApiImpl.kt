@@ -6,6 +6,7 @@ import com.bsnl.sample.export.api.SampleApi
 import com.bsnl.sample.export.api.SampleParam
 import com.bsnl.sample.pkg.feature.view.SampleActivity
 import com.bsnl.sample.pkg.feature.view.async.AsyncCreateViewActivity
+import com.bsnl.sample.pkg.feature.view.databinding.DataBindingSampleActivity
 import com.bsnl.sample.pkg.feature.view.login.LoginActivity
 import com.bsnl.sample.pkg.feature.view.viewpager.ViewPagerActivity
 import com.bsnl.sample.pkg.feature.view.webview.WebViewActivity
@@ -40,6 +41,10 @@ class SampleApiImpl : SampleApi() {
     }
 
     override fun getSampleParam(): SampleParam {
-        return  SampleParam("sample")
+        return SampleParam("sample")
+    }
+
+    override fun startDataBindingActivity(context: Context) {
+        DataBindingSampleActivity.startAction(context)
     }
 }

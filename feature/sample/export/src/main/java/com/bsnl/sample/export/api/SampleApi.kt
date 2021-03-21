@@ -22,6 +22,8 @@ abstract class SampleApi : ApiUtils.BaseApi() {
 
     abstract fun getSampleParam():SampleParam
 
+    abstract fun startDataBindingActivity(context: Context)
+
 
 }
 
