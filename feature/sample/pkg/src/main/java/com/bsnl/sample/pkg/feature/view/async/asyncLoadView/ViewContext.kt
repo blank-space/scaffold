@@ -15,7 +15,6 @@ class ViewContext(realContext: Context) : ContextWrapper(realContext) {
     private var mCrtContextRef = WeakReference(realContext)
 
     fun setCurrentContext(ctx: Context) {
-        L.e("ctx name: ${ctx}")
         mCrtContextRef = WeakReference(ctx)
     }
 
