@@ -61,9 +61,7 @@ class App : BaseApp() {
                     Looper.loop()
                 } catch (e: Throwable) {
                     val stack = Log.getStackTraceString(e)
-                    if (stack.contains("Toast")
-                        || stack.contains("SelectionHandleView")
-                    ) {
+                    if (stack.contains("Toast")) {
                         L.e("捕获到异常，在线程${Thread.currentThread().name}, 在${e.stackTrace[0].className}")
                     } else {
                         //不可接受的异常，让他crash

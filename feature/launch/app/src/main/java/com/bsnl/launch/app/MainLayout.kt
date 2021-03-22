@@ -2,22 +2,15 @@ package com.bsnl.launch.app
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
-import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import  android.widget.ImageView
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.view.marginBottom
-import androidx.core.view.marginLeft
-import androidx.core.view.marginRight
 import androidx.core.view.marginTop
 import com.bsnl.base.dsl.dp
 import com.bsnl.base.dsl.onClick
-import com.bsnl.base.log.L
 import com.bsnl.base.utils.ApiUtils
-import com.bsnl.base.utils.showToast
 import com.bsnl.base.widget.CustomLayout
 import com.bsnl.constraint.export.api.ConstrainApi
 import com.bsnl.sample.export.api.SampleApi
@@ -31,6 +24,7 @@ import com.bsnl.sample.export.api.SampleApi
 class MainLayout(context: Context) : CustomLayout(context) {
 
     val textStyleId = R.style.feature_launch_app_text
+
     val header = AppCompatImageView(context).apply {
         scaleType = ImageView.ScaleType.FIT_XY
         layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 180.dp)
@@ -83,6 +77,28 @@ class MainLayout(context: Context) : CustomLayout(context) {
         addView(this)
     }
 
+    val webView = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
+        text = "WebView"
+        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40.dp)
+        (layoutParams as LayoutParams).topMargin = 5.dp
+        onClick = {
+            ApiUtils.getApi(SampleApi::class.java).startWebViewActivity(context, "https://wanandroid.com/?cid=440")
+        }
+        addView(this)
+    }
+
+    val asyncCreateView = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
+        text = "AsyncCreateView"
+        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40.dp)
+        (layoutParams as LayoutParams).topMargin = 5.dp
+        onClick = {
+            ApiUtils.getApi(SampleApi::class.java)
+                .startAsyncCreateViewActivity(context)
+        }
+        addView(this)
+    }
+
+
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -92,8 +108,9 @@ class MainLayout(context: Context) : CustomLayout(context) {
         dataBinding.autoMeasure()
         viewPager.autoMeasure()
         constraintLayout.autoMeasure()
-        val wrapContentHeight = (header.measuredHeight + listItem.measuredHeightWithMargins
-                + dataBinding.measuredHeightWithMargins + viewPager.measuredHeightWithMargins + constraintLayout.measuredHeightWithMargins)
+        webView.autoMeasure()
+        asyncCreateView.autoMeasure()
+        val wrapContentHeight = (header.measuredHeight + listItem.measuredHeightWithMargins+dataBinding.measuredHeightWithMargins*5)
         setMeasuredDimension(measuredWidth, wrapContentHeight)
     }
 
@@ -110,6 +127,8 @@ class MainLayout(context: Context) : CustomLayout(context) {
         dataBinding.let { it.layout(listItem.left, listItem.bottom + it.marginTop) }
         viewPager.let { it.layout(dataBinding.left, dataBinding.bottom + it.marginTop) }
         constraintLayout.let { it.layout(viewPager.left, viewPager.bottom + it.marginTop) }
+        webView.let { it.layout(constraintLayout.left, constraintLayout.bottom + it.marginTop) }
+        asyncCreateView.let { it.layout(webView.left, webView.bottom + it.marginTop) }
     }
 }
 

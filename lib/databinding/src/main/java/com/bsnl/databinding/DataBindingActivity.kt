@@ -94,17 +94,13 @@ abstract class DataBindingActivity<T : BaseViewModel> : AppCompatActivity(), ITr
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mActivity = WeakReference(this)
-
         mViewModel = initViewModel()
         getIntentData()
-
         lifecycle.addObserver(KeyboardStateManager)
         lifecycle.addObserver(NetworkStateManager)
-
         val dataBindingConfig = initBindingConfig(getLayoutId())
         if (dataBindingConfig != null) {
-            val binding: ViewDataBinding =
-                DataBindingUtil.setContentView(this, dataBindingConfig.layout)
+            val binding: ViewDataBinding = DataBindingUtil.setContentView(this, dataBindingConfig.layout)
             binding.lifecycleOwner = this
             binding.setVariable(dataBindingConfig.vmVariableId, dataBindingConfig.viewModel)
             val bindingParams = dataBindingConfig.getBindingParams()
@@ -121,7 +117,6 @@ abstract class DataBindingActivity<T : BaseViewModel> : AppCompatActivity(), ITr
                 setContentView(getLayoutId())
             }
         }
-
         initView()
         initListener()
         initData()
@@ -192,11 +187,6 @@ abstract class DataBindingActivity<T : BaseViewModel> : AppCompatActivity(), ITr
             ViewState.STATE_SHOW_LOADING_DIALOG -> {
                 showLoading()
             }
-            ViewState.STATE_IDLE -> {
-                //showLoadSuccess()
-
-            }
-
         }
 
     }

@@ -46,10 +46,10 @@ class SampleActivity : BaseListActivity<SampleViewModel>() {
 
     override fun initView() {
         //TODO 异步创建ViewHolder有问题
-       /* itemView = viewHelper.getView(R.layout.feature_sample_pkg_recycle_item_pokemon)!!
+       itemView = viewHelper.getView(R.layout.feature_sample_pkg_recycle_item_pokemon)!!
         itemView.let {
             viewHelper.refreshCurrentActivity(this)
-        }*/
+        }
         super.initView()
         getTitleView()?.setTitleText(TAG)
     }

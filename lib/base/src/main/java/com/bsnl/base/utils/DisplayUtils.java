@@ -109,8 +109,7 @@ public class DisplayUtils {
      * @return 是否是竖平
      */
     public static boolean isPortrait() {
-        return BaseApp.application.getResources().getConfiguration().orientation
-                == Configuration.ORIENTATION_PORTRAIT;
+        return BaseApp.application.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
     }
 
     /**

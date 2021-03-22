@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
 
     >
 
-    <FrameLayout
-        android:id="@+id/webview_root_fl"
+    <include layout="@layout/lib_common_base_toolbar"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-         
+        android:layout_marginTop="44dp"
+        />
 
     <ProgressBar
         android:id="@+id/pb_web"
@@ -20,8 +18,11 @@
         android:layout_width="match_parent"
         android:layout_height="3dp" />
 
+    <FrameLayout
+        android:id="@+id/webview_root_fl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-             
 
 
-</FrameLayout>
+</LinearLayout>

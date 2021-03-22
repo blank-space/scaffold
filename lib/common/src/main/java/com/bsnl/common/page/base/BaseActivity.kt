@@ -79,8 +79,7 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity(), ITrack, IV
 
     private fun ensureTitleView(isContentUnderTitleBar: Boolean) {
         if (mTitleView == null) {
-            mTitleView =
-                layoutDelegateImpl?.getTitleView(isFinalImmersionBarEnable(), isContentUnderTitleBar)
+            mTitleView = layoutDelegateImpl?.getTitleView(isFinalImmersionBarEnable(), isContentUnderTitleBar)
         }
         if (mTitleView != null) {
             if (mTitleView!!.getToolbar() != null) {

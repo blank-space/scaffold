@@ -28,8 +28,6 @@ class PokemonItemViewBinder(private val mView: View? = null) :
                     RecyclerView.LayoutParams.WRAP_CONTENT
                 )
             )
-
-
         }
 
         holder.tvName.text = item.name
@@ -41,17 +39,10 @@ class PokemonItemViewBinder(private val mView: View? = null) :
 
     override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): MyHolder {
         if (mView == null) {
-            return MyHolder(
-                (inflater.inflate(
-                    R.layout.feature_sample_pkg_recycle_item_pokemon,
-                    parent,
-                    false
-                ))
-            )
+            return MyHolder((inflater.inflate(R.layout.feature_sample_pkg_recycle_item_pokemon, parent, false)))
         } else {
             if (mView.parent != null) {
                 val prt = mView.parent as ViewGroup
-                L.d(" mView.parent :${ mView.parent}")
                 prt.removeView(mView)
             }
             val holder = MyHolder(mView)
@@ -59,12 +50,10 @@ class PokemonItemViewBinder(private val mView: View? = null) :
                 val prt = holder.itemView.parent as ViewGroup
                 prt.removeView(holder.itemView)
             }
-
+            L.d("onCreateViewHolder :${ holder.layoutPosition}")
             return holder
         }
     }
-
-
 
 
     inner class MyHolder(view: View) : RecyclerView.ViewHolder(view) {

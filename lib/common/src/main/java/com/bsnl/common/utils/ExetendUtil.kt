@@ -15,6 +15,7 @@ import com.bsnl.common.iface.ViewState
 import com.bsnl.common.iface.ViewStateWithMsg
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 
 /**
@@ -74,6 +75,7 @@ inline fun <T, R> T.doWithTry(block: (T) -> R) {
 /**
  * 简化获取flow获取liveData的流程
  */
+@ExperimentalCoroutinesApi
 inline fun <T> fetchLiveData(
     flow: Flow<BaseHttpResult<T?>?>,
     isFirstTimeLoad: Boolean = true,
@@ -81,37 +83,28 @@ inline fun <T> fetchLiveData(
     crossinline block: (T) -> Unit
 ): LiveData<T?> = liveData {
     flow.onStart {
-
         if (isFirstTimeLoad) {
             viewState.postValue(ViewStateWithMsg(msg = "", state = ViewState.STATE_LOADING))
         } else {
-            viewState.postValue(
-                ViewStateWithMsg(
-                    msg = "",
-                    state = ViewState.STATE_SHOW_LOADING_DIALOG
-                )
-            )
+            viewState.postValue(ViewStateWithMsg(msg = "", state = ViewState.STATE_SHOW_LOADING_DIALOG))
         }
-
     }.catch {
-
         viewState.postValue(ViewStateWithMsg(it.message.toString(), state = ViewState.STATE_ERROR))
-
     }.collectLatest {
-
-        if (it?.isSuccessFul()!! && it?.data != null) {
-            viewState.postValue(ViewStateWithMsg(msg = it?.msg, state = ViewState.STATE_COMPLETED))
-            block(it?.data!!)
-            emit(it?.data)
+        if (it?.isSuccessFul()!! && it.data != null) {
+            viewState.postValue(ViewStateWithMsg(msg = it.msg, state = ViewState.STATE_COMPLETED))
+            block(it.data!!)
+            emit(it.data)
         } else {
-            it?.msg.showToast()
-            viewState.postValue(ViewStateWithMsg(msg = it?.msg, state = ViewState.STATE_ERROR))
+            it.msg.showToast()
+            viewState.postValue(ViewStateWithMsg(msg = it.msg, state = ViewState.STATE_ERROR))
         }
 
     }
 }
 
 
+@ExperimentalCoroutinesApi
 inline fun <T> createFlow(crossinline block: () -> BaseHttpResult<T?>?): Flow<BaseHttpResult<T?>?> {
     return flow { emit(block()) }.flowOn(Dispatchers.IO)
 }
@@ -151,8 +144,7 @@ val Float.dp
         Resources.getSystem().displayMetrics
     )
 
-val Int.dp
-    get() = this.toFloat().dp
+val Int.dp get() = this.toFloat().dp
 
 
 

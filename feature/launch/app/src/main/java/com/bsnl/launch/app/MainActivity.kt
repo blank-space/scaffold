@@ -4,6 +4,7 @@ import android.view.View
 import com.bsnl.common.iface.ViewState
 import com.bsnl.common.page.base.BaseActivity
 import com.bsnl.common.utils.getVm
+import com.bsnl.sample.pkg.R
 import com.bsnl.sample.pkg.feature.view.async.asyncLoadView.ViewHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -21,7 +22,9 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
     private val contentView by lazy { MainLayout(this) }
 
-    override fun initView() {}
+    override fun initView() {
+        viewHelper.asyncPreLoadView(R.layout.feature_sample_pkg_recycle_item_pokemon)
+    }
 
     override fun initStatusBar() {}
 
@@ -33,7 +36,6 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
     override fun initData() {
         setState(ViewState.STATE_LOADING)
-
     }
 
     override fun getLayoutId(): Int = 0

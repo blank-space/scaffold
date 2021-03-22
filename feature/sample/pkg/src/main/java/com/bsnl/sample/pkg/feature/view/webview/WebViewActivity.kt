@@ -13,6 +13,7 @@ import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.bsnl.base.log.L
+import com.bsnl.base.utils.DisplayUtils
 import com.bsnl.base.webview.WebViewPool
 import com.bsnl.common.utils.startActivity
 import com.bsnl.sample.pkg.R
@@ -27,11 +28,15 @@ class WebViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DisplayUtils.setFitsSystemWindows(this,true)
         setContentView(R.layout.feature_sample_pkg_activity_web)
         mWebviewRoot = findViewById(R.id.webview_root_fl)
         mWebView = WebViewPool.instance?.mWebView
         mWebviewRoot!!.addView(mWebView)
         mWebView?.visibility = View.GONE
+        findViewById<View>(R.id.top_bar_layout).setOnClickListener {
+            finish()
+        }
         getData()
         initClient()
         initUrl()
@@ -92,7 +97,6 @@ class WebViewActivity : AppCompatActivity() {
 
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 mUrl = url
-                L.d("mUrl:${mUrl}")
                 return false
             }
 
