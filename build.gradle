@@ -48,36 +48,18 @@ subprojects {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
 
 
-            if (details.requested.group == 'androidx.lifecycle') {
+            if (details.requested.group == 'androidx.fragment') {
+                details.useVersion "1.3.5"
+            }
+            if (details.requested.group == 'androidx.core' && details.requested.name=='core') {
+                details.useVersion "1.3.2"
+            }
+
+            if (details.requested.group == 'androidx.lifecycle' && details.requested.name =='lifecycle-livedata') {
                 details.useVersion "2.2.0"
             }
             if (details.requested.group == 'androidx.appcompat') {
                 details.useVersion "1.2.0"
-            }
-            if (details.requested.group == 'androidx.core:core') {
-                details.useVersion "1.3.1"
-            }
-            if (details.requested.group == 'androidx.arch.core') {
-                details.useVersion "2.1.0"
-            }
-            if (details.requested.group == 'androidx.fragment') {
-                details.useVersion "1.2.5"
-            }
-            if (details.requested.group == 'androidx.constraintlayout') {
-                details.useVersion "2.0.1"
-            }
-            if (details.requested.group == 'androidx.recyclerview') {
-                details.useVersion "1.1.0"
-
-            }
-            if (details.requested.group == 'androidx.transition') {
-                details.useVersion "1.2.0"
-            }
-            if (details.requested.group == 'androidx.localbroadcastmanager') {
-                details.useVersion "1.0.0-rc01"
-            }
-            if (details.requested.group == 'androidx.databinding') {
-                details.useVersion "3.6.3"
             }
         }
     }

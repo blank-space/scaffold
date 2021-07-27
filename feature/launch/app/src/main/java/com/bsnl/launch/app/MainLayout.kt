@@ -47,36 +47,6 @@ class MainLayout(context: Context) : CustomLayout(context) {
         addView(this)
     }
 
-    val dataBinding = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
-        text = "CustomView with DataBinding"
-        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40.dp)
-        (layoutParams as LayoutParams).topMargin = 5.dp
-        onClick = {
-            ApiUtils.getApi(SampleApi::class.java).startDataBindingActivity(context)
-        }
-        addView(this)
-    }
-
-    val viewPager = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
-        text = "ViewPager"
-        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40.dp)
-        (layoutParams as LayoutParams).topMargin = 5.dp
-        onClick = {
-            ApiUtils.getApi(SampleApi::class.java).startViewPagerActivity(context)
-        }
-        addView(this)
-    }
-
-    val constraintLayout = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
-        text = "ConstraintLayout"
-        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40.dp)
-        (layoutParams as LayoutParams).topMargin = 5.dp
-        onClick = {
-            ApiUtils.getApi(ConstrainApi::class.java).startSampleActivity(context)
-        }
-        addView(this)
-    }
-
     val webView = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
         text = "WebView"
         layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40.dp)
@@ -87,31 +57,10 @@ class MainLayout(context: Context) : CustomLayout(context) {
         addView(this)
     }
 
-    val asyncCreateView = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
-        text = "AsyncCreateView"
-        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40.dp)
-        (layoutParams as LayoutParams).topMargin = 5.dp
-        onClick = {
-            ApiUtils.getApi(SampleApi::class.java)
-                .startAsyncCreateViewActivity(context)
-        }
-        addView(this)
-    }
 
-
-
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        header.autoMeasure()
-        avatar.autoMeasure()
-        listItem.autoMeasure()
-        dataBinding.autoMeasure()
-        viewPager.autoMeasure()
-        constraintLayout.autoMeasure()
-        webView.autoMeasure()
-        asyncCreateView.autoMeasure()
-        val wrapContentHeight = (header.measuredHeight + listItem.measuredHeightWithMargins+dataBinding.measuredHeightWithMargins*5)
-        setMeasuredDimension(measuredWidth, wrapContentHeight)
+    override fun onMeasureChildren(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        forEachAutoMeasure()
+        setMeasuredDimension(measuredWidth, measuredHeight)
     }
 
 
@@ -124,11 +73,7 @@ class MainLayout(context: Context) : CustomLayout(context) {
             )
         }
         listItem.let { it.layout(header.left, header.bottom + it.marginTop) }
-        dataBinding.let { it.layout(listItem.left, listItem.bottom + it.marginTop) }
-        viewPager.let { it.layout(dataBinding.left, dataBinding.bottom + it.marginTop) }
-        constraintLayout.let { it.layout(viewPager.left, viewPager.bottom + it.marginTop) }
-        webView.let { it.layout(constraintLayout.left, constraintLayout.bottom + it.marginTop) }
-        asyncCreateView.let { it.layout(webView.left, webView.bottom + it.marginTop) }
+        webView.let { it.layout(listItem.left, listItem.bottom + it.marginTop) }
     }
 }
 

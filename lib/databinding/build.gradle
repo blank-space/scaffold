@@ -1,5 +1,0 @@
-
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api Config.depConfig.lib_common.dep
-}

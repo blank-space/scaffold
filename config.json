@@ -51,11 +51,7 @@
       "useLocal": true,
       "localPath": ":lib:faster"
     }
-  , {
-      "isApply": true,
-      "useLocal": true,
-      "localPath": ":lib:databinding"
-    },
+  ,
     {
       "isApply": true,
       "useLocal": true,

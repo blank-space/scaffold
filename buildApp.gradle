@@ -35,6 +35,12 @@ android {
         applicationId Config.applicationId + suffix
         targetSdkVersion Config.targetSdkVersion
         multiDexEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
     }
 
     buildTypes {

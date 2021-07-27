@@ -34,7 +34,6 @@ class Config {
             feature_sample_pkg         : new DepConfig(true , true , ":feature:sample:pkg"),
             feature_sample_export      : new DepConfig(true , true , ":feature:sample:export"),
             lib_faster                 : new DepConfig(true , true , ":lib:faster"),
-            lib_databinding            : new DepConfig(true , true , ":lib:databinding"),
             feature_constraint_pkg     : new DepConfig(true , true , ":feature:constraint:pkg"),
             feature_constraint_export  : new DepConfig(true , true , ":feature:constraint:export"),
             /*Never delete this line*/

@@ -1,10 +1,5 @@
 package com.bsnl.sample.pkg.feature.view
 
-import android.graphics.Color
-import android.os.Bundle
-import android.view.View
-import com.bsnl.databinding.DataBindingConfig
-import com.bsnl.databinding.DataBindingFragment
 import com.bsnl.common.page.base.BaseFragment
 import com.bsnl.common.utils.getVm
 import com.bsnl.sample.pkg.R

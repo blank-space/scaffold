@@ -16,7 +16,7 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="ResourceName">
-    <color name="colorPrimary">#FA6555</color>
+    <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#FA8855</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="recycle_item_press">#9FB6B6B6</color>

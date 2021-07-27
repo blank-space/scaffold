@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bsnl.databinding.viewHolder.BaseViewHolder
 import com.bsnl.sample.pkg.R
 import com.drakeet.multitype.ItemViewBinder
 

@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
-import com.bsnl.databinding.DataBindingActivity
-import com.bsnl.databinding.DataBindingConfig
 import com.bsnl.common.page.base.BaseActivity
 import com.bsnl.common.ui.viewpager.CustomerViewpager
 import com.bsnl.common.utils.getVm

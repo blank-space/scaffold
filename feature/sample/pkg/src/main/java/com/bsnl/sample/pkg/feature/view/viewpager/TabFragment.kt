@@ -4,8 +4,6 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bsnl.base.log.L
 import com.bsnl.base.utils.showToast
-import com.bsnl.databinding.DataBindingConfig
-import com.bsnl.databinding.LazyListDataBindingFragment
 import com.bsnl.common.iface.OnItemClickListener
 import com.bsnl.common.page.base.LazyListFragment
 import com.bsnl.common.utils.RecyclerViewUtil

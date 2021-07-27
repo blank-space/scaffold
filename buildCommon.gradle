@@ -14,6 +14,12 @@ android {
         versionCode Config.versionCode
         versionName Config.versionName
         consumerProguardFiles 'proguard-rules.pro'
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
     }
 
     buildTypes {
@@ -44,15 +50,7 @@ android {
         jvmTarget = '1.8'
     }
 
-    dataBinding {
-        if (applyDataBinding() && Config.depConfig.lib_databinding.isApply) {
-            enabled = true
-        } else if (startWithFeature() && Config.depConfig.lib_databinding!=null) {
-            enabled = true
-        } else {
-            enabled = false
-        }
-    }
+
 
 
 }
