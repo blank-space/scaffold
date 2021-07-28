@@ -35,11 +35,16 @@ class Versions {
     static liveEventBus = "1.7.2"
     static leakCanary = "2.5"
     static gson = "2.8.5"
-    static  multidex ="2.0.1"
-    static  multitype="4.2.0"
-    static  smartRefreshLayout="2.0.1"
-    static statusBarUtil ="1.5.1"
-    static epic ="0.11.0"
+    static multidex = "2.0.1"
+    static multitype = "4.2.0"
+    static smartRefreshLayout = "2.0.1"
+    static statusBarUtil = "1.5.1"
+    static epic = "0.11.0"
+    static eventBus = "3.2.0"
+    static router = "1.5.1"
+    static background = "1.6.5"
+    static xpop = "2.4.3"
+
 }
 
 

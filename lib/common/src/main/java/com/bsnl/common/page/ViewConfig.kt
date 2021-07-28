@@ -21,8 +21,16 @@ data class ViewConfig(
     var emptyLayoutId: Int = R.layout.lib_common_stub_no_data,
     @DrawableRes
     var emptyDrawableId: Int = -1,
+    @DrawableRes
+    var errorDrawableId: Int = -1,
     var emptyTxt: String? = null,
     @ColorRes
     var emptyTxtColor: Int = 0,
-    var emptyBtnTxt: String? = null
+    var emptyBtnTxt: String? = null,
+    var illustrateTxt: String? = null,
+    var retryBtnTxt: String? = null,
+    @LayoutRes
+    var bottomLayoutId: Int = -1,
+    @LayoutRes
+    var customLayoutId: Int = -1,
 )

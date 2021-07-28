@@ -4,20 +4,16 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.bsnl.base.BaseApp
 import com.bsnl.common.utils.startActivity
 import com.bsnl.sample.pkg.R
 import com.bsnl.sample.pkg.feature.view.async.asyncLoadView.ViewHelper
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.feature_sample_pkg_activity_async.*
-import javax.inject.Inject
 
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/11/24
  * @desc   :
  */
-@AndroidEntryPoint
 class AsyncCreateViewActivity : AppCompatActivity() {
     companion object {
         fun startAction(context: Context) {
@@ -25,7 +21,6 @@ class AsyncCreateViewActivity : AppCompatActivity() {
         }
     }
 
-    @Inject
     lateinit var viewHelper: ViewHelper
 
 

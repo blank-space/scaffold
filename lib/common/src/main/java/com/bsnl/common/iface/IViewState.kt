@@ -8,7 +8,7 @@ package com.bsnl.common.iface
  */
 interface IViewState {
 
-    fun setState(state: ViewState)
+    fun setState(state: ViewStateWithMsg)
 
 
 }

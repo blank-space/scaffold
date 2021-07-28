@@ -48,6 +48,8 @@ abstract class BaseListActivity<T : BaseViewModel> : BaseActivity<T>() {
 
     override fun getLayoutId(): Int = R.layout.lib_common_recycerview
 
+    override fun getLayout(): View? = null
+
     override fun getRefreshLayout(): SmartRefreshLayout? {
         return getLayoutDelegateImpl()?.getRefreshLayout()?.getSmartRefreshLayout()
     }

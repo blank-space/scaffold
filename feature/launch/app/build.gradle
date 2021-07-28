@@ -1,3 +1,8 @@
+apply plugin: 'com.android.application'
+apply from: "../../../buildCommon.gradle"
 
-
-
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':feature:sample:pkg')
+    kapt Config.aRouter_compiler
+}

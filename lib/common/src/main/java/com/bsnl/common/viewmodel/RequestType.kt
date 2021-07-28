@@ -25,5 +25,10 @@ open interface RequestType {
          * 加载更多
          */
         const val LOAD_MORE = 3
+
+        /**
+         * 静默刷新
+         */
+        const val SILENT_REFRESH = 4
     }
 }

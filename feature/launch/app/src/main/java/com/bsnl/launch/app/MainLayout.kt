@@ -3,25 +3,27 @@ package com.bsnl.launch.app
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatImageView
-import  android.widget.ImageView
+import android.widget.ImageView
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.marginTop
-import com.bsnl.base.dsl.dp
+import com.alibaba.android.arouter.facade.annotation.Autowired
+import com.alibaba.android.arouter.launcher.ARouter
 import com.bsnl.base.dsl.onClick
-import com.bsnl.base.utils.ApiUtils
 import com.bsnl.base.widget.CustomLayout
-import com.bsnl.constraint.export.api.ConstrainApi
-import com.bsnl.sample.export.api.SampleApi
+import com.bsnl.sample.export.api.ISampleService
+import com.bsnl.sample.export.path.SamplePath
 
 /**
  * @author : LeeZhaoXing
  * @date   : 2021/3/21
- * @desc   : Custom ViewGroup > WIDTH:MATCH_PARENT , HEIGHT:WRAP_CONTENT
+ * @desc   :
  */
 @SuppressLint("ResourceAsColor")
-class MainLayout(context: Context) : CustomLayout(context) {
+class MainLayout(context: Context,sampleService: ISampleService?) : CustomLayout(context) {
+
+
 
     val textStyleId = R.style.feature_launch_app_text
 
@@ -42,7 +44,8 @@ class MainLayout(context: Context) : CustomLayout(context) {
         text = "ListView"
         layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40.dp)
         onClick = {
-            ApiUtils.getApi(SampleApi::class.java).startSampleActivity(context)
+            //vehicleService?.startListViewActivity()
+            ARouter.getInstance().build(SamplePath.A_LISTVIEW_ACTIVITY).navigation()
         }
         addView(this)
     }
@@ -52,7 +55,7 @@ class MainLayout(context: Context) : CustomLayout(context) {
         layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40.dp)
         (layoutParams as LayoutParams).topMargin = 5.dp
         onClick = {
-            ApiUtils.getApi(SampleApi::class.java).startWebViewActivity(context, "https://wanandroid.com/?cid=440")
+            sampleService?.startWebViewActivity("https://www.wanandroid.com")
         }
         addView(this)
     }

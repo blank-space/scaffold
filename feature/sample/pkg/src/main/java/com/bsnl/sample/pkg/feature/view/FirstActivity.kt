@@ -1,8 +1,7 @@
 package com.bsnl.sample.pkg.feature.view
 
 import android.content.Context
-import android.view.WindowManager
-import com.bsnl.base.utils.DisplayUtils
+import android.view.View
 import com.bsnl.common.page.base.BaseActivity
 import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.startActivity
@@ -25,6 +24,8 @@ class FirstActivity : BaseActivity<TestViewModel>() {
         }
     }
 
+
+    override fun getLayout(): View? = null
 
     override fun initView() {
         firstFragment = FirstFragment()

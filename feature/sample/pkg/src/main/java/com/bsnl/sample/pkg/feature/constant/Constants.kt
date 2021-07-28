@@ -6,3 +6,4 @@ package com.bsnl.sample.pkg.feature.constant
  * @desc   :
  */
 const val Bundle_TITLE = "bundle_title"
+const val Bundle_URL = "bundle_url"

@@ -1,5 +1,8 @@
+apply plugin: "com.android.library"
+apply from: "../../buildCommon.gradle"
+
 dependencies {
-    implementation Config.depConfig.kotlin.dep
-    implementation Config.depConfig.coreKtx.dep
-    implementation Config.depConfig.appcompat.dep
+    implementation Config.kotlin
+    implementation Config.coreKtx
+    implementation Config.appcompat
 }

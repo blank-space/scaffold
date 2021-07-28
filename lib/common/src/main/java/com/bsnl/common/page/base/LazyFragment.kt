@@ -1,5 +1,6 @@
 package com.bsnl.common.page.base
 
+import android.view.View
 import com.bsnl.common.viewmodel.BaseViewModel
 
 
@@ -14,7 +15,7 @@ abstract class LazyFragment<T : BaseViewModel> : BaseFragment<T>() {
 
     private var mHasInit = false
 
-    override fun initView() {
+    override fun initView(v: View) {
         //do nothing
     }
 

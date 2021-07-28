@@ -43,7 +43,7 @@ abstract class BaseListFragment<T : BaseListViewModel> : BaseFragment<T>() {
 
     override fun getLayoutId(): Int = R.layout.lib_common_recycerview
 
-    override fun initView() {
+    override fun initView(v: View) {
         setupListViewDelegate()
     }
 

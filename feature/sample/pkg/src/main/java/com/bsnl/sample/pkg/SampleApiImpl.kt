@@ -1,49 +1,33 @@
 package com.bsnl.sample.pkg
 
 import android.content.Context
-import com.bsnl.base.utils.ApiUtils
-import com.bsnl.sample.export.api.SampleApi
-import com.bsnl.sample.export.api.SampleParam
-import com.bsnl.sample.pkg.feature.view.SampleActivity
-import com.bsnl.sample.pkg.feature.view.async.AsyncCreateViewActivity
-import com.bsnl.sample.pkg.feature.view.login.LoginActivity
-import com.bsnl.sample.pkg.feature.view.viewpager.ViewPagerActivity
-import com.bsnl.sample.pkg.feature.view.webview.WebViewActivity
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
+import com.bsnl.base.log.L
+import com.bsnl.sample.export.api.ISampleService
+import com.bsnl.sample.export.path.SamplePath
+import com.bsnl.sample.pkg.feature.constant.Bundle_TITLE
+import com.bsnl.sample.pkg.feature.constant.Bundle_URL
 
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/10/21
  * @desc   :
  */
+@Route(path = SamplePath.S_SAMPLE_SERVICE)
+class SampleApiImpl : ISampleService {
 
-@ApiUtils.Api
-class SampleApiImpl : SampleApi() {
-
-    override fun startSampleActivity(context: Context) {
-        SampleActivity.actionStart(context)
+    override fun startWebViewActivity( url: String) {
+        ARouter.getInstance().build(SamplePath.A_WEBVIEW_ACTIVITY).withString(Bundle_URL,url).navigation()
     }
 
-    override fun startLoginActivity(context: Context) {
-        LoginActivity.startAction(context)
+    override fun startListViewActivity() {
+        ARouter.getInstance().build(SamplePath.A_LISTVIEW_ACTIVITY).navigation()
     }
 
-    override fun startWebViewActivity(context: Context, url: String) {
-        WebViewActivity.startAction(context, url)
+    override fun init(context: Context?) {
+        L.d("init sampleService")
     }
 
-    override fun startViewPagerActivity(context: Context) {
-        ViewPagerActivity.startAction(context)
-    }
 
-    override fun startAsyncCreateViewActivity(context: Context) {
-        AsyncCreateViewActivity.startAction(context)
-    }
-
-    override fun getSampleParam(): SampleParam {
-        return SampleParam("sample")
-    }
-
-    override fun startDataBindingActivity(context: Context) {
-
-    }
 }

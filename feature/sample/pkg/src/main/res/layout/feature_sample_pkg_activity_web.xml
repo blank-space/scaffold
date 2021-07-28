@@ -6,11 +6,6 @@
 
     >
 
-    <include layout="@layout/lib_common_base_toolbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginTop="44dp"
-        />
 
     <ProgressBar
         android:id="@+id/pb_web"

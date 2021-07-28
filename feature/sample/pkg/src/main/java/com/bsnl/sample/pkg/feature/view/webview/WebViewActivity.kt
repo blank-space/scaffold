@@ -12,31 +12,40 @@ import android.webkit.*
 import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.alibaba.android.arouter.facade.annotation.Autowired
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.bsnl.base.log.L
 import com.bsnl.base.utils.DisplayUtils
 import com.bsnl.base.webview.WebViewPool
 import com.bsnl.common.utils.startActivity
+import com.bsnl.sample.export.path.SamplePath
 import com.bsnl.sample.pkg.R
+import com.bsnl.sample.pkg.feature.constant.Bundle_URL
 import kotlinx.android.synthetic.main.feature_sample_pkg_activity_web.*
 
-
+@Route(path = SamplePath.A_WEBVIEW_ACTIVITY)
 class WebViewActivity : AppCompatActivity() {
     protected var mWebviewRoot: FrameLayout? = null
     protected var mWebView: WebView? = null
-    private lateinit var mUrl: String
+
+    @JvmField
+    @Autowired(name = Bundle_URL)
+    var mUrl: String? = null
+
     private var startUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DisplayUtils.setFitsSystemWindows(this,true)
+        ARouter.getInstance().inject(this)
+        DisplayUtils.setFitsSystemWindows(this, true)
         setContentView(R.layout.feature_sample_pkg_activity_web)
+        ARouter.getInstance().inject(this)
         mWebviewRoot = findViewById(R.id.webview_root_fl)
         mWebView = WebViewPool.instance?.mWebView
         mWebviewRoot!!.addView(mWebView)
         mWebView?.visibility = View.GONE
-        findViewById<View>(R.id.top_bar_layout).setOnClickListener {
-            finish()
-        }
+
         getData()
         initClient()
         initUrl()
@@ -57,7 +66,7 @@ class WebViewActivity : AppCompatActivity() {
                 pb_web.visibility = View.VISIBLE
 
                 //重定向后url不一致
-                if(!url!!.startsWith(startUrl!!)){
+                if (!url!!.startsWith(startUrl!!)) {
                     finish()
                 }
 
@@ -109,75 +118,75 @@ class WebViewActivity : AppCompatActivity() {
 
 
                 return super.shouldInterceptRequest(view, request)
-               /* val builder = Request.Builder()
-                L.d("request?.method:${request?.method.toString()}")
-                builder.url(mUrl).method(request?.method, null)
-                val requestHeaders = request?.getRequestHeaders()
-                if (!requestHeaders.isNullOrEmpty()) {
-                    for ((index, e) in requestHeaders) {
-                        builder.addHeader(index, e)
-                    }
-                }
-                val okHttpClient = OkHttpClient.Builder()
-                    .followRedirects(false) // 不follow重定向
-                    .followSslRedirects(false)
-                    .connectTimeout(15, TimeUnit.SECONDS)
-                    .build()
-                val synCall = okHttpClient.newCall(builder.build())
-                val response = synCall.execute()
-                val code = response?.code()
+                /* val builder = Request.Builder()
+                 L.d("request?.method:${request?.method.toString()}")
+                 builder.url(mUrl).method(request?.method, null)
+                 val requestHeaders = request?.getRequestHeaders()
+                 if (!requestHeaders.isNullOrEmpty()) {
+                     for ((index, e) in requestHeaders) {
+                         builder.addHeader(index, e)
+                     }
+                 }
+                 val okHttpClient = OkHttpClient.Builder()
+                     .followRedirects(false) // 不follow重定向
+                     .followSslRedirects(false)
+                     .connectTimeout(15, TimeUnit.SECONDS)
+                     .build()
+                 val synCall = okHttpClient.newCall(builder.build())
+                 val response = synCall.execute()
+                 val code = response?.code()
 
-                code?.let {
-                    if (it > 299 && it < 400) {
-                        //重定向
-                        return super.shouldInterceptRequest(view, request)
-                    }
-                }
+                 code?.let {
+                     if (it > 299 && it < 400) {
+                         //重定向
+                         return super.shouldInterceptRequest(view, request)
+                     }
+                 }
 
-                response?.let {
-                    val body = it.body()
-                    val map = mutableMapOf<String, String>()
-                    for (index in 0..it.headers().size() - 1) {
-                        map[it.headers().name(index)] = it.headers().value(index)
-                    }
-                    var mimeType = MimeTypeMap.getSingleton()
-                        .getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(mUrl))
-                    val contentType = response.headers()["Content-Type"]
-                    var encoding = "utf-8"
+                 response?.let {
+                     val body = it.body()
+                     val map = mutableMapOf<String, String>()
+                     for (index in 0..it.headers().size() - 1) {
+                         map[it.headers().name(index)] = it.headers().value(index)
+                     }
+                     var mimeType = MimeTypeMap.getSingleton()
+                         .getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(mUrl))
+                     val contentType = response.headers()["Content-Type"]
+                     var encoding = "utf-8"
 
-                    //获取ContentType和编码格式
-                    if (contentType != null && !"".equals(contentType)) {
-                        if (contentType.contains(";")) {
+                     //获取ContentType和编码格式
+                     if (contentType != null && !"".equals(contentType)) {
+                         if (contentType.contains(";")) {
 
-                            val args = contentType.split(";")
-                            mimeType = args[0]
-                            val args2 = args[1].trim().split("=")
-                            if (args.size == 2 && args2[0].trim().toLowerCase()
-                                    .equals("charset")
-                            ) {
-                                encoding = args2[1].trim();
-                            }
-                        } else {
-                            mimeType = contentType;
-                        }
-                    }
+                             val args = contentType.split(";")
+                             mimeType = args[0]
+                             val args2 = args[1].trim().split("=")
+                             if (args.size == 2 && args2[0].trim().toLowerCase()
+                                     .equals("charset")
+                             ) {
+                                 encoding = args2[1].trim();
+                             }
+                         } else {
+                             mimeType = contentType;
+                         }
+                     }
 
-                    val webResourceResponse =
-                        WebResourceResponse(mimeType, encoding, body?.byteStream());
-                    var message = response?.message()
+                     val webResourceResponse =
+                         WebResourceResponse(mimeType, encoding, body?.byteStream());
+                     var message = response?.message()
 
-                    if (TextUtils.isEmpty(message) && code == 200) {
-                        //message不能为空
-                        message = "OK"
-                    }
+                     if (TextUtils.isEmpty(message) && code == 200) {
+                         //message不能为空
+                         message = "OK"
+                     }
 
-                    webResourceResponse.setStatusCodeAndReasonPhrase(code!!, message);
-                    webResourceResponse.setResponseHeaders(map)
-                    return webResourceResponse
-                }
+                     webResourceResponse.setStatusCodeAndReasonPhrase(code!!, message);
+                     webResourceResponse.setResponseHeaders(map)
+                     return webResourceResponse
+                 }
 
 
-                return super.shouldInterceptRequest(view, request)*/
+                 return super.shouldInterceptRequest(view, request)*/
 
             }
 
@@ -203,8 +212,7 @@ class WebViewActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        mUrl = intent.getStringExtra(URL)
-        startUrl =  intent.getStringExtra(URL)
+        startUrl = mUrl
     }
 
     private fun initUrl() {
@@ -247,12 +255,5 @@ class WebViewActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    companion object {
-        const val URL = "url"
-        fun startAction(context: Context, url: String) {
-            startActivity<WebViewActivity>(context) {
-                putExtra(URL, url)
-            }
-        }
-    }
+
 }

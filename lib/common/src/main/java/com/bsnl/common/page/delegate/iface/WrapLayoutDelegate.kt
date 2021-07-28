@@ -17,12 +17,24 @@ import com.bsnl.common.refreshLayout.RefreshLayoutProxy
  */
 interface WrapLayoutDelegate {
 
+    /**
+     * 自定义Title
+     */
     fun setTitleLayoutLayout(@LayoutRes layoutResId: Int)
 
+    /**
+     * 自定义空页面
+     */
     fun setEmptyLayout(@LayoutRes layoutResId: Int)
 
+    /**
+     * 自定义Loading页面
+     */
     fun setLoadingLayout(@LayoutRes layoutResId: Int)
 
+    /**
+     * 自定义错误页面
+     */
     fun setErrorLayout(@LayoutRes layoutResId: Int)
 
     fun setEmptyText(@StringRes text: Int)
@@ -31,7 +43,15 @@ interface WrapLayoutDelegate {
 
     fun setEmptyTextColor(@ColorRes color: Int)
 
+    /**
+     * 自定义空状态的图标
+     */
     fun setEmptyIcon(@DrawableRes icon: Int)
+
+    /**
+     * 自定义错误状态的图标
+     */
+    fun setErrorIcon(@DrawableRes icon: Int)
 
     fun setEmptyBtnTxt(text: String?)
 
@@ -48,4 +68,33 @@ interface WrapLayoutDelegate {
     fun getRefreshLayout(): RefreshLayoutProxy?
 
     fun getTitleView(isImmersionBarEnable: Boolean, isContentUnderTitleBar: Boolean): ITitleView?
+
+    /**
+     *自定义具体说明文案
+     */
+    fun setIllustrateText(@StringRes text: Int)
+
+    /**
+     * 自定义具体说明文案
+     */
+    fun setIllustrateText(text: String?)
+
+    /**
+     * 自定义交互按钮文字
+     */
+    fun setRetryText(text: String?)
+
+    fun setRetryText(@StringRes text: Int)
+
+    /**
+     * 自定义底部界面
+     */
+    fun setBottomLayout(@LayoutRes layoutResId: Int, height:Int)
+
+    fun getBottomLayout():View?
+
+    /**
+     * 完全自定义界面
+     */
+    fun setCustomLayout(@LayoutRes layoutResId: Int)
 }

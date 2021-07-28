@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.multidex.MultiDex
+import com.alibaba.android.arouter.launcher.ARouter
 import com.bsnl.base.imageloader.BaseImageLoaderStrategy
 import com.bsnl.base.imageloader.ImageLoader
 import com.bsnl.base.imageloader.glide.GlideImageLoaderStrategy
@@ -45,7 +46,12 @@ open class BaseApp : Application(), ViewModelStoreOwner {
         super.onCreate()
         application = this
         mAppViewModelStore = ViewModelStore()
-
+        if (BuildConfig.DEBUG) {
+            // 这两行必须写在init之前，否则这些配置在init过程中将无效
+            ARouter.openLog()
+            ARouter.openDebug()
+        }
+        ARouter.init(application)
     }
 
 

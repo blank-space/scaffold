@@ -27,8 +27,8 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
 
     @RefreshType.Val
     var mRequestType = 0
-    protected var pageNo = DEFAULT_START_PAGE_INDEX
-    protected var pageSize: Int = DEFAULT_PAGE_SIZE
+    protected open var pageNo = DEFAULT_START_PAGE_INDEX
+    protected open var pageSize: Int = DEFAULT_PAGE_SIZE
     protected var mData: MutableList<Any> = mutableListOf()
 
 
@@ -78,17 +78,14 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
 
         return liveData {
             getList()?.catch {
-                processError(it.message, !NetworkUtils.isConnected(BaseApp.application))
+                processError("网络似乎出现了问题")
             }
                 ?.collectLatest {
                     if (it?.isSuccessFul!!) {
                         processData(it)
-                        emit(it)
+                        emit(it as BaseHttpResult<Any>?)
                     } else {
-                        processError(
-                            it.msg,
-                            !NetworkUtils.isConnected(BaseApp.application)
-                        )
+                        processError(it.msg)
                     }
                 }
         }
@@ -97,28 +94,19 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
     /**
      * 处理错误
      */
-    private fun processError(errMsg: String?, isNetError: Boolean) {
-        L.e("processError,errMsg:$errMsg")
+    private fun processError(errMsg: String?) {
         when (mRequestType) {
-            RequestType.INIT -> processInitDataError(errMsg)
             RequestType.REFRESH -> {
-                if (isNetError) {
-                    "网络连接失败，请检查您的网络...".showToast()
-                } else {
-                    errMsg?.showToast()
-                }
                 _finishRefresh.postValue(true)
             }
             RequestType.LOAD_MORE -> {
                 pageNo--
-                if (isNetError) {
-                    "网络连接失败，请检查您的网络...".showToast()
-                } else {
-                    errMsg?.showToast()
-                }
+                if (pageNo < 0) pageNo = DEFAULT_START_PAGE_INDEX
                 _finishLoadMore.postValue(true)
             }
+
         }
+        processInitDataError(errMsg)
     }
 
 
@@ -143,6 +131,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
                 _finishLoadMore.postValue(true)
                 processLoadMoreData(t)
             }
+            RequestType.SILENT_REFRESH -> initView(t, mRequestType)
         }
     }
 
@@ -154,7 +143,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
         @RequestType.Val requestType: Int
     ) {
         if (listResponseBean?.getData() is IBaseList) {
-            val data: IBaseList = listResponseBean?.getData() as IBaseList
+            val data: IBaseList = listResponseBean.getData() as IBaseList
             if (!data.getDataList().isNullOrEmpty()) {
                 mData.clear()
                 mData.addAll(data.getDataList()!!)
@@ -200,7 +189,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
      */
     protected open fun isLoadMoreNoData(baseList: IBaseList?): Boolean {
         if (baseList?.getTotals()!! > 0) {
-            return mData?.size!! >= baseList.getTotals()
+            return mData.size >= baseList.getTotals()
         } else {
             return judgeLoadMoreNoDataByPageSize(baseList)
         }
@@ -214,9 +203,9 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
     protected open fun processLoadMoreData(listResponseBean: BaseHttpResult<Any>?) {
         if (listResponseBean?.data is IBaseList) {
             val data: IBaseList = listResponseBean?.getData() as IBaseList
-            val insertP = mData!!.size
+            val insertP = mData.size
             if (!data.getDataList().isNullOrEmpty()) {
-                mData!!.addAll(data.getDataList()!!)
+                mData.addAll(data.getDataList()!!)
                 if (isLoadMoreNoData(data)) {
                     finishLoadMoreWithNoMoreData()
                 }
@@ -241,7 +230,18 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
      * 初始化页面数据获取失败后的处理(子类可重写)
      */
     protected open fun processInitDataError(errMsg: String?) {
-        setState(errMsg, ViewState.STATE_ERROR)
+        if (mData.size == 0) {
+            if (errMsg.isNullOrBlank()) {
+                setState("网络似乎出现了问题", ViewState.STATE_NETWORK_ERROR)
+            } else {
+                setState(errMsg, ViewState.STATE_ERROR)
+            }
+            return
+        }
+        if (!NetworkUtils.isConnected()) {
+           "当前无网路连接，请检查网络".showToast()
+            setState("网络似乎出现了问题", ViewState.STATE_NETWORK_ERROR)
+        }
     }
 
 
@@ -253,8 +253,8 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
         setState("", ViewState.STATE_LOADING)
     }
 
-    private fun setState(msg: String? = "", value: ViewState) {
-        _viewState.postValue(ViewStateWithMsg(msg, value))
+    private fun setState(msg: String? = "", value: ViewState, illustrateStrId: Int? = null) {
+        _viewState.postValue(ViewStateWithMsg(illustrateStrId, msg = msg, state = value))
     }
 
 

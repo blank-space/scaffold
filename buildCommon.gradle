@@ -2,14 +2,25 @@ apply {
     plugin "kotlin-android"
     plugin "kotlin-android-extensions"
     plugin 'kotlin-kapt'
-
 }
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
 
 android {
     compileSdkVersion Config.compileSdkVersion
     resourcePrefix suffix
 
     defaultConfig {
+        if (project.name == "app") {
+            applicationId Config.applicationId
+            multiDexEnabled true
+        }
+
         minSdkVersion Config.minSdkVersion
         versionCode Config.versionCode
         versionName Config.versionName
@@ -37,9 +48,13 @@ android {
     }
 
     lintOptions {
+        checkReleaseBuilds false
         abortOnError false
     }
 
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -50,7 +65,18 @@ android {
         jvmTarget = '1.8'
     }
 
+    buildFeatures{
+        viewBinding = true
+    }
 
+    packagingOptions {
+        exclude 'META-INF/library_release.kotlin_module'
+        exclude "**/module-info.class"
+    }
+
+    sourceSets {
+        main.jniLibs.srcDirs = ['libs']
+    }
 
 
 }
@@ -63,10 +89,4 @@ def getSuffix() {
     return project.name + "_"
 }
 
-def applyDataBinding() {
-    return project.name.equals("lib_databinding")
-}
 
-def startWithFeature() {
-    return project.name.startsWith("feature_")
-}

@@ -1,16 +1,17 @@
 package com.bsnl.common.page.delegate
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Resources
 import android.os.Build
 import android.text.TextUtils
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.ViewGroup.MarginLayoutParams
-import android.view.ViewStub
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -22,6 +23,8 @@ import com.bsnl.common.page.delegate.iface.OnViewStateListener
 import com.bsnl.common.page.delegate.iface.WrapLayoutDelegate
 import com.bsnl.common.refreshLayout.RefreshLayoutProxy
 import com.bsnl.common.viewmodel.RequestType
+import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.impl.LoadingPopupView
 
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 
@@ -30,15 +33,18 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
  * @date   : 2020/8/18
  * @desc   : Loading-Content-Empty-Error状态转换
  */
-class WrapLayoutDelegateImpl(val mActivity: AppCompatActivity? = null,
-                             val mFragment: Fragment? = null,
-                             val mContentLayoutResID: Int = 0,
-                             @RefreshType.Val val mRefreshType: Int = RefreshType.NONE,
-                             val mOnViewStateListener: OnViewStateListener? = null) :
-    WrapLayoutDelegate {
+class WrapLayoutDelegateImpl(
+    val mActivity: AppCompatActivity? = null,
+    val mFragment: Fragment? = null,
+    val mContentLayoutResID: Int = 0,
+    val childView: View? = null,
+    @RefreshType.Val val mRefreshType: Int = RefreshType.NONE,
+    var mOnViewStateListener: OnViewStateListener? = null,
+    var showImgHeader: Boolean = false
+) : WrapLayoutDelegate {
     //当前页面状态
     private var mCurrentState = ViewState.STATE_COMPLETED
-    private var mContext: Context? = null
+    private var mContext: Context
     private var mRefreshLayout: RefreshLayoutProxy? = null
     private var mViewConfig: ViewConfig? = null
 
@@ -71,15 +77,35 @@ class WrapLayoutDelegateImpl(val mActivity: AppCompatActivity? = null,
     // 无数据提示文字
     private var mEmptyTv: TextView? = null
 
+    // 说明文字
+    private var mIllustrateTv: TextView? = null
+
     //无数据功能按钮
     private var mEmptyBtn: TextView? = null
+
+    //底部布局
+    private var mBottomView: View? = null
+
+    //头部导航栏布局
+    private var imgHeaderView: View? = null
+
+    //完全自定义View
+    private var mCustomView: View? = null
+
+    private var smartRefreshLayout: SmartRefreshLayout? = null
+
+
+    private var loadingPopup: LoadingPopupView? = null
+
+    //loadingIcon without background
+    // private var mLoadingIcon :AlertDialog?=null
 
 
     init {
         if (mActivity != null) {
             mContext = mActivity
         } else {
-            mContext = mFragment?.context
+            mContext = mFragment?.requireContext()!!
         }
         requireNotNull(mContext) {
             "context cannt be null"
@@ -88,6 +114,7 @@ class WrapLayoutDelegateImpl(val mActivity: AppCompatActivity? = null,
         mViewConfig = ViewConfig()
     }
 
+    @SuppressLint("CutPasteId")
     fun setup(): View? {
         if (mView == null) {
             var mainView: View? = null
@@ -100,38 +127,60 @@ class WrapLayoutDelegateImpl(val mActivity: AppCompatActivity? = null,
             mView = mainView
             setupContentView()
             if (isNeedRefreshLayout()) {
-                val smartRefreshLayout: SmartRefreshLayout = mainView!!.findViewById<View>(R.id.content_wrap) as SmartRefreshLayout
-                setupRefreshLayout(smartRefreshLayout)
+                smartRefreshLayout =
+                    mainView?.findViewById<View>(R.id.content_wrap) as SmartRefreshLayout
+                setupRefreshLayout(smartRefreshLayout!!)
+                mContentWrapView = mainView.findViewById(R.id.fl_content)
+            } else {
+                mContentWrapView = mainView?.findViewById(R.id.content_wrap)
             }
-            mContentWrapView = mainView!!.findViewById(R.id.content_wrap)
+            if (mViewConfig?.bottomLayoutId!! > -1) {
+                ensureBottomView()
+            }
+
+            if (childView != null && mContentWrapView != null) {
+                addChildViewToBaseRootView(mContentWrapView as ViewGroup)
+            }
         }
         return mView
     }
 
+    fun addChildViewToBaseRootView(parentViewGroup: ViewGroup) {
+        parentViewGroup.addView(childView)
+    }
+
     private fun setupContentView() {
-        val contentStub = mView!!.findViewById<View>(R.id.stub_content) as ViewStub
-        if (contentStub != null) {
+        val contentStub = mView?.findViewById<View>(R.id.stub_content) as ViewStub
+        if (mContentLayoutResID != 0) {
             contentStub.layoutResource = mContentLayoutResID
             mContentView = contentStub.inflate()
-            val background = mContentView?.getBackground()
-            if (background != null) {
-                mContentView?.setBackground(null)
-                mView!!.background = background
-            }
+        } else {
+            mContentView = childView
+        }
+
+        val background = mContentView?.getBackground()
+        if (background != null) {
+            mContentView?.setBackground(null)
+            mView?.background = background
         }
     }
 
     private fun setupRefreshLayout(smartRefreshLayout: SmartRefreshLayout) {
-        mRefreshLayout = RefreshLayoutProxy(smartRefreshLayout, object : OnRefreshAndLoadMoreListener {
-            override fun onRefresh(refreshLayout: IRefreshLayout?) {
-                mOnViewStateListener?.onRefresh(refreshLayout)
-            }
+        if (bottomViewHeight > 0) {
+            val mlp = smartRefreshLayout.layoutParams as MarginLayoutParams
+            mlp.bottomMargin = bottomViewHeight
+        }
+        mRefreshLayout =
+            RefreshLayoutProxy(smartRefreshLayout, object : OnRefreshAndLoadMoreListener {
+                override fun onRefresh(refreshLayout: IRefreshLayout?) {
+                    mOnViewStateListener?.onRefresh(refreshLayout)
+                }
 
-            override fun onLoadMore(refreshLayout: IRefreshLayout?) {
-                mOnViewStateListener?.onLoadMore(refreshLayout)
-            }
+                override fun onLoadMore(refreshLayout: IRefreshLayout?) {
+                    mOnViewStateListener?.onLoadMore(refreshLayout)
+                }
 
-        })
+            })
         processRefreshType(mRefreshType)
 
     }
@@ -141,7 +190,7 @@ class WrapLayoutDelegateImpl(val mActivity: AppCompatActivity? = null,
             processRefreshType(mRefreshType)
         } else {
             if (mRefreshLayout != null) {
-                mRefreshLayout?.setEnableRefresh(false)
+                mRefreshLayout?.setEnableRefresh(viewState == ViewState.STATE_EMPTY)
                 mRefreshLayout?.setEnableLoadMore(false)
             }
         }
@@ -175,55 +224,72 @@ class WrapLayoutDelegateImpl(val mActivity: AppCompatActivity? = null,
         if (mTitleView != null) {
             return mTitleView
         }
-        setViewStubLayoutRes(R.id.stub_titlebar, mViewConfig?.titleLayoutId!!)
+        mViewConfig?.titleLayoutId?.let { setViewStubLayoutRes(R.id.stub_titlebar, it) }
         mTitleView = inflateViewStub(R.id.stub_titlebar)
         layoutTitleView(isImmersionBarEnable, isContentUnderTitleBar, true)
         return mTitleView
     }
 
 
-    fun layoutTitleView(isImmersionBarEnable: Boolean, isContentUnderTitleBar: Boolean, fromInit: Boolean) {
+    fun layoutTitleView(
+        isImmersionBarEnable: Boolean,
+        isContentUnderTitleBar: Boolean,
+        fromInit: Boolean
+    ) {
         if (mContentWrapView == null) {
             return
         }
+        val smartLayoutLp = smartRefreshLayout?.layoutParams as? MarginLayoutParams
         val mlp = mContentWrapView?.layoutParams as MarginLayoutParams
+        val titleLp = mTitleView?.layoutParams as MarginLayoutParams
         if (isImmersionBarEnable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (!isContentUnderTitleBar) {
-                mlp.topMargin = 44f.dp.toInt()+getStatusBarHeight(mContext!!)
-            } else {
                 mlp.topMargin = 0
-                mTitleView!!.bringToFront()
+                smartLayoutLp?.topMargin = 0
+                titleLp.topMargin = getStatusBarHeight()
+
+            } else {
+                if (smartRefreshLayout == null) {
+                    mlp.topMargin = 42.5f.dp.toInt()
+                } else {
+                    smartLayoutLp?.topMargin = 42f.dp.toInt()
+                }
+                mTitleView?.bringToFront()
             }
         } else {
             if (!isContentUnderTitleBar) {
-                mlp.topMargin =44f.dp.toInt()
+                mlp.topMargin = 42f.dp.toInt()
             } else {
                 mlp.topMargin = 0
-                mTitleView!!.bringToFront()
+                mTitleView?.bringToFront()
             }
         }
         if (!fromInit) {
-            mContentWrapView!!.parent.requestLayout()
+            mContentWrapView?.parent?.requestLayout()
         }
     }
 
-    fun getStatusBarHeight(context: Context): Int {
-        val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
-        return context.resources.getDimensionPixelSize(resourceId)
+
+    private fun getStatusBarHeight(): Int {
+        val resources = Resources.getSystem()
+        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+        return resources.getDimensionPixelSize(resourceId)
     }
+
 
     private fun setViewStubLayoutRes(@IdRes stubId: Int, @LayoutRes layoutResId: Int) {
-        val viewStub = mView?.findViewById<View>(stubId) as ViewStub
-        if (viewStub != null) {
-            viewStub.layoutResource = layoutResId
-        }
+        val viewStub = mView?.findViewById<View>(stubId) as? ViewStub
+        viewStub?.layoutResource = layoutResId
     }
 
     private fun inflateViewStub(@IdRes stubId: Int): View? {
-        val viewStub = mView?.findViewById<View>(stubId) as ViewStub
-        return if (viewStub != null && viewStub.layoutResource != 0) {
-            viewStub.inflate()
-        } else null
+        val viewStub = mView?.findViewById<View>(stubId) as? ViewStub
+        if (viewStub != null) {
+            return if (viewStub.layoutResource > 0) {
+                viewStub.inflate()
+            } else null
+        }
+        return null
     }
 
     private fun getContentLayoutResId(): Int {
@@ -250,8 +316,19 @@ class WrapLayoutDelegateImpl(val mActivity: AppCompatActivity? = null,
         mViewConfig?.errorLayoutId = layoutResId
     }
 
+    private var bottomViewHeight: Int = 0
+
+    override fun setBottomLayout(layoutResId: Int, height: Int) {
+        mViewConfig?.bottomLayoutId = layoutResId
+        bottomViewHeight = height
+    }
+
+    override fun setCustomLayout(layoutResId: Int) {
+        mViewConfig?.customLayoutId = layoutResId
+    }
+
     override fun setEmptyText(text: Int) {
-        mViewConfig?.emptyTxt = mContext?.getString(text)
+        mViewConfig?.emptyTxt = mContext.getString(text)
         mEmptyTv?.setText(text)
 
     }
@@ -261,9 +338,29 @@ class WrapLayoutDelegateImpl(val mActivity: AppCompatActivity? = null,
         mEmptyTv?.setText(text)
     }
 
+    override fun setIllustrateText(text: Int) {
+        mViewConfig?.illustrateTxt = mContext.getString(text)
+        mIllustrateTv?.setText(text)
+    }
+
+    override fun setIllustrateText(text: String?) {
+        mViewConfig?.illustrateTxt = text
+        mIllustrateTv?.setText(text)
+    }
+
+    override fun setRetryText(text: String?) {
+        mViewConfig?.retryBtnTxt = text
+        mRetryTv?.setText(text)
+    }
+
+    override fun setRetryText(text: Int) {
+        mViewConfig?.retryBtnTxt = mContext.getString(text)
+        mRetryTv?.setText(text)
+    }
+
     override fun setEmptyTextColor(color: Int) {
         mViewConfig?.emptyTxtColor = color
-        mEmptyTv?.setTextColor(ContextCompat.getColor(mContext!!, color))
+        mEmptyTv?.setTextColor(ContextCompat.getColor(mContext, color))
     }
 
     override fun setEmptyIcon(icon: Int) {
@@ -271,6 +368,12 @@ class WrapLayoutDelegateImpl(val mActivity: AppCompatActivity? = null,
         mEmptyImg?.setImageResource(icon)
 
     }
+
+    override fun setErrorIcon(icon: Int) {
+        mViewConfig?.errorDrawableId = icon
+        mErrorImg?.setImageResource(icon)
+    }
+
 
     override fun setEmptyBtnTxt(text: String?) {
         mViewConfig?.emptyBtnTxt = text
@@ -281,11 +384,12 @@ class WrapLayoutDelegateImpl(val mActivity: AppCompatActivity? = null,
 
     private fun ensureEmptyView() {
         if (mEmptyView == null) {
-            setViewStubLayoutRes(R.id.stub_empty, mViewConfig?.emptyLayoutId!!)
+            mViewConfig?.emptyLayoutId?.let { setViewStubLayoutRes(R.id.stub_empty, it) }
             mEmptyView = inflateViewStub(R.id.stub_empty)
-            mEmptyImg = mEmptyView?.findViewById<View>(R.id.no_data_image) as ImageView
-            mEmptyTv = mEmptyView?.findViewById<View>(R.id.no_data_txt) as TextView
-            //mEmptyBtn = mEmptyView?.findViewById<View>(R.id.no_data_button) as TextView
+            mEmptyImg = mEmptyView?.findViewById<View>(R.id.no_data_image) as? ImageView
+            mEmptyTv = mEmptyView?.findViewById<View>(R.id.no_data_txt) as? TextView
+            mEmptyBtn = mEmptyView?.findViewById<View>(R.id.tv_nav) as? TextView
+
             if (mEmptyImg != null && mViewConfig?.emptyDrawableId !== -1) {
                 mEmptyImg?.setImageResource(mViewConfig?.emptyDrawableId!!)
             }
@@ -293,35 +397,73 @@ class WrapLayoutDelegateImpl(val mActivity: AppCompatActivity? = null,
                 mEmptyTv?.setText(mViewConfig?.emptyTxt)
             }
             if (mEmptyTv != null && mViewConfig?.emptyTxtColor !== 0) {
-                mEmptyTv?.setTextColor(ContextCompat.getColor(mContext!!, mViewConfig?.emptyTxtColor!!))
+                mEmptyTv?.setTextColor(
+                    ContextCompat.getColor(
+                        mContext,
+                        mViewConfig?.emptyTxtColor!!
+                    )
+                )
             }
             if (mEmptyBtn != null) {
                 if (!TextUtils.isEmpty(mViewConfig?.emptyBtnTxt)) {
                     mEmptyBtn?.setText(mViewConfig?.emptyBtnTxt)
                     mEmptyBtn?.setVisibility(View.VISIBLE)
                 }
-                mEmptyBtn?.setOnClickListener(View.OnClickListener { v -> mOnViewStateListener?.onNoDataBtnClick(v) })
+                mEmptyBtn?.setOnClickListener { v ->
+                    mOnViewStateListener?.onNoDataBtnClick(v)
+                }
+            }
+
+            mIllustrateTv = mEmptyView?.findViewById<View>(R.id.tv_illustrate) as TextView
+            if (mIllustrateTv != null && !TextUtils.isEmpty(mViewConfig?.illustrateTxt)) {
+                mIllustrateTv?.setText(mViewConfig?.illustrateTxt)
             }
         }
     }
 
     private fun ensureLoadingView() {
         if (mLoadingView == null) {
-            setViewStubLayoutRes(R.id.stub_loading, mViewConfig?.loadingLayoutId!!)
+            mViewConfig?.loadingLayoutId?.let { setViewStubLayoutRes(R.id.stub_loading, it) }
             mLoadingView = inflateViewStub(R.id.stub_loading)
         }
     }
 
+    private fun ensureCustomView() {
+        if (mCustomView == null) {
+            mViewConfig?.customLayoutId?.let { setViewStubLayoutRes(R.id.stub_custom, it) }
+            mCustomView = inflateViewStub(R.id.stub_custom)
+            mOnViewStateListener?.onLoadCustomLayout(mCustomView)
+        }
+    }
+
+    private fun ensureBottomView() {
+        if (mBottomView == null) {
+            mViewConfig?.bottomLayoutId?.let { setViewStubLayoutRes(R.id.stub_bottom, it) }
+            mBottomView = inflateViewStub(R.id.stub_bottom)
+        }
+    }
+
+
     private fun ensureErrorView() {
         if (mErrorView == null) {
-            setViewStubLayoutRes(R.id.stub_error, mViewConfig?.errorLayoutId!!)
+            mViewConfig?.errorLayoutId?.let { setViewStubLayoutRes(R.id.stub_error, it) }
             mErrorView = inflateViewStub(R.id.stub_error)
-            mErrorView?.setOnClickListener { v -> mOnViewStateListener?.onReload(v) }
-            mErrorImg = mErrorView?.findViewById<View>(R.id.imgv_reload) as ImageView
-            mErrorTv = mErrorView?.findViewById<View>(R.id.tv_reload) as TextView
-            mRetryTv = mErrorView?.findViewById<View>(R.id.tv_retry) as TextView
+
+            mErrorImg = mErrorView?.findViewById<View>(R.id.imgv_reload) as? ImageView
+            if (mErrorImg != null && mViewConfig?.errorDrawableId !== -1) {
+                mErrorImg?.setImageResource(mViewConfig?.errorDrawableId!!)
+            }
+            mErrorTv = mErrorView?.findViewById<View>(R.id.tv_reload) as? TextView
+            mRetryTv = mErrorView?.findViewById<View>(R.id.tv_retry) as? TextView
+            mIllustrateTv = mErrorView?.findViewById<View>(R.id.tv_illustrate) as? TextView
             if (mRetryTv != null) {
-                mRetryTv!!.setOnClickListener { v -> mOnViewStateListener?.onReload(v) }
+                if (!TextUtils.isEmpty(mViewConfig?.retryBtnTxt)) {
+                    mRetryTv?.setText(mViewConfig?.retryBtnTxt)
+                }
+                mRetryTv?.setOnClickListener { v -> mOnViewStateListener?.onReload(v) }
+            }
+            if (mIllustrateTv != null && !TextUtils.isEmpty(mViewConfig?.illustrateTxt)) {
+                mIllustrateTv?.setText(mViewConfig?.illustrateTxt)
             }
         }
     }
@@ -348,47 +490,85 @@ class WrapLayoutDelegateImpl(val mActivity: AppCompatActivity? = null,
     override fun getRefreshLayout(): RefreshLayoutProxy? = mRefreshLayout
 
 
-    fun showState(viewState: ViewState, show: Boolean, hideOther: Boolean, vararg args: Any?) {
-        L.d("viewState:$viewState")
+    fun showState(
+        viewState: ViewState,
+        show: Boolean,
+        showBottomViewWhenEmpty: Boolean,
+        hideOther: Boolean,
+        vararg args: Any?
+    ) {
         setRefreshLayoutState(viewState)
+        //L.d("wrap showState:$viewState ,show:$show,hideOther:$hideOther")
         if (hideOther) {
-            setContentViewVisible((ViewState.STATE_COMPLETED === viewState) and show) //加载完成
-            setLoadingViewVisible((ViewState.STATE_LOADING === viewState) and show) //加载中
-            setErrorViewVisible((ViewState.STATE_ERROR === viewState) and show, args) //加载失败
-            setEmptyViewVisible((ViewState.STATE_EMPTY === viewState) and show, args) //空数据
+            //加载完成
+            setContentViewVisible((ViewState.STATE_COMPLETED === viewState || ViewState.STATE_LOGIN === viewState) and show)
+            //加载中
+            setLoadingViewVisible((ViewState.STATE_LOADING === viewState || ViewState.STATE_SHOW_LOADING_DIALOG === viewState) and show)
+            //加载失败
+            setErrorViewVisible(
+                (ViewState.STATE_ERROR === viewState || ViewState.STATE_NETWORK_ERROR === viewState) and show,
+                args
+            )
+            //空数据
+            setEmptyViewVisible((ViewState.STATE_EMPTY === viewState) and show, args)
+            //底部Layout
+            setBottomViewVisible(ViewState.STATE_COMPLETED === viewState || showBottomViewWhenEmpty)
+            //完全自定义Layout
+            setCustomViewVisible(ViewState.STATE_CUSTOM === viewState)
 
         } else {
             when (viewState) {
                 ViewState.STATE_COMPLETED -> setContentViewVisible(show)
-                ViewState.STATE_LOADING -> setLoadingViewVisible(show)
-                ViewState.STATE_ERROR -> setErrorViewVisible(show, args)
+                ViewState.STATE_LOADING, ViewState.STATE_SHOW_LOADING_DIALOG -> setLoadingViewVisible(
+                    show
+                )
+                ViewState.STATE_ERROR, ViewState.STATE_NETWORK_ERROR -> setErrorViewVisible(
+                    show,
+                    args
+                )
                 ViewState.STATE_EMPTY -> setEmptyViewVisible(show, args)
+                else -> {
+                    throw IllegalArgumentException("没有这个状态值")
+                }
             }
         }
         mCurrentState = viewState
     }
 
+    private fun setCustomViewVisible(visible: Boolean) {
+        if (visible && mCustomView == null) {
+            ensureCustomView()
+        }
+        mCustomView?.visibility = if (visible) View.VISIBLE else View.GONE
+    }
+
+    private fun setBottomViewVisible(visible: Boolean) {
+        if (visible && mBottomView == null) {
+            ensureBottomView()
+        }
+        mBottomView?.visibility = if (visible) View.VISIBLE else View.GONE
+
+    }
 
     private fun setEmptyViewVisible(visible: Boolean, args: Array<out Any?>) {
         if (visible && mEmptyView == null) {
             ensureEmptyView()
         }
         if (mEmptyView != null) {
-            if (args != null) {
-                //setEmptyArgs(args);
-                for (arg in args) {
-                    if (arg is Int) {
-                        val resId = arg
-                        val typeName = mContext!!.resources.getResourceTypeName(resId)
-                        if ("string" == typeName) {
-                            mEmptyTv!!.setText(resId)
-                        }
-                    } else if (arg is CharSequence) {
-                        mEmptyTv!!.text = arg
+            for (arg in args) {
+                //Int类型对应mIllustrateTv，String类型对应mEmptyTv
+                if (arg is Int) {
+                    val resId = arg
+                    if (resId <= 0) return
+                    val typeName = mContext.resources.getResourceTypeName(resId)
+                    if ("string" == typeName) {
+                        mIllustrateTv?.setText(resId)
                     }
+                } else if (arg is CharSequence) {
+                    mEmptyTv?.text = arg
                 }
             }
-            mEmptyView!!.visibility = if (visible) View.VISIBLE else View.GONE
+            mEmptyView?.visibility = if (visible) View.VISIBLE else View.GONE
         }
     }
 
@@ -398,7 +578,7 @@ class WrapLayoutDelegateImpl(val mActivity: AppCompatActivity? = null,
         }
         if (mErrorView != null) {
             setErrorArgs(*args)
-            mErrorView!!.visibility = if (visible) View.VISIBLE else View.GONE
+            mErrorView?.visibility = if (visible) View.VISIBLE else View.GONE
         }
     }
 
@@ -410,27 +590,47 @@ class WrapLayoutDelegateImpl(val mActivity: AppCompatActivity? = null,
             return
         }
         for (arg in args) {
+            //Int类型对应mIllustrateTv，String类型对应mEmptyTv
             if (arg is Int) {
                 val resId = arg
-                val typeName = mContext!!.resources.getResourceTypeName(resId)
+                if (resId <= 0) return
+                val typeName = mContext.resources.getResourceTypeName(resId)
                 if ("string" == typeName) {
-                    mErrorTv!!.setText(resId)
-                } else {
-                    mErrorImg?.setImageResource(resId)
+                    mIllustrateTv?.setText(resId)
                 }
             } else if (arg is CharSequence) {
-                mErrorTv!!.text = arg
+                mErrorTv?.text = arg
             }
         }
     }
 
+
+    private fun setLoadingIconVisible(visible: Boolean) {
+        /* if (mLoadingIcon == null) {
+             mLoadingIcon = CommonDialogBuilder(mContext, DialogStyleConfig.LOADING_ONLY_ICON)
+                 .setCanceledOnTouchOutside(true)
+                 .setCancelable(true).build(isShow = false)!!
+         }
+         mLoadingIcon?.apply {
+             if (visible) show() else dismiss()
+         }*/
+        //暂时无区别
+
+    }
+
     private fun setLoadingViewVisible(visible: Boolean) {
-        if (visible && mLoadingView == null) {
-            ensureLoadingView()
+        if (loadingPopup == null) {
+            loadingPopup = XPopup.Builder(mContext)
+                .dismissOnBackPressed(false)
+                .asLoading("加载中")
+                .show() as LoadingPopupView
+        } else {
+            if (visible) {
+                loadingPopup!!.show()
+            } else {
+                loadingPopup!!.dismiss()
+            }
         }
-
-        mLoadingView?.post { mLoadingView!!.visibility = if (visible) View.VISIBLE else View.GONE }
-
     }
 
     private fun setContentViewVisible(visible: Boolean) {
@@ -441,10 +641,19 @@ class WrapLayoutDelegateImpl(val mActivity: AppCompatActivity? = null,
     }
 
 
-    override fun getTitleView(isImmersionBarEnable: Boolean, isContentUnderTitleBar: Boolean): ITitleView? {
+    override fun getTitleView(
+        isImmersionBarEnable: Boolean,
+        isContentUnderTitleBar: Boolean
+    ): ITitleView? {
         if (mTitleView == null) {
             setTitleLayout(isImmersionBarEnable, isContentUnderTitleBar)
         }
         return mTitleView as ITitleView?
     }
+
+    override fun getBottomLayout(): View? {
+        return mBottomView
+    }
+
+
 }

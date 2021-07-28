@@ -18,12 +18,15 @@ import androidx.lifecycle.Observer
 import androidx.transition.Slide
 import androidx.transition.TransitionManager
 import com.bsnl.base.manager.KeyboardStateManager
+import com.bsnl.common.R
 import com.bsnl.common.iface.*
 import com.bsnl.common.page.delegate.WrapLayoutDelegateImpl
 import com.bsnl.common.page.delegate.iface.OnViewStateListener
 import com.bsnl.common.utils.doOnMainThreadIdle
 import com.bsnl.common.viewmodel.BaseViewModel
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import org.greenrobot.eventbus.EventBus
+import java.lang.NullPointerException
 import java.lang.ref.WeakReference
 
 /**
@@ -31,14 +34,15 @@ import java.lang.ref.WeakReference
  * @date   : 2020/8/17
  * @desc   :
  */
-abstract class BaseFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState {
+abstract class BaseFragment<T : BaseViewModel> : Fragment(), IViewState {
     protected var mActivityFragmentManager: FragmentManager? = null
     protected var mAnimationLoaded = false
     var mActivity: WeakReference<Activity>? = null
     lateinit var mViewModel: T
     private val TAG by lazy { javaClass.simpleName }
-    private var msg: String? = null
     private var layoutDelegateImpl: WrapLayoutDelegateImpl? = null
+    private var mTitleView: ITitleView? = null
+    private var hideOther = true
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -53,6 +57,60 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState 
     }
 
 
+    open fun getTitleView(): ITitleView? {
+        ensureTitleView(isContentUnderTitleBar())
+        return mTitleView
+    }
+
+    /**
+     * desc:内容区域是否在标题栏之下
+     *
+     */
+    open fun isContentUnderTitleBar(): Boolean {
+        return true
+    }
+
+    /**
+     * 初始化TitleView以及点击事件
+     */
+    private fun ensureTitleView(isContentUnderTitleBar: Boolean) {
+        if (mTitleView == null) {
+            mTitleView = layoutDelegateImpl?.getTitleView(
+                isFinalImmersionBarEnable(),
+                isContentUnderTitleBar
+            )
+        }
+        mTitleView?.let {
+            it.setNavIconOnClickListener { processClickNavIcon() }
+        }
+    }
+
+    protected open fun processClickNavIcon() {
+        if (isInterceptBackPressed()) {
+            return
+        }
+        hideSelf(R.anim.lib_common_no_anim, R.anim.lib_common_no_anim)
+    }
+
+    /**
+     * 是否拦截返回键
+     */
+    protected open fun isInterceptBackPressed() = false
+
+    /**
+     * 是否开启沉浸式
+     */
+    protected open fun isFinalImmersionBarEnable(): Boolean {
+        return true
+    }
+
+    /**
+     * 是否显示顶部image导航栏
+     */
+    protected open fun isShowImageHeader(): Boolean {
+        return false
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,13 +118,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState 
     ): View? {
         lifecycle.addObserver(KeyboardStateManager)
         mActivityFragmentManager = activity?.supportFragmentManager
-        layoutDelegateImpl = WrapLayoutDelegateImpl(
-            mFragment = this,
-            mContentLayoutResID = getLayoutId(),
-            mRefreshType = getRefreshType(),
-            mOnViewStateListener = MyViewStateListener()
-        )
-        val view = getLayout() ?: layoutDelegateImpl?.setup()
+        val view = initWrapDelegate()
         val parent = view?.getParent()
         if (parent != null) {
             parent as ViewGroup
@@ -75,15 +127,37 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState 
         return view
     }
 
+    private fun initWrapDelegate(): View? {
+        layoutDelegateImpl = if (getLayout() != null) WrapLayoutDelegateImpl(
+            mFragment = this,
+            childView = getLayout(),
+            mRefreshType = getRefreshType(),
+            mOnViewStateListener = MyViewStateListener(),
+            showImgHeader = isShowImageHeader()
+        )
+        else WrapLayoutDelegateImpl(
+            mFragment = this,
+            mContentLayoutResID = getLayoutId(),
+            mRefreshType = getRefreshType(),
+            mOnViewStateListener = MyViewStateListener(),
+            showImgHeader = isShowImageHeader()
+        )
+        initBottomLayout(getBottomLayoutId(), getBottomHeight())
+        return layoutDelegateImpl?.setup()
+    }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initStatusBarColor(getStatusBarColor())
-        initView()
+        injectARoute()
+        initView(view)
         initListener()
         initData()
+        initEventBus()
+
         val targetLayout = view
+        if (!isNeedTransition()) return
         //先隐藏
         targetLayout.isInvisible = true
         //实现流畅的转场动画
@@ -98,16 +172,32 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState 
         }, 100)
     }
 
+    /**
+     * 是否需要转场动画，默认：false
+     */
+    open fun isNeedTransition(): Boolean = false
+
+
+    private fun injectARoute() {
+        if (!isNeedInjectARouter()) {
+            return
+        }
+        //ARouter.getInstance().inject(this)
+    }
+
+    open fun isNeedInjectARouter(): Boolean {
+        return true
+    }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private  fun initStatusBarColor(colorId: Int) {
+    private fun initStatusBarColor(colorId: Int) {
         if (colorId != Color.TRANSPARENT) mActivity?.get()?.window?.setStatusBarColor(colorId)
     }
 
     /**
      * 设置状态栏的颜色
      */
-    protected open fun getStatusBarColor()= Color.TRANSPARENT
+    protected open fun getStatusBarColor() = Color.TRANSPARENT
 
 
     protected open fun getRefreshType(): Int {
@@ -132,7 +222,13 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState 
         override fun onLoadMore(refreshLayout: IRefreshLayout?) {
             processLoadMore(refreshLayout)
         }
+
+        override fun onLoadCustomLayout(v: View?) {
+            processCustomLayout(v)
+        }
     }
+
+    protected open fun processCustomLayout(v: View?) {}
 
     protected open fun onPageReload(v: View?) {
 
@@ -154,35 +250,51 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState 
 
 
     fun hideSelf(@AnimatorRes @AnimRes enter: Int, @AnimatorRes @AnimRes exit: Int) {
-        try {
-            val fragmentTransaction: FragmentTransaction =
-                this.mActivityFragmentManager!!.beginTransaction()
-            fragmentTransaction.setCustomAnimations(enter, exit)
-            fragmentTransaction.hide(this).commitAllowingStateLoss()
-        } catch (var4: Exception) {
-            var4.printStackTrace()
+        this.mActivityFragmentManager?.beginTransaction()?.apply {
+            setCustomAnimations(enter, exit)
+            hide(this@BaseFragment)
+            commitAllowingStateLoss()
         }
     }
 
 
     fun showSelf(@AnimatorRes @AnimRes enter: Int, @AnimatorRes @AnimRes exit: Int) {
-        try {
-            val fragmentTransaction: FragmentTransaction =
-                this.mActivityFragmentManager!!.beginTransaction()
-            fragmentTransaction.setCustomAnimations(enter, exit)
-            fragmentTransaction.show(this).commitAllowingStateLoss()
-        } catch (var4: Exception) {
-            var4.printStackTrace()
+        this.mActivityFragmentManager?.beginTransaction()?.apply {
+            setCustomAnimations(enter, exit)
+            show(this@BaseFragment)
+            commitAllowingStateLoss()
         }
     }
 
+    fun initEventBus() {
+        if (isNeedEvenBus()) {
+            EventBus.getDefault().register(this)
+        }
+    }
 
-    abstract fun initView()
+    abstract fun initView(view: View)
 
 
     abstract fun initData()
 
-    abstract fun getLayoutId(): Int
+    protected open fun getLayoutId(): Int = 0
+
+    protected open fun getBottomLayoutId(): Int = -1
+
+    protected open fun getBottomHeight(): Int = -1
+
+    /**
+     * desc:是否开启evenBus
+     *
+     */
+    open fun isNeedEvenBus(): Boolean {
+        return false
+    }
+
+
+    private fun initBottomLayout(bottomLayoutId: Int, bottomLayoutHeight: Int) {
+        getLayoutDelegateImpl()?.setBottomLayout(bottomLayoutId, bottomLayoutHeight)
+    }
 
     abstract fun initViewModel(): T
 
@@ -190,27 +302,46 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(), ITrack, IViewState 
 
     }
 
-    @Deprecated("只满足基础显示，暂不支持页面切换以及下拉刷新等feature")
-    protected open fun getLayout(): View? {
-        return null
-    }
+    abstract fun getLayout(): View?
 
 
     protected open fun initListener() {
-        mViewModel.viewState.observe(requireActivity(), Observer {
-            msg = it.msg
-            it.state?.let { it1 -> setState(it1) }
+        mViewModel.viewState.observe(viewLifecycleOwner, {
+            it.let { it1 -> setState(it1) }
         })
 
     }
 
-    override fun setState(state: ViewState) {
-        layoutDelegateImpl?.showState(state, true, true)
+    override fun setState(state: ViewStateWithMsg) {
+        state.state?.let {
+
+            hideOther = it != ViewState.STATE_SHOW_LOADING_DIALOG
+            layoutDelegateImpl?.showState(
+                it,
+                true,
+                showBottomViewAnyWay(),
+                hideOther,
+                state.illustrateStrId,
+                state.msg
+            )
+        }
     }
 
 
+
+    protected open fun showBottomViewAnyWay(): Boolean {
+        return false
+    }
+
     protected open fun getRefreshLayout(): SmartRefreshLayout? {
         return null
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        if (isNeedEvenBus()) {
+            EventBus.getDefault().unregister(this)
+        }
     }
 
 }

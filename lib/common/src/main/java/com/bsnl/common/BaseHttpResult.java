@@ -1,24 +1,19 @@
 package com.bsnl.common;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
-/**
- * @author bsnl_zhangnx
- * @date 2018/6/12 00:58
- * @desc 抽取的一个基类的bean, 直接在泛型中传data就行
- */
 public class BaseHttpResult<T> implements Serializable {
     private static final long serialVersionUID = 2690553609250007325L;
-    public static final int SUCCESS_CODE = 0;
-    public int code;
+    public String code;
     public String msg;
-
+    public long date;
     private T data;
 
     public boolean isError() {
-        return code != 0;
+        return !code.contentEquals("0");
     }
-
 
     public T getData() {
         return data;
@@ -29,10 +24,12 @@ public class BaseHttpResult<T> implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "BaseHttpResult{" +
-                "error=" + code +
-                ", results=" + data +
+    public @NotNull String toString() {
+        return "{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", date=" + date +
+                ", data=" + data +
                 '}';
     }
 

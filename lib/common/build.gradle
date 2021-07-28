@@ -1,10 +1,17 @@
+apply plugin: "com.android.library"
+apply from: "../../buildCommon.gradle"
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api Config.depConfig.lib_base.dep
-    api Config.depConfig.refresh_layout_kernel.dep
-    api Config.depConfig.refresh_layout_footer.dep
-    api Config.depConfig.refresh_layout_header.dep
-    api Config.depConfig.statusbarutil.dep
-    api Config.depConfig.multitype.dep
+    api project(':lib:base')
+    api Config.refresh_layout_kernel
+    api Config.refresh_layout_footer
+    api Config.refresh_layout_header
+    api Config.statusbarutil
+    api Config.multitype
+    api Config.background
+    api Config.xpopup
+    api Config.eventbus
+
 
 }

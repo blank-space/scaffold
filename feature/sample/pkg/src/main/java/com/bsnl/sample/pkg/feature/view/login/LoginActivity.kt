@@ -2,6 +2,7 @@ package com.bsnl.sample.pkg.feature.view.login
 
 import android.content.Context
 import android.view.MotionEvent
+import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import com.bsnl.base.utils.DisplayUtils
@@ -123,5 +124,7 @@ class LoginActivity : BaseActivity<StubViewModel>() {
         super.onDestroy()
 
     }
+
+    override fun getLayout(): View? =null
 
 }

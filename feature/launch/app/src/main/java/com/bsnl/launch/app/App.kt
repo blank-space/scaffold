@@ -11,12 +11,13 @@ import com.bsnl.base.BaseApp
 import com.bsnl.base.log.L
 import com.bsnl.base.utils.GlobalHandler
 import com.bsnl.faster.TaskDispatcher
-import com.bsnl.launch.app.task.*
+import com.bsnl.launch.app.task.InitImageLoaderTask
+import com.bsnl.launch.app.task.InitLogTask
+import com.bsnl.launch.app.task.InitMVVMTask
+import com.bsnl.launch.app.task.InitWebViewTask
 import com.bsnl.sample.pkg.feature.hook.BitmapsHook
 import com.bsnl.sample.pkg.feature.hook.DrawableHook
-import dagger.hilt.android.HiltAndroidApp
 import de.robv.android.xposed.DexposedBridge
-import de.robv.android.xposed.XC_MethodHook
 
 
 /**
@@ -24,7 +25,7 @@ import de.robv.android.xposed.XC_MethodHook
  * @date   : 2020/10/21
  * @desc   :
  */
-@HiltAndroidApp
+
 class App : BaseApp() {
 
     override fun onCreate() {
@@ -44,7 +45,6 @@ class App : BaseApp() {
         val dispatcher: TaskDispatcher = TaskDispatcher.createInstance()
         dispatcher.addTask(InitLogTask())
             .addTask(InitMVVMTask())
-            .addTask(InitViewStateChangeTask())
             .addTask(InitImageLoaderTask())
             .addTask(InitWebViewTask())
             .start()

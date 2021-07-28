@@ -1,6 +1,7 @@
 package com.bsnl.sample.pkg.feature.view.viewpager
 
 import android.content.Context
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
@@ -10,7 +11,6 @@ import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.startActivity
 import com.bsnl.common.viewmodel.StubViewModel
 import com.bsnl.sample.pkg.R
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.feature_sample_pkg_activity_viewpager.*
 
 
@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.feature_sample_pkg_activity_viewpager.*
  * @date   : 2020/11/10
  * @desc   : ViewPager+Fragment+RecyclerView+RecyclerViewPool的示例
  */
-@AndroidEntryPoint
 class ViewPagerActivity : BaseActivity<StubViewModel>() {
     private val tabs = arrayOf("tab1", "tab2", "tab3")
 
@@ -73,4 +72,6 @@ class ViewPagerActivity : BaseActivity<StubViewModel>() {
             startActivity<ViewPagerActivity>(context)
         }
     }
+
+    override fun getLayout(): View? = null
 }

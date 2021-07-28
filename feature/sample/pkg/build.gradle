@@ -1,0 +1,37 @@
+if (sample_runAlone.toBoolean()) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+apply from: "../../../buildCommon.gradle"
+
+
+
+android {
+    defaultConfig {
+        if (sample_runAlone.toBoolean()) {
+            applicationId "me.module.sample"
+            multiDexEnabled true
+        }
+    }
+    sourceSets {
+        main {
+            if (sample_runAlone.toBoolean()) {
+                manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                java {
+                    exclude 'debug/**'
+                }
+            }
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    api project(':lib:common')
+    kapt Config.aRouter_compiler
+    kapt Config.hilt_daggerCompiler
+    api project(':feature:sample:export')
+}

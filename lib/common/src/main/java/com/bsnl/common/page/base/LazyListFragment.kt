@@ -1,5 +1,6 @@
 package com.bsnl.common.page.base
 
+import android.view.View
 import com.bsnl.common.viewmodel.BaseListViewModel
 
 
@@ -16,7 +17,7 @@ abstract class LazyListFragment<T : BaseListViewModel> : BaseListFragment<T>() {
 
     }
 
-    override fun initView() {
+    override fun initView(v:View) {
 
     }
 

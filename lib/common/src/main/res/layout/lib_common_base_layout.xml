@@ -5,12 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ViewStub
-        android:id="@+id/stub_titlebar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top" />
-
     <FrameLayout
         android:id="@+id/content_wrap"
         android:layout_width="match_parent"
@@ -33,8 +27,25 @@
             android:layout_height="match_parent" />
 
         <ViewStub
+            android:id="@+id/stub_custom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ViewStub
             android:id="@+id/stub_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>
+
+    <ViewStub
+        android:id="@+id/stub_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top" />
+
+    <ViewStub
+        android:id="@+id/stub_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
 </FrameLayout>

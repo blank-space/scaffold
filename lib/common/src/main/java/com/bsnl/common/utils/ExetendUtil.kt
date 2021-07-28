@@ -89,7 +89,7 @@ inline fun <T> fetchLiveData(
             viewState.postValue(ViewStateWithMsg(msg = "", state = ViewState.STATE_SHOW_LOADING_DIALOG))
         }
     }.catch {
-        viewState.postValue(ViewStateWithMsg(it.message.toString(), state = ViewState.STATE_ERROR))
+        viewState.postValue(ViewStateWithMsg(null,it.message.toString(), state = ViewState.STATE_ERROR))
     }.collectLatest {
         if (it?.isSuccessFul()!! && it.data != null) {
             viewState.postValue(ViewStateWithMsg(msg = it.msg, state = ViewState.STATE_COMPLETED))
