@@ -11,7 +11,6 @@ import com.bsnl.base.BaseApp
 import com.bsnl.base.log.L
 import com.bsnl.base.utils.GlobalHandler
 import com.bsnl.faster.TaskDispatcher
-import com.bsnl.launch.app.task.InitImageLoaderTask
 import com.bsnl.launch.app.task.InitLogTask
 import com.bsnl.launch.app.task.InitMVVMTask
 import com.bsnl.launch.app.task.InitWebViewTask
@@ -45,7 +44,6 @@ class App : BaseApp() {
         val dispatcher: TaskDispatcher = TaskDispatcher.createInstance()
         dispatcher.addTask(InitLogTask())
             .addTask(InitMVVMTask())
-            .addTask(InitImageLoaderTask())
             .addTask(InitWebViewTask())
             .start()
     }

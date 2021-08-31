@@ -34,4 +34,5 @@ dependencies {
     kapt Config.aRouter_compiler
     kapt Config.hilt_daggerCompiler
     api project(':feature:sample:export')
+    implementation Config.coil
 }

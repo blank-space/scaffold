@@ -6,8 +6,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.RoundedCornersTransformation
+import com.bsnl.base.dsl.dp
 import com.bsnl.base.log.L
-import com.bsnl.base.utils.load
 import com.bsnl.sample.pkg.R
 import com.bsnl.sample.pkg.feature.data.model.PokeItemModel
 import com.drakeet.multitype.ItemViewBinder
@@ -19,7 +21,7 @@ import com.drakeet.multitype.ItemViewBinder
  */
 class PokemonItemViewBinder(private val mView: View? = null) :
     ItemViewBinder<PokeItemModel, PokemonItemViewBinder.MyHolder>() {
-
+    private val dp4 = 4f.dp
     override fun onBindViewHolder(holder: MyHolder, item: PokeItemModel) {
         if (mView != null) {
             holder.itemView.setLayoutParams(
@@ -31,15 +33,25 @@ class PokemonItemViewBinder(private val mView: View? = null) :
         }
 
         holder.tvName.text = item.name
-        holder.ivAvatar.load {
-            this.url = item.getImageUrl()
-            this.fallback = R.color.colorAccent
+        holder.ivAvatar.load(item.getImageUrl()) {
+            crossfade(true)
+            placeholder(R.drawable.ic_goods_placeholder)
+            //圆形
+            //transformations(CircleCropTransformation())
+            //圆角
+            transformations(RoundedCornersTransformation(dp4))
         }
     }
 
     override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): MyHolder {
         if (mView == null) {
-            return MyHolder((inflater.inflate(R.layout.feature_sample_pkg_recycle_item_pokemon, parent, false)))
+            return MyHolder(
+                (inflater.inflate(
+                    R.layout.feature_sample_pkg_recycle_item_pokemon,
+                    parent,
+                    false
+                ))
+            )
         } else {
             if (mView.parent != null) {
                 val prt = mView.parent as ViewGroup
@@ -50,7 +62,7 @@ class PokemonItemViewBinder(private val mView: View? = null) :
                 val prt = holder.itemView.parent as ViewGroup
                 prt.removeView(holder.itemView)
             }
-            L.d("onCreateViewHolder :${ holder.layoutPosition}")
+            L.d("onCreateViewHolder :${holder.layoutPosition}")
             return holder
         }
     }

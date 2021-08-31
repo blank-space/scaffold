@@ -14,7 +14,7 @@ data class PokeItemModel(
 ) {
     fun getImageUrl(): String {
         val index = url.split("/".toRegex()).dropLast(1).last()
-        return "https://pokeres.bastionbot.org/images/pokemon/$index.png"
+        return "https://gank.io/images/d6bba8cf5b8c40f9ad229844475e9149"
     }
 
     override fun toString(): String {

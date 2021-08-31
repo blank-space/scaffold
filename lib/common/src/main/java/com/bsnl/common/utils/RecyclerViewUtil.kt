@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.bsnl.common.iface.OnItemClickListener
-import com.bumptech.glide.Glide
 
 
 /**

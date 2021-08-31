@@ -9,7 +9,7 @@
     <application
         android:allowBackup="false"
         android:icon="@drawable/feature_launch_app_ic_logo"
-        android:label="@string/app_name"
+        android:label="小锤子"
         android:name=".App"
         tools:replace="android:label"
         android:theme="@style/lib_base_AppTheme"

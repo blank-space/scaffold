@@ -44,6 +44,7 @@ class Versions {
     static router = "1.5.1"
     static background = "1.6.5"
     static xpop = "2.4.3"
+    static coil ="1.3.2"
 
 }
 

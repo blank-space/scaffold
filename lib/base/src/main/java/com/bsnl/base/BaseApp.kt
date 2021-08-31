@@ -1,27 +1,11 @@
 package com.bsnl.base
 
-import android.R
-import android.app.Activity
 import android.app.Application
 import android.content.Context
-import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.multidex.MultiDex
 import com.alibaba.android.arouter.launcher.ARouter
-import com.bsnl.base.imageloader.BaseImageLoaderStrategy
-import com.bsnl.base.imageloader.ImageLoader
-import com.bsnl.base.imageloader.glide.GlideImageLoaderStrategy
-import com.bsnl.base.log.L
-
-import com.bsnl.base.utils.ActivitysManager.addActivity
-import com.bsnl.base.utils.ActivitysManager.removeActivity
-import com.bsnl.base.widget.ShowFps
-import com.tencent.mmkv.MMKV
-import timber.log.Timber
 
 /**
  * @author : LeeZhaoXing

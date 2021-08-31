@@ -5,16 +5,16 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import coil.load
 import com.bsnl.base.utils.DisplayUtils
 import com.bsnl.base.utils.GlobalHandler
-import com.bsnl.base.utils.KeyboardUtils
-import com.bsnl.base.utils.load
 import com.bsnl.base.window.KeyboardStatePopupWindow
 import com.bsnl.common.page.base.BaseActivity
 import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.startActivity
 import com.bsnl.common.viewmodel.StubViewModel
 import com.bsnl.sample.pkg.R
+import com.lxj.xpopup.util.KeyboardUtils
 import kotlinx.android.synthetic.main.feature_sample_pkg_activity_login.*
 
 /**
@@ -65,9 +65,7 @@ class LoginActivity : BaseActivity<StubViewModel>() {
     override fun initViewModel(): StubViewModel = getVm()
 
     override fun initData() {
-        iv_header.load {
-            this.url = avatar
-        }
+        iv_header.load(avatar)
     }
 
     override fun initListener() {
