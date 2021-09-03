@@ -2,6 +2,7 @@ package com.bsnl.common.page.base
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.bsnl.common.R
 import com.bsnl.common.iface.IRefreshLayout
 import com.bsnl.common.iface.RefreshType

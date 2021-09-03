@@ -49,7 +49,7 @@ object GlobalAsyncHandler {
         }
     }
 
-    fun postDelayed(r: Runnable?, delay: Long) {
+    fun postDelayed( delay: Long,r: Runnable?) {
         prepare()
         sHandler!!.postAtTime(r, SystemClock.uptimeMillis() + delay)
     }

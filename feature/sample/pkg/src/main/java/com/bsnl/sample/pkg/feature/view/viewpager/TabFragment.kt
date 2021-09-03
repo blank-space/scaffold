@@ -39,7 +39,6 @@ class TabFragment : LazyListFragment<TabViewModel>() {
 
     override fun lazyInitListener() {
         val title = arguments?.getString(Bundle_TITLE, "1")
-        L.e("title:${title}")
         RecyclerViewUtil.setOnItemClickListener(getRecyclerView(), object : OnItemClickListener {
             override fun onItemClick(v: View, position: Int) {
                 title?.showToast()
@@ -47,7 +46,6 @@ class TabFragment : LazyListFragment<TabViewModel>() {
 
             override fun onChildClick(v: View, position: Int) {
                 title?.showToast()
-
             }
         }, R.id.name, R.id.avator)
     }

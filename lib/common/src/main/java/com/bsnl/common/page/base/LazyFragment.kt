@@ -1,6 +1,7 @@
 package com.bsnl.common.page.base
 
 import android.view.View
+import androidx.viewbinding.ViewBinding
 import com.bsnl.common.viewmodel.BaseViewModel
 
 
@@ -11,7 +12,7 @@ import com.bsnl.common.viewmodel.BaseViewModel
  * @update : 2020/11/11
  * @note   : setUserVisibleHint()在androidX放弃， Use [androidx.fragment.app.FragmentTransaction.setMaxLifecycle]
  */
-abstract class LazyFragment<T : BaseViewModel> : BaseFragment<T>() {
+abstract class LazyFragment<T : BaseViewModel,VB: ViewBinding> : BaseBindingFragment<T,VB>() {
 
     private var mHasInit = false
 

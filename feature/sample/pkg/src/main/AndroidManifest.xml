@@ -11,6 +11,8 @@
         <activity android:name=".feature.view.viewpager.ViewPagerActivity" />
         <activity android:name=".feature.view.async.AsyncCreateViewActivity" />
         <activity android:name=".feature.view.async.AsyncCreateView2Activity" />
+        <activity android:name=".feature.view.gson.GsonDemoActivity" />
+        <activity android:name=".feature.view.countdowm.CountDownActivity" />
 
     </application>
 </manifest>

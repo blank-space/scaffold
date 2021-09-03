@@ -4,6 +4,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 
+/**
+ * @author : LeeZhaoXing
+ * @date : 2021/9/2
+ * @desc :
+ */
 public class BaseHttpResult<T> implements Serializable {
     private static final long serialVersionUID = 2690553609250007325L;
     public String code;
@@ -12,7 +17,7 @@ public class BaseHttpResult<T> implements Serializable {
     private T data;
 
     public boolean isError() {
-        return !code.contentEquals("0");
+        return code == null || !code.contentEquals("000000");
     }
 
     public T getData() {

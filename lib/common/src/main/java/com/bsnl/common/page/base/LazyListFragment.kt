@@ -1,6 +1,7 @@
 package com.bsnl.common.page.base
 
 import android.view.View
+import androidx.viewbinding.ViewBinding
 import com.bsnl.common.viewmodel.BaseListViewModel
 
 
@@ -13,14 +14,9 @@ abstract class LazyListFragment<T : BaseListViewModel> : BaseListFragment<T>() {
     protected var mHasInit = false
 
 
-    override fun initData() {
+    override fun initData() {}
 
-    }
-
-    override fun initView(v:View) {
-
-    }
-
+    override fun initView(v: View) {}
 
     override fun onResume() {
         super.onResume()
@@ -29,17 +25,17 @@ abstract class LazyListFragment<T : BaseListViewModel> : BaseListFragment<T>() {
             setupListViewDelegate()
             setupLiveDataCallback()
             lazyInitListener()
-            if(mViewModel.providerData().isNullOrEmpty()) {
+            if (mViewModel.providerData().isNullOrEmpty()) {
                 fetchData()
             }
         }
     }
 
 
-    protected open fun lazyInitListener(){}
+    protected open fun lazyInitListener() {}
 
     override fun onDestroyView() {
-        mHasInit=false
+        mHasInit = false
         super.onDestroyView()
     }
 

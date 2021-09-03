@@ -41,7 +41,6 @@ class DrawableHook : XC_MethodHook() {
                 }
 
             })
-
         }
     }
 

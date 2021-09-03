@@ -14,6 +14,9 @@ import com.bsnl.base.dsl.onClick
 import com.bsnl.base.widget.CustomLayout
 import com.bsnl.sample.export.api.ISampleService
 import com.bsnl.sample.export.path.SamplePath
+import com.bsnl.sample.pkg.feature.view.countdowm.CountDownActivity
+import com.bsnl.sample.pkg.feature.view.gson.GsonDemo
+import com.bsnl.sample.pkg.feature.view.gson.GsonDemoActivity
 
 /**
  * @author : LeeZhaoXing
@@ -21,10 +24,7 @@ import com.bsnl.sample.export.path.SamplePath
  * @desc   :
  */
 @SuppressLint("ResourceAsColor")
-class MainLayout(context: Context,sampleService: ISampleService?) : CustomLayout(context) {
-
-
-
+class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayout(context) {
     val textStyleId = R.style.feature_launch_app_text
 
     val header = AppCompatImageView(context).apply {
@@ -60,6 +60,26 @@ class MainLayout(context: Context,sampleService: ISampleService?) : CustomLayout
         addView(this)
     }
 
+    val gson = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
+        text = "Gson解析"
+        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40.dp)
+        (layoutParams as LayoutParams).topMargin = 5.dp
+        onClick = {
+            GsonDemoActivity.actionStart(context)
+        }
+        addView(this)
+    }
+
+    val countdown = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
+        text = "倒计时列表"
+        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40.dp)
+        (layoutParams as LayoutParams).topMargin = 5.dp
+        onClick = {
+            CountDownActivity.actionStart(context)
+        }
+        addView(this)
+    }
+
 
     override fun onMeasureChildren(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         forEachAutoMeasure()
@@ -77,6 +97,8 @@ class MainLayout(context: Context,sampleService: ISampleService?) : CustomLayout
         }
         listItem.let { it.layout(header.left, header.bottom + it.marginTop) }
         webView.let { it.layout(listItem.left, listItem.bottom + it.marginTop) }
+        gson.let { it.layout(listItem.left, webView.bottom + it.marginTop) }
+        countdown.let { it.layout(listItem.left, gson.bottom + it.marginTop) }
     }
 }
 

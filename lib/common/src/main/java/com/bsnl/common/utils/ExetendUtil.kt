@@ -1,16 +1,18 @@
 package com.bsnl.common.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.TypedValue
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.*
+import androidx.viewbinding.ViewBinding
 import com.bsnl.base.dsl.dp
 import com.bsnl.base.utils.showToast
-import com.bsnl.common.BaseHttpResult
 import com.bsnl.common.iface.ViewState
 import com.bsnl.common.iface.ViewStateWithMsg
 
@@ -73,43 +75,6 @@ inline fun <T, R> T.doWithTry(block: (T) -> R) {
 }
 
 /**
- * 简化获取flow获取liveData的流程
- */
-@ExperimentalCoroutinesApi
-inline fun <T> fetchLiveData(
-    flow: Flow<BaseHttpResult<T?>?>,
-    isFirstTimeLoad: Boolean = true,
-    viewState: MutableLiveData<ViewStateWithMsg>,
-    crossinline block: (T) -> Unit
-): LiveData<T?> = liveData {
-    flow.onStart {
-        if (isFirstTimeLoad) {
-            viewState.postValue(ViewStateWithMsg(msg = "", state = ViewState.STATE_LOADING))
-        } else {
-            viewState.postValue(ViewStateWithMsg(msg = "", state = ViewState.STATE_SHOW_LOADING_DIALOG))
-        }
-    }.catch {
-        viewState.postValue(ViewStateWithMsg(null,it.message.toString(), state = ViewState.STATE_ERROR))
-    }.collectLatest {
-        if (it?.isSuccessFul()!! && it.data != null) {
-            viewState.postValue(ViewStateWithMsg(msg = it.msg, state = ViewState.STATE_COMPLETED))
-            block(it.data!!)
-            emit(it.data)
-        } else {
-            it.msg.showToast()
-            viewState.postValue(ViewStateWithMsg(msg = it.msg, state = ViewState.STATE_ERROR))
-        }
-
-    }
-}
-
-
-@ExperimentalCoroutinesApi
-inline fun <T> createFlow(crossinline block: () -> BaseHttpResult<T?>?): Flow<BaseHttpResult<T?>?> {
-    return flow { emit(block()) }.flowOn(Dispatchers.IO)
-}
-
-/**
  * 共享Activity
  */
 inline fun <reified T : ViewModel> Fragment.getVm(): T {
@@ -128,14 +93,6 @@ inline fun <reified T : ViewModel> FragmentActivity.getVm(): T {
     return ViewModelProvider(this).get(T::class.java)
 }
 
-
-/*fun <T : ViewModel> Fragment.getVm(clazz: Class<T>): T {
-    return ViewModelProvider(this).get(clazz)
-}
-
-fun <T : ViewModel> FragmentActivity.getVm(clazz: Class<T>): T {
-    return ViewModelProvider(this).get(clazz)
-}*/
 
 val Float.dp
     get() = TypedValue.applyDimension(
