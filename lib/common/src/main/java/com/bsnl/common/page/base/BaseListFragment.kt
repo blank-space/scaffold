@@ -4,6 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bsnl.common.R
+import com.bsnl.common.databinding.LibCommonRecycerviewBinding
 import com.bsnl.common.iface.IRefreshLayout
 import com.bsnl.common.iface.RefreshType
 import com.bsnl.common.page.delegate.iface.IListViewDelegate
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.lib_common_recycerview.*
  * @desc   : 基础列表fragment
  *
  */
-abstract class BaseListFragment<T : BaseListViewModel> : BaseFragment<T>() {
+abstract class BaseListFragment<T : BaseListViewModel> : BaseBindingFragment<T,LibCommonRecycerviewBinding>() {
 
     private var mListViewDelegate: ListViewDelegateImpl? = null
 
@@ -42,7 +43,6 @@ abstract class BaseListFragment<T : BaseListViewModel> : BaseFragment<T>() {
         mListViewDelegate?.setRefreshProxy(getLayoutDelegateImpl()?.getRefreshLayout())
     }
 
-    override fun getLayoutId(): Int = R.layout.lib_common_recycerview
 
     override fun initView(v: View) {
         setupListViewDelegate()

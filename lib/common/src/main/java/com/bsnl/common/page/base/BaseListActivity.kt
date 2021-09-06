@@ -3,6 +3,7 @@ package com.bsnl.common.page.base
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bsnl.common.R
+import com.bsnl.common.databinding.LibCommonRecycerviewBinding
 import com.bsnl.common.iface.IRefreshLayout
 import com.bsnl.common.iface.RefreshType
 import com.bsnl.common.page.delegate.ListViewDelegateImpl
@@ -21,7 +22,7 @@ import kotlinx.android.synthetic.main.lib_common_recycerview.*
  * @desc   : 基础列表Activity
  *
  */
-abstract class BaseListActivity<T : BaseViewModel> : BaseActivity<T>() {
+abstract class BaseListActivity<T : BaseViewModel> : BaseBindingActivity<T,LibCommonRecycerviewBinding>() {
     private var mListViewDelegate: ListViewDelegateImpl? = null
 
     abstract fun registerItem(adapter: MultiTypeAdapter?)
@@ -46,9 +47,7 @@ abstract class BaseListActivity<T : BaseViewModel> : BaseActivity<T>() {
 
     fun getAdapter(): MultiTypeAdapter? = mListViewDelegate?.getAdapter()
 
-    override fun getLayoutId(): Int = R.layout.lib_common_recycerview
 
-    override fun getLayout(): View? = null
 
     override fun getRefreshLayout(): SmartRefreshLayout? {
         return getLayoutDelegateImpl()?.getRefreshLayout()?.getSmartRefreshLayout()

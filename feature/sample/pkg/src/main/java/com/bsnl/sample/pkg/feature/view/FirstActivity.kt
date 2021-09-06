@@ -2,10 +2,11 @@ package com.bsnl.sample.pkg.feature.view
 
 import android.content.Context
 import android.view.View
-import com.bsnl.common.page.base.BaseActivity
+import com.bsnl.common.page.base.BaseBindingActivity
 import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.startActivity
 import com.bsnl.sample.pkg.R
+import com.bsnl.sample.pkg.databinding.FeatureSamplePkgActivityMainBinding
 import com.bsnl.sample.pkg.feature.viewmodel.TestViewModel
 import kotlinx.android.synthetic.main.feature_sample_pkg_activity_main.*
 
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.feature_sample_pkg_activity_main.*
  * @date   : 2020/10/26
  * @desc   :
  */
-class FirstActivity : BaseActivity<TestViewModel>() {
+class FirstActivity : BaseBindingActivity<TestViewModel,FeatureSamplePkgActivityMainBinding>() {
     private var isShow = true
     private lateinit var firstFragment: FirstFragment
 
@@ -25,25 +26,18 @@ class FirstActivity : BaseActivity<TestViewModel>() {
     }
 
 
-    override fun getLayout(): View? = null
-
     override fun initView() {
         firstFragment = FirstFragment()
         supportFragmentManager.beginTransaction().apply {
             add(R.id.container, firstFragment, "first")
             commit()
         }
-
     }
 
     override fun initStatusBar() {
         //重写该方法，非纯色沉浸式
     }
 
-    override fun getLayoutId(): Int = R.layout.feature_sample_pkg_activity_main
-
-
-    override fun initViewModel(): TestViewModel = getVm()
 
     override fun initData() {}
 
@@ -51,10 +45,10 @@ class FirstActivity : BaseActivity<TestViewModel>() {
         super.initListener()
         tv.setOnClickListener {
             if (isShow) {
-                tv.setText("显示")
+                tv.text = "显示"
                 firstFragment.hideSelf(R.anim.lib_common_no_anim, R.anim.lib_common_push_bottom_out)
             } else {
-                tv.setText("隐藏")
+                tv.text = "隐藏"
                 firstFragment.showSelf(R.anim.lib_common_push_bottom_in, R.anim.lib_common_no_anim)
             }
             isShow = !isShow

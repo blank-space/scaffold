@@ -2,9 +2,8 @@ package com.bsnl.launch.app
 
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.launcher.ARouter
-import com.bsnl.common.page.base.BaseActivity
-import com.bsnl.common.utils.getVm
+import com.bsnl.common.databinding.LibCommonEmptyLayoutBinding
+import com.bsnl.common.page.base.BaseBindingActivity
 import com.bsnl.sample.export.api.ISampleService
 
 /**
@@ -12,7 +11,7 @@ import com.bsnl.sample.export.api.ISampleService
  * @date   : 2020/10/19
  * @desc   :
  */
-class MainActivity : BaseActivity<MainViewModel>() {
+class MainActivity : BaseBindingActivity<MainViewModel,LibCommonEmptyLayoutBinding>() {
 
     @Autowired
     @JvmField
@@ -30,12 +29,11 @@ class MainActivity : BaseActivity<MainViewModel>() {
         return contentView
     }
 
-    override fun initViewModel(): MainViewModel = getVm()
 
     override fun initData() {
+
     }
 
-    override fun getLayoutId(): Int = 0
 
 
 }

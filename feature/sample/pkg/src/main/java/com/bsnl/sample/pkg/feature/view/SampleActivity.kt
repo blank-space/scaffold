@@ -7,7 +7,6 @@ import com.bsnl.base.utils.showToast
 import com.bsnl.common.iface.OnItemClickListener
 import com.bsnl.common.page.base.BaseListActivity
 import com.bsnl.common.utils.RecyclerViewUtil
-import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.startActivity
 import com.bsnl.sample.export.path.SamplePath
 import com.bsnl.sample.pkg.R
@@ -29,7 +28,6 @@ class SampleActivity : BaseListActivity<SampleViewModel>() {
         }
     }
 
-    private lateinit var itemView: View
 
     override fun registerItem(adapter: MultiTypeAdapter?) {
         adapter?.apply {
@@ -43,7 +41,6 @@ class SampleActivity : BaseListActivity<SampleViewModel>() {
         getTitleView()?.setTitleText(TAG)
     }
 
-    override fun initViewModel(): SampleViewModel = getVm()
 
     override fun initListener() {
         super.initListener()

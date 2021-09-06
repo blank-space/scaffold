@@ -8,7 +8,6 @@ import com.bsnl.common.iface.RefreshType
 import com.bsnl.common.iface.ViewState
 import com.bsnl.common.iface.ViewStateWithMsg
 import com.bsnl.common.page.base.BaseListActivity
-import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.startActivity
 import com.bsnl.sample.pkg.feature.itemViewBinder.CountDownItemViewBinder
 import com.bsnl.sample.pkg.feature.viewmodel.CountDownViewModel
@@ -82,7 +81,6 @@ class CountDownActivity : BaseListActivity<CountDownViewModel>() {
         mAdapter = adapter
     }
 
-    override fun initViewModel(): CountDownViewModel = getVm()
 
     override fun initView() {
         super.initView()

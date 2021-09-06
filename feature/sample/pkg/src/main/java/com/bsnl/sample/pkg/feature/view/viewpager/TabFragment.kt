@@ -2,12 +2,10 @@ package com.bsnl.sample.pkg.feature.view.viewpager
 
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bsnl.base.log.L
 import com.bsnl.base.utils.showToast
 import com.bsnl.common.iface.OnItemClickListener
 import com.bsnl.common.page.base.LazyListFragment
 import com.bsnl.common.utils.RecyclerViewUtil
-import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.newFrgInstance
 import com.bsnl.sample.pkg.R
 import com.bsnl.sample.pkg.feature.constant.Bundle_TITLE
@@ -34,9 +32,6 @@ class TabFragment : LazyListFragment<TabViewModel>() {
     }
 
 
-    override fun initViewModel(): TabViewModel = getVm()
-
-
     override fun lazyInitListener() {
         val title = arguments?.getString(Bundle_TITLE, "1")
         RecyclerViewUtil.setOnItemClickListener(getRecyclerView(), object : OnItemClickListener {
@@ -56,6 +51,5 @@ class TabFragment : LazyListFragment<TabViewModel>() {
         }
     }
 
-    override fun getLayout(): View? =null
 
 }

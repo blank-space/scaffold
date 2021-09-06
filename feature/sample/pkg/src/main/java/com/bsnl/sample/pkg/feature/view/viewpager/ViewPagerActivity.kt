@@ -5,12 +5,11 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
-import com.bsnl.common.page.base.BaseActivity
+import com.bsnl.common.page.base.BaseBindingActivity
 import com.bsnl.common.ui.viewpager.CustomerViewpager
-import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.startActivity
 import com.bsnl.common.viewmodel.StubViewModel
-import com.bsnl.sample.pkg.R
+import com.bsnl.sample.pkg.databinding.FeatureSamplePkgActivityViewpagerBinding
 import kotlinx.android.synthetic.main.feature_sample_pkg_activity_viewpager.*
 
 
@@ -19,7 +18,7 @@ import kotlinx.android.synthetic.main.feature_sample_pkg_activity_viewpager.*
  * @date   : 2020/11/10
  * @desc   : ViewPager+Fragment+RecyclerView+RecyclerViewPool的示例
  */
-class ViewPagerActivity : BaseActivity<StubViewModel>() {
+class ViewPagerActivity : BaseBindingActivity<StubViewModel,FeatureSamplePkgActivityViewpagerBinding>() {
     private val tabs = arrayOf("tab1", "tab2", "tab3")
 
     private var recycledViewPool: RecycledViewPool? =  RecycledViewPool()
@@ -40,7 +39,6 @@ class ViewPagerActivity : BaseActivity<StubViewModel>() {
 
     override fun initView() {
     getTitleView()?.setTitleText(TAG)
-
         //添加tab
         for (i in 0 until tabs.size) {
             tab_layout.addTab(tab_layout.newTab().setText(tabs[i]))
@@ -58,11 +56,6 @@ class ViewPagerActivity : BaseActivity<StubViewModel>() {
         tab_layout.setupWithViewPager(view_pager, false)
     }
 
-    override fun getLayoutId(): Int = R.layout.feature_sample_pkg_activity_viewpager
-
-   // override fun initBindingConfig(layoutId: Int): DataBindingConfig? = null
-
-    override fun initViewModel(): StubViewModel = getVm()
 
     override fun initData() {
     }

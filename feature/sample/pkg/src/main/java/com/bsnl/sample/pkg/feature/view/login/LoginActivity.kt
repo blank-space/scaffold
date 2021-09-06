@@ -9,11 +9,12 @@ import coil.load
 import com.bsnl.base.utils.DisplayUtils
 import com.bsnl.base.utils.GlobalHandler
 import com.bsnl.base.window.KeyboardStatePopupWindow
-import com.bsnl.common.page.base.BaseActivity
+import com.bsnl.common.page.base.BaseBindingActivity
 import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.startActivity
 import com.bsnl.common.viewmodel.StubViewModel
 import com.bsnl.sample.pkg.R
+import com.bsnl.sample.pkg.databinding.FeatureSamplePkgActivityLoginBinding
 import com.lxj.xpopup.util.KeyboardUtils
 import kotlinx.android.synthetic.main.feature_sample_pkg_activity_login.*
 
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.feature_sample_pkg_activity_login.*
  * @date   : 2020/11/4
  * @desc   :
  */
-class LoginActivity : BaseActivity<StubViewModel>() {
+class LoginActivity : BaseBindingActivity<StubViewModel,FeatureSamplePkgActivityLoginBinding>() {
 
 
     companion object {
@@ -59,10 +60,6 @@ class LoginActivity : BaseActivity<StubViewModel>() {
         }
     }
 
-    override fun getLayoutId(): Int = R.layout.feature_sample_pkg_activity_login
-
-
-    override fun initViewModel(): StubViewModel = getVm()
 
     override fun initData() {
         iv_header.load(avatar)
@@ -86,7 +83,7 @@ class LoginActivity : BaseActivity<StubViewModel>() {
             KeyboardStatePopupWindow.OnKeyboardStateChangerListener {
             override fun onClose() {
                 isSystemHandler = true
-                GlobalHandler.postDelayed(Runnable { scrollView.smoothScrollTo(0, 0) }, 100)
+                GlobalHandler.postDelayed({ scrollView.smoothScrollTo(0, 0) }, 100)
 
             }
 

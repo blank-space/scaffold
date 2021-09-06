@@ -10,7 +10,7 @@ import com.drakeet.multitype.ItemViewDelegate
 /**
  * @author : LeeZhaoXing
  * @date   : 2021/9/3
- * @desc   :
+ * @desc   : 简化ViewHolder的创建
  */
 abstract class BindingViewDelegate<T, VB : ViewBinding> : ItemViewDelegate<T, BindingViewDelegate.BindingViewHolder<VB>>() {
 

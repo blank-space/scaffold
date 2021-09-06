@@ -27,7 +27,7 @@ class SampleViewModel : BaseListViewModel() {
             val data = BaseHttpResult<PokemonListResponse>()
             response.collectLatest {
                 data.data = it
-                data.code = 0.toString()
+                data.code = "000000"
                 data.msg = "ok"
             }
             emit(data)
