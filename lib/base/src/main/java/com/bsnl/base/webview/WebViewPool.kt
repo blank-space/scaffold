@@ -1,5 +1,6 @@
 package com.bsnl.base.webview
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Build.VERSION_CODES.KITKAT
 import android.view.ViewGroup
@@ -147,6 +148,7 @@ class WebViewPool private constructor() {
         }
 
 
+        @SuppressLint("SetJavaScriptEnabled")
         fun setupWebView(webView: WebView) {
             val params: ViewGroup.LayoutParams = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,

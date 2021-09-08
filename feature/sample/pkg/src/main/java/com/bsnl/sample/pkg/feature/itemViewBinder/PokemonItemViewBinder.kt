@@ -35,7 +35,6 @@ class PokemonItemViewBinder(private val mView: View? = null) :
         holder.tvName.text = item.name
         holder.ivAvatar.load(item.getImageUrl()) {
             crossfade(true)
-            placeholder(R.drawable.ic_goods_placeholder)
             //圆形
             //transformations(CircleCropTransformation())
             //圆角

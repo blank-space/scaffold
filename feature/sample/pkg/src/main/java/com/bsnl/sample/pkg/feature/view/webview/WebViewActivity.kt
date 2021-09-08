@@ -1,7 +1,6 @@
 package com.bsnl.sample.pkg.feature.view.webview
 
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.net.http.SslError
 import android.os.Build
@@ -15,10 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.bsnl.base.log.L
 import com.bsnl.base.utils.DisplayUtils
 import com.bsnl.base.webview.WebViewPool
-import com.bsnl.common.utils.startActivity
 import com.bsnl.sample.export.path.SamplePath
 import com.bsnl.sample.pkg.R
 import com.bsnl.sample.pkg.feature.constant.Bundle_URL
@@ -38,9 +35,8 @@ class WebViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ARouter.getInstance().inject(this)
-        DisplayUtils.setFitsSystemWindows(this, true)
+        DisplayUtils.setFitsSystemWindows(this, false)
         setContentView(R.layout.feature_sample_pkg_activity_web)
-        ARouter.getInstance().inject(this)
         mWebviewRoot = findViewById(R.id.webview_root_fl)
         mWebView = WebViewPool.instance?.mWebView
         mWebviewRoot!!.addView(mWebView)
@@ -98,10 +94,7 @@ class WebViewActivity : AppCompatActivity() {
                 super.onReceivedSslError(view, handler, error)
 
                 //https忽略证书问题
-                if (handler != null) {
-                    //表示等待证书响应
-                    handler.proceed();
-                }
+                handler?.proceed()
             }
 
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {

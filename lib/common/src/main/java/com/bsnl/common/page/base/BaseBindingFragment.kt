@@ -50,6 +50,7 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
     private var layoutDelegateImpl: WrapLayoutDelegateImpl? = null
     private var mTitleView: ITitleView? = null
     private var hideOther = true
+    val binding: VB by lazy { inflateBindingWithGeneric(layoutInflater)}
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -304,7 +305,6 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
     }
 
     fun getLayout(): View {
-        val binding: VB = inflateBindingWithGeneric(layoutInflater)
         return binding.root
     }
 

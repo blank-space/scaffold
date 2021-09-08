@@ -17,6 +17,7 @@ import com.bsnl.sample.export.path.SamplePath
 import com.bsnl.sample.pkg.feature.view.countdowm.CountDownActivity
 import com.bsnl.sample.pkg.feature.view.gson.GsonDemo
 import com.bsnl.sample.pkg.feature.view.gson.GsonDemoActivity
+import com.bsnl.sample.pkg.feature.view.viewpager.ViewPagerActivity
 
 /**
  * @author : LeeZhaoXing
@@ -80,6 +81,16 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
         addView(this)
     }
 
+    val viewPager2 = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
+        text = "ViewPager2"
+        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40.dp)
+        (layoutParams as LayoutParams).topMargin = 5.dp
+        onClick = {
+            ViewPagerActivity.startAction(context)
+        }
+        addView(this)
+    }
+
 
     override fun onMeasureChildren(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         forEachAutoMeasure()
@@ -97,8 +108,9 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
         }
         listItem.let { it.layout(header.left, header.bottom + it.marginTop) }
         webView.let { it.layout(listItem.left, listItem.bottom + it.marginTop) }
-        gson.let { it.layout(listItem.left, webView.bottom + it.marginTop) }
-        countdown.let { it.layout(listItem.left, gson.bottom + it.marginTop) }
+        //gson.let { it.layout(listItem.left, webView.bottom + it.marginTop) }
+        countdown.let { it.layout(listItem.left, webView.bottom + it.marginTop) }
+        viewPager2.let { it.layout(listItem.left, countdown.bottom + it.marginTop) }
     }
 }
 

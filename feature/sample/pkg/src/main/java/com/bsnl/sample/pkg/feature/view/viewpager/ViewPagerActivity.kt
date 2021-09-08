@@ -1,16 +1,15 @@
 package com.bsnl.sample.pkg.feature.view.viewpager
 
 import android.content.Context
-import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import com.bsnl.common.page.base.BaseBindingActivity
-import com.bsnl.common.ui.viewpager.CustomerViewpager
 import com.bsnl.common.utils.startActivity
 import com.bsnl.common.viewmodel.StubViewModel
 import com.bsnl.sample.pkg.databinding.FeatureSamplePkgActivityViewpagerBinding
-import kotlinx.android.synthetic.main.feature_sample_pkg_activity_viewpager.*
+import com.bsnl.sample.pkg.feature.view.FirstFragment
+import com.drakeet.multitype.MultiTypeAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 
 
 /**
@@ -18,10 +17,18 @@ import kotlinx.android.synthetic.main.feature_sample_pkg_activity_viewpager.*
  * @date   : 2020/11/10
  * @desc   : ViewPager+Fragment+RecyclerView+RecyclerViewPool的示例
  */
-class ViewPagerActivity : BaseBindingActivity<StubViewModel,FeatureSamplePkgActivityViewpagerBinding>() {
-    private val tabs = arrayOf("tab1", "tab2", "tab3")
+class ViewPagerActivity :
+    BaseBindingActivity<StubViewModel, FeatureSamplePkgActivityViewpagerBinding>() {
+    private val tabs = listOf("tab1", "tab2", "tab3")
 
-    private var recycledViewPool: RecycledViewPool? =  RecycledViewPool()
+    private var recycledViewPool: RecycledViewPool? = RecycledViewPool()
+    private val fragments= arrayListOf<Fragment>(TabFragment.newInstance(""),FirstFragment(),FirstFragment())
+
+    private val tabAdapter by lazy {
+        TabAdapter(this,fragments)
+    }
+
+    private  val mAdapter = MultiTypeAdapter(tabs)
 
     /**
      * MultiTypeAdapter没提供设置viewType的api,viewType等于该VH在的添加到集合时候的位置(index),所以这边写 "0"
@@ -29,7 +36,7 @@ class ViewPagerActivity : BaseBindingActivity<StubViewModel,FeatureSamplePkgActi
      * 备注:不建议把RecycledViewPool放置在ViewModel中提供给V层，ViewModel不应该持有跟Context引用，避免内存泄漏
      */
     fun getRvPool(): RecycledViewPool? {
-        if(recycledViewPool==null) {
+        if (recycledViewPool == null) {
             recycledViewPool = RecycledViewPool()
             recycledViewPool!!.setMaxRecycledViews(0, 8)
         }
@@ -38,27 +45,21 @@ class ViewPagerActivity : BaseBindingActivity<StubViewModel,FeatureSamplePkgActi
 
 
     override fun initView() {
-    getTitleView()?.setTitleText(TAG)
-        //添加tab
-        for (i in 0 until tabs.size) {
-            tab_layout.addTab(tab_layout.newTab().setText(tabs[i]))
-        }
+        getTitleView()?.setTitleText(TAG)
 
-        //设置Title和创建Fragment
-        view_pager.setInitFragmentListener(object : CustomerViewpager.OnInitFragmentListener {
-            override fun getFragment(position: Int): Fragment {
-                return TabFragment.newInstance("Tab_${System.currentTimeMillis()}")
-            }
-            override fun getTabs(): Array<String> = tabs
-        }, supportFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
+        /** 一般View的写法，跟使用RecyclerView一致 */
+        //mAdapter.register(StringItemViewBinder())
 
-        //设置TabLayout和ViewPager联动
-        tab_layout.setupWithViewPager(view_pager, false)
+        binding.viewPager2.adapter = tabAdapter
+        binding.viewPager2.offscreenPageLimit = 2
+
+        TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, position ->
+            tab.text = "Tab ${(position + 1)}"
+        }.attach()
     }
 
 
-    override fun initData() {
-    }
+    override fun initData() {}
 
     companion object {
         fun startAction(context: Context) {
@@ -66,5 +67,4 @@ class ViewPagerActivity : BaseBindingActivity<StubViewModel,FeatureSamplePkgActi
         }
     }
 
-    override fun getLayout(): View? = null
 }

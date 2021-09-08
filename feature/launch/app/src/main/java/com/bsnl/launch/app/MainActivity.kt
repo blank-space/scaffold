@@ -11,13 +11,13 @@ import com.bsnl.sample.export.api.ISampleService
  * @date   : 2020/10/19
  * @desc   :
  */
-class MainActivity : BaseBindingActivity<MainViewModel,LibCommonEmptyLayoutBinding>() {
+class MainActivity : BaseBindingActivity<MainViewModel, LibCommonEmptyLayoutBinding>() {
 
     @Autowired
     @JvmField
     var sampleService: ISampleService? = null
 
-    private val contentView by lazy { MainLayout(this,sampleService) }
+    private val contentView by lazy { MainLayout(this, sampleService) }
 
     override fun initView() {
 
@@ -29,11 +29,8 @@ class MainActivity : BaseBindingActivity<MainViewModel,LibCommonEmptyLayoutBindi
         return contentView
     }
 
-
+    override fun isNeedInjectARouter() = true
     override fun initData() {
 
     }
-
-
-
 }

@@ -39,6 +39,7 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
     var mActivity: WeakReference<Activity>? = null
     private var layoutDelegateImpl: WrapLayoutDelegateImpl? = null
     private var hideOther = true
+    val binding: VB by lazy { inflateBindingWithGeneric(layoutInflater)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -249,7 +250,6 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
     }
 
     open fun getLayout(): View? {
-        val binding: VB = inflateBindingWithGeneric(layoutInflater)
         return binding.root
     }
 

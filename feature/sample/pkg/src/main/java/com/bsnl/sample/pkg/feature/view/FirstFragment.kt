@@ -2,10 +2,6 @@ package com.bsnl.sample.pkg.feature.view
 
 import android.view.View
 import com.bsnl.common.page.base.BaseBindingFragment
-import com.bsnl.common.page.base.BaseFragment
-import com.bsnl.common.utils.getVm
-import com.bsnl.sample.pkg.R
-import com.bsnl.sample.pkg.databinding.FeatureSamplePkgActivitySampleBinding
 import com.bsnl.sample.pkg.databinding.FeatureSamplePkgFragmentFirstBinding
 import com.bsnl.sample.pkg.feature.viewmodel.TestViewModel
 
@@ -29,7 +25,6 @@ class FirstFragment : BaseBindingFragment<TestViewModel,FeatureSamplePkgFragment
 
         }
     }
-
 
 
     override fun initView(view: View) {}

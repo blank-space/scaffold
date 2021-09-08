@@ -20,8 +20,6 @@ dependencies {
     api Config.mmkv
     api Config.permissionx
     api Config.timber
-    /*api Config.glide_runtime
-    kapt Config.glide_compiler*/
     api Config.epic
     api Config.aRouter
     kapt Config.aRouter_compiler
