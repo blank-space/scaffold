@@ -1,24 +1,14 @@
 package com.bsnl.common.utils
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.TypedValue
-import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.*
-import androidx.viewbinding.ViewBinding
-import com.bsnl.base.dsl.dp
-import com.bsnl.base.utils.showToast
-import com.bsnl.common.iface.ViewState
-import com.bsnl.common.iface.ViewStateWithMsg
-
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 
 /**
  * @author : LeeZhaoXing

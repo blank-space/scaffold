@@ -10,6 +10,7 @@ import com.bsnl.common.utils.RecyclerViewUtil
 import com.bsnl.common.utils.startActivity
 import com.bsnl.sample.export.path.SamplePath
 import com.bsnl.sample.pkg.R
+import com.bsnl.sample.pkg.feature.itemViewBinder.ArticleItemViewBinder
 import com.bsnl.sample.pkg.feature.itemViewBinder.PokemonItemViewBinder
 import com.bsnl.sample.pkg.feature.viewmodel.SampleViewModel
 import com.drakeet.multitype.MultiTypeAdapter
@@ -31,7 +32,7 @@ class SampleActivity : BaseListActivity<SampleViewModel>() {
 
     override fun registerItem(adapter: MultiTypeAdapter?) {
         adapter?.apply {
-            register(PokemonItemViewBinder())
+            register(ArticleItemViewBinder())
             //setHasStableIds(true)
         }
     }

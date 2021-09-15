@@ -10,8 +10,8 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.marginTop
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.launcher.ARouter
-import com.bsnl.base.dsl.onClick
 import com.bsnl.base.widget.CustomLayout
+import com.bsnl.base.widget.onClick
 import com.bsnl.sample.export.api.ISampleService
 import com.bsnl.sample.export.path.SamplePath
 import com.bsnl.sample.pkg.feature.view.countdowm.CountDownActivity

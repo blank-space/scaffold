@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="base_str_none">Oops!</string>
+    <string name="base_loading">loading...</string>
+    <string name="base_load_fail">load fail</string>
+    <string name="base_load_failed_no_network">no network</string>
+    <string name="base_empty">empty</string>
+</resources>

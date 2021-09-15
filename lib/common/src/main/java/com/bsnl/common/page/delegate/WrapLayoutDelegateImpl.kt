@@ -15,13 +15,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.bsnl.base.dsl.dp
 import com.bsnl.base.log.L
 import com.bsnl.common.R
 import com.bsnl.common.iface.*
 import com.bsnl.common.page.delegate.iface.OnViewStateListener
 import com.bsnl.common.page.delegate.iface.WrapLayoutDelegate
 import com.bsnl.common.refreshLayout.RefreshLayoutProxy
+import com.bsnl.common.utils.dp
 import com.bsnl.common.viewmodel.RequestType
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.impl.LoadingPopupView

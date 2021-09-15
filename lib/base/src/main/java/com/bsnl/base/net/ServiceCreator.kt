@@ -6,6 +6,7 @@ import com.bsnl.base.net.interceptors.RetryInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.paradisehell.convex.converter.ConvexConverterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.security.SecureRandom
@@ -21,7 +22,7 @@ import kotlin.jvm.Throws
  * @desc   : Retrofit封装类，获取Service
  */
 object ServiceCreator {
-    var BASE_URL = "https://pokeapi.co/api/v2/"
+    var BASE_URL = "https://www.wanandroid.com/"
     private const val TIME_OUT_SECONDS = 20
 
     //不同的项目或许需要不同的拦截器，自行扩展即可
@@ -37,6 +38,7 @@ object ServiceCreator {
         retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(getClient())
+            .addConverterFactory(ConvexConverterFactory())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         return  retrofit

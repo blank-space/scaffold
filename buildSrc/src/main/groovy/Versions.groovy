@@ -34,7 +34,7 @@ class Versions {
     static permissionx = "1.4.0"
     static liveEventBus = "1.7.2"
     static leakCanary = "2.5"
-    static gson = "2.8.5"
+    static gson = "2.8.8"
     static multidex = "2.0.1"
     static multitype = "4.2.0"
     static smartRefreshLayout = "2.0.1"
@@ -45,6 +45,7 @@ class Versions {
     static background = "1.6.5"
     static xpop = "2.4.3"
     static coil ="1.3.2"
+    static convex = "1.0.0"
 
 }
 

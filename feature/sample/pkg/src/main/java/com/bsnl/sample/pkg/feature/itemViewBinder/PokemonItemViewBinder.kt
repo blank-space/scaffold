@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
-import com.bsnl.base.dsl.dp
 import com.bsnl.base.log.L
+import com.bsnl.common.utils.dp
 import com.bsnl.sample.pkg.R
 import com.bsnl.sample.pkg.feature.data.model.PokeItemModel
 import com.drakeet.multitype.ItemViewBinder

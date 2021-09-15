@@ -24,5 +24,6 @@ dependencies {
     api Config.aRouter
     kapt Config.aRouter_compiler
     api project(":lib:faster")
+    api Config.convex
 
 }

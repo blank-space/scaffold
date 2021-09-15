@@ -56,5 +56,6 @@ class Config {
     static background = "com.noober.background:core:${Versions.background}"
     static xpopup = "com.github.li-xiaojun:XPopup:${Versions.xpop}"
     static coil ="io.coil-kt:coil:${Versions.coil}"
+    static convex ="org.paradisehell.convex:convex:${Versions.convex}"
 
 }

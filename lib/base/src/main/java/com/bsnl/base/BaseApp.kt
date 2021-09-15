@@ -38,16 +38,9 @@ open class BaseApp : Application(), ViewModelStoreOwner {
         ARouter.init(application)
     }
 
-
-
-
     override fun getViewModelStore(): ViewModelStore {
         return mAppViewModelStore
     }
-
-
-
-
 
 }
 

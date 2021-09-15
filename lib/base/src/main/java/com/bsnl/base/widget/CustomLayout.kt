@@ -127,3 +127,11 @@ fun View?.performHapticFeedbackSafely() {
         t.message?.let { Log.e("@@", it) }
     }
 }
+
+var View.onClick: (View) -> Unit
+    get() {
+        return {}
+    }
+    set(value) {
+        setOnClickListener { v -> value(v) }
+    }

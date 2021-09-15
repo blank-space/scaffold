@@ -14,10 +14,10 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.*
 import androidx.appcompat.widget.Toolbar
-import com.bsnl.base.dsl.dp
 import com.bsnl.base.utils.KeyboardUtils
 import com.bsnl.common.R
 import com.bsnl.common.iface.ITitleView
+import com.bsnl.common.utils.dp
 
 /**
  * @author : LeeZhaoXing
@@ -187,7 +187,7 @@ class ToolbarTitleView : LinearLayout, ITitleView {
             LayoutParams.WRAP_CONTENT,
             LayoutParams.MATCH_PARENT
         )
-        param.rightMargin = 12.dp
+        param.rightMargin = 12.dp.toInt()
         view?.setOnClickListener(onClickListener)
         mToolbarRightLayout!!.addView(view, param)
         return this
