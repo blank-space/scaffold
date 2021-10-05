@@ -8,14 +8,13 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.marginTop
-import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.launcher.ARouter
+import com.bsnl.base.utils.AdaptScreenUtils
 import com.bsnl.base.widget.CustomLayout
 import com.bsnl.base.widget.onClick
 import com.bsnl.sample.export.api.ISampleService
 import com.bsnl.sample.export.path.SamplePath
 import com.bsnl.sample.pkg.feature.view.countdowm.CountDownActivity
-import com.bsnl.sample.pkg.feature.view.gson.GsonDemo
 import com.bsnl.sample.pkg.feature.view.gson.GsonDemoActivity
 import com.bsnl.sample.pkg.feature.view.viewpager.ViewPagerActivity
 
@@ -32,23 +31,22 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
         scaleType = ImageView.ScaleType.FIT_XY
         layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 180.dp)
         setImageResource(R.mipmap.feature_launch_app_ic_head)
-        addView(this)
+        this@MainLayout.addView(this)
     }
 
     val avatar = AppCompatImageView(context).apply {
         setImageResource(R.drawable.feature_launch_app_ic_logo)
         layoutParams = LayoutParams(80.dp, 80.dp)
-        addView(this)
+        this@MainLayout.addView(this)
     }
 
     val listItem = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
         text = "ListView"
         layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40.dp)
         onClick = {
-            //vehicleService?.startListViewActivity()
             ARouter.getInstance().build(SamplePath.A_LISTVIEW_ACTIVITY).navigation()
         }
-        addView(this)
+        this@MainLayout.addView(this)
     }
 
     val webView = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
@@ -68,7 +66,7 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
         onClick = {
             GsonDemoActivity.actionStart(context)
         }
-        addView(this)
+        this@MainLayout.addView(this)
     }
 
     val countdown = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
@@ -78,7 +76,7 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
         onClick = {
             CountDownActivity.actionStart(context)
         }
-        addView(this)
+        this@MainLayout.addView(this)
     }
 
     val viewPager2 = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
@@ -88,7 +86,7 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
         onClick = {
             ViewPagerActivity.startAction(context)
         }
-        addView(this)
+        this@MainLayout.addView(this)
     }
 
 
@@ -108,7 +106,6 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
         }
         listItem.let { it.layout(header.left, header.bottom + it.marginTop) }
         webView.let { it.layout(listItem.left, listItem.bottom + it.marginTop) }
-        //gson.let { it.layout(listItem.left, webView.bottom + it.marginTop) }
         countdown.let { it.layout(listItem.left, webView.bottom + it.marginTop) }
         viewPager2.let { it.layout(listItem.left, countdown.bottom + it.marginTop) }
     }

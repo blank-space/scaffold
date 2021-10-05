@@ -25,5 +25,6 @@ dependencies {
     kapt Config.aRouter_compiler
     api project(":lib:faster")
     api Config.convex
+    api Config.coordinatorlayout
 
 }

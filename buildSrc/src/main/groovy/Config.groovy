@@ -55,7 +55,11 @@ class Config {
     static aRouter_compiler = "com.alibaba:arouter-compiler:${Versions.router}"
     static background = "com.noober.background:core:${Versions.background}"
     static xpopup = "com.github.li-xiaojun:XPopup:${Versions.xpop}"
-    static coil ="io.coil-kt:coil:${Versions.coil}"
-    static convex ="org.paradisehell.convex:convex:${Versions.convex}"
+    static coil = "io.coil-kt:coil:${Versions.coil}"
+    static convex = "org.paradisehell.convex:convex:${Versions.convex}"
+    static activity_ktx = "androidx.activity:activity-ktx:${Versions.activity_ktx}"
+    static fragment_ktx = "androidx.fragment:fragment-ktx:${Versions.fragment_ktx}"
+    static coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:${Versions.coordinatorlayout}"
+
 
 }

@@ -2,6 +2,7 @@ package com.bsnl.common.page.base
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -12,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bsnl.base.manager.KeyboardStateManager
+import com.bsnl.base.utils.AdaptScreenUtils
+import com.bsnl.base.utils.DisplayUtils
 import com.bsnl.common.iface.*
 import com.bsnl.common.page.delegate.WrapLayoutDelegateImpl
 import com.bsnl.common.page.delegate.iface.OnViewStateListener
@@ -309,4 +312,12 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
         return !(event.x > left && event.x < right && event.y > top && event.y < bottom)
     }
 
+    /** 屏幕适配 */
+    override fun getResources(): Resources {
+        return if (DisplayUtils.isPortrait()) {
+            AdaptScreenUtils.adaptWidth(super.getResources(), 360)
+        } else {
+            AdaptScreenUtils.adaptHeight(super.getResources(), 640)
+        }
+    }
 }

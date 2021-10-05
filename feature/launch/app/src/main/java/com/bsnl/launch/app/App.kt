@@ -1,4 +1,3 @@
-
 package com.bsnl.launch.app
 
 import android.graphics.Bitmap
@@ -32,8 +31,21 @@ class App : BaseApp() {
         initTasks()
         registerActivityLifecycleCallbacks(ActivityLifecycleCallback())
 
-        DexposedBridge.findAndHookMethod(ImageView::class.java, "setImageBitmap", Bitmap::class.java, BitmapsHook())
-        DexposedBridge.findAndHookMethod(ImageView::class.java, "setImageDrawable", Drawable::class.java, DrawableHook())
+        //不用于线上，避免出现兼容问题
+        if (BuildConfig.DEBUG) {
+            DexposedBridge.findAndHookMethod(
+                ImageView::class.java,
+                "setImageBitmap",
+                Bitmap::class.java,
+                BitmapsHook()
+            )
+            DexposedBridge.findAndHookMethod(
+                ImageView::class.java,
+                "setImageDrawable",
+                Drawable::class.java,
+                DrawableHook()
+            )
+        }
 
         loop()
     }

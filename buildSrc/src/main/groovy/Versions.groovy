@@ -44,9 +44,11 @@ class Versions {
     static router = "1.5.1"
     static background = "1.6.5"
     static xpop = "2.4.3"
-    static coil ="1.3.2"
+    static coil = "1.3.2"
     static convex = "1.0.0"
-
+    static activity_ktx = "1.4.0-alpha02"
+    static fragment_ktx = "1.4.0-alpha09"
+    static coordinatorlayout = "1.1.0"
 }
 
 

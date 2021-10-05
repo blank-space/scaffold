@@ -23,7 +23,6 @@ import com.bsnl.sample.pkg.R
  * @desc   :
  */
 private val MARGIN = 18.dp.toInt()
-
 class ArticleLayout(context: Context,attrs: AttributeSet? = null) : CustomLayout(context,attrs) {
     private val textStyleId = R.style.lib_base_article_text
 

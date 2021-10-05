@@ -1,5 +1,6 @@
 package com.bsnl.sample.pkg.feature.transformer
 
+import com.bsnl.base.utils.showToast
 import com.bsnl.common.BaseResponse
 import com.google.gson.Gson
 import com.google.gson.JsonElement
@@ -22,8 +23,7 @@ class WanAndroidConvexTransformer : ConvexTransformer {
     override fun transform(original: InputStream): InputStream {
         val response = gson.fromJson<BaseResponse<JsonElement>>(
             original.reader(),
-            object : TypeToken<BaseResponse<JsonElement>>() {
-            }.type
+            object : TypeToken<BaseResponse<JsonElement>>() {}.type
         )
         if (response.errorCode == 0 && response.data != null) {
             return response.data.toString().byteInputStream()

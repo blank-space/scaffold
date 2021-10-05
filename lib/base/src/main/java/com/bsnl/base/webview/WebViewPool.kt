@@ -86,7 +86,7 @@ class WebViewPool private constructor() {
             view?.removeView(this)
             loadUrl("about:blank")
             stopLoading()
-            setWebChromeClient(null)
+            webChromeClient = null
             webViewClient = null
             clearCache(true)
             clearHistory()

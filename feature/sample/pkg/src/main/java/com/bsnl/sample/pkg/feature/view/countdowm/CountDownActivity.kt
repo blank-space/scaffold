@@ -1,8 +1,10 @@
 package com.bsnl.sample.pkg.feature.view.countdowm
 
 import android.content.Context
+import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
+import com.bsnl.base.log.L
 import com.bsnl.base.utils.GlobalAsyncHandler
 import com.bsnl.common.iface.RefreshType
 import com.bsnl.common.iface.ViewState
@@ -21,21 +23,7 @@ import com.drakeet.multitype.MultiTypeAdapter
 class CountDownActivity : BaseListActivity<CountDownViewModel>() {
     private val countDownItemViewBinder by lazy { CountDownItemViewBinder() }
     private var mAdapter: MultiTypeAdapter? = null
-
-    /**
-     * 用来执行倒计时
-     */
-    private val timerHandler = Handler(Looper.getMainLooper())
-
-    /**
-     * 剩余倒计时
-     */
-    private var delay = 0L
-
-    private val timerRunnable = Runnable {
-        delay -= 1000
-        updateTimerState()
-    }
+    private var countDownTimer: CountDownTimer? = null
 
     private fun updateTimerState() {
         val data = mViewModel.providerData() as MutableList<Long>
@@ -44,29 +32,45 @@ class CountDownActivity : BaseListActivity<CountDownViewModel>() {
         for (i in 0 until data.size) {
             if (data[i] > 0) {
                 ++needCountDownItemSize
-                data[i] = data[i]-1000
+                data[i] = data[i] - 1000
                 needUpdateItem.add(i)
             }
         }
-        if(needCountDownItemSize>0){
-            needUpdateItem.forEach{
-                mAdapter?.notifyItemChanged(it,"update")
+        if (needCountDownItemSize > 0) {
+            needUpdateItem.forEach {
+                mAdapter?.notifyItemChanged(it, "update")
             }
-            startTimer()
-        }else{
-            endTimer()
         }
 
     }
 
-    // 开始倒计时
     private fun startTimer() {
-        timerHandler.postDelayed(timerRunnable, 1000)
+        countDownTimer = object : CountDownTimer(getMaxDuration(), 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                updateTimerState()
+            }
+
+            override fun onFinish() {
+                endTimer()
+            }
+        }
+        countDownTimer?.start()
     }
 
-    // 结束倒计时
+    private fun getMaxDuration(): Long {
+        val data = mViewModel.providerData() as MutableList<Long>
+        var duration = 0L
+        for (i in 0 until data.size) {
+            if (data[i] > 0 && data[i] > duration) {
+                duration = data[i]
+            }
+        }
+        L.d("max duration is : $duration")
+        return duration
+    }
+
     private fun endTimer() {
-        timerHandler.removeCallbacks(timerRunnable)
+        countDownTimer?.cancel()
     }
 
 
@@ -95,10 +99,15 @@ class CountDownActivity : BaseListActivity<CountDownViewModel>() {
     override fun onGetDataFinish(data: Any?) {
         super.onGetDataFinish(data)
         GlobalAsyncHandler.postDelayed(300) {
-            //countDownItemViewBinder.startCountDown(23333)
             startTimer()
 
         }
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        countDownTimer?.cancel()
+        countDownTimer = null
     }
 }
