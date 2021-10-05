@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: "com.didiglobal.booster"
 apply from: "../../../buildCommon.gradle"
+apply plugin: 'com.alibaba.arouter'
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
