@@ -49,6 +49,7 @@ class Versions {
     static activity_ktx = "1.4.0-alpha02"
     static fragment_ktx = "1.4.0-alpha09"
     static coordinatorlayout = "1.1.0"
+    static loadSir = "1.3.8"
 }
 
 

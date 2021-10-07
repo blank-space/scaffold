@@ -30,7 +30,7 @@
         android:gravity="center"
         android:paddingLeft="69dp"
         android:paddingRight="69dp"
-        android:text="暂无数据"
+        android:text="Boss! something is wrong."
         android:textColor="@color/lib_common_background_color"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"

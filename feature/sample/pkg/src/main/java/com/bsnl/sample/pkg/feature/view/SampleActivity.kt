@@ -6,6 +6,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.bsnl.base.utils.showToast
 import com.bsnl.common.iface.OnItemClickListener
 import com.bsnl.common.page.base.BaseListActivity
+import com.bsnl.common.page.base.SimpleListActivity
 import com.bsnl.common.utils.RecyclerViewUtil
 import com.bsnl.common.utils.startActivity
 import com.bsnl.sample.export.path.SamplePath
@@ -21,7 +22,7 @@ import com.drakeet.multitype.MultiTypeAdapter
  * @desc   :
  */
 @Route(path = SamplePath.A_LISTVIEW_ACTIVITY)
-class SampleActivity : BaseListActivity<SampleViewModel>() {
+class SampleActivity : SimpleListActivity<SampleViewModel>() {
 
     companion object {
         fun actionStart(context: Context) {

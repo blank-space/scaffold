@@ -1,7 +1,6 @@
 package com.bsnl.common.page.base
 
 import android.view.View
-import androidx.viewbinding.ViewBinding
 import com.bsnl.common.viewmodel.BaseListViewModel
 
 
@@ -10,7 +9,7 @@ import com.bsnl.common.viewmodel.BaseListViewModel
  * @date   : 2020/9/16
  * @desc   : 懒加载列表
  */
-abstract class LazyListFragment<T : BaseListViewModel, VB : ViewBinding> : BaseListFragment<T,VB>() {
+abstract class SimpleLazyListFragment<T : BaseListViewModel> : SimpleListFragment<T>() {
     protected var mHasInit = false
 
 

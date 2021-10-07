@@ -2,6 +2,7 @@ package com.bsnl.launch.app
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.hardware.Camera
 import android.os.Looper
 import android.util.Log
 import android.widget.ImageView
@@ -9,12 +10,16 @@ import com.bsnl.base.ActivityLifecycleCallback
 import com.bsnl.base.BaseApp
 import com.bsnl.base.log.L
 import com.bsnl.base.utils.GlobalHandler
+import com.bsnl.common.callback.EmptyLayoutCallback
+import com.bsnl.common.callback.ErrorLayoutCallback
+import com.bsnl.common.callback.LoadingLayoutCallback
 import com.bsnl.faster.TaskDispatcher
 import com.bsnl.launch.app.task.InitLogTask
 import com.bsnl.launch.app.task.InitMVVMTask
 import com.bsnl.launch.app.task.InitWebViewTask
 import com.bsnl.sample.pkg.feature.hook.BitmapsHook
 import com.bsnl.sample.pkg.feature.hook.DrawableHook
+import com.kingja.loadsir.core.LoadSir
 import de.robv.android.xposed.DexposedBridge
 
 
@@ -30,7 +35,12 @@ class App : BaseApp() {
         super.onCreate()
         initTasks()
         registerActivityLifecycleCallbacks(ActivityLifecycleCallback())
+        initHookMethods()
+        initLoadSir()
+        loop()
+    }
 
+    private fun initHookMethods() {
         //不用于线上，避免出现兼容问题
         if (BuildConfig.DEBUG) {
             DexposedBridge.findAndHookMethod(
@@ -46,10 +56,16 @@ class App : BaseApp() {
                 DrawableHook()
             )
         }
-
-        loop()
     }
 
+    private fun initLoadSir() {
+        LoadSir.beginBuilder()
+            .addCallback(ErrorLayoutCallback())
+            .addCallback(EmptyLayoutCallback())
+            .addCallback(LoadingLayoutCallback())
+            .setDefaultCallback(LoadingLayoutCallback::class.java)
+            .commit()
+    }
 
     private fun initTasks() {
         TaskDispatcher.init(this)

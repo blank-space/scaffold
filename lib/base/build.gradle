@@ -26,5 +26,7 @@ dependencies {
     api project(":lib:faster")
     api Config.convex
     api Config.coordinatorlayout
+    api Config.loadsir
+
 
 }

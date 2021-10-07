@@ -21,6 +21,7 @@ class ViewPagerActivity :
     BaseBindingActivity<StubViewModel, FeatureSamplePkgActivityViewpagerBinding>() {
     private val tabs = listOf("tab1", "tab2", "tab3")
 
+
     private var recycledViewPool: RecycledViewPool? = RecycledViewPool()
     private val fragments= arrayListOf<Fragment>(TabFragment.newInstance(""),FirstFragment(),FirstFragment())
 
@@ -43,6 +44,9 @@ class ViewPagerActivity :
         return recycledViewPool
     }
 
+    override fun isUseDefaultLoadService(): Boolean {
+        return false
+    }
 
     override fun initView() {
         getTitleView()?.setTitleText(TAG)

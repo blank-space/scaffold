@@ -30,5 +30,6 @@ android {
 
 dependencies {
     api project(':lib:common')
+    api project(':feature:constraint:export')
     kapt Config.aRouter_compiler
 }

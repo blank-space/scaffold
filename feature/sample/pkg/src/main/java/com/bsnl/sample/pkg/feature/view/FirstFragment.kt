@@ -1,6 +1,9 @@
 package com.bsnl.sample.pkg.feature.view
 
 import android.view.View
+import com.bsnl.base.utils.GlobalAsyncHandler
+import com.bsnl.common.iface.ViewState
+import com.bsnl.common.iface.ViewStateWithMsg
 import com.bsnl.common.page.base.BaseBindingFragment
 import com.bsnl.sample.pkg.databinding.FeatureSamplePkgFragmentFirstBinding
 import com.bsnl.sample.pkg.feature.viewmodel.TestViewModel
@@ -10,7 +13,7 @@ import com.bsnl.sample.pkg.feature.viewmodel.TestViewModel
  * @date   : 2020/10/26
  * @desc   :
  */
-class FirstFragment : BaseBindingFragment<TestViewModel,FeatureSamplePkgFragmentFirstBinding>() {
+class FirstFragment : BaseBindingFragment<TestViewModel, FeatureSamplePkgFragmentFirstBinding>() {
 
     /**
      * 在fragment中，LifecycleOwner不能使用this,而是viewLifecycleOwner。
@@ -23,6 +26,9 @@ class FirstFragment : BaseBindingFragment<TestViewModel,FeatureSamplePkgFragment
     override fun initData() {
         mViewModel.count.observe(viewLifecycleOwner) {
 
+        }
+        GlobalAsyncHandler.postDelayed(1000) {
+            setState(ViewStateWithMsg(state = ViewState.STATE_COMPLETED))
         }
     }
 

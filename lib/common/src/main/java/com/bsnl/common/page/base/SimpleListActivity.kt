@@ -2,7 +2,6 @@ package com.bsnl.common.page.base
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.bsnl.common.R
 import com.bsnl.common.databinding.CommonRecycerviewBinding
 import com.bsnl.common.iface.IRefreshLayout
@@ -20,10 +19,10 @@ import kotlinx.android.synthetic.main.common_recycerview.*
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/9/16
- * @desc   : 基础列表Activity
+ * @desc   : 最简单的LitView-Activity,如果布局比较复杂，可以使用[BaseBindingActivity]
  *
  */
-abstract class BaseListActivity<T : BaseViewModel,VB : ViewBinding> : BaseBindingActivity<T, VB>() {
+abstract class SimpleListActivity<T : BaseViewModel> : BaseBindingActivity<T, CommonRecycerviewBinding>() {
     private var mListViewDelegate: ListViewDelegateImpl? = null
 
     abstract fun registerItem(adapter: MultiTypeAdapter?)

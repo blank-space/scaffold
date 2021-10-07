@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bsnl.base.utils.showToast
 import com.bsnl.common.iface.OnItemClickListener
 import com.bsnl.common.page.base.LazyListFragment
+import com.bsnl.common.page.base.SimpleLazyListFragment
 import com.bsnl.common.utils.RecyclerViewUtil
 import com.bsnl.common.utils.newFrgInstance
 import com.bsnl.sample.pkg.R
@@ -17,7 +18,7 @@ import com.drakeet.multitype.MultiTypeAdapter
  * @author : LeeZhaoXing
  * @date   : 2020/11/10
  */
-class TabFragment : LazyListFragment<TabViewModel>() {
+class TabFragment : SimpleLazyListFragment<TabViewModel>() {
 
     override fun registerItem(adapter: MultiTypeAdapter?) {
         adapter?.register(PokemonItemViewBinder())

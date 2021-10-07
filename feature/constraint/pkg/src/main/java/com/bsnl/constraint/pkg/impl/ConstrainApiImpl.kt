@@ -10,7 +10,6 @@ import com.bsnl.constraint.pkg.feature.ConstraintDemoActivity
  * @date   : 2021/1/4
  * @desc   :
  */
-@ApiUtils.Api
 class ConstrainApiImpl : ConstrainApi() {
     override fun startSampleActivity(context: Context) {
         ConstraintDemoActivity.startAction(context)

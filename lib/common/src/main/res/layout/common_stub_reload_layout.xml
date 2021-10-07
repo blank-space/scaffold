@@ -8,7 +8,7 @@
     android:layout_centerInParent="true"
     android:layout_gravity="center"
     android:background="@color/color_white"
-    android:visibility="gone"
+    android:visibility="visible"
     tools:visibility="visible">
 
     <ImageView
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/lib_common_icon_failed"
+        android:src="@drawable/lib_common_icon_error"
         app:layout_constraintBottom_toTopOf="@+id/tv_reload"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -49,9 +49,7 @@
         android:paddingRight="23dp"
         android:paddingBottom="8dp"
         android:text="重试"
-        android:textColor="@color/color_white"
         android:textSize="15sp"
-       android:background="@color/lib_common_background_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

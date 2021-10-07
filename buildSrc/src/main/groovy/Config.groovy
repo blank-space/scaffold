@@ -60,6 +60,7 @@ class Config {
     static activity_ktx = "androidx.activity:activity-ktx:${Versions.activity_ktx}"
     static fragment_ktx = "androidx.fragment:fragment-ktx:${Versions.fragment_ktx}"
     static coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:${Versions.coordinatorlayout}"
+    static loadsir = "com.kingja.loadsir:loadsir:${Versions.loadSir}"
 
 
 }

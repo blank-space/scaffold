@@ -12,13 +12,13 @@ import com.bsnl.common.R
  */
 data class ViewConfig(
     @LayoutRes
-    var titleLayoutId: Int = R.layout.lib_common_base_toolbar,
+    var titleLayoutId: Int = R.layout.common_base_toolbar,
     @LayoutRes
-    var loadingLayoutId: Int = R.layout.lib_common_stub_progress_wait,
+    var loadingLayoutId: Int = R.layout.common_stub_progress_wait,
     @LayoutRes
-    var errorLayoutId: Int = R.layout.lib_common_stub_reload_layout,
+    var errorLayoutId: Int = R.layout.common_stub_reload_layout,
     @LayoutRes
-    var emptyLayoutId: Int = R.layout.lib_common_stub_no_data,
+    var emptyLayoutId: Int = R.layout.common_stub_no_data,
     @DrawableRes
     var emptyDrawableId: Int = -1,
     @DrawableRes

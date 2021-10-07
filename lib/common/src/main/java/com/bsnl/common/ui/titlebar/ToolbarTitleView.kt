@@ -208,7 +208,7 @@ class ToolbarTitleView : LinearLayout, ITitleView {
         onClickListener: OnClickListener?
     ): TextView {
         val root: View =
-            LayoutInflater.from(context).inflate(R.layout.lib_common_top_bar_btn, null)
+            LayoutInflater.from(context).inflate(R.layout.common_top_bar_btn, null)
         val btnTxt =
             root.findViewById<View>(R.id.text) as TextView
         btnTxt.setTextColor(resources.getColor(R.color.color_white))

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.bsnl.base.BaseApp
 import com.bsnl.base.log.L
+import com.bsnl.base.utils.GlobalAsyncHandler
 import com.bsnl.base.utils.showToast
 import com.bsnl.common.BaseHttpResult
 import com.bsnl.common.iface.IList
@@ -239,7 +240,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
             return
         }
         if (!NetworkUtils.isConnected()) {
-           "当前无网路连接，请检查网络".showToast()
+            "当前无网路连接，请检查网络".showToast()
             setState("网络似乎出现了问题", ViewState.STATE_NETWORK_ERROR)
         }
     }
@@ -253,8 +254,8 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
         setState("", ViewState.STATE_LOADING)
     }
 
-    private fun setState(msg: String? = "", value: ViewState, illustrateStrId: Int? = null) {
-        _viewState.postValue(ViewStateWithMsg(illustrateStrId, msg = msg, state = value))
+    private fun setState(msg: String? = "", value: ViewState) {
+        _viewState.postValue(ViewStateWithMsg(msg = msg, state = value))
     }
 
 

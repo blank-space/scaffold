@@ -2,34 +2,31 @@ package com.bsnl.common.page.base
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
-import com.bsnl.common.R
 import com.bsnl.common.databinding.CommonRecycerviewBinding
 import com.bsnl.common.iface.IRefreshLayout
 import com.bsnl.common.iface.RefreshType
 import com.bsnl.common.page.delegate.ListViewDelegateImpl
 import com.bsnl.common.page.delegate.iface.IListViewDelegate
 import com.bsnl.common.viewmodel.BaseListViewModel
-import com.bsnl.common.viewmodel.BaseViewModel
 import com.bsnl.common.viewmodel.RequestType
 import com.drakeet.multitype.MultiTypeAdapter
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import kotlinx.android.synthetic.main.common_recycerview.*
 
-
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/9/16
- * @desc   : 基础列表Activity
+ * @desc   : 最简单的LitView-Fragment,如果布局比较复杂，可以使用[BaseBindingFragment]
  *
  */
-abstract class BaseListActivity<T : BaseViewModel,VB : ViewBinding> : BaseBindingActivity<T, VB>() {
+abstract class SimpleListFragment<T : BaseListViewModel> : BaseBindingFragment<T, CommonRecycerviewBinding>() {
+
     private var mListViewDelegate: ListViewDelegateImpl? = null
 
     abstract fun registerItem(adapter: MultiTypeAdapter?)
 
-    override fun initView() {
-        //初始化代理
+    //初始化代理
+    protected fun setupListViewDelegate() {
         mListViewDelegate = ListViewDelegateImpl(mViewModel as BaseListViewModel, this)
         mListViewDelegate?.setILoadDataFinishListener(object :
             IListViewDelegate.IDoExtendListener {
@@ -37,32 +34,39 @@ abstract class BaseListActivity<T : BaseViewModel,VB : ViewBinding> : BaseBindin
                 onGetDataFinish(data)
             }
         })
-        registerItem(mListViewDelegate?.getAdapter())
         mListViewDelegate?.initRecyclerView(rv)
+        registerItem(mListViewDelegate?.getAdapter())
         mListViewDelegate?.setRefreshProxy(getLayoutDelegateImpl()?.getRefreshLayout())
-
     }
 
-    fun getRecyclerView(): RecyclerView? = mListViewDelegate?.getRecyclerView()
 
-
-    fun getAdapter(): MultiTypeAdapter? = mListViewDelegate?.getAdapter()
-
-
+    override fun initView(v: View) {
+        setupListViewDelegate()
+    }
 
     override fun getRefreshLayout(): SmartRefreshLayout? {
         return getLayoutDelegateImpl()?.getRefreshLayout()?.getSmartRefreshLayout()
     }
 
+    protected fun fetchData() {
+        mListViewDelegate?.loadData(RequestType.INIT)
+    }
 
     override fun initData() {
-        mListViewDelegate?.loadData(RequestType.INIT)
+        fetchData()
+    }
+
+
+    /**
+     * 监听LiveData的通知
+     */
+    protected fun setupLiveDataCallback() {
+        mListViewDelegate?.observeLiveDataCallback()
     }
 
     override fun initListener() {
         super.initListener()
-        //监听LiveData的通知
-        mListViewDelegate?.observeLiveDataCallback()
+        setupLiveDataCallback()
     }
 
 
@@ -71,7 +75,7 @@ abstract class BaseListActivity<T : BaseViewModel,VB : ViewBinding> : BaseBindin
      *
      * @return RefreshType
      */
-    override fun getRefreshType(): Int {
+    protected override fun getRefreshType(): Int {
         mListViewDelegate?.apply {
             return getRefreshType()
         }
@@ -79,10 +83,12 @@ abstract class BaseListActivity<T : BaseViewModel,VB : ViewBinding> : BaseBindin
     }
 
 
-    /**
-     * 提供给外部做一些额外的处理
-     */
     protected open fun onGetDataFinish(data: Any?) {}
+
+    fun getRecyclerView(): RecyclerView? = mListViewDelegate?.getRecyclerView()
+
+
+    fun getAdapter(): MultiTypeAdapter? = mListViewDelegate?.getAdapter()
 
     override fun processLoadMore(refreshLayout: IRefreshLayout?) {
         mListViewDelegate?.loadData(RequestType.LOAD_MORE)

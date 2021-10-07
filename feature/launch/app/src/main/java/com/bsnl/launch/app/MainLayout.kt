@@ -2,16 +2,16 @@ package com.bsnl.launch.app
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.view.ViewGroup
-import android.widget.ImageView
+import android.graphics.Color
 import androidx.appcompat.view.ContextThemeWrapper
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.marginTop
 import com.alibaba.android.arouter.launcher.ARouter
-import com.bsnl.base.utils.AdaptScreenUtils
+import com.bsnl.base.utils.DisplayUtils
 import com.bsnl.base.widget.CustomLayout
+import com.bsnl.base.widget.matchParent
 import com.bsnl.base.widget.onClick
+import com.bsnl.common.utils.dp
 import com.bsnl.sample.export.api.ISampleService
 import com.bsnl.sample.export.path.SamplePath
 import com.bsnl.sample.pkg.feature.view.countdowm.CountDownActivity
@@ -23,70 +23,71 @@ import com.bsnl.sample.pkg.feature.view.viewpager.ViewPagerActivity
  * @date   : 2021/3/21
  * @desc   :
  */
+private val MARGIN: Int = 19.dp.toInt()
+
 @SuppressLint("ResourceAsColor")
 class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayout(context) {
+
+
+    init {
+        setBackgroundColor(Color.parseColor("#11ff0000"))
+    }
+
     val textStyleId = R.style.feature_launch_app_text
-
-    val header = AppCompatImageView(context).apply {
-        scaleType = ImageView.ScaleType.FIT_XY
-        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 180.dp)
-        setImageResource(R.mipmap.feature_launch_app_ic_head)
-        this@MainLayout.addView(this)
-    }
-
-    val avatar = AppCompatImageView(context).apply {
-        setImageResource(R.drawable.feature_launch_app_ic_logo)
-        layoutParams = LayoutParams(80.dp, 80.dp)
-        this@MainLayout.addView(this)
-    }
+    private val toRightSideOffset = DisplayUtils.getScreenWidth() - MARGIN
 
     val listItem = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
         text = "ListView"
-        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40.dp)
+
         onClick = {
             ARouter.getInstance().build(SamplePath.A_LISTVIEW_ACTIVITY).navigation()
         }
-        this@MainLayout.addView(this)
+        this@MainLayout.addView(this, matchParent, 60.dp) {
+            topMargin = 40.dp
+
+        }
     }
 
     val webView = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
         text = "WebView"
-        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40.dp)
-        (layoutParams as LayoutParams).topMargin = 5.dp
+        setBackgroundColor(Color.parseColor("#00BCD4"))
         onClick = {
             sampleService?.startWebViewActivity("https://www.wanandroid.com")
         }
-        addView(this)
+        addView(this, matchParent, 60.dp) {
+            topMargin = 10.dp
+        }
     }
 
     val gson = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
         text = "Gson解析"
-        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40.dp)
-        (layoutParams as LayoutParams).topMargin = 5.dp
         onClick = {
             GsonDemoActivity.actionStart(context)
         }
-        this@MainLayout.addView(this)
+        this@MainLayout.addView(this, matchParent, 60.dp) {
+            topMargin = 10.dp
+        }
     }
 
     val countdown = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
         text = "倒计时列表"
-        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40.dp)
-        (layoutParams as LayoutParams).topMargin = 5.dp
         onClick = {
             CountDownActivity.actionStart(context)
         }
-        this@MainLayout.addView(this)
+        this@MainLayout.addView(this, matchParent, 60.dp) {
+            topMargin = 10.dp
+        }
     }
 
     val viewPager2 = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
         text = "ViewPager2"
-        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40.dp)
-        (layoutParams as LayoutParams).topMargin = 5.dp
+        setBackgroundColor(Color.parseColor("#00BCD4"))
         onClick = {
             ViewPagerActivity.startAction(context)
         }
-        this@MainLayout.addView(this)
+        this@MainLayout.addView(this, matchParent, 60.dp) {
+            topMargin = 10.dp
+        }
     }
 
 
@@ -97,14 +98,7 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
 
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-        header.layout(0, 0)
-        avatar.let {
-            it.layout(
-                (measuredWidth / 2 - it.measuredWidth / 2),
-                (header.measuredHeight / 2 - it.measuredHeight / 2)
-            )
-        }
-        listItem.let { it.layout(header.left, header.bottom + it.marginTop) }
+        listItem.layout(0, 40.dp)
         webView.let { it.layout(listItem.left, listItem.bottom + it.marginTop) }
         countdown.let { it.layout(listItem.left, webView.bottom + it.marginTop) }
         viewPager2.let { it.layout(listItem.left, countdown.bottom + it.marginTop) }

@@ -2,25 +2,28 @@ package com.bsnl.sample.pkg.feature.view.countdowm
 
 import android.content.Context
 import android.os.CountDownTimer
-import android.os.Handler
-import android.os.Looper
 import com.bsnl.base.log.L
 import com.bsnl.base.utils.GlobalAsyncHandler
+import com.bsnl.base.utils.showToast
 import com.bsnl.common.iface.RefreshType
 import com.bsnl.common.iface.ViewState
 import com.bsnl.common.iface.ViewStateWithMsg
 import com.bsnl.common.page.base.BaseListActivity
+import com.bsnl.common.page.base.SimpleListActivity
 import com.bsnl.common.utils.startActivity
+import com.bsnl.sample.pkg.feature.callback.PlaceholderCallback
 import com.bsnl.sample.pkg.feature.itemViewBinder.CountDownItemViewBinder
 import com.bsnl.sample.pkg.feature.viewmodel.CountDownViewModel
 import com.drakeet.multitype.MultiTypeAdapter
+import com.kingja.loadsir.core.LoadService
+import com.kingja.loadsir.core.LoadSir
 
 /**
  * @author : LeeZhaoXing
  * @date   : 2021/9/2
  * @desc   :
  */
-class CountDownActivity : BaseListActivity<CountDownViewModel>() {
+class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
     private val countDownItemViewBinder by lazy { CountDownItemViewBinder() }
     private var mAdapter: MultiTypeAdapter? = null
     private var countDownTimer: CountDownTimer? = null
@@ -89,7 +92,26 @@ class CountDownActivity : BaseListActivity<CountDownViewModel>() {
     override fun initView() {
         super.initView()
         getTitleView()?.setTitleText("倒计时列表")
-        setState(ViewStateWithMsg(null, "", ViewState.STATE_COMPLETED))
+
+    }
+
+    override fun setupLoadSir() {
+        val loadSir = LoadSir
+            .Builder()
+            .addCallback(PlaceholderCallback())
+            .setDefaultCallback(PlaceholderCallback::class.java)
+            .build()
+
+        getLayoutDelegateImpl()?.let {
+           it.loadService = loadSir.register(it.childView){
+               "wer".showToast()
+               //setState(ViewStateWithMsg(state = ViewState.STATE_COMPLETED))
+           }
+        }
+    }
+
+    override fun isUseDefaultLoadService(): Boolean {
+        return false
     }
 
     override fun getRefreshType(): Int {

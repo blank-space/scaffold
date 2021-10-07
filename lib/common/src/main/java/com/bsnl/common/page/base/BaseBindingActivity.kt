@@ -21,6 +21,7 @@ import com.bsnl.common.page.delegate.iface.OnViewStateListener
 import com.bsnl.common.utils.inflateBindingWithGeneric
 import com.bsnl.common.viewmodel.BaseViewModel
 import com.jaeger.library.StatusBarUtil
+import com.kingja.loadsir.core.LoadService
 import com.lxj.xpopup.util.KeyboardUtils
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import org.greenrobot.eventbus.EventBus
@@ -42,17 +43,22 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
     var mActivity: WeakReference<Activity>? = null
     private var layoutDelegateImpl: WrapLayoutDelegateImpl? = null
     private var hideOther = true
-    val binding: VB by lazy { inflateBindingWithGeneric(layoutInflater)}
+    val binding: VB by lazy { inflateBindingWithGeneric(layoutInflater) }
+    var mLoadService: LoadService<*>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         injectARoute()
+
         mContext = this
         mActivity = WeakReference(this)
         mViewModel = initViewModel()
         getIntentData()
         lifecycle.addObserver(KeyboardStateManager)
         initWrapDelegate()
+        if(!isUseDefaultLoadService()) {
+            setupLoadSir()
+        }
         initView()
         initListener()
         initData()
@@ -60,16 +66,23 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
         initEventBus()
     }
 
+    /** 重写[isUseDefaultLoadService]返回false，必须重写该方法去实例化mLoadService*/
+    open fun setupLoadSir(){}
+
+    open fun isUseDefaultLoadService() = true
 
     private fun initWrapDelegate() {
         layoutDelegateImpl = WrapLayoutDelegateImpl(
             mActivity = this,
             childView = getLayout(),
             mRefreshType = getRefreshType(),
-            mOnViewStateListener = MyViewStateListener()
+            mOnViewStateListener = MyViewStateListener(),
+            loadService = mLoadService,
+            useLoadService = isUseDefaultLoadService()
         )
-        initBottomLayout(getBottomLayoutId(), getBottomHeight())
+
         layoutDelegateImpl?.setup()
+
     }
 
     private fun initEventBus() {
@@ -181,17 +194,11 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
             layoutDelegateImpl?.showState(
                 it,
                 true,
-                showBottomViewAnyWay(),
                 hideOther,
-                state.illustrateStrId,
                 state.msg
             )
         }
 
-    }
-
-    protected open fun showBottomViewAnyWay(): Boolean {
-        return false
     }
 
     /** ==================MyViewStateListener - start==================  */
@@ -220,9 +227,6 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
         }
     }
 
-    protected open fun getBottomView(): View? {
-        return layoutDelegateImpl?.getBottomLayout()
-    }
 
     protected open fun processCustomLayout(v: View?) {}
 
@@ -244,13 +248,6 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
 
     /** ==================MyViewStateListener - end==================  */
 
-    protected open fun getBottomLayoutId(): Int = -1
-
-    protected open fun getBottomHeight(): Int = -1
-
-    private fun initBottomLayout(bottomLayoutId: Int, bottomLayoutHeight: Int) {
-        getLayoutDelegateImpl()?.setBottomLayout(bottomLayoutId, bottomLayoutHeight)
-    }
 
     open fun getLayout(): View? {
         return binding.root
@@ -258,9 +255,11 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
 
     /*利用反射获取类实例*/
     private fun initViewModel(): T {
-        val persistentClass = (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<T>
+        val persistentClass =
+            (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<T>
         mViewModel = ViewModelProvider(
-            this, ViewModelProvider.AndroidViewModelFactory.getInstance(application))
+            this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+        )
             .get(persistentClass)
         return mViewModel
     }

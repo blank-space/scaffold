@@ -30,6 +30,8 @@ import com.bsnl.common.page.delegate.iface.OnViewStateListener
 import com.bsnl.common.utils.doOnMainThreadIdle
 import com.bsnl.common.utils.inflateBindingWithGeneric
 import com.bsnl.common.viewmodel.BaseViewModel
+import com.kingja.loadsir.core.LoadService
+import com.kingja.loadsir.core.LoadSir
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import org.greenrobot.eventbus.EventBus
 import java.lang.ref.WeakReference
@@ -51,6 +53,8 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
     private var mTitleView: ITitleView? = null
     private var hideOther = true
     val binding: VB by lazy { inflateBindingWithGeneric(layoutInflater)}
+    private var mLoadService: LoadService<*>? = null
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -76,6 +80,10 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
      */
     open fun isContentUnderTitleBar(): Boolean {
         return true
+    }
+
+    open fun setupLoadSir() {
+
     }
 
     /**
@@ -141,7 +149,7 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
             childView = getLayout(),
             mRefreshType = getRefreshType(),
             mOnViewStateListener = MyViewStateListener(),
-            showImgHeader = isShowImageHeader()
+            loadService = mLoadService
         )
         initBottomLayout(getBottomLayoutId(), getBottomHeight())
         return layoutDelegateImpl?.setup()
@@ -296,7 +304,7 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
 
 
     private fun initBottomLayout(bottomLayoutId: Int, bottomLayoutHeight: Int) {
-        getLayoutDelegateImpl()?.setBottomLayout(bottomLayoutId, bottomLayoutHeight)
+
     }
 
 
@@ -331,18 +339,14 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
             layoutDelegateImpl?.showState(
                 it,
                 true,
-                showBottomViewAnyWay(),
                 hideOther,
-                state.illustrateStrId,
                 state.msg
             )
         }
     }
 
 
-    protected open fun showBottomViewAnyWay(): Boolean {
-        return false
-    }
+
 
     protected open fun getRefreshLayout(): SmartRefreshLayout? {
         return null

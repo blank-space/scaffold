@@ -3,19 +3,16 @@ package com.bsnl.common.page.base
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.bsnl.common.R
-import com.bsnl.common.databinding.LibCommonRecycerviewBinding
+import com.bsnl.common.databinding.CommonRecycerviewBinding
 import com.bsnl.common.iface.IRefreshLayout
 import com.bsnl.common.iface.RefreshType
-import com.bsnl.common.page.delegate.iface.IListViewDelegate
 import com.bsnl.common.page.delegate.ListViewDelegateImpl
+import com.bsnl.common.page.delegate.iface.IListViewDelegate
 import com.bsnl.common.viewmodel.BaseListViewModel
 import com.bsnl.common.viewmodel.RequestType
-
 import com.drakeet.multitype.MultiTypeAdapter
-
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
-import kotlinx.android.synthetic.main.lib_common_recycerview.*
+import kotlinx.android.synthetic.main.common_recycerview.*
 
 /**
  * @author : LeeZhaoXing
@@ -23,7 +20,8 @@ import kotlinx.android.synthetic.main.lib_common_recycerview.*
  * @desc   : 基础列表fragment
  *
  */
-abstract class BaseListFragment<T : BaseListViewModel> : BaseBindingFragment<T,LibCommonRecycerviewBinding>() {
+abstract class BaseListFragment<T : BaseListViewModel, VB : ViewBinding> :
+    BaseBindingFragment<T, VB>() {
 
     private var mListViewDelegate: ListViewDelegateImpl? = null
 
