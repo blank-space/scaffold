@@ -5,6 +5,9 @@ import android.os.CountDownTimer
 import com.bsnl.base.log.L
 import com.bsnl.base.utils.GlobalAsyncHandler
 import com.bsnl.base.utils.showToast
+import com.bsnl.common.callback.EmptyLayoutCallback
+import com.bsnl.common.callback.ErrorLayoutCallback
+import com.bsnl.common.callback.LoadingLayoutCallback
 import com.bsnl.common.iface.RefreshType
 import com.bsnl.common.iface.ViewState
 import com.bsnl.common.iface.ViewStateWithMsg
@@ -15,6 +18,9 @@ import com.bsnl.sample.pkg.feature.callback.PlaceholderCallback
 import com.bsnl.sample.pkg.feature.itemViewBinder.CountDownItemViewBinder
 import com.bsnl.sample.pkg.feature.viewmodel.CountDownViewModel
 import com.drakeet.multitype.MultiTypeAdapter
+import com.kingja.loadsir.callback.Callback
+import com.kingja.loadsir.callback.SuccessCallback
+import com.kingja.loadsir.core.Convertor
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 
@@ -102,11 +108,17 @@ class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
             .setDefaultCallback(PlaceholderCallback::class.java)
             .build()
 
+        //注意：上面的只定义了PlaceholderCallback，在转换器回调里是无法使用其他Callback(SuccessCallback是内置的),否则会抛出异常
         getLayoutDelegateImpl()?.let {
-           it.loadService = loadSir.register(it.childView){
-               "wer".showToast()
-               //setState(ViewStateWithMsg(state = ViewState.STATE_COMPLETED))
-           }
+           it.loadService = loadSir.register(it.childView, Callback.OnReloadListener {
+
+           }, Convertor<ViewState> { v ->
+               val resultCode: Class<out Callback?> = when (v) {
+                   ViewState.STATE_LOADING -> PlaceholderCallback::class.java
+                   else -> SuccessCallback::class.java
+               }
+               resultCode
+           }) as LoadService<ViewState>?
         }
     }
 

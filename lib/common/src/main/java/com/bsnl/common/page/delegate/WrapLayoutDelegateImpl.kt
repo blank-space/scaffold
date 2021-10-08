@@ -11,7 +11,6 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bsnl.base.log.L
-import com.bsnl.base.utils.showToast
 import com.bsnl.common.R
 import com.bsnl.common.callback.ErrorLayoutCallback
 import com.bsnl.common.iface.*
@@ -19,10 +18,18 @@ import com.bsnl.common.page.delegate.iface.OnViewStateListener
 import com.bsnl.common.page.delegate.iface.IWrapLayoutDelegate
 import com.bsnl.common.refreshLayout.RefreshLayoutProxy
 import com.bsnl.common.utils.dp
+import com.kingja.loadsir.callback.Callback
+import com.kingja.loadsir.core.Convertor
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.bsnl.common.callback.EmptyLayoutCallback
+import com.bsnl.common.callback.LoadingLayoutCallback
+import com.kingja.loadsir.callback.Callback.OnReloadListener
+
+import com.kingja.loadsir.callback.SuccessCallback
+
 
 /**
  * @author : LeeZhaoXing
@@ -34,8 +41,8 @@ class WrapLayoutDelegateImpl(
     val mFragment: Fragment? = null,
     val childView: View? = null,
     @RefreshType.Val val mRefreshType: Int = RefreshType.NONE,
-    var mOnViewStateListener: OnViewStateListener? = null,
-    var loadService: LoadService<*>? = null,
+    var viewStateChangeListener: OnViewStateListener? = null,
+    var loadService: LoadService<ViewState>? = null,
     var useLoadService: Boolean = true
 ) : IWrapLayoutDelegate {
     //当前页面状态
@@ -91,16 +98,25 @@ class WrapLayoutDelegateImpl(
             }
 
             if (loadService == null && useLoadService) {
-                loadService = childView?.let {
-                    LoadSir.getDefault().register(it) {
-                        "reload".showToast()
-                    }
+                childView?.let {
+                    loadService = LoadSir.getDefault().register(it, OnReloadListener {
+                        loadService?.showCallback(LoadingLayoutCallback::class.java)
+                        viewStateChangeListener?.onReload(it)
+                    }, Convertor<ViewState> { v ->
+                        val resultCode: Class<out Callback?> = when (v) {
+                            ViewState.STATE_LOADING -> LoadingLayoutCallback::class.java
+                            ViewState.STATE_ERROR -> ErrorLayoutCallback::class.java
+                            ViewState.STATE_EMPTY -> EmptyLayoutCallback::class.java
+                            else -> SuccessCallback::class.java
+                        }
+                        resultCode
+                    }) as LoadService<ViewState>?
                 }
             }
+
         }
         return mView
     }
-
 
 
     private fun addChildViewToBaseRootView(parentViewGroup: ViewGroup) {
@@ -121,11 +137,11 @@ class WrapLayoutDelegateImpl(
         mRefreshLayout =
             RefreshLayoutProxy(smartRefreshLayout, object : OnRefreshAndLoadMoreListener {
                 override fun onRefresh(refreshLayout: IRefreshLayout?) {
-                    mOnViewStateListener?.onRefresh(refreshLayout)
+                    viewStateChangeListener?.onRefresh(refreshLayout)
                 }
 
                 override fun onLoadMore(refreshLayout: IRefreshLayout?) {
-                    mOnViewStateListener?.onLoadMore(refreshLayout)
+                    viewStateChangeListener?.onLoadMore(refreshLayout)
                 }
 
             })
@@ -261,36 +277,12 @@ class WrapLayoutDelegateImpl(
 
     fun showState(
         viewState: ViewState,
-        show: Boolean,
-        hideOther: Boolean,
         vararg args: Any?
     ) {
         setRefreshLayoutState(viewState)
-        L.d("wrap showState:$viewState ,show:$show,hideOther:$hideOther")
-        if (hideOther) {
-            //加载完成
-            setContentViewVisible((ViewState.STATE_COMPLETED === viewState || ViewState.STATE_LOGIN === viewState) and show)
-            setErrorViewVisible((ViewState.STATE_ERROR === viewState) and show)
-        } else {
-            when (viewState) {
-                ViewState.STATE_COMPLETED -> setContentViewVisible(show)
-            }
-        }
+        loadService?.showWithConvertor(viewState)
         mCurrentState = viewState
     }
-
-    private fun setErrorViewVisible(visible: Boolean) {
-        if (visible) {
-            loadService?.showCallback(ErrorLayoutCallback::class.java)
-        }
-    }
-
-    private fun setContentViewVisible(visible: Boolean) {
-        if (visible) {
-            loadService?.showSuccess()
-        }
-    }
-
 
     override fun getTitleView(
         isImmersionBarEnable: Boolean,

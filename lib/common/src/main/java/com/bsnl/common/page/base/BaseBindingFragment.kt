@@ -31,7 +31,6 @@ import com.bsnl.common.utils.doOnMainThreadIdle
 import com.bsnl.common.utils.inflateBindingWithGeneric
 import com.bsnl.common.viewmodel.BaseViewModel
 import com.kingja.loadsir.core.LoadService
-import com.kingja.loadsir.core.LoadSir
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import org.greenrobot.eventbus.EventBus
 import java.lang.ref.WeakReference
@@ -53,7 +52,7 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
     private var mTitleView: ITitleView? = null
     private var hideOther = true
     val binding: VB by lazy { inflateBindingWithGeneric(layoutInflater)}
-    private var mLoadService: LoadService<*>? = null
+    private var mLoadService: LoadService<ViewState>? = null
 
 
     override fun onAttach(context: Context) {
@@ -148,7 +147,7 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
             mFragment = this,
             childView = getLayout(),
             mRefreshType = getRefreshType(),
-            mOnViewStateListener = MyViewStateListener(),
+            viewStateChangeListener = MyViewStateListener(),
             loadService = mLoadService
         )
         initBottomLayout(getBottomLayoutId(), getBottomHeight())
@@ -316,7 +315,7 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
         return binding.root
     }
 
-    fun initViewModel(): T {
+    private fun initViewModel(): T {
         val persistentClass =
             (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<T>
         mViewModel = ViewModelProvider(
@@ -330,23 +329,13 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
         mViewModel.viewState.observe(viewLifecycleOwner, {
             it.let { it1 -> setState(it1) }
         })
-
     }
 
     override fun setState(state: ViewStateWithMsg) {
         state.state?.let {
-            hideOther = it != ViewState.STATE_SHOW_LOADING_DIALOG
-            layoutDelegateImpl?.showState(
-                it,
-                true,
-                hideOther,
-                state.msg
-            )
+            layoutDelegateImpl?.showState(it, state.msg)
         }
     }
-
-
-
 
     protected open fun getRefreshLayout(): SmartRefreshLayout? {
         return null

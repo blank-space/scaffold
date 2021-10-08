@@ -44,7 +44,7 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
     private var layoutDelegateImpl: WrapLayoutDelegateImpl? = null
     private var hideOther = true
     val binding: VB by lazy { inflateBindingWithGeneric(layoutInflater) }
-    var mLoadService: LoadService<*>? = null
+    var mLoadService: LoadService<ViewState>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +76,7 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
             mActivity = this,
             childView = getLayout(),
             mRefreshType = getRefreshType(),
-            mOnViewStateListener = MyViewStateListener(),
+            viewStateChangeListener = MyViewStateListener(),
             loadService = mLoadService,
             useLoadService = isUseDefaultLoadService()
         )
@@ -190,15 +190,8 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
 
     override fun setState(state: ViewStateWithMsg) {
         state.state?.let {
-            hideOther = it != ViewState.STATE_SHOW_LOADING_DIALOG
-            layoutDelegateImpl?.showState(
-                it,
-                true,
-                hideOther,
-                state.msg
-            )
+            layoutDelegateImpl?.showState(it, state.msg)
         }
-
     }
 
     /** ==================MyViewStateListener - start==================  */

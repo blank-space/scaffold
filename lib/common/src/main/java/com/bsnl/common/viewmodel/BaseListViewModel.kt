@@ -121,8 +121,10 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
         }
         when (mRequestType) {
             RequestType.INIT -> {
-                setState(value = ViewState.STATE_COMPLETED)
-                initView(t, mRequestType)
+                GlobalAsyncHandler.postDelayed(2_000) {
+                    setState(value = ViewState.STATE_COMPLETED)
+                    initView(t, mRequestType)
+                }
             }
             RequestType.REFRESH -> {
                 _finishRefresh.postValue(true)
