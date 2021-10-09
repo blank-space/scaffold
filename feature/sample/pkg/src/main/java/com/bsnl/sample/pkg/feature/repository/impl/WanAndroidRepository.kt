@@ -1,6 +1,6 @@
 package com.bsnl.sample.pkg.feature.repository.impl
 
-import com.bsnl.common.BaseListBean
+import com.bsnl.common.BaseHttpResult
 import com.bsnl.sample.pkg.feature.data.entity.Article
 import com.bsnl.sample.pkg.feature.data.entity.Banner
 import com.bsnl.sample.pkg.feature.repository.IWanAndroidRepository
@@ -18,15 +18,17 @@ import kotlinx.coroutines.flow.flowOn
 class WanAndroidRepository : IWanAndroidRepository {
     private val network by lazy { WanAndroidNetwork }
 
-    override fun getTopArticles(): Flow<BaseListBean<Article>> {
+    override fun getTopArticles(): Flow<BaseHttpResult<List<Article>>>{
         return flow {
-            emit(BaseListBean(network.getTopArticles()))
+            emit(network.getTopArticles())
         }.flowOn(Dispatchers.IO)
     }
 
-    override fun getBanners(): Flow<BaseListBean<Banner>> {
+    override fun getBanners(): Flow<BaseHttpResult<List<Banner>>> {
         return flow {
-            emit(BaseListBean(network.getBanners()))
+            emit(network.getBanners())
         }.flowOn(Dispatchers.IO)
     }
+
+
 }

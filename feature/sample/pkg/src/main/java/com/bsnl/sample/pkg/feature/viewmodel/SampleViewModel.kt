@@ -30,7 +30,7 @@ class SampleViewModel : BaseListViewModel() {
             val response = repository.getTopArticles()
             val data = BaseHttpResult<BaseListBean<Article>>()
             response.collectLatest {
-                data.data = it
+                data.data = BaseListBean(it.data)
                 data.code = "000000"
                 data.msg = "ok"
             }

@@ -14,7 +14,6 @@ import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.*
-import kotlin.jvm.Throws
 
 /**
  * @author : LeeZhaoXing
@@ -22,7 +21,8 @@ import kotlin.jvm.Throws
  * @desc   : Retrofit封装类，获取Service
  */
 object ServiceCreator {
-    var BASE_URL = "https://pokeapi.co/api/v2/"
+    //var BASE_URL = "https://pokeapi.co/api/v2/"
+    var BASE_URL ="https://www.wanandroid.com/"
     private const val TIME_OUT_SECONDS = 20
 
     //不同的项目或许需要不同的拦截器，自行扩展即可
@@ -30,18 +30,16 @@ object ServiceCreator {
 
     private var retrofit = initRetrofit()
 
-
     /**
      * 重新初始化Retrofit
      */
-    fun initRetrofit():Retrofit {
+    fun initRetrofit(): Retrofit {
         retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(getClient())
-            .addConverterFactory(ConvexConverterFactory())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        return  retrofit
+        return retrofit
     }
 
     fun <T> create(serviceClass: Class<T>): T = retrofit.create(serviceClass)
@@ -56,7 +54,7 @@ object ServiceCreator {
             .connectTimeout(TIME_OUT_SECONDS.toLong(), TimeUnit.SECONDS)
             .readTimeout(TIME_OUT_SECONDS.toLong(), TimeUnit.SECONDS)
             .readTimeout(TIME_OUT_SECONDS.toLong(), TimeUnit.SECONDS)
-            //.addInterceptor(RetryInterceptor())
+            .addInterceptor(RetryInterceptor())
             .addInterceptor(getLogInterceptor())
 
         if (interceptors.isNotEmpty()) {
@@ -73,6 +71,7 @@ object ServiceCreator {
     }
 
 
+
     private fun getLogInterceptor(): Interceptor {
         if (!BuildConfig.LOG_DEBUG) {
             //Release 时, 让框架不再打印 Http 请求和响应的信息
@@ -80,7 +79,6 @@ object ServiceCreator {
         } else {
             return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         }
-
     }
 
 

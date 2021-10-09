@@ -21,7 +21,6 @@ abstract class SimpleLazyListFragment<T : BaseListViewModel> : SimpleListFragmen
         super.onResume()
         if (!mHasInit) {
             mHasInit = true
-            setupListViewDelegate()
             setupLiveDataCallback()
             lazyInitListener()
             if (mViewModel.providerData().isNullOrEmpty()) {

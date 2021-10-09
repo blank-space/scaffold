@@ -18,5 +18,4 @@ interface OnViewStateListener {
 
     fun onLoadMore(refreshLayout: IRefreshLayout?)
 
-    fun onLoadCustomLayout(v: View?)
 }

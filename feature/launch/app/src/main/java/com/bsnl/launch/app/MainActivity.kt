@@ -2,6 +2,7 @@ package com.bsnl.launch.app
 
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Autowired
+import com.bsnl.base.log.L
 import com.bsnl.base.utils.GlobalAsyncHandler
 import com.bsnl.common.databinding.CommonEmptyLayoutBinding
 import com.bsnl.common.iface.ViewState
@@ -24,7 +25,7 @@ class MainActivity : BaseBindingActivity<MainViewModel, CommonEmptyLayoutBinding
 
     override fun initView() {
         GlobalAsyncHandler.postDelayed(1000) {
-            setState(ViewStateWithMsg(state=  ViewState.STATE_COMPLETED))
+            setState(ViewStateWithMsg(state = ViewState.STATE_COMPLETED))
         }
     }
 

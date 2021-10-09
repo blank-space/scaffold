@@ -15,4 +15,5 @@ object WanAndroidNetwork {
     suspend fun getTopArticles() = service.getTopArticles()
 
     suspend fun getBanners() = service.getBanners()
+
 }

@@ -58,5 +58,4 @@ class SampleActivity : SimpleListActivity<SampleViewModel>() {
         }, R.id.name, R.id.avator)
     }
 
-
 }

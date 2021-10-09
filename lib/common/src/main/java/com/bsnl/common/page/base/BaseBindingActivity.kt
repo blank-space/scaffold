@@ -49,7 +49,6 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         injectARoute()
-
         mContext = this
         mActivity = WeakReference(this)
         mViewModel = initViewModel()
@@ -66,7 +65,7 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
         initEventBus()
     }
 
-    /** 重写[isUseDefaultLoadService]返回false，必须重写该方法去实例化mLoadService*/
+    /** 如果[isUseDefaultLoadService]返回false，必须重写该方法去实例化mLoadService，且要使用[LoadSir#register( target,  onReloadListener,convertor)]这个方法去注册*/
     open fun setupLoadSir(){}
 
     open fun isUseDefaultLoadService() = true
@@ -80,10 +79,10 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
             loadService = mLoadService,
             useLoadService = isUseDefaultLoadService()
         )
-
         layoutDelegateImpl?.setup()
 
     }
+
 
     private fun initEventBus() {
         if (isNeedEvenBus()) {
@@ -201,11 +200,9 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
             onPageReload(v)
         }
 
-
         override fun onNoDataBtnClick(v: View?) {
             processNoDataBtnClick(v)
         }
-
 
         override fun onRefresh(refreshLayout: IRefreshLayout?) {
             processRefresh(refreshLayout)
@@ -214,30 +211,17 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
         override fun onLoadMore(refreshLayout: IRefreshLayout?) {
             processLoadMore(refreshLayout)
         }
-
-        override fun onLoadCustomLayout(v: View?) {
-            processCustomLayout(v)
-        }
     }
 
 
-    protected open fun processCustomLayout(v: View?) {}
 
-    protected open fun onPageReload(v: View?) {
+    protected open fun onPageReload(v: View?) {}
 
-    }
+    protected open fun processNoDataBtnClick(v: View?) {}
 
-    protected open fun processNoDataBtnClick(v: View?) {
+    protected open fun processRefresh(refreshLayout: IRefreshLayout?) {}
 
-    }
-
-    protected open fun processRefresh(refreshLayout: IRefreshLayout?) {
-
-    }
-
-    protected open fun processLoadMore(refreshLayout: IRefreshLayout?) {
-
-    }
+    protected open fun processLoadMore(refreshLayout: IRefreshLayout?) {}
 
     /** ==================MyViewStateListener - end==================  */
 
@@ -271,7 +255,6 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
         }
         super.onDestroy()
     }
-
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         if (ev.action == MotionEvent.ACTION_DOWN) {

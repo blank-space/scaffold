@@ -33,7 +33,7 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
         setBackgroundColor(Color.parseColor("#11ff0000"))
     }
 
-    val textStyleId = R.style.feature_launch_app_text
+    private val textStyleId = R.style.feature_launch_app_text
     private val toRightSideOffset = DisplayUtils.getScreenWidth() - MARGIN
 
     val listItem = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {

@@ -3,6 +3,7 @@ package com.bsnl.common.page.base
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.bsnl.base.log.L
 import com.bsnl.common.databinding.CommonRecycerviewBinding
 import com.bsnl.common.iface.IRefreshLayout
 import com.bsnl.common.iface.RefreshType
@@ -38,7 +39,7 @@ abstract class BaseListFragment<T : BaseListViewModel, VB : ViewBinding> :
         })
         mListViewDelegate?.initRecyclerView(rv)
         registerItem(mListViewDelegate?.getAdapter())
-        mListViewDelegate?.setRefreshProxy(getLayoutDelegateImpl()?.getRefreshLayout())
+        mListViewDelegate?.setupRefreshLayout(getLayoutDelegateImpl()?.getRefreshLayout())
     }
 
 
@@ -47,7 +48,7 @@ abstract class BaseListFragment<T : BaseListViewModel, VB : ViewBinding> :
     }
 
     override fun getRefreshLayout(): SmartRefreshLayout? {
-        return getLayoutDelegateImpl()?.getRefreshLayout()?.getSmartRefreshLayout()
+        return getLayoutDelegateImpl()?.getRefreshLayout()
     }
 
     protected fun fetchData() {
@@ -77,13 +78,12 @@ abstract class BaseListFragment<T : BaseListViewModel, VB : ViewBinding> :
      *
      * @return RefreshType
      */
-    protected override fun getRefreshType(): Int {
+    override fun getRefreshType(): Int {
         mListViewDelegate?.apply {
             return getRefreshType()
         }
         return RefreshType.REFRESH_AND_LOAD_MORE
     }
-
 
     protected open fun onGetDataFinish(data: Any?) {}
 

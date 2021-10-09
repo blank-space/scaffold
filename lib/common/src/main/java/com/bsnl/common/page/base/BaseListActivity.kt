@@ -3,6 +3,7 @@ package com.bsnl.common.page.base
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.bsnl.base.log.L
 import com.bsnl.common.R
 import com.bsnl.common.databinding.CommonRecycerviewBinding
 import com.bsnl.common.iface.IRefreshLayout
@@ -29,6 +30,10 @@ abstract class BaseListActivity<T : BaseViewModel,VB : ViewBinding> : BaseBindin
     abstract fun registerItem(adapter: MultiTypeAdapter?)
 
     override fun initView() {
+        setupListViewDelegate()
+    }
+
+    protected fun setupListViewDelegate() {
         //初始化代理
         mListViewDelegate = ListViewDelegateImpl(mViewModel as BaseListViewModel, this)
         mListViewDelegate?.setILoadDataFinishListener(object :
@@ -39,19 +44,15 @@ abstract class BaseListActivity<T : BaseViewModel,VB : ViewBinding> : BaseBindin
         })
         registerItem(mListViewDelegate?.getAdapter())
         mListViewDelegate?.initRecyclerView(rv)
-        mListViewDelegate?.setRefreshProxy(getLayoutDelegateImpl()?.getRefreshLayout())
-
+        mListViewDelegate?.setupRefreshLayout(getLayoutDelegateImpl()?.getRefreshLayout())
     }
 
     fun getRecyclerView(): RecyclerView? = mListViewDelegate?.getRecyclerView()
 
-
     fun getAdapter(): MultiTypeAdapter? = mListViewDelegate?.getAdapter()
 
-
-
     override fun getRefreshLayout(): SmartRefreshLayout? {
-        return getLayoutDelegateImpl()?.getRefreshLayout()?.getSmartRefreshLayout()
+        return getLayoutDelegateImpl()?.getRefreshLayout()
     }
 
 
@@ -65,7 +66,6 @@ abstract class BaseListActivity<T : BaseViewModel,VB : ViewBinding> : BaseBindin
         mListViewDelegate?.observeLiveDataCallback()
     }
 
-
     /**
      * 子类可以复写刷新类型，默认支持刷新和加载更多
      *
@@ -77,7 +77,6 @@ abstract class BaseListActivity<T : BaseViewModel,VB : ViewBinding> : BaseBindin
         }
         return RefreshType.REFRESH_AND_LOAD_MORE
     }
-
 
     /**
      * 提供给外部做一些额外的处理
@@ -95,6 +94,5 @@ abstract class BaseListActivity<T : BaseViewModel,VB : ViewBinding> : BaseBindin
     override fun onPageReload(v: View?) {
         mListViewDelegate?.loadData(RequestType.INIT)
     }
-
 
 }

@@ -54,8 +54,10 @@ class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
     }
 
     private fun startTimer() {
+
         countDownTimer = object : CountDownTimer(getMaxDuration(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
+                L.d("onTick：$millisUntilFinished")
                 updateTimerState()
             }
 
@@ -74,7 +76,7 @@ class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
                 duration = data[i]
             }
         }
-        L.d("max duration is : $duration")
+        L.d("maxDuration:$duration")
         return duration
     }
 
@@ -107,7 +109,6 @@ class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
             .addCallback(PlaceholderCallback())
             .setDefaultCallback(PlaceholderCallback::class.java)
             .build()
-
         //注意：上面的只定义了PlaceholderCallback，在转换器回调里是无法使用其他Callback(SuccessCallback是内置的),否则会抛出异常
         getLayoutDelegateImpl()?.let {
            it.loadService = loadSir.register(it.childView, Callback.OnReloadListener {
@@ -126,17 +127,15 @@ class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
         return false
     }
 
-    override fun getRefreshType(): Int {
-        return RefreshType.NONE
-    }
+
 
     override fun onGetDataFinish(data: Any?) {
         super.onGetDataFinish(data)
-        GlobalAsyncHandler.postDelayed(300) {
+        L.d("onGetDataFinish")
+        GlobalAsyncHandler.postDelayed(1000) {
+            endTimer()
             startTimer()
-
         }
-
     }
 
     override fun onDestroy() {

@@ -23,6 +23,7 @@ interface IListViewDelegate {
      * 设置刷新、加载更多的回调
      */
     fun setupRefreshLayout(smartRefreshLayout: SmartRefreshLayout?)
+
     fun setRefreshProxy(proxy: RefreshLayoutProxy?)
 
 

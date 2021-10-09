@@ -9,6 +9,7 @@ import com.bsnl.common.iface.IRefreshLayout
 import com.bsnl.common.iface.ITitleView
 import com.bsnl.common.iface.ViewState
 import com.bsnl.common.refreshLayout.RefreshLayoutProxy
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 
 /**
  * @author : LeeZhaoXing
@@ -24,7 +25,7 @@ interface IWrapLayoutDelegate {
 
     fun getViewState(): ViewState?
 
-    fun getRefreshLayout(): RefreshLayoutProxy?
+    fun getRefreshLayout(): SmartRefreshLayout?
 
     fun getTitleView(isImmersionBarEnable: Boolean, isContentUnderTitleBar: Boolean): ITitleView?
 

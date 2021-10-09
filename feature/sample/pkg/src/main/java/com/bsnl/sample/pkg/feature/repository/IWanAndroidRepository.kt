@@ -1,5 +1,6 @@
 package com.bsnl.sample.pkg.feature.repository
 
+import com.bsnl.common.BaseHttpResult
 import com.bsnl.common.BaseListBean
 import com.bsnl.sample.pkg.feature.data.entity.Article
 import com.bsnl.sample.pkg.feature.data.entity.Banner
@@ -12,7 +13,8 @@ import kotlinx.coroutines.flow.Flow
  */
 interface IWanAndroidRepository {
 
-    fun getTopArticles(): Flow<BaseListBean<Article>>
+    fun getTopArticles(): Flow<BaseHttpResult<List<Article>>>
 
-    fun getBanners(): Flow<BaseListBean<Banner>>
+    fun getBanners(): Flow<BaseHttpResult<List<Banner>>>
+
 }

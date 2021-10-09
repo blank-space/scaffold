@@ -23,10 +23,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
  */
 class ListViewDelegateImpl(val viewModel: BaseListViewModel, private val owner: LifecycleOwner) :
     IListViewDelegate {
-    init {
-        requireNotNull(viewModel, { " viewModel cannot be null" })
-        requireNotNull(owner, { " owner cannot be null" })
-    }
 
     private val mAdapter by lazy {
         MultiTypeAdapter(viewModel.providerData())
@@ -40,9 +36,11 @@ class ListViewDelegateImpl(val viewModel: BaseListViewModel, private val owner: 
         RecyclerViewUtil.initRecyclerView(mRecyclerView, mAdapter)
     }
 
-
     @ExperimentalCoroutinesApi
     override fun setupRefreshLayout(smartRefreshLayout: SmartRefreshLayout?) {
+        if (smartRefreshLayout == null) {
+            L.e("smartRefreshLayout cant be null !")
+        }
         mRefreshLayout =
             RefreshLayoutProxy(smartRefreshLayout, object : OnRefreshAndLoadMoreListener {
                 override fun onRefresh(refreshLayout: IRefreshLayout?) {
@@ -97,6 +95,7 @@ class ListViewDelegateImpl(val viewModel: BaseListViewModel, private val owner: 
 
     override fun processRefreshType(refreshType: Int) {
         if (mRefreshLayout == null) {
+            L.e("mRefreshLayout == null")
             return
         }
         when (refreshType) {
@@ -129,16 +128,14 @@ class ListViewDelegateImpl(val viewModel: BaseListViewModel, private val owner: 
 
     @ExperimentalCoroutinesApi
     override fun loadData(requestType: Int) {
-        viewModel.fetchListData(requestType)?.observe(owner, Observer {
+        viewModel.fetchListData(requestType)?.observe(owner) {
             mILoadDataFinishListener?.apply {
                 this.onLoadDataFinish(it?.data)
             }
-        })
+        }
     }
 
-
     override fun getRecyclerView(): RecyclerView? = mRecyclerView
-
 
     override fun getRefreshLayoutProxy(): RefreshLayoutProxy? = mRefreshLayout
 

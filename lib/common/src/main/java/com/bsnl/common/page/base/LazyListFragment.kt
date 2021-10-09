@@ -22,7 +22,6 @@ abstract class LazyListFragment<T : BaseListViewModel, VB : ViewBinding> : BaseL
         super.onResume()
         if (!mHasInit) {
             mHasInit = true
-            setupListViewDelegate()
             setupLiveDataCallback()
             lazyInitListener()
             if (mViewModel.providerData().isNullOrEmpty()) {

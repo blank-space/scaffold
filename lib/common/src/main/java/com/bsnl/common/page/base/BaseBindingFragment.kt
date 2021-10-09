@@ -22,7 +22,6 @@ import androidx.transition.TransitionManager
 import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bsnl.base.BaseApp
-import com.bsnl.base.manager.KeyboardStateManager
 import com.bsnl.common.R
 import com.bsnl.common.iface.*
 import com.bsnl.common.page.delegate.WrapLayoutDelegateImpl
@@ -53,6 +52,8 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
     private var hideOther = true
     val binding: VB by lazy { inflateBindingWithGeneric(layoutInflater)}
     private var mLoadService: LoadService<ViewState>? = null
+    private var  smartRefreshLayout: SmartRefreshLayout?=null
+
 
 
     override fun onAttach(context: Context) {
@@ -79,10 +80,6 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
      */
     open fun isContentUnderTitleBar(): Boolean {
         return true
-    }
-
-    open fun setupLoadSir() {
-
     }
 
     /**
@@ -131,7 +128,6 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        lifecycle.addObserver(KeyboardStateManager)
         mActivityFragmentManager = activity?.supportFragmentManager
         val view = initWrapDelegate()
         val parent = view?.getParent()
@@ -150,9 +146,10 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
             viewStateChangeListener = MyViewStateListener(),
             loadService = mLoadService
         )
-        initBottomLayout(getBottomLayoutId(), getBottomHeight())
         return layoutDelegateImpl?.setup()
     }
+
+    protected open fun initListViewDelegate(refreshLayout: SmartRefreshLayout){}
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -160,23 +157,23 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
         initStatusBarColor(getStatusBarColor())
         injectARoute()
         initView(view)
+        smartRefreshLayout?.let { initListViewDelegate(it) }
         initListener()
         initData()
         initEventBus()
 
-        val targetLayout = view
         if (!isNeedTransition()) return
         //先隐藏
-        targetLayout.isInvisible = true
+        view.isInvisible = true
         //实现流畅的转场动画
         doOnMainThreadIdle({
             TransitionManager.beginDelayedTransition(
-                targetLayout.parent as ViewGroup,
+                view.parent as ViewGroup,
                 Slide(Gravity.BOTTOM).apply {
-                    addTarget(targetLayout)
+                    addTarget(view)
                 })
             //动画执行结束后显示view
-            targetLayout.isInvisible = false
+            view.isInvisible = false
         }, 100)
     }
 
@@ -218,7 +215,6 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
             onPageReload(v)
         }
 
-
         override fun onNoDataBtnClick(v: View?) {
             processNoDataBtnClick(v)
         }
@@ -231,29 +227,16 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
         override fun onLoadMore(refreshLayout: IRefreshLayout?) {
             processLoadMore(refreshLayout)
         }
-
-        override fun onLoadCustomLayout(v: View?) {
-            processCustomLayout(v)
-        }
     }
 
-    protected open fun processCustomLayout(v: View?) {}
 
-    protected open fun onPageReload(v: View?) {
+    protected open fun onPageReload(v: View?) {}
 
-    }
+    protected open fun processNoDataBtnClick(v: View?) {}
 
-    protected open fun processNoDataBtnClick(v: View?) {
+    protected open fun processRefresh(refreshLayout: IRefreshLayout?) {}
 
-    }
-
-    protected open fun processRefresh(refreshLayout: IRefreshLayout?) {
-
-    }
-
-    protected open fun processLoadMore(refreshLayout: IRefreshLayout?) {
-
-    }
+    protected open fun processLoadMore(refreshLayout: IRefreshLayout?) {}
 
     /** ==================MyViewStateListener - end==================  */
 
@@ -289,9 +272,6 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
     abstract fun initData()
 
 
-    protected open fun getBottomLayoutId(): Int = -1
-
-    protected open fun getBottomHeight(): Int = -1
 
     /**
      * desc:是否开启evenBus
@@ -347,5 +327,10 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
             EventBus.getDefault().unregister(this)
         }
     }
+
+    /** 如果[isUseDefaultLoadService]返回false，必须重写该方法去实例化mLoadService，且要使用[LoadSir#register( target,  onReloadListener,convertor)]这个方法去注册*/
+    open fun setupLoadSir(){}
+
+    open fun isUseDefaultLoadService() = true
 
 }

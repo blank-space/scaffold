@@ -17,8 +17,7 @@ import com.google.android.material.tabs.TabLayoutMediator
  * @date   : 2020/11/10
  * @desc   : ViewPager+Fragment+RecyclerView+RecyclerViewPool的示例
  */
-class ViewPagerActivity :
-    BaseBindingActivity<StubViewModel, FeatureSamplePkgActivityViewpagerBinding>() {
+class ViewPagerActivity : BaseBindingActivity<StubViewModel, FeatureSamplePkgActivityViewpagerBinding>() {
     private val tabs = listOf("tab1", "tab2", "tab3")
 
 

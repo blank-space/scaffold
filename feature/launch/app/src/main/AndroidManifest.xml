@@ -12,6 +12,7 @@
         android:label="小锤子"
         android:name=".App"
         tools:replace="android:label"
+        android:usesCleartextTraffic="true"
         android:theme="@style/lib_base_AppTheme"
       >
 

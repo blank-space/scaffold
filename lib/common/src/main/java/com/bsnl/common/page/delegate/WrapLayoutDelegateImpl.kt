@@ -10,13 +10,11 @@ import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.bsnl.base.log.L
 import com.bsnl.common.R
 import com.bsnl.common.callback.ErrorLayoutCallback
 import com.bsnl.common.iface.*
 import com.bsnl.common.page.delegate.iface.OnViewStateListener
 import com.bsnl.common.page.delegate.iface.IWrapLayoutDelegate
-import com.bsnl.common.refreshLayout.RefreshLayoutProxy
 import com.bsnl.common.utils.dp
 import com.kingja.loadsir.callback.Callback
 import com.kingja.loadsir.core.Convertor
@@ -44,11 +42,11 @@ class WrapLayoutDelegateImpl(
     var viewStateChangeListener: OnViewStateListener? = null,
     var loadService: LoadService<ViewState>? = null,
     var useLoadService: Boolean = true
+
 ) : IWrapLayoutDelegate {
     //当前页面状态
     private var mCurrentState = ViewState.STATE_COMPLETED
     private var mContext: Context
-    private var mRefreshLayout: RefreshLayoutProxy? = null
     private var mViewConfig: ViewConfig? = null
 
     //页面base View
@@ -64,14 +62,9 @@ class WrapLayoutDelegateImpl(
     private var smartRefreshLayout: SmartRefreshLayout? = null
 
     init {
-        mContext = if (mActivity != null) {
-            mActivity
-        } else {
-            mFragment?.requireContext()!!
-        }
+        mContext = mActivity ?: mFragment?.requireContext()!!
         mLayoutInflater = LayoutInflater.from(mContext)
         mViewConfig = ViewConfig()
-
     }
 
     @SuppressLint("CutPasteId")
@@ -87,10 +80,7 @@ class WrapLayoutDelegateImpl(
             mView = mainView
             setupContentView()
             if (isNeedRefreshLayout()) {
-                smartRefreshLayout =
-                    mainView?.findViewById<View>(R.id.content_wrap) as SmartRefreshLayout
-                setupRefreshLayout(smartRefreshLayout!!)
-
+                smartRefreshLayout = mainView?.findViewById<View>(R.id.content_wrap) as SmartRefreshLayout
             }
             mContentWrapView = mainView?.findViewById(R.id.fl_content)
             if (childView != null && mContentWrapView != null) {
@@ -113,7 +103,6 @@ class WrapLayoutDelegateImpl(
                     }) as LoadService<ViewState>?
                 }
             }
-
         }
         return mView
     }
@@ -125,7 +114,6 @@ class WrapLayoutDelegateImpl(
 
     private fun setupContentView() {
         mContentView = childView
-
         val background = mContentView?.background
         if (background != null) {
             mContentView?.background = null
@@ -133,56 +121,6 @@ class WrapLayoutDelegateImpl(
         }
     }
 
-    private fun setupRefreshLayout(smartRefreshLayout: SmartRefreshLayout) {
-        mRefreshLayout =
-            RefreshLayoutProxy(smartRefreshLayout, object : OnRefreshAndLoadMoreListener {
-                override fun onRefresh(refreshLayout: IRefreshLayout?) {
-                    viewStateChangeListener?.onRefresh(refreshLayout)
-                }
-
-                override fun onLoadMore(refreshLayout: IRefreshLayout?) {
-                    viewStateChangeListener?.onLoadMore(refreshLayout)
-                }
-
-            })
-        processRefreshType(mRefreshType)
-
-    }
-
-    private fun setRefreshLayoutState(viewState: ViewState) {
-        if (viewState === ViewState.STATE_COMPLETED) {
-            processRefreshType(mRefreshType)
-        } else {
-            if (mRefreshLayout != null) {
-                mRefreshLayout?.setEnableRefresh(viewState == ViewState.STATE_EMPTY)
-                mRefreshLayout?.setEnableLoadMore(false)
-            }
-        }
-    }
-
-    private fun processRefreshType(@RefreshType.Val refreshType: Int) {
-        if (mRefreshLayout == null) {
-            return
-        }
-        when (refreshType) {
-            RefreshType.REFRESH_AND_LOAD_MORE -> {
-                mRefreshLayout?.setEnableRefresh(true)
-                mRefreshLayout?.setEnableLoadMore(true)
-            }
-            RefreshType.REFRESH_ONLY -> {
-                mRefreshLayout?.setEnableRefresh(true)
-                mRefreshLayout?.setEnableLoadMore(false)
-            }
-            RefreshType.LOAD_MORE_ONLY -> {
-                mRefreshLayout?.setEnableRefresh(false)
-                mRefreshLayout?.setEnableLoadMore(true)
-            }
-            else -> {
-                mRefreshLayout?.setEnableRefresh(false)
-                mRefreshLayout?.setEnableLoadMore(false)
-            }
-        }
-    }
 
     fun setTitleLayout(isImmersionBarEnable: Boolean, isContentUnderTitleBar: Boolean): View? {
         if (mTitleView != null) {
@@ -272,14 +210,13 @@ class WrapLayoutDelegateImpl(
 
     override fun getViewState(): ViewState? = mCurrentState
 
-    override fun getRefreshLayout(): RefreshLayoutProxy? = mRefreshLayout
+    override fun getRefreshLayout(): SmartRefreshLayout? = smartRefreshLayout
 
 
     fun showState(
         viewState: ViewState,
         vararg args: Any?
     ) {
-        setRefreshLayoutState(viewState)
         loadService?.showWithConvertor(viewState)
         mCurrentState = viewState
     }
