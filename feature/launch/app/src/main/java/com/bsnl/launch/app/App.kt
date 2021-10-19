@@ -2,12 +2,12 @@ package com.bsnl.launch.app
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.hardware.Camera
 import android.os.Looper
 import android.util.Log
 import android.widget.ImageView
 import com.bsnl.base.ActivityLifecycleCallback
 import com.bsnl.base.BaseApp
+import com.bsnl.base.BaseAppInit
 import com.bsnl.base.log.L
 import com.bsnl.base.utils.GlobalHandler
 import com.bsnl.common.callback.EmptyLayoutCallback
@@ -34,9 +34,11 @@ class App : BaseApp() {
     override fun onCreate() {
         super.onCreate()
         initTasks()
+        initSubModulesSpeed()
         registerActivityLifecycleCallbacks(ActivityLifecycleCallback())
         initHookMethods()
         initLoadSir()
+        initSubModulesLow()
         loop()
     }
 
@@ -94,6 +96,30 @@ class App : BaseApp() {
                         throw  e
                     }
                 }
+            }
+        }
+    }
+
+    private fun initSubModulesSpeed() {
+        PageConfig.initModules.forEach {
+            try {
+                val clazz = Class.forName(it)
+                val moduleInit = clazz.newInstance() as BaseAppInit
+                moduleInit.onInitSpeed(this)
+            } catch (e: Exception) {
+                e.message?.let { it1 -> L.e(it1) }
+            }
+        }
+    }
+
+    private fun initSubModulesLow() {
+        PageConfig.initModules.forEach {
+            try {
+                val clazz = Class.forName(it)
+                val moduleInit = clazz.newInstance() as BaseAppInit
+                moduleInit.onInitLow(this)
+            } catch (e: Exception) {
+                e.message?.let { it1 -> L.e(it1) }
             }
         }
     }

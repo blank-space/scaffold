@@ -1,5 +1,6 @@
 package com.bsnl.sample.pkg.feature.itemViewBinder
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.TextView
 import com.bsnl.sample.pkg.feature.data.entity.Article
@@ -12,6 +13,7 @@ import com.drakeet.multitype.ViewDelegate
  */
 class ArticleItemViewBinder : ViewDelegate<Article,ArticleLayout>() {
 
+    @SuppressLint("SetTextI18n")
     override fun onBindView(view: ArticleLayout, item: Article) {
        view.tvTitle.text = item.title
         view.tvAuthor.text = "作者：${item.author}"
