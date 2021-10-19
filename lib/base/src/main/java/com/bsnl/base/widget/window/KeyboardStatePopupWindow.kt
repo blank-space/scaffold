@@ -1,4 +1,4 @@
-package com.bsnl.base.window
+package com.bsnl.base.widget.window
 
 import android.content.Context
 import android.graphics.Color

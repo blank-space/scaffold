@@ -1,7 +1,7 @@
 package com.bsnl.launch.app.task
 
 import com.bsnl.faster.MainTask
-import com.bsnl.base.webview.WebViewPool
+import com.bsnl.base.widget.webview.WebViewPool
 
 /**
  * @author : LeeZhaoXing

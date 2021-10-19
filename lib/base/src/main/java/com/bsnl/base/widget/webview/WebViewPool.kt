@@ -1,4 +1,4 @@
-package com.bsnl.base.webview
+package com.bsnl.base.widget.webview
 
 import android.annotation.SuppressLint
 import android.os.Build

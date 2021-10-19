@@ -62,11 +62,6 @@ object ServiceCreator {
                 builder.addInterceptor(interceptors[index])
             }
         }
-        if (Build.VERSION.SDK_INT < 29) {
-            createSSLSocketFactory()?.let {
-                builder.sslSocketFactory(it)
-            }
-        }
         return builder.build()
     }
 
@@ -82,41 +77,5 @@ object ServiceCreator {
     }
 
 
-    /**
-     * 实现https请求
-     */
-    private fun createSSLSocketFactory(): SSLSocketFactory? {
-        var ssfFactory: SSLSocketFactory? = null
-        try {
-            val sc = SSLContext.getInstance("TLS")
-            sc.init(null, arrayOf<TrustManager>(TrustAllCerts()), SecureRandom())
-            ssfFactory = sc.socketFactory
-        } catch (e: Exception) {
-        }
-        return ssfFactory
-    }
 
-    private class TrustAllCerts : X509TrustManager {
-        @Throws(CertificateException::class)
-        override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
-        }
-
-        @Throws(CertificateException::class)
-        override fun checkClientTrusted(x509Certificates: Array<X509Certificate>, s: String) {
-        }
-
-
-        override fun getAcceptedIssuers(): Array<X509Certificate?>? {
-            return arrayOfNulls(0)
-        }
-    }
-
-    /**
-     * 信任所有的服务器,返回true
-     */
-    private class TrustAllHostnameVerifier : HostnameVerifier {
-        override fun verify(hostname: String, session: SSLSession): Boolean {
-            return true
-        }
-    }
 }

@@ -31,10 +31,7 @@ class ActivityLifecycleCallback : Application.ActivityLifecycleCallbacks,
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         Timber.v("${activity::class.java.name}#onActivityCreated ")
         ActivitysManager.addActivity(activity)
-        (activity as? FragmentActivity)?.supportFragmentManager?.registerFragmentLifecycleCallbacks(
-            this,
-            false
-        );
+        (activity as? FragmentActivity)?.supportFragmentManager?.registerFragmentLifecycleCallbacks(this, false)
     }
 
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
@@ -71,7 +68,7 @@ class ActivityLifecycleCallback : Application.ActivityLifecycleCallbacks,
         ActivitysManager.removeActivity(activity)
         (activity as? FragmentActivity)?.supportFragmentManager?.unregisterFragmentLifecycleCallbacks(
             this
-        );
+        )
     }
 
     override fun onFragmentCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {

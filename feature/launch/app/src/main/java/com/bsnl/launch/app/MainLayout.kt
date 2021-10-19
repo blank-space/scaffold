@@ -1,17 +1,20 @@
 package com.bsnl.launch.app
 
+import ClickProtector
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.view.View
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.marginTop
 import com.alibaba.android.arouter.launcher.ARouter
+import com.bsnl.base.log.L
 import com.bsnl.base.utils.DisplayUtils
 import com.bsnl.base.widget.CustomLayout
 import com.bsnl.base.widget.matchParent
-import com.bsnl.base.widget.onClick
 import com.bsnl.common.utils.dp
+import com.bsnl.common.utils.onClick
 import com.bsnl.sample.export.api.ISampleService
 import com.bsnl.sample.export.path.SamplePath
 import com.bsnl.sample.pkg.feature.view.countdowm.CountDownActivity
@@ -42,9 +45,9 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
         onClick = {
             ARouter.getInstance().build(SamplePath.A_LISTVIEW_ACTIVITY).navigation()
         }
+
         this@MainLayout.addView(this, matchParent, 60.dp) {
             topMargin = 40.dp
-
         }
     }
 

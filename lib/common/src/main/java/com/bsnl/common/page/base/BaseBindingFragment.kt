@@ -25,7 +25,6 @@ import com.bsnl.base.BaseApp
 import com.bsnl.common.R
 import com.bsnl.common.iface.*
 import com.bsnl.common.page.delegate.WrapLayoutDelegateImpl
-import com.bsnl.common.page.delegate.iface.OnViewStateListener
 import com.bsnl.common.utils.doOnMainThreadIdle
 import com.bsnl.common.utils.inflateBindingWithGeneric
 import com.bsnl.common.viewmodel.BaseViewModel
@@ -41,7 +40,6 @@ import java.lang.reflect.ParameterizedType
  * @desc   :
  */
 abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragment(), IViewState {
-
     protected var mActivityFragmentManager: FragmentManager? = null
     protected var mAnimationLoaded = false
     var mActivity: WeakReference<Activity>? = null
@@ -53,8 +51,7 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
     val binding: VB by lazy { inflateBindingWithGeneric(layoutInflater)}
     private var mLoadService: LoadService<ViewState>? = null
     private var  smartRefreshLayout: SmartRefreshLayout?=null
-
-
+    private var pageStateChangeListener: PageStateChangeListener? = PageStateChangeListener(this)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -130,7 +127,7 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
     ): View? {
         mActivityFragmentManager = activity?.supportFragmentManager
         val view = initWrapDelegate()
-        val parent = view?.getParent()
+        val parent = view?.parent
         if (parent != null) {
             parent as ViewGroup
             parent.removeView(view)
@@ -143,7 +140,7 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
             mFragment = this,
             childView = getLayout(),
             mRefreshType = getRefreshType(),
-            viewStateChangeListener = MyViewStateListener(),
+            viewStateChangeListener = pageStateChangeListener,
             loadService = mLoadService
         )
         return layoutDelegateImpl?.setup()
@@ -207,38 +204,6 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
     protected open fun getRefreshType(): Int {
         return RefreshType.NONE
     }
-
-    /** ==================MyViewStateListener - start==================  */
-
-    private inner class MyViewStateListener : OnViewStateListener {
-        override fun onReload(v: View?) {
-            onPageReload(v)
-        }
-
-        override fun onNoDataBtnClick(v: View?) {
-            processNoDataBtnClick(v)
-        }
-
-
-        override fun onRefresh(refreshLayout: IRefreshLayout?) {
-            processRefresh(refreshLayout)
-        }
-
-        override fun onLoadMore(refreshLayout: IRefreshLayout?) {
-            processLoadMore(refreshLayout)
-        }
-    }
-
-
-    protected open fun onPageReload(v: View?) {}
-
-    protected open fun processNoDataBtnClick(v: View?) {}
-
-    protected open fun processRefresh(refreshLayout: IRefreshLayout?) {}
-
-    protected open fun processLoadMore(refreshLayout: IRefreshLayout?) {}
-
-    /** ==================MyViewStateListener - end==================  */
 
     fun getLayoutDelegateImpl() = layoutDelegateImpl
 
@@ -326,6 +291,7 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
         if (isNeedEvenBus()) {
             EventBus.getDefault().unregister(this)
         }
+        pageStateChangeListener =null
     }
 
     /** 如果[isUseDefaultLoadService]返回false，必须重写该方法去实例化mLoadService，且要使用[LoadSir#register( target,  onReloadListener,convertor)]这个方法去注册*/

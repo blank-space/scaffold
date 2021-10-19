@@ -8,12 +8,10 @@ import android.view.ViewTreeObserver
 import coil.load
 import com.bsnl.base.utils.DisplayUtils
 import com.bsnl.base.utils.GlobalHandler
-import com.bsnl.base.window.KeyboardStatePopupWindow
+import com.bsnl.base.widget.window.KeyboardStatePopupWindow
 import com.bsnl.common.page.base.BaseBindingActivity
-import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.startActivity
 import com.bsnl.common.viewmodel.StubViewModel
-import com.bsnl.sample.pkg.R
 import com.bsnl.sample.pkg.databinding.FeatureSamplePkgActivityLoginBinding
 import com.lxj.xpopup.util.KeyboardUtils
 import kotlinx.android.synthetic.main.feature_sample_pkg_activity_login.*

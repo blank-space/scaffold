@@ -1,5 +1,7 @@
 package com.bsnl.common.iface
 
+import android.view.View
+
 
 /**
  * @author : LeeZhaoXing
@@ -8,4 +10,12 @@ package com.bsnl.common.iface
  */
 interface IViewState {
     fun setState(state: ViewStateWithMsg)
+
+    fun onPageReload(v: View?) {}
+
+    fun processNoDataBtnClick(v: View?) {}
+
+    fun processRefresh(refreshLayout: IRefreshLayout?) {}
+
+    fun processLoadMore(refreshLayout: IRefreshLayout?) {}
 }

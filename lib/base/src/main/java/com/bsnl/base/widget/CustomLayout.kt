@@ -128,10 +128,3 @@ fun View?.performHapticFeedbackSafely() {
     }
 }
 
-var View.onClick: (View) -> Unit
-    get() {
-        return {}
-    }
-    set(value) {
-        setOnClickListener { v -> value(v) }
-    }

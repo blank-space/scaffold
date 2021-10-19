@@ -17,7 +17,6 @@ import com.bsnl.base.utils.AdaptScreenUtils
 import com.bsnl.base.utils.DisplayUtils
 import com.bsnl.common.iface.*
 import com.bsnl.common.page.delegate.WrapLayoutDelegateImpl
-import com.bsnl.common.page.delegate.iface.OnViewStateListener
 import com.bsnl.common.utils.inflateBindingWithGeneric
 import com.bsnl.common.viewmodel.BaseViewModel
 import com.jaeger.library.StatusBarUtil
@@ -45,6 +44,7 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
     private var hideOther = true
     val binding: VB by lazy { inflateBindingWithGeneric(layoutInflater) }
     var mLoadService: LoadService<ViewState>? = null
+    private var pageStateChangeListener: PageStateChangeListener? = PageStateChangeListener(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +55,7 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
         getIntentData()
         lifecycle.addObserver(KeyboardStateManager)
         initWrapDelegate()
-        if(!isUseDefaultLoadService()) {
+        if (!isUseDefaultLoadService()) {
             setupLoadSir()
         }
         initView()
@@ -66,7 +66,7 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
     }
 
     /** 如果[isUseDefaultLoadService]返回false，必须重写该方法去实例化mLoadService，且要使用[LoadSir#register( target,  onReloadListener,convertor)]这个方法去注册*/
-    open fun setupLoadSir(){}
+    open fun setupLoadSir() {}
 
     open fun isUseDefaultLoadService() = true
 
@@ -75,7 +75,7 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
             mActivity = this,
             childView = getLayout(),
             mRefreshType = getRefreshType(),
-            viewStateChangeListener = MyViewStateListener(),
+            viewStateChangeListener = pageStateChangeListener,
             loadService = mLoadService,
             useLoadService = isUseDefaultLoadService()
         )
@@ -102,13 +102,11 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
 
     /**
      * desc:内容区域是否在标题栏之下
-     *
      */
     open fun isContentUnderTitleBar() = true
 
     /**
      * desc:是否开启evenBus
-     *
      */
     open fun isNeedEvenBus() = false
 
@@ -193,38 +191,6 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
         }
     }
 
-    /** ==================MyViewStateListener - start==================  */
-
-    private inner class MyViewStateListener : OnViewStateListener {
-        override fun onReload(v: View?) {
-            onPageReload(v)
-        }
-
-        override fun onNoDataBtnClick(v: View?) {
-            processNoDataBtnClick(v)
-        }
-
-        override fun onRefresh(refreshLayout: IRefreshLayout?) {
-            processRefresh(refreshLayout)
-        }
-
-        override fun onLoadMore(refreshLayout: IRefreshLayout?) {
-            processLoadMore(refreshLayout)
-        }
-    }
-
-
-
-    protected open fun onPageReload(v: View?) {}
-
-    protected open fun processNoDataBtnClick(v: View?) {}
-
-    protected open fun processRefresh(refreshLayout: IRefreshLayout?) {}
-
-    protected open fun processLoadMore(refreshLayout: IRefreshLayout?) {}
-
-    /** ==================MyViewStateListener - end==================  */
-
 
     open fun getLayout(): View? {
         return binding.root
@@ -249,6 +215,7 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
         if (isNeedEvenBus()) {
             EventBus.getDefault().unregister(this)
         }
+        pageStateChangeListener = null
         if (mActivity != null) {
             mActivity?.clear()
             mActivity = null
@@ -277,7 +244,6 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
         if (v !is EditText) {
             return false
         }
-
         val l = intArrayOf(0, 0)
         v.getLocationInWindow(l)
         val left = l[0]

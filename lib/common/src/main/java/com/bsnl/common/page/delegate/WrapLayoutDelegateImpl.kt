@@ -46,7 +46,7 @@ class WrapLayoutDelegateImpl(
 ) : IWrapLayoutDelegate {
     //当前页面状态
     private var mCurrentState = ViewState.STATE_COMPLETED
-    private var mContext: Context
+    private var mContext: Context = mActivity ?: mFragment?.requireContext()!!
     private var mViewConfig: ViewConfig? = null
 
     //页面base View
@@ -62,7 +62,6 @@ class WrapLayoutDelegateImpl(
     private var smartRefreshLayout: SmartRefreshLayout? = null
 
     init {
-        mContext = mActivity ?: mFragment?.requireContext()!!
         mLayoutInflater = LayoutInflater.from(mContext)
         mViewConfig = ViewConfig()
     }

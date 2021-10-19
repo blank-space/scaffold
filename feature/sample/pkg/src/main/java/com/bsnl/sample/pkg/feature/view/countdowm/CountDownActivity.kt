@@ -2,6 +2,7 @@ package com.bsnl.sample.pkg.feature.view.countdowm
 
 import android.content.Context
 import android.os.CountDownTimer
+import android.view.View
 import com.bsnl.base.log.L
 import com.bsnl.base.utils.GlobalAsyncHandler
 import com.bsnl.base.utils.showToast
@@ -54,7 +55,6 @@ class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
     }
 
     private fun startTimer() {
-
         countDownTimer = object : CountDownTimer(getMaxDuration(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 L.d("onTick：$millisUntilFinished")
@@ -142,5 +142,10 @@ class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
         super.onDestroy()
         countDownTimer?.cancel()
         countDownTimer = null
+    }
+
+    override fun onPageReload(v: View?) {
+        super.onPageReload(v)
+        L.e("onPageReload,onPageReload")
     }
 }

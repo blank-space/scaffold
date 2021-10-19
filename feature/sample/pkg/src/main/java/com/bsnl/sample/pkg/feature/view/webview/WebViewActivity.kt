@@ -15,7 +15,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bsnl.base.utils.DisplayUtils
-import com.bsnl.base.webview.WebViewPool
+import com.bsnl.base.widget.webview.WebViewPool
 import com.bsnl.sample.export.path.SamplePath
 import com.bsnl.sample.pkg.R
 import com.bsnl.sample.pkg.feature.constant.Bundle_URL

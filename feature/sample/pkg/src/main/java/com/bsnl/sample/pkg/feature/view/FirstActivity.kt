@@ -2,6 +2,9 @@ package com.bsnl.sample.pkg.feature.view
 
 import android.content.Context
 import android.view.View
+import com.bsnl.base.utils.GlobalAsyncHandler
+import com.bsnl.common.iface.ViewState
+import com.bsnl.common.iface.ViewStateWithMsg
 import com.bsnl.common.page.base.BaseBindingActivity
 import com.bsnl.common.utils.getVm
 import com.bsnl.common.utils.startActivity
@@ -31,6 +34,10 @@ class FirstActivity : BaseBindingActivity<TestViewModel,FeatureSamplePkgActivity
         supportFragmentManager.beginTransaction().apply {
             add(R.id.container, firstFragment, "first")
             commit()
+        }
+
+        GlobalAsyncHandler.postDelayed(1000) {
+            setState(ViewStateWithMsg(state = ViewState.STATE_COMPLETED))
         }
     }
 
