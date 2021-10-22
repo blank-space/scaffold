@@ -31,4 +31,6 @@
     <color name="head_bg_red">#FA6555</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="lib_common_background_color">#121215</color>
+    <color name="lib_common_white_color">#ffffff</color>
 </resources>

@@ -23,10 +23,17 @@ dependencies {
     api Config.epic
     api Config.aRouter
     kapt Config.aRouter_compiler
-    api project(":lib:faster")
-    api Config.convex
-    api Config.coordinatorlayout
     api Config.loadsir
-
+    api Config.refresh_layout_kernel
+    api Config.refresh_layout_footer
+    api Config.refresh_layout_header
+    api Config.statusbarutil
+    api Config.multitype
+    api Config.background
+    api Config.xpopup
+    api Config.eventbus
+    api Config.coil
+    api Config.coil_gif
+    api Config.coil_svg
 
 }

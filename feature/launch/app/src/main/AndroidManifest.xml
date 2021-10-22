@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.bsnl.launch.app">
+    package="com.dawn.launch.app">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -10,17 +10,18 @@
         android:allowBackup="false"
         android:icon="@drawable/feature_launch_app_ic_logo"
         android:label="小锤子"
-        android:name=".App"
+        android:name="com.dawn.launch.app.App"
         tools:replace="android:label"
         android:usesCleartextTraffic="true"
         android:theme="@style/lib_base_AppTheme"
       >
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.dawn.launch.app.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="user"
-            android:windowSoftInputMode="adjustNothing">
+            android:windowSoftInputMode="adjustNothing"
+           >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -28,7 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.bsnl.sample.pkg.feature.view.webview.WebViewActivity" />
+        <activity android:name="com.dawn.sample.pkg.feature.view.webview.WebViewActivity" />
 
     </application>
 </manifest>

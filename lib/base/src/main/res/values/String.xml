@@ -5,4 +5,10 @@
     <string name="base_load_fail">load fail</string>
     <string name="base_load_failed_no_network">no network</string>
     <string name="base_empty">empty</string>
+    <string name="lib_common_loading">Loading…</string>
+    <string name="lib_common_load_failed">Load failed. click to retry!</string>
+    <string name="lib_common_load_failed_no_network">Oops, network is lost!  click to retry</string>
+    <string name="lib_common_empty">Empty!</string>
+    <string name="lib_common_str_none" />
+    <string name="lib_common_component_dispatch">dispatch</string>
 </resources>

@@ -6,7 +6,7 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url 'https://jitpack.io' }
 
 
@@ -17,10 +17,6 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
         classpath "com.alibaba:arouter-register:$arouter_register_version"
-        // booster
-        classpath "com.didiglobal.booster:booster-gradle-plugin:3.3.1"
-        // convex-booster
-        classpath "org.paradisehell.convex:convex-booster:1.0.0"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -43,15 +39,12 @@ allprojects {
 subprojects {
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-
-
             if (details.requested.group == 'androidx.fragment') {
                 details.useVersion "1.3.5"
             }
             if (details.requested.group == 'androidx.core' && details.requested.name=='core') {
                 details.useVersion "1.3.2"
             }
-
             if (details.requested.group == 'androidx.lifecycle' && details.requested.name =='lifecycle-livedata') {
                 details.useVersion "2.2.0"
             }

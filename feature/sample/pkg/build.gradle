@@ -30,9 +30,8 @@ android {
 }
 
 dependencies {
-    api project(':lib:common')
+    api project(':lib:base')
     kapt Config.aRouter_compiler
-    kapt Config.hilt_daggerCompiler
     api project(':feature:sample:export')
-    implementation Config.coil
+
 }

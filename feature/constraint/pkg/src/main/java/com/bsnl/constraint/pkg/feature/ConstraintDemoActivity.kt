@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.bsnl.common.utils.startActivity
+import com.bsnl.base.utils.startActivity
 import com.bsnl.constraint.pkg.R
 import kotlinx.android.synthetic.main.feature_constraint_pkg_activity_main.*
 

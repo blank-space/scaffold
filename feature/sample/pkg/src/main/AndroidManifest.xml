@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bsnl.sample.pkg">
+    package="com.dawn.sample.pkg">
 
     <application>
-        <activity android:name=".feature.view.SampleActivity" />
-        <activity android:name=".feature.view.FirstActivity" />
-        <activity android:name=".feature.view.login.LoginActivity"
+        <activity android:name="com.dawn.sample.pkg.feature.view.SampleActivity" />
+        <activity android:name="com.dawn.sample.pkg.feature.view.FirstActivity" />
+        <activity android:name="com.dawn.sample.pkg.feature.view.login.LoginActivity"
             android:windowSoftInputMode="adjustNothing"
             />
-        <activity android:name=".feature.view.viewpager.ViewPagerActivity" />
-        <activity android:name=".feature.view.async.AsyncCreateViewActivity" />
-        <activity android:name=".feature.view.async.AsyncCreateView2Activity" />
-        <activity android:name=".feature.view.gson.GsonDemoActivity" />
-        <activity android:name=".feature.view.countdowm.CountDownActivity" />
+        <activity android:name="com.dawn.sample.pkg.feature.view.viewpager.ViewPagerActivity" />
+        <activity android:name="com.dawn.sample.pkg.feature.view.async.AsyncCreateViewActivity" />
+        <activity android:name="com.dawn.sample.pkg.feature.view.async.AsyncCreateView2Activity" />
+        <activity android:name="com.dawn.sample.pkg.feature.view.gson.GsonDemoActivity" />
+        <activity android:name="com.dawn.sample.pkg.feature.view.countdowm.CountDownActivity" />
 
     </application>
 </manifest>

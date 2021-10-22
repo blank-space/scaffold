@@ -1,6 +1,5 @@
 apply {
     plugin "kotlin-android"
-    plugin "kotlin-android-extensions"
     plugin 'kotlin-kapt'
 }
 
