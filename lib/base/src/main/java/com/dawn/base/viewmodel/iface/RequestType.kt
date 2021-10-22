@@ -11,6 +11,7 @@ open interface RequestType {
     @IntDef(value = [INIT, REFRESH, LOAD_MORE])
     annotation class Val
     companion object {
+
         /**
          * 初始化
          */

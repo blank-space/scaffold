@@ -2,9 +2,17 @@ package com.dawn.launch.app
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Looper
 import android.util.Log
 import android.widget.ImageView
+import coil.ImageLoader
+import coil.ImageLoaderFactory
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.decode.SvgDecoder
+import coil.util.CoilUtils
+import coil.util.DebugLogger
 import com.dawn.base.ActivityLifecycleCallback
 import com.dawn.base.BaseApp
 import com.dawn.base.BaseAppInit
@@ -21,6 +29,8 @@ import com.dawn.sample.pkg.feature.hook.BitmapsHook
 import com.dawn.sample.pkg.feature.hook.DrawableHook
 import com.kingja.loadsir.core.LoadSir
 import de.robv.android.xposed.DexposedBridge
+import okhttp3.Dispatcher
+import okhttp3.OkHttpClient
 
 
 /**
@@ -29,7 +39,7 @@ import de.robv.android.xposed.DexposedBridge
  * @desc   :
  */
 
-class App : BaseApp() {
+class App : BaseApp() , ImageLoaderFactory {
 
     override fun onCreate() {
         super.onCreate()
@@ -122,5 +132,36 @@ class App : BaseApp() {
                 e.message?.let { it1 -> L.e(it1) }
             }
         }
+    }
+
+    override fun newImageLoader(): ImageLoader {
+        return ImageLoader.Builder(this)
+            .componentRegistry {
+                // GIFs
+                if (Build.VERSION.SDK_INT >= 28) {
+                    add(ImageDecoderDecoder(this@App))
+                } else {
+                    add(GifDecoder())
+                }
+                // SVGs
+                add(SvgDecoder(this@App))
+                // Video frames
+                //add(VideoFrameDecoder.Factory())
+            }
+            .availableMemoryPercentage(0.25)
+            .okHttpClient {
+                val dispatcher = Dispatcher().apply { maxRequestsPerHost = maxRequests }
+                OkHttpClient.Builder()
+                    .cache(CoilUtils.createDefaultCache(this))
+                    .dispatcher(dispatcher)
+                    .build()
+            }
+            .crossfade(true)
+            .apply {
+                if (com.dawn.base.BuildConfig.DEBUG) {
+                    logger(DebugLogger(Log.VERBOSE))
+                }
+            }
+            .build()
     }
 }

@@ -1,9 +1,8 @@
 package com.dawn.sample.pkg.feature.itemViewBinder
 
-import coil.load
 import coil.transform.CircleCropTransformation
-import com.dawn.base.imageLoader.load
 import com.dawn.base.ui.page.base.BindingViewDelegate
+import com.dawn.imageloader.load
 import com.dawn.sample.pkg.R
 import com.dawn.sample.pkg.databinding.FeatureSamplePkgRecycleItemCountdownBinding
 
@@ -34,6 +33,7 @@ class CountDownItemViewBinder : BindingViewDelegate<Long, FeatureSamplePkgRecycl
         holder.binding.apply {
             img.load("https://image-upyun.halvie.com/images/20210611/1623414322613.jpg!/format/webp",R.drawable.ic_goods_placeholder,CircleCropTransformation())
         }
+        holder.addOnChildClickListener(R.id.tv_title).addOnChildClickListener(R.id.img)
     }
 
     private fun updateText(

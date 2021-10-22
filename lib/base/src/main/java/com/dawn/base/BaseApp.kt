@@ -2,28 +2,17 @@ package com.dawn.base
 
 import android.app.Application
 import android.content.Context
-import android.os.Build.VERSION.SDK_INT
-import android.util.Log
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.multidex.MultiDex
-import coil.ImageLoader
-import coil.ImageLoaderFactory
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
-import coil.decode.SvgDecoder
-import coil.util.CoilUtils
-import coil.util.DebugLogger
 import com.alibaba.android.arouter.launcher.ARouter
-import okhttp3.Dispatcher
-import okhttp3.OkHttpClient
 
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/10/10
  * @desc   :
  */
-open class BaseApp : Application(), ViewModelStoreOwner, ImageLoaderFactory {
+open class BaseApp : Application(), ViewModelStoreOwner {
 
     companion object {
         lateinit var application: Application
@@ -53,36 +42,7 @@ open class BaseApp : Application(), ViewModelStoreOwner, ImageLoaderFactory {
         return mAppViewModelStore
     }
 
-    override fun newImageLoader(): ImageLoader {
-        return ImageLoader.Builder(this)
-            .componentRegistry {
-                // GIFs
-                if (SDK_INT >= 28) {
-                    add(ImageDecoderDecoder(this@BaseApp))
-                } else {
-                    add(GifDecoder())
-                }
-                // SVGs
-                add(SvgDecoder(this@BaseApp))
-                // Video frames
-                //add(VideoFrameDecoder.Factory())
-            }
-            .availableMemoryPercentage(0.25)
-            .okHttpClient {
-                val dispatcher = Dispatcher().apply { maxRequestsPerHost = maxRequests }
-                OkHttpClient.Builder()
-                    .cache(CoilUtils.createDefaultCache(this))
-                    .dispatcher(dispatcher)
-                    .build()
-            }
-            .crossfade(true)
-            .apply {
-                if (BuildConfig.DEBUG) {
-                    logger(DebugLogger(Log.VERBOSE))
-                }
-            }
-            .build()
-    }
+
 }
 
 

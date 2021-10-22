@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.launcher.ARouter
 import com.dawn.base.manager.KeyboardStateManager
+import com.dawn.base.ui.page.FragmentStateFixer
 import com.dawn.base.utils.AdaptScreenUtils
 import com.dawn.base.utils.DisplayUtils
 import com.dawn.base.ui.page.iface.*
@@ -47,6 +48,7 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
     private var pageStateChangeListener: PageStateChangeListener? = PageStateChangeListener(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        FragmentStateFixer.fixState(this, savedInstanceState)
         super.onCreate(savedInstanceState)
         injectARoute()
         mContext = this
@@ -80,7 +82,6 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
             useLoadService = isUseDefaultLoadService()
         )
         layoutDelegateImpl?.setup()
-
     }
 
 
@@ -191,7 +192,6 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
         }
     }
 
-
     open fun getLayout(): View? {
         return binding.root
     }
@@ -202,8 +202,7 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
             (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<T>
         mViewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)
-        )
-            .get(persistentClass)
+        ).get(persistentClass)
         return mViewModel
     }
 

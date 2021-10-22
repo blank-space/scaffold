@@ -1,8 +1,11 @@
 package com.dawn.sample.pkg.feature.view
 
 import android.content.Context
+import android.content.Intent
+import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.dawn.base.ui.page.base.SimpleListActivity
+import com.dawn.base.utils.ItemClickSupport
 import com.dawn.base.utils.startActivity
 import com.dawn.sample.export.path.SamplePath
 import com.dawn.sample.pkg.feature.itemViewBinder.ArticleItemViewBinder
@@ -39,6 +42,7 @@ class SampleActivity : SimpleListActivity<SampleViewModel>() {
 
     override fun initListener() {
         super.initListener()
+
     }
 
 }

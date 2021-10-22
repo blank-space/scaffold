@@ -30,7 +30,7 @@ android {
 }
 
 dependencies {
-    api project(':lib:base')
+    api project(':lib:imageLoader')
     kapt Config.aRouter_compiler
     api project(':feature:sample:export')
 

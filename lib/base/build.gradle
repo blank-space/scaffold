@@ -32,8 +32,6 @@ dependencies {
     api Config.background
     api Config.xpopup
     api Config.eventbus
-    api Config.coil
-    api Config.coil_gif
-    api Config.coil_svg
+
 
 }

@@ -5,7 +5,6 @@ import android.widget.Toast
 import com.dawn.base.BaseApp
 
 
-private var toast: Toast? = null
 
 
 /**
@@ -13,12 +12,7 @@ private var toast: Toast? = null
  */
 fun String.showToast(duration: Int = Toast.LENGTH_SHORT) {
     if (Looper.myLooper() == Looper.getMainLooper()) {
-        if (toast == null) {
-            toast = Toast.makeText(BaseApp.application, this, duration)
-        } else {
-            toast?.setText(this)
-        }
-        toast?.show()
+        Toast.makeText(BaseApp.application, this, duration).show()
     }
 }
 
@@ -28,11 +22,6 @@ fun String.showToast(duration: Int = Toast.LENGTH_SHORT) {
  */
 fun Int.showToast(duration: Int = Toast.LENGTH_SHORT) {
     if (Looper.myLooper() == Looper.getMainLooper()) {
-        if (toast == null) {
-            toast = Toast.makeText(BaseApp.application, this, duration)
-        } else {
-            toast?.setText(this)
-        }
-        toast?.show()
+        Toast.makeText(BaseApp.application, this, duration).show()
     }
 }

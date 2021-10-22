@@ -7,11 +7,10 @@
  * </pre>
  */
 class Versions {
-
     static retrofit = "2.9.0"
     static okhttpLogging = "3.9.0"
     static appcompat = "1.2.0"
-    static coreKtx = "1.3.1"
+    static coreKtx = "1.6.0"
     static constraintlayout = "2.0.1"
     static paging = "3.0.0-alpha02"
     static timber = "4.7.1"

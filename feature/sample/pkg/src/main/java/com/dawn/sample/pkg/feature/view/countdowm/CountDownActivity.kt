@@ -7,7 +7,10 @@ import com.dawn.base.log.L
 import com.dawn.base.utils.GlobalAsyncHandler
 import com.dawn.base.ui.page.iface.ViewState
 import com.dawn.base.ui.page.base.SimpleListActivity
+import com.dawn.base.utils.ItemClickSupport
+import com.dawn.base.utils.showToast
 import com.dawn.base.utils.startActivity
+import com.dawn.sample.pkg.R
 import com.dawn.sample.pkg.feature.callback.PlaceholderCallback
 import com.dawn.sample.pkg.feature.itemViewBinder.CountDownItemViewBinder
 import com.dawn.sample.pkg.feature.viewmodel.CountDownViewModel
@@ -104,22 +107,21 @@ class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
             .build()
         //注意：上面的只定义了PlaceholderCallback，在转换器回调里是无法使用其他Callback(SuccessCallback是内置的),否则会抛出异常
         getLayoutDelegateImpl()?.let {
-           it.loadService = loadSir.register(it.childView, Callback.OnReloadListener {
+            it.loadService = loadSir.register(it.childView, Callback.OnReloadListener {
 
-           }, Convertor<ViewState> { v ->
-               val resultCode: Class<out Callback?> = when (v) {
-                   ViewState.STATE_LOADING -> PlaceholderCallback::class.java
-                   else -> SuccessCallback::class.java
-               }
-               resultCode
-           }) as LoadService<ViewState>?
+            }, Convertor<ViewState> { v ->
+                val resultCode: Class<out Callback?> = when (v) {
+                    ViewState.STATE_LOADING -> PlaceholderCallback::class.java
+                    else -> SuccessCallback::class.java
+                }
+                resultCode
+            }) as LoadService<ViewState>?
         }
     }
 
     override fun isUseDefaultLoadService(): Boolean {
         return false
     }
-
 
 
     override fun onGetDataFinish(data: Any?) {
@@ -140,5 +142,30 @@ class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
     override fun onPageReload(v: View?) {
         super.onPageReload(v)
         L.e("onPageReload,onPageReload")
+    }
+
+    override fun initListener() {
+        super.initListener()
+        ItemClickSupport.addTo(getRecyclerView())
+            .setOnItemClickListener(object : ItemClickSupport.OnItemClick<MultiTypeAdapter>() {
+                override fun onItemClick(adapter: MultiTypeAdapter?, view: View?, position: Int) {
+                    "$position onItemClick".showToast()
+                }
+
+                override fun onItemChildClick(
+                    adapter: MultiTypeAdapter?,
+                    view: View?,
+                    position: Int) {
+                    when (view?.id) {
+                        R.id.img -> {
+                            "$position img".showToast()
+                        }
+
+                        R.id.tv_title -> {
+                            "$position tv_title".showToast()
+                        }
+                    }
+                }
+            })
     }
 }

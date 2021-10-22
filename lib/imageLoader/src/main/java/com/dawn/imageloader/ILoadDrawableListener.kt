@@ -1,4 +1,4 @@
-package com.dawn.base.imageLoader
+package com.dawn.imageloader
 
 import android.graphics.drawable.Drawable
 

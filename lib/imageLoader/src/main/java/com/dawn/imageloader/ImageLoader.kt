@@ -1,4 +1,4 @@
-package com.dawn.base.imageLoader
+package com.dawn.imageloader
 
 import android.content.Context
 import android.net.Uri
@@ -45,12 +45,11 @@ fun getDrawable(url: String, context: Context, loadBitmapListener: ILoadDrawable
     val imageLoader = ImageLoader(context)
     var disposable: Disposable? = null
     val request = ImageRequest.Builder(context)
-        .data("https://www.example.com/image.jpg")
+        .data(url)
         .target { result ->
             loadBitmapListener?.onGetDrawable(result)
             disposable?.dispose()
         }
         .build()
     disposable = imageLoader.enqueue(request)
-
 }
