@@ -45,8 +45,10 @@ subprojects {
             if (details.requested.group == 'androidx.core' && details.requested.name=='core') {
                 details.useVersion "1.6.0"
             }
-            if (details.requested.group == 'androidx.lifecycle' && details.requested.name =='lifecycle-livedata') {
-                details.useVersion "2.2.0"
+            if (details.requested.group == 'androidx.lifecycle') {
+                if(details.requested.name =='lifecycle-livedata' || details.requested.name =='lifecycle-common'
+                        || details.requested.name =='lifecycle-runtime')
+                details.useVersion "2.3.1"
             }
             if (details.requested.group == 'androidx.appcompat') {
                 details.useVersion "1.2.0"
@@ -54,6 +56,16 @@ subprojects {
             if (details.requested.group == 'androidx.core' && details.requested.name=='core-ktx') {
                 details.useVersion "1.6.0"
             }
+            if (details.requested.group == 'androidx.arch.core' && details.requested.name=='core-common') {
+                details.useVersion "2.1.0"
+            }
+            if (details.requested.group == 'androidx.annotation' && details.requested.name=='annotation') {
+                details.useVersion "1.2.0"
+            }
+            if (details.requested.group == 'androidx.collection' && details.requested.name=='collection') {
+                details.useVersion "1.1.0"
+            }
+
         }
     }
 }

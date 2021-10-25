@@ -1,0 +1,55 @@
+apply plugin: "com.android.library"
+apply from: "../../buildCommon.gradle"
+
+
+ext {
+    PUBLISH_GROUP_ID = 'com.dawn.base'
+    PUBLISH_VERSION = '1.0.0-beta1'
+    VERSION_CODE = 100001
+
+    PUBLISH_ARTIFACT_ID = 'scaffold'
+    ARTIFACT_DESCRIPTION = 'mvvm scaffold'
+
+    POM_URL='https://github.com/blank-space/scaffold'
+    POM_SCM_URL='https://github.com/blank-space/scaffold/tree/master'
+    POM_SCM_CONNECTION='scm:git:github.com//blank-space/scaffold.git'
+    POM_SCM_DEV_CONNECTION='scm:git:ssh://github.com//blank-space/scaffold.git'
+
+    POM_DEVELOPER_ID='blank-space'
+    POM_DEVELOPER_NAME='blank-space'
+    POM_DEVELOPER_URL='https://github.com/blank-space'
+    POM_DEVELOPER_EMAIL=''
+
+    LICENSE_NAME='The Apache Software License, Version 2.0'
+    LICENSE_URL='http://www.apache.org/licenses/LICENSE-2.0.txt'
+
+    uploadJavadocs = false
+    uploadSources = false
+}
+
+//apply from: "${rootProject.projectDir}/publish-mavencentral.gradle"
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    api Config.kotlin
+    api Config.coreKtx
+    api Config.appcompat
+    api Config.multidex
+    api Config.constraintlayout
+    api Config.recyclerview
+    api Config.viewModel
+    api Config.liveData
+    api Config.commonJava8
+    api Config.mmkv
+    api Config.permissionx
+    api Config.timber
+    api Config.aRouter
+    kapt Config.aRouter_compiler
+    api Config.loadsir
+    api Config.refresh_layout_kernel
+    api Config.refresh_layout_footer
+    api Config.refresh_layout_header
+    api Config.statusbarutil
+    api Config.multitype
+    api Config.unpeek_livedata
+}

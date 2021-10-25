@@ -24,10 +24,10 @@ class Versions {
     static swiperefreshlayout = "1.0.0"
     static hit = "2.28-alpha"
     static hitViewModule = "1.0.0-alpha01"
-    static material = "1.0.0@aar"
+    static material = "1.4.0"
     static glide = "4.11.0"
     static viewpager2 = "1.0.0"
-    static lifecycle_version = "2.2.0"
+    static lifecycle_version = "2.3.1"
     static mmkv = "1.2.2"
     static permissionx = "1.4.0"
     static liveEventBus = "1.7.2"
@@ -48,6 +48,7 @@ class Versions {
     static fragment_ktx = "1.4.0-alpha09"
     static coordinatorlayout = "1.1.0"
     static loadSir = "1.3.8"
+    static unpeek_livedata ="7.2.0-beta1"
 }
 
 

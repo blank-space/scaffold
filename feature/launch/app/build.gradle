@@ -7,5 +7,7 @@ dependencies {
     implementation project(':feature:sample:pkg')
     kapt Config.aRouter_compiler
     debugImplementation Config.leakcanary
-    api project(":lib:faster")
+    //api project(":lib:faster")
+    implementation 'com.github.Caij:DGAppStartup:1.0.2'
+
 }

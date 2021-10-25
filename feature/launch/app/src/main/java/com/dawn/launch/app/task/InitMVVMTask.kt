@@ -1,7 +1,7 @@
 package com.dawn.launch.app.task
 
+import com.caij.app.startup.Task
 import com.dawn.base.BaseApp
-import com.dawn.faster.Task
 import com.tencent.mmkv.MMKV
 
 /**
@@ -14,4 +14,10 @@ class InitMVVMTask : Task(){
         //本地Key-value存储
         MMKV.initialize(BaseApp.application)
     }
+
+    override fun dependencies(): MutableList<Class<out Task>>? {
+        return null
+    }
+
+    override fun getTaskName()= "InitMVVMTask"
 }

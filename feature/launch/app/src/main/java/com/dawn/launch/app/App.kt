@@ -13,6 +13,7 @@ import coil.decode.ImageDecoderDecoder
 import coil.decode.SvgDecoder
 import coil.util.CoilUtils
 import coil.util.DebugLogger
+import com.caij.app.startup.Config
 import com.dawn.base.ActivityLifecycleCallback
 import com.dawn.base.BaseApp
 import com.dawn.base.BaseAppInit
@@ -21,7 +22,6 @@ import com.dawn.base.utils.GlobalHandler
 import com.dawn.base.ui.callback.EmptyLayoutCallback
 import com.dawn.base.ui.callback.ErrorLayoutCallback
 import com.dawn.base.ui.callback.LoadingLayoutCallback
-import com.dawn.faster.TaskDispatcher
 import com.dawn.launch.app.task.InitLogTask
 import com.dawn.launch.app.task.InitMVVMTask
 import com.dawn.launch.app.task.InitWebViewTask
@@ -31,6 +31,10 @@ import com.kingja.loadsir.core.LoadSir
 import de.robv.android.xposed.DexposedBridge
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
+import com.caij.app.startup.OnProjectListener
+
+import com.caij.app.startup.DGAppStartup
+import com.dawn.launch.app.task.MonitorTaskListener
 
 
 /**
@@ -80,12 +84,24 @@ class App : BaseApp() , ImageLoaderFactory {
     }
 
     private fun initTasks() {
-        TaskDispatcher.init(this)
-        val dispatcher: TaskDispatcher = TaskDispatcher.createInstance()
-        dispatcher.addTask(InitLogTask())
-            .addTask(InitMVVMTask())
-            .addTask(InitWebViewTask())
+
+        val config = Config()
+        config.isStrictMode = BuildConfig.DEBUG
+        DGAppStartup.Builder()
+            .add(InitLogTask())
+            .add(InitMVVMTask())
+            //.add(InitWebViewTask())
+            .setConfig(config)
+            .addTaskListener(MonitorTaskListener("@@", true))
+            .setExecutorService(ThreadManager.getInstance().WORK_EXECUTOR)
+            .addOnProjectExecuteListener(object : OnProjectListener {
+                override fun onProjectStart() {}
+                override fun onProjectFinish() {}
+                override fun onStageFinish() {}
+            })
+            .create()
             .start()
+            .await()
     }
 
 

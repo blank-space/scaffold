@@ -52,10 +52,12 @@ class Config {
     static background = "com.noober.background:core:${Versions.background}"
     static xpopup = "com.github.li-xiaojun:XPopup:${Versions.xpop}"
     static coil = "io.coil-kt:coil:${Versions.coil}"
-    static coil_gif="io.coil-kt:coil-gif:${Versions.coil}"
-    static coil_svg="io.coil-kt:coil-svg:${Versions.coil}"
+    static coil_gif = "io.coil-kt:coil-gif:${Versions.coil}"
+    static coil_svg = "io.coil-kt:coil-svg:${Versions.coil}"
     static coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:${Versions.coordinatorlayout}"
     static loadsir = "com.kingja.loadsir:loadsir:${Versions.loadSir}"
+    static unpeek_livedata = "com.kunminx.arch:unpeek-livedata:${Versions.unpeek_livedata}"
+    static material               = "com.google.android.material:material:${Versions.material}"
 
 
 }

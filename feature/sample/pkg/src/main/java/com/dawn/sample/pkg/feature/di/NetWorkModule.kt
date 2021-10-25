@@ -1,6 +1,6 @@
 package com.dawn.sample.pkg.feature.di
 
-import com.dawn.base.net.ServiceCreator
+import com.dawn.network.ServiceCreator
 import com.dawn.sample.pkg.feature.repository.PokemonNetwork
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -14,13 +14,13 @@ object NetWorkModule {
 
 
     fun provideOkHttpClient(): OkHttpClient {
-        return ServiceCreator.getClient()
+        return com.dawn.network.ServiceCreator.getClient()
     }
 
 
 
     fun provideRetrofit(): Retrofit {
-        return ServiceCreator.initRetrofit()
+        return com.dawn.network.ServiceCreator.initRetrofit()
     }
 
 
