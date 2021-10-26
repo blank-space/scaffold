@@ -32,6 +32,7 @@ android {
 dependencies {
     api project(':lib:imageLoader')
     api project(':lib:network')
+    api project(':lib:domain')
     kapt Config.aRouter_compiler
     api project(':feature:sample:export')
     api Config.epic

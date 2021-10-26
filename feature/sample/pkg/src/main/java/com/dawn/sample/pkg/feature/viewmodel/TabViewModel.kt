@@ -1,6 +1,6 @@
 package com.dawn.sample.pkg.feature.viewmodel
 
-import com.dawn.base.BaseHttpResult
+import com.dawn.base.DataResult
 import com.dawn.base.viewmodel.base.BaseListViewModel
 import com.dawn.sample.pkg.feature.data.model.PokemonListResponse
 import com.dawn.sample.pkg.feature.repository.PokemonNetwork
@@ -19,16 +19,16 @@ class TabViewModel : BaseListViewModel() {
         PokeRepositoryImpl(PokemonNetwork)
     }
 
-    override fun getList(): Flow<BaseHttpResult<Any>?>? {
+    override fun getList(): Flow<DataResult<Any>?>? {
         return flow {
             val response = repository.fetchPokemonList(pageNo)
-            val data = BaseHttpResult<PokemonListResponse>()
+            val data = DataResult<PokemonListResponse>()
             response.collectLatest {
                 data.data = it
                 data.code ="000000"
                 data.msg = "ok"
             }
             emit(data)
-        } as Flow<BaseHttpResult<Any>?>?
+        } as Flow<DataResult<Any>?>?
     }
 }

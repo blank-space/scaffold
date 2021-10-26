@@ -1,16 +1,20 @@
 package com.dawn.launch.app
 
 import android.view.View
+import androidx.lifecycle.Observer
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.dawn.base.BaseApp
 import com.dawn.base.databinding.BaseEmptyLayoutBinding
+import com.dawn.base.log.L
 import com.dawn.base.utils.GlobalAsyncHandler
 import com.dawn.base.ui.page.iface.ViewState
 import com.dawn.base.ui.page.iface.ViewStateWithMsg
 import com.dawn.base.ui.page.base.BaseBindingActivity
 import com.dawn.base.utils.doOnMainThreadIdle
+import com.dawn.base.utils.getApplicationScopeViewModel
 import com.dawn.base.widget.webview.WebViewPool
 import com.dawn.sample.export.api.ISampleService
+import com.dawn.sample.pkg.feature.domain.message.ShareViewModel
 
 /**
  * @author : LeeZhaoXing
@@ -45,6 +49,11 @@ class MainActivity : BaseBindingActivity<MainViewModel, BaseEmptyLayoutBinding>(
     override fun isNeedInjectARouter() = true
 
     override fun initData() {
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
 
     }
 }

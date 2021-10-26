@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.dawn.base.utils.NetworkUtils
 import com.dawn.base.utils.showToast
-import com.dawn.base.BaseHttpResult
+import com.dawn.base.DataResult
 import com.dawn.base.constant.DEFAULT_PAGE_SIZE
 import com.dawn.base.constant.DEFAULT_START_PAGE_INDEX
 import com.dawn.base.ui.page.iface.IList
@@ -67,7 +67,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
      * 请求入口
      */
     @ExperimentalCoroutinesApi
-    override fun fetchListData(requestType: Int): LiveData<BaseHttpResult<Any>?>? {
+    override fun fetchListData(requestType: Int): LiveData<DataResult<Any>?>? {
         mRequestType = requestType
         when (requestType) {
             RequestType.INIT -> processPreInitData()
@@ -82,7 +82,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
             }?.collectLatest {
                     if (it?.isSuccessFul!!) {
                         processData(it)
-                        emit(it as BaseHttpResult<Any>?)
+                        emit(it as DataResult<Any>?)
                     } else {
                         processError(it.msg)
                     }
@@ -111,7 +111,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
     /**
      * 处理数据
      */
-    protected open fun processData(t: BaseHttpResult<Any>?) {
+    protected open fun processData(t: DataResult<Any>?) {
         if (t == null) {
             setState(value = ViewState.STATE_ERROR)
             return
@@ -137,7 +137,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
      * 初始化页面数据（子类可重写）
      */
     protected open fun initView(
-        listResponseBean: BaseHttpResult<Any>?,
+        listResponseBean: DataResult<Any>?,
         @RequestType.Val requestType: Int
     ) {
         if (listResponseBean?.data is IBaseList) {
@@ -198,7 +198,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
      *
      * @param listResponseBean
      */
-    protected open fun processLoadMoreData(listResponseBean: BaseHttpResult<Any>?) {
+    protected open fun processLoadMoreData(listResponseBean: DataResult<Any>?) {
         if (listResponseBean?.data is IBaseList) {
             val data: IBaseList = listResponseBean?.getData() as IBaseList
             val insertP = mData.size

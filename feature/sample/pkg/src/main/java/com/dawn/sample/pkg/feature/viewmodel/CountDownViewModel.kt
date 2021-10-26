@@ -1,6 +1,6 @@
 package com.dawn.sample.pkg.feature.viewmodel
 
-import com.dawn.base.BaseHttpResult
+import com.dawn.base.DataResult
 import com.dawn.base.viewmodel.base.BaseListViewModel
 import com.dawn.sample.pkg.feature.data.entity.CountDownList
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.flow
  * @desc   :
  */
 class CountDownViewModel : BaseListViewModel() {
-    override fun getList(): Flow<BaseHttpResult<Any>?> {
+    override fun getList(): Flow<DataResult<Any>?> {
         return flow {
             val response = arrayListOf<Long>(
                 0,
@@ -30,11 +30,11 @@ class CountDownViewModel : BaseListViewModel() {
                 0,
             )
             val bean = CountDownList(response)
-            val data = BaseHttpResult<CountDownList>()
+            val data = DataResult<CountDownList>()
             data.data = bean
             data.code = "000000"
             data.msg = "ok"
             emit(data)
-        } as Flow<BaseHttpResult<Any>?>
+        } as Flow<DataResult<Any>?>
     }
 }

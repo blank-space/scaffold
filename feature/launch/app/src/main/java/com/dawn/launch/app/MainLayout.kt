@@ -15,6 +15,7 @@ import com.dawn.base.utils.onClick
 import com.dawn.sample.export.api.ISampleService
 import com.dawn.sample.export.path.SamplePath
 import com.dawn.sample.pkg.feature.view.countdowm.CountDownActivity
+import com.dawn.sample.pkg.feature.view.download.DownLoadActivity
 import com.dawn.sample.pkg.feature.view.gson.GsonDemoActivity
 import com.dawn.sample.pkg.feature.view.viewpager.ViewPagerActivity
 

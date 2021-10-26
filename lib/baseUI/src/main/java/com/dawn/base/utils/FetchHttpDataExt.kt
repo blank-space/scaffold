@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.dawn.base.log.L
-import com.dawn.base.BaseHttpResult
+import com.dawn.base.DataResult
 import com.dawn.base.ui.page.iface.ViewState
 import com.dawn.base.ui.page.iface.ViewStateWithMsg
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.onStart
  * @desc   :
  */
 inline fun <T> fetchData(
-    flow: Flow<BaseHttpResult<T>>,
+    flow: Flow<DataResult<T>>,
     isFirstTimeLoad: Boolean = true,
     viewState: MutableLiveData<ViewStateWithMsg>,
     isShowLoadingOnStart: Boolean = true,
@@ -61,7 +61,7 @@ inline fun <T> fetchData(
  */
 @ExperimentalCoroutinesApi
 inline fun <T> fetchData(
-    flow: Flow<BaseHttpResult<T>>,
+    flow: Flow<DataResult<T>>,
     crossinline block: (T) -> Unit,
 ): LiveData<T?> = liveData {
     flow.onStart {

@@ -1,6 +1,6 @@
 package com.dawn.base.ui.page.iface
 
-import com.dawn.base.BaseHttpResult
+import com.dawn.base.DataResult
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -10,5 +10,5 @@ import kotlinx.coroutines.flow.Flow
  */
 interface IList {
 
-    fun getList(): Flow<BaseHttpResult<Any>?>?
+    fun getList(): Flow<DataResult<Any>?>?
 }

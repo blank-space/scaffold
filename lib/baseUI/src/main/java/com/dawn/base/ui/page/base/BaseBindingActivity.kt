@@ -33,10 +33,10 @@ import java.lang.reflect.ParameterizedType
  * @date   : 2020/8/17
  * @desc   :
  */
-abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCompatActivity(),
+abstract class BaseBindingActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatActivity(),
     IViewState {
     private var mTitleView: ITitleView? = null
-    lateinit var mViewModel: T
+    lateinit var mViewModel: VM
     val TAG by lazy { javaClass.simpleName }
     lateinit var mContext: Context
     var mActivity: WeakReference<Activity>? = null
@@ -81,9 +81,6 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
         )
         layoutDelegateImpl?.setup()
     }
-
-
-
 
     private fun injectARoute() {
         if (!isNeedInjectARouter()) {
@@ -191,9 +188,9 @@ abstract class BaseBindingActivity<T : BaseViewModel, VB : ViewBinding> : AppCom
     }
 
     /*利用反射获取类实例*/
-    private fun initViewModel(): T {
+    private fun initViewModel(): VM {
         val persistentClass = (javaClass.genericSuperclass as ParameterizedType).
-        actualTypeArguments[0] as Class<T>
+        actualTypeArguments[0] as Class<VM>
         mViewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)
         ).get(persistentClass)

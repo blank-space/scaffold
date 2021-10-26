@@ -1,5 +1,6 @@
 package com.dawn.base.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.dawn.base.BaseApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -37,7 +39,8 @@ inline fun <reified T> startActivity(context: Context, block: Intent.() -> Unit)
 inline fun <reified T> startActivityForResult(
     context: FragmentActivity,
     block: Intent.() -> Unit,
-    requestCode: Int) {
+    requestCode: Int
+) {
     val intent = Intent(context, T::class.java)
     intent.block()
     context.startActivityForResult(intent, requestCode)
@@ -89,6 +92,10 @@ inline fun <reified T : ViewModel> FragmentActivity.getVm(): T {
 }
 
 
+inline fun <reified T : ViewModel> Activity.getApplicationScopeViewModel(): T {
+    return ViewModelProvider(application as BaseApp).get(T::class.java)
+}
+
 val Float.dp
     get() = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
@@ -106,4 +113,5 @@ val Int.dp
 
 @ExperimentalCoroutinesApi
 fun <T> simpleSlow(block: suspend FlowCollector<T>.() -> Unit): Flow<T> = flow(block).flowOn(
-    Dispatchers.IO)
+    Dispatchers.IO
+)

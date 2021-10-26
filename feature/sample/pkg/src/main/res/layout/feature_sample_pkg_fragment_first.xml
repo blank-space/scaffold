@@ -13,7 +13,7 @@
         android:layout_height="500dp"
         android:background="#003366"
         android:gravity="center"
-        android:text="123"
+        android:text="下载"
         android:textColor="@color/color_white"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -1,6 +1,6 @@
 package com.dawn.sample.pkg.feature.apiService
 
-import com.dawn.base.BaseHttpResult
+import com.dawn.base.DataResult
 import com.dawn.sample.pkg.feature.data.entity.Article
 import com.dawn.sample.pkg.feature.data.entity.Banner
 import retrofit2.http.GET
@@ -13,9 +13,9 @@ import retrofit2.http.GET
 interface WanAndroidService {
 
     @GET("/article/top/json")
-    suspend fun getTopArticles(): BaseHttpResult<List<Article>>
+    suspend fun getTopArticles(): DataResult<List<Article>>
 
     @GET("/banner/json")
-    suspend fun getBanners(): BaseHttpResult<List<Banner>>
+    suspend fun getBanners(): DataResult<List<Banner>>
 
 }

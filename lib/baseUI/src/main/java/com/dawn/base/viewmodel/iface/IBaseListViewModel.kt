@@ -1,7 +1,7 @@
 package com.dawn.base.viewmodel.iface
 
 import androidx.lifecycle.LiveData
-import com.dawn.base.BaseHttpResult
+import com.dawn.base.DataResult
 
 /**
  * @author : LeeZhaoXing
@@ -10,7 +10,7 @@ import com.dawn.base.BaseHttpResult
  */
 interface IBaseListViewModel {
 
-    fun fetchListData(@RequestType.Val requestType: Int):LiveData<BaseHttpResult<Any>?>?
+    fun fetchListData(@RequestType.Val requestType: Int):LiveData<DataResult<Any>?>?
 
     fun providerData(): MutableList<Any>
 

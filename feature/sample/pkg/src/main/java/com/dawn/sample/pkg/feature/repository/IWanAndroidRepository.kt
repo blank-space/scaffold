@@ -1,8 +1,9 @@
 package com.dawn.sample.pkg.feature.repository
 
-import com.dawn.base.BaseHttpResult
+import com.dawn.base.DataResult
 import com.dawn.sample.pkg.feature.data.entity.Article
 import com.dawn.sample.pkg.feature.data.entity.Banner
+import com.dawn.sample.pkg.feature.data.entity.DownloadFile
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -12,8 +13,9 @@ import kotlinx.coroutines.flow.Flow
  */
 interface IWanAndroidRepository {
 
-    fun getTopArticles(): Flow<BaseHttpResult<List<Article>>>
+    fun getTopArticles(): Flow<DataResult<List<Article>>>
 
-    fun getBanners(): Flow<BaseHttpResult<List<Banner>>>
+    fun getBanners(): Flow<DataResult<List<Banner>>>
 
+    fun downLoadFile(downloadFile: DownloadFile,result: DownloadFile.DownLoadResult)
 }
