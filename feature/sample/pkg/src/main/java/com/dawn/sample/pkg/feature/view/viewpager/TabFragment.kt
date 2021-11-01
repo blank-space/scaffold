@@ -26,7 +26,6 @@ class TabFragment : SimpleLazyListFragment<TabViewModel>() {
         }
     }
 
-
     override fun lazyInitListener() {
     }
 

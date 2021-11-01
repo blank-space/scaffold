@@ -154,7 +154,7 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
         initData()
         if (!isNeedTransition()) return
         //先隐藏
-        view.isInvisible = true
+        //view.isInvisible = true
         //实现流畅的转场动画
       /*  doOnMainThreadIdle({
             TransitionManager.beginDelayedTransition(
@@ -171,7 +171,6 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
      * 是否需要转场动画，默认：false
      */
     open fun isNeedTransition(): Boolean = false
-
 
     private fun injectARoute() {
         if (!isNeedInjectARouter()) {
@@ -193,13 +192,11 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
      */
     protected open fun getStatusBarColor() = Color.TRANSPARENT
 
-
     protected open fun getRefreshType(): Int {
         return RefreshType.NONE
     }
 
     fun getLayoutDelegateImpl() = layoutDelegateImpl
-
 
     fun hideSelf(@AnimatorRes @AnimRes enter: Int, @AnimatorRes @AnimRes exit: Int) {
         this.mActivityFragmentManager?.beginTransaction()?.apply {
@@ -209,7 +206,6 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
         }
     }
 
-
     fun showSelf(@AnimatorRes @AnimRes enter: Int, @AnimatorRes @AnimRes exit: Int) {
         this.mActivityFragmentManager?.beginTransaction()?.apply {
             setCustomAnimations(enter, exit)
@@ -218,28 +214,9 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
         }
     }
 
-
-
     abstract fun initView(view: View)
 
-
     abstract fun initData()
-
-
-
-    /**
-     * desc:是否开启evenBus
-     *
-     */
-    open fun isNeedEvenBus(): Boolean {
-        return false
-    }
-
-
-    private fun initBottomLayout(bottomLayoutId: Int, bottomLayoutHeight: Int) {
-
-    }
-
 
     protected open fun getIntentData() {
 

@@ -11,6 +11,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.dawn.base.R
+import com.dawn.base.log.L
 import com.dawn.base.ui.callback.ErrorLayoutCallback
 import com.dawn.base.ui.page.iface.*
 import com.dawn.base.ui.page.delegate.iface.OnViewStateListener
@@ -24,7 +25,9 @@ import com.kingja.loadsir.core.LoadSir
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.dawn.base.ui.callback.EmptyLayoutCallback
 import com.dawn.base.ui.callback.LoadingLayoutCallback
+import com.dawn.base.utils.GlobalAsyncHandler
 import com.kingja.loadsir.callback.Callback.OnReloadListener
+import com.kingja.loadsir.callback.ProgressCallback
 
 import com.kingja.loadsir.callback.SuccessCallback
 
@@ -45,7 +48,7 @@ class WrapLayoutDelegateImpl(
 
 ) : IWrapLayoutDelegate {
     //当前页面状态
-    private var mCurrentState = ViewState.STATE_COMPLETED
+    private var mCurrentState = ViewState.STATE_LOADING
     private var mContext: Context = mActivity ?: mFragment?.requireContext()!!
     private var mViewConfig: ViewConfig? = null
 
@@ -60,6 +63,8 @@ class WrapLayoutDelegateImpl(
     private var mTitleView: View? = null
     private var mContentWrapView: View? = null
     private var smartRefreshLayout: SmartRefreshLayout? = null
+    /** load1000ms后自动转成success*/
+    var delayToChangeLoadingViewToSuccess = 1000L
 
     init {
         mLayoutInflater = LayoutInflater.from(mContext)
@@ -79,7 +84,8 @@ class WrapLayoutDelegateImpl(
             mView = mainView
             setupContentView()
             if (isNeedRefreshLayout()) {
-                smartRefreshLayout = mainView?.findViewById<View>(R.id.content_wrap) as SmartRefreshLayout
+                smartRefreshLayout =
+                    mainView?.findViewById<View>(R.id.content_wrap) as SmartRefreshLayout
             }
             mContentWrapView = mainView?.findViewById(R.id.fl_content)
             if (childView != null && mContentWrapView != null) {
@@ -93,7 +99,14 @@ class WrapLayoutDelegateImpl(
                         viewStateChangeListener?.onReload(it)
                     }, Convertor<ViewState> { v ->
                         val resultCode: Class<out Callback?> = when (v) {
-                            ViewState.STATE_LOADING -> LoadingLayoutCallback::class.java
+                            ViewState.STATE_LOADING -> {
+                                GlobalAsyncHandler.postDelayed(delayToChangeLoadingViewToSuccess) {
+                                    if (mCurrentState == ViewState.STATE_LOADING) {
+                                        loadService?.showWithConvertor(ViewState.STATE_COMPLETED)
+                                    }
+                                }
+                                ProgressCallback::class.java
+                            }
                             ViewState.STATE_ERROR -> ErrorLayoutCallback::class.java
                             ViewState.STATE_EMPTY -> EmptyLayoutCallback::class.java
                             else -> SuccessCallback::class.java
@@ -103,6 +116,7 @@ class WrapLayoutDelegateImpl(
                 }
             }
         }
+
         return mView
     }
 

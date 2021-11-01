@@ -75,7 +75,6 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
             RequestType.LOAD_MORE -> { }
         }
 
-
         return liveData {
             getList()?.catch {
                 processError("网络似乎出现了问题")

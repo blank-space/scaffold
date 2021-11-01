@@ -34,9 +34,7 @@ class FirstFragment : BaseBindingFragment<TestViewModel, FeatureSamplePkgFragmen
      * 详细见 @see https://mp.weixin.qq.com/s/_2YSV_JsjDJ7CuHJngMbqQ
      */
     override fun initData() {
-        GlobalAsyncHandler.postDelayed(1000) {
-            setState(ViewStateWithMsg(state = ViewState.STATE_COMPLETED))
-        }
+        setState(ViewStateWithMsg(state = ViewState.STATE_LOADING))
         event.countLiveData.observeForever(Observer<Int> {
             L.d("event value:$it")
         }.apply {

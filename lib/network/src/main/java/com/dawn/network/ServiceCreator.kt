@@ -45,9 +45,8 @@ object ServiceCreator {
     fun getClient(): OkHttpClient {
         val builder = OkHttpClient.Builder()
             .connectTimeout(TIME_OUT_SECONDS.toLong(), TimeUnit.SECONDS)
+            .writeTimeout(TIME_OUT_SECONDS.toLong(), TimeUnit.SECONDS)
             .readTimeout(TIME_OUT_SECONDS.toLong(), TimeUnit.SECONDS)
-            .readTimeout(TIME_OUT_SECONDS.toLong(), TimeUnit.SECONDS)
-            .addInterceptor(RetryInterceptor())
             .addInterceptor(getLogInterceptor())
 
         if (interceptors.isNotEmpty()) {

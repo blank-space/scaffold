@@ -14,28 +14,25 @@ import coil.decode.SvgDecoder
 import coil.util.CoilUtils
 import coil.util.DebugLogger
 import com.caij.app.startup.Config
+import com.caij.app.startup.DGAppStartup
+import com.caij.app.startup.OnProjectListener
 import com.dawn.base.ActivityLifecycleCallback
 import com.dawn.base.BaseApp
 import com.dawn.base.BaseAppInit
 import com.dawn.base.log.L
-import com.dawn.base.utils.GlobalHandler
 import com.dawn.base.ui.callback.EmptyLayoutCallback
 import com.dawn.base.ui.callback.ErrorLayoutCallback
-import com.dawn.base.ui.callback.LoadingLayoutCallback
+import com.dawn.base.utils.GlobalHandler
 import com.dawn.launch.app.task.InitLogTask
 import com.dawn.launch.app.task.InitMVVMTask
-import com.dawn.launch.app.task.InitWebViewTask
+import com.dawn.launch.app.task.MonitorTaskListener
 import com.dawn.sample.pkg.feature.hook.BitmapsHook
 import com.dawn.sample.pkg.feature.hook.DrawableHook
+import com.kingja.loadsir.callback.ProgressCallback
 import com.kingja.loadsir.core.LoadSir
 import de.robv.android.xposed.DexposedBridge
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
-import com.caij.app.startup.OnProjectListener
-
-import com.caij.app.startup.DGAppStartup
-import com.dawn.launch.app.task.MonitorTaskListener
-
 
 /**
  * @author : LeeZhaoXing
@@ -75,11 +72,13 @@ class App : BaseApp() , ImageLoaderFactory {
     }
 
     private fun initLoadSir() {
+        val loadingCallback: ProgressCallback = ProgressCallback.Builder()
+            .setTitle("Loading", R.style.Hint_Title).build()
+
         LoadSir.beginBuilder()
             .addCallback(ErrorLayoutCallback())
             .addCallback(EmptyLayoutCallback())
-            .addCallback(LoadingLayoutCallback())
-            .setDefaultCallback(LoadingLayoutCallback::class.java)
+            .addCallback(loadingCallback)
             .commit()
     }
 
@@ -90,7 +89,6 @@ class App : BaseApp() , ImageLoaderFactory {
         DGAppStartup.Builder()
             .add(InitLogTask())
             .add(InitMVVMTask())
-            //.add(InitWebViewTask())
             .setConfig(config)
             .addTaskListener(MonitorTaskListener("@@", true))
             .setExecutorService(ThreadManager.getInstance().WORK_EXECUTOR)
@@ -161,8 +159,6 @@ class App : BaseApp() , ImageLoaderFactory {
                 }
                 // SVGs
                 add(SvgDecoder(this@App))
-                // Video frames
-                //add(VideoFrameDecoder.Factory())
             }
             .availableMemoryPercentage(0.25)
             .okHttpClient {
@@ -174,9 +170,7 @@ class App : BaseApp() , ImageLoaderFactory {
             }
             .crossfade(true)
             .apply {
-                if (com.dawn.base.BuildConfig.DEBUG) {
-                    logger(DebugLogger(Log.VERBOSE))
-                }
+                if (com.dawn.base.BuildConfig.DEBUG) { logger(DebugLogger(Log.VERBOSE))}
             }
             .build()
     }

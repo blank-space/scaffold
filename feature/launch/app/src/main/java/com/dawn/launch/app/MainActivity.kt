@@ -32,12 +32,10 @@ class MainActivity : BaseBindingActivity<MainViewModel, BaseEmptyLayoutBinding>(
     override fun initView() {
         //计算冷启动
         reportFullyDrawn()
-        GlobalAsyncHandler.postDelayed(1000) {
-            setState(ViewStateWithMsg(state = ViewState.STATE_COMPLETED))
-        }
+        getLayoutDelegateImpl()?.delayToChangeLoadingViewToSuccess = 300
         doOnMainThreadIdle({
             WebViewPool.init(BaseApp.application)
-        },10)
+        }, 10)
     }
 
     override fun initStatusBar() {}
@@ -49,11 +47,6 @@ class MainActivity : BaseBindingActivity<MainViewModel, BaseEmptyLayoutBinding>(
     override fun isNeedInjectARouter() = true
 
     override fun initData() {
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
+        setState(ViewStateWithMsg(state = ViewState.STATE_LOADING))
     }
 }

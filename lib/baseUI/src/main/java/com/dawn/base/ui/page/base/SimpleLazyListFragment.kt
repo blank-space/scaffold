@@ -15,8 +15,6 @@ abstract class SimpleLazyListFragment<T : BaseListViewModel> : SimpleListFragmen
 
     override fun initData() {}
 
-    override fun initView(v: View) {}
-
     override fun onResume() {
         super.onResume()
         if (!mHasInit) {
