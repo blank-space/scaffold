@@ -25,4 +25,6 @@ dependencies {
     api Config.statusbarutil
     api Config.multitype
     api Config.unpeek_livedata
+    api Config.lifecycleRuntime
+    implementation Config.coroutines
 }

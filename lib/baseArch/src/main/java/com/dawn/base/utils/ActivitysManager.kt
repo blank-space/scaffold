@@ -27,4 +27,8 @@ object ActivitysManager {
         }
         activities.clear()
     }
+
+    fun getTopActivity():Activity{
+        return activities[0]
+    }
 }
