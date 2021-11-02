@@ -13,5 +13,7 @@ interface SamplePath {
         const val A_LISTVIEW_ACTIVITY = GROUP + "ListViewActivity"
 
         const val A_WEBVIEW_ACTIVITY = GROUP + "WebViewActivity"
+
+        const val A_FIND_LOCATION_ACTIVITY = GROUP + "FindLocationActivity"
     }
 }

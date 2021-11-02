@@ -38,5 +38,5 @@ dependencies {
     api Config.epic
     api Config.material
     api Config.viewpager2
-
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 }

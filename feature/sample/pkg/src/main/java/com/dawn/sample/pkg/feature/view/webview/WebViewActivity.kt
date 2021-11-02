@@ -212,7 +212,7 @@ class WebViewActivity : AppCompatActivity() {
     }
 
     private fun initUrl() {
-        mWebView?.loadUrl(mUrl)
+        mUrl?.let { mWebView?.loadUrl(it) }
     }
 
     override fun onResume() {

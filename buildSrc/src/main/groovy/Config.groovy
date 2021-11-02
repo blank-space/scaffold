@@ -1,19 +1,13 @@
 class Config {
 
-    static applicationId = 'com.bsnl.scaffold'
+    static applicationId = 'com.dawn.scaffold'
     static appName = 'scaffold'
 
-    static compileSdkVersion = 29
-    static minSdkVersion = 21
+    static compileSdkVersion = 31
+    static minSdkVersion = 24
     static targetSdkVersion = 29
     static versionCode = 1_0_0
     static versionName = '1.0.0'
-
-    // lib version
-    static gradlePluginVersion = '4.1.3'
-    static kotlinVersion = '1.5.10'
-    static supportVersion = '28.0.0'
-
 
     static multidex = "androidx.multidex:multidex:${Versions.multidex}"
     static appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
@@ -23,6 +17,7 @@ class Config {
     static viewpager2 = "androidx.viewpager2:viewpager2:${Versions.viewpager2}"
     static viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle_version}"
     static liveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle_version}"
+    static lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle_version}"
     static commonJava8 = "androidx.lifecycle:lifecycle-common-java8:${Versions.lifecycle_version}"
     static glide_runtime = "com.github.bumptech.glide:glide:${Versions.glide}"
     static glide_compiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
@@ -59,5 +54,6 @@ class Config {
     static unpeek_livedata = "com.kunminx.arch:unpeek-livedata:${Versions.unpeek_livedata}"
     static material = "com.google.android.material:material:${Versions.material}"
     static lottie = "com.airbnb.android:lottie:${Versions.lottie}"
+    static coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
 
 }

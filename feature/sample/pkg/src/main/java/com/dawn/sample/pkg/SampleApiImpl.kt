@@ -24,8 +24,11 @@ class SampleApiImpl : ISampleService {
         ARouter.getInstance().build(SamplePath.A_LISTVIEW_ACTIVITY).navigation()
     }
 
+    override fun startFindLocationActivity() {
+        ARouter.getInstance().build(SamplePath.A_FIND_LOCATION_ACTIVITY).navigation()
+    }
+
     override fun init(context: Context?) {
-        L.d("init sampleService")
     }
 
 

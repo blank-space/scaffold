@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dawn.sample.pkg">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application>
         <activity android:name="com.dawn.sample.pkg.feature.view.SampleActivity" />
         <activity android:name="com.dawn.sample.pkg.feature.view.FirstActivity" />
@@ -14,6 +16,7 @@
         <activity android:name="com.dawn.sample.pkg.feature.view.gson.GsonDemoActivity" />
         <activity android:name="com.dawn.sample.pkg.feature.view.countdowm.CountDownActivity" />
         <activity android:name=".feature.view.download.DownLoadActivity" />
+        <activity android:name=".feature.view.location.FindLocationActivity" />
 
     </application>
 </manifest>

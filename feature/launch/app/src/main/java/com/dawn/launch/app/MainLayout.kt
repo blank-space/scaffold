@@ -1,12 +1,19 @@
 package com.dawn.launch.app
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.marginTop
+import androidx.fragment.app.FragmentActivity
+import com.alibaba.android.arouter.facade.Postcard
+import com.alibaba.android.arouter.facade.callback.NavigationCallback
 import com.alibaba.android.arouter.launcher.ARouter
+import com.dawn.base.log.L
+import com.dawn.base.permission.PermissionHelper
+import com.dawn.base.utils.ActivitysManager
 import com.dawn.base.utils.DisplayUtils
 import com.dawn.base.widget.CustomLayout
 import com.dawn.base.widget.matchParent
@@ -17,7 +24,9 @@ import com.dawn.sample.export.path.SamplePath
 import com.dawn.sample.pkg.feature.view.countdowm.CountDownActivity
 import com.dawn.sample.pkg.feature.view.download.DownLoadActivity
 import com.dawn.sample.pkg.feature.view.gson.GsonDemoActivity
+import com.dawn.sample.pkg.feature.view.location.FindLocationActivity
 import com.dawn.sample.pkg.feature.view.viewpager.ViewPagerActivity
+import java.lang.ref.WeakReference
 
 /**
  * @author : LeeZhaoXing
@@ -85,6 +94,18 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
         setBackgroundColor(Color.parseColor("#00BCD4"))
         onClick = {
             ViewPagerActivity.startAction(context)
+
+        }
+        this@MainLayout.addView(this, matchParent, 60.dp) {
+            topMargin = 10.dp
+        }
+    }
+
+    val location = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
+        text = "FindLocation"
+        onClick = {
+          sampleService?.startFindLocationActivity()
+
         }
         this@MainLayout.addView(this, matchParent, 60.dp) {
             topMargin = 10.dp
@@ -103,6 +124,7 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
         webView.let { it.layout(listItem.left, listItem.bottom + it.marginTop) }
         countdown.let { it.layout(listItem.left, webView.bottom + it.marginTop) }
         viewPager2.let { it.layout(listItem.left, countdown.bottom + it.marginTop) }
+        location.let{ it.layout(listItem.left, viewPager2.bottom + it.marginTop)}
     }
 }
 
