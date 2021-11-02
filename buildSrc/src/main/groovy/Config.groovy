@@ -57,7 +57,7 @@ class Config {
     static coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:${Versions.coordinatorlayout}"
     static loadsir = "com.kingja.loadsir:loadsir:${Versions.loadSir}"
     static unpeek_livedata = "com.kunminx.arch:unpeek-livedata:${Versions.unpeek_livedata}"
-    static material               = "com.google.android.material:material:${Versions.material}"
-
+    static material = "com.google.android.material:material:${Versions.material}"
+    static lottie = "com.airbnb.android:lottie:${Versions.lottie}"
 
 }

@@ -19,7 +19,7 @@ import com.dawn.base.utils.DisplayUtils
 import com.dawn.base.widget.webview.WebViewPool
 import com.dawn.sample.export.path.SamplePath
 import com.dawn.sample.pkg.R
-import com.dawn.sample.pkg.feature.constant.Bundle_URL
+import com.dawn.sample.pkg.feature.constant.BUNDLE_URL
 
 @Route(path = SamplePath.A_WEBVIEW_ACTIVITY)
 class WebViewActivity : AppCompatActivity() {
@@ -27,7 +27,7 @@ class WebViewActivity : AppCompatActivity() {
     protected var mWebView: WebView? = null
 
     @JvmField
-    @Autowired(name = Bundle_URL)
+    @Autowired(name = BUNDLE_URL)
     var mUrl: String? = null
 
     private var startUrl: String? = null

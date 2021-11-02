@@ -21,15 +21,8 @@ android {
         }
 
         minSdkVersion Config.minSdkVersion
-        versionCode Config.versionCode
-        versionName Config.versionName
-        consumerProguardFiles 'proguard-rules.pro'
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                includeCompileClasspath = true
-            }
-        }
+
     }
 
     buildTypes {

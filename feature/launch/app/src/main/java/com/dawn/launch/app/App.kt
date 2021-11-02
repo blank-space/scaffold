@@ -40,7 +40,7 @@ import okhttp3.OkHttpClient
  * @desc   :
  */
 
-class App : BaseApp() , ImageLoaderFactory {
+class App : BaseApp(), ImageLoaderFactory {
 
     override fun onCreate() {
         super.onCreate()
@@ -170,7 +170,9 @@ class App : BaseApp() , ImageLoaderFactory {
             }
             .crossfade(true)
             .apply {
-                if (com.dawn.base.BuildConfig.DEBUG) { logger(DebugLogger(Log.VERBOSE))}
+                if (com.dawn.base.BuildConfig.DEBUG) {
+                    logger(DebugLogger(Log.VERBOSE))
+                }
             }
             .build()
     }

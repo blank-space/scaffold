@@ -6,7 +6,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.dawn.base.log.L
 import com.dawn.sample.export.api.ISampleService
 import com.dawn.sample.export.path.SamplePath
-import com.dawn.sample.pkg.feature.constant.Bundle_URL
+import com.dawn.sample.pkg.feature.constant.BUNDLE_URL
 
 /**
  * @author : LeeZhaoXing
@@ -17,7 +17,7 @@ import com.dawn.sample.pkg.feature.constant.Bundle_URL
 class SampleApiImpl : ISampleService {
 
     override fun startWebViewActivity( url: String) {
-        ARouter.getInstance().build(SamplePath.A_WEBVIEW_ACTIVITY).withString(Bundle_URL,url).navigation()
+        ARouter.getInstance().build(SamplePath.A_WEBVIEW_ACTIVITY).withString(BUNDLE_URL,url).navigation()
     }
 
     override fun startListViewActivity() {

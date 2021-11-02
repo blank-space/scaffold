@@ -49,6 +49,7 @@ class Versions {
     static coordinatorlayout = "1.1.0"
     static loadSir = "1.3.8"
     static unpeek_livedata ="7.2.0-beta1"
+    static lottie ="3.5.0"
 }
 
 

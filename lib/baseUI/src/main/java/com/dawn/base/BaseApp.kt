@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.multidex.MultiDex
 import com.alibaba.android.arouter.launcher.ARouter
+import com.dawn.base.ui.page.iface.ViewState
+import com.kingja.loadsir.callback.Callback
 
 /**
  * @author : LeeZhaoXing
@@ -17,8 +19,8 @@ open class BaseApp : Application(), ViewModelStoreOwner {
     companion object {
         lateinit var application: Application
     }
-
     private lateinit var mAppViewModelStore: ViewModelStore
+    //val callbackPairs = mutableMapOf<ViewState, Class<out Callback>>()
 
 
     override fun attachBaseContext(base: Context) {
@@ -31,7 +33,6 @@ open class BaseApp : Application(), ViewModelStoreOwner {
         application = this
         mAppViewModelStore = ViewModelStore()
         if (BuildConfig.DEBUG) {
-            // 这两行必须写在init之前，否则这些配置在init过程中将无效
             ARouter.openLog()
             ARouter.openDebug()
         }

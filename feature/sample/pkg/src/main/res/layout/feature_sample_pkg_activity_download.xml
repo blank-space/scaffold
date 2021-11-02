@@ -17,4 +17,15 @@
         android:background="@color/colorPrimary"
         android:layout_height="200dp"/>
 
+    <TextView
+        android:id="@+id/tvClose"
+        android:text="close"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:background="#00BCD4"
+        android:layout_height="200dp"/>
+
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.dawn.sample.pkg.feature.view.download
 
 import android.content.Context
+import android.content.Intent
 import com.dawn.base.DataResult
 import com.dawn.base.ui.page.base.BaseBindingActivity
 import com.dawn.base.ui.page.iface.ViewState
@@ -19,8 +20,9 @@ import com.dawn.sample.pkg.feature.viewmodel.DownLoadViewModel
  * @date   : 2021/10/26
  * @desc   :
  */
-class DownLoadActivity : BaseBindingActivity<DownLoadViewModel, FeatureSamplePkgActivityDownloadBinding>() {
-    private  val event : ShareViewModel by lazy {
+class DownLoadActivity :
+    BaseBindingActivity<DownLoadViewModel, FeatureSamplePkgActivityDownloadBinding>() {
+    private val event: ShareViewModel by lazy {
         getApplicationScopeViewModel()
     }
 
@@ -51,6 +53,12 @@ class DownLoadActivity : BaseBindingActivity<DownLoadViewModel, FeatureSamplePkg
         super.initListener()
         binding.tvDownLoad.onClick = {
             mViewModel.downloadRequest.requestCanBeStoppedDownloadFile()
+        }
+        binding.tvClose.onClick = {
+            val intent = Intent()
+            intent.putExtra("data", "data from DownLoadActivity")
+            setResult(RESULT_OK, intent)
+            finish()
         }
     }
 }

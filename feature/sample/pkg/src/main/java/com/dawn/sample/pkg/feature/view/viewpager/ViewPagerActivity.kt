@@ -1,6 +1,7 @@
 package com.dawn.sample.pkg.feature.view.viewpager
 
 import android.content.Context
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import com.dawn.base.ui.page.base.BaseBindingActivity
@@ -8,7 +9,6 @@ import com.dawn.base.utils.startActivity
 import com.dawn.base.viewmodel.StubViewModel
 import com.dawn.sample.pkg.databinding.FeatureSamplePkgActivityViewpagerBinding
 import com.dawn.sample.pkg.feature.view.FirstFragment
-import com.drakeet.multitype.MultiTypeAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
 
@@ -20,11 +20,10 @@ import com.google.android.material.tabs.TabLayoutMediator
 class ViewPagerActivity : BaseBindingActivity<StubViewModel, FeatureSamplePkgActivityViewpagerBinding>() {
     private val tabs = listOf("tab1", "tab2", "tab3")
     private var recycledViewPool: RecycledViewPool? = RecycledViewPool()
-    private val fragments= arrayListOf<Fragment>(TabFragment.newInstance("tab"),FirstFragment(),FirstFragment())
+    private val fragments= arrayListOf<Fragment>(TabFragment.newInstance("tab",112),FirstFragment(),FirstFragment())
     private val tabAdapter by lazy {
         TabAdapter(this,fragments)
     }
-
     //private  val mAdapter = MultiTypeAdapter(tabs)
 
     /**

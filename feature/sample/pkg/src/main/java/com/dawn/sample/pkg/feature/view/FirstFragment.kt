@@ -1,6 +1,8 @@
 package com.dawn.sample.pkg.feature.view
 
+import android.content.Intent
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import com.dawn.base.log.L
 import com.dawn.base.utils.GlobalAsyncHandler
@@ -24,6 +26,12 @@ class FirstFragment : BaseBindingFragment<TestViewModel, FeatureSamplePkgFragmen
     private val event: ShareViewModel by lazy {
         mActivity?.get()?.getApplicationScopeViewModel()!!
     }
+    private val actionLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            val code = it.resultCode
+            val data = it.data?.getStringExtra("data")
+            L.d("code:$code,data:$data")
+        }
 
     /**
      * 在fragment中，LifecycleOwner不能使用this,而是viewLifecycleOwner。
@@ -47,7 +55,7 @@ class FirstFragment : BaseBindingFragment<TestViewModel, FeatureSamplePkgFragmen
     override fun initListener() {
         super.initListener()
         binding.tv.onClick = {
-            context?.let { DownLoadActivity.startAction(it) }
+            context?.let { actionLauncher.launch(Intent(it, DownLoadActivity::class.java)) }
         }
     }
 

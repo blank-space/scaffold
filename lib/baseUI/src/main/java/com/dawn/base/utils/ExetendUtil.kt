@@ -23,46 +23,8 @@ import kotlinx.coroutines.flow.flowOn
  * @date   : 2020/8/17
  * @desc   : 高阶函数、内联函数
  */
-/**
- * 传参启动Activity
- */
-inline fun <reified T> startActivity(context: Context, block: Intent.() -> Unit) {
-    val intent = Intent(context, T::class.java)
-    intent.block()
-    context.startActivity(intent)
-}
 
 
-/**
- * startActivityForResult启动Activity
- */
-inline fun <reified T> startActivityForResult(
-    context: FragmentActivity,
-    block: Intent.() -> Unit,
-    requestCode: Int
-) {
-    val intent = Intent(context, T::class.java)
-    intent.block()
-    context.startActivityForResult(intent, requestCode)
-}
-
-/**
- * 启动Activity
- */
-inline fun <reified T> startActivity(context: Context) {
-    val intent = Intent(context, T::class.java)
-    context.startActivity(intent)
-}
-
-/**
- * 创建Fragment
- */
-inline fun <reified T : Fragment> newFrgInstance(block: Bundle.() -> Unit): T {
-    val clazz = T::class.java.newInstance()
-    val args = Bundle().apply(block)
-    clazz.arguments = args
-    return clazz
-}
 
 inline fun <T, R> T.doWithTry(block: (T) -> R) {
     try {
@@ -72,29 +34,9 @@ inline fun <T, R> T.doWithTry(block: (T) -> R) {
     }
 }
 
-/**
- * 共享Activity
- */
-inline fun <reified T : ViewModel> Fragment.getVm(): T {
-    return ViewModelProvider(this.activity as FragmentActivity).get(T::class.java)
-}
-
-/**
- * 独立作用域
- */
-inline fun <reified T : ViewModel> Fragment.getSelfVm(): T {
-    return ViewModelProvider(this).get(T::class.java)
-}
 
 
-inline fun <reified T : ViewModel> FragmentActivity.getVm(): T {
-    return ViewModelProvider(this).get(T::class.java)
-}
 
-
-inline fun <reified T : ViewModel> Activity.getApplicationScopeViewModel(): T {
-    return ViewModelProvider(application as BaseApp).get(T::class.java)
-}
 
 val Float.dp
     get() = TypedValue.applyDimension(
