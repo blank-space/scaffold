@@ -230,6 +230,9 @@ class WrapLayoutDelegateImpl(
         viewState: ViewState,
         vararg args: Any?
     ) {
+        if(loadService==null){
+            L.e("loadService==null")
+        }
         loadService?.showWithConvertor(viewState)
         mCurrentState = viewState
     }

@@ -1,23 +1,25 @@
 package com.dawn.base.viewmodel.base
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
 import com.dawn.base.utils.NetworkUtils
 import com.dawn.base.utils.showToast
 import com.dawn.base.DataResult
 import com.dawn.base.constant.DEFAULT_PAGE_SIZE
 import com.dawn.base.constant.DEFAULT_START_PAGE_INDEX
+import com.dawn.base.log.L
 import com.dawn.base.ui.page.iface.IList
 import com.dawn.base.ui.page.iface.RefreshType
 import com.dawn.base.ui.page.iface.ViewState
 import com.dawn.base.ui.page.iface.ViewStateWithMsg
+import com.dawn.base.utils.GlobalAsyncHandler
 import com.dawn.base.viewmodel.iface.IBaseList
 import com.dawn.base.viewmodel.iface.IBaseListViewModel
 import com.dawn.base.viewmodel.iface.RequestType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 /**
  * @author : LeeZhaoXing
@@ -26,8 +28,8 @@ import kotlinx.coroutines.flow.collectLatest
  */
 abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
 
-    @RefreshType.Val
-    var mRequestType = 0
+    @RequestType.Val
+    var mRequestType = RequestType.INIT
     protected open var pageNo = DEFAULT_START_PAGE_INDEX
     protected open var pageSize: Int = DEFAULT_PAGE_SIZE
     protected var mData: MutableList<Any> = mutableListOf()
@@ -63,11 +65,19 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
     private val _noMoreData = MutableLiveData(false)
     val noMoreData: LiveData<Boolean> = _noMoreData
 
+    var resultLiveData: LiveData<DataResult<out Any>?>? = null
+
+    init {
+        viewModelScope.launch {
+            resultLiveData =  fetchListData(mRequestType)
+        }
+    }
+
     /**
      * 请求入口
      */
     @ExperimentalCoroutinesApi
-    override fun fetchListData(requestType: Int): LiveData<DataResult<Any>?>? {
+    override fun fetchListData(requestType: Int): LiveData<DataResult<out Any>?>? {
         mRequestType = requestType
         when (requestType) {
             RequestType.INIT -> processPreInitData()
@@ -76,16 +86,17 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
         }
 
         return liveData {
-            getList()?.catch {
+            getList()?.
+            catch {
                 processError("网络似乎出现了问题")
             }?.collectLatest {
-                    if (it?.isSuccessFul!!) {
-                        processData(it)
-                        emit(it as DataResult<Any>?)
-                    } else {
-                        processError(it.msg)
-                    }
+                if (it?.isSuccessFul!!) {
+                    processData(it)
+                    emit(it as DataResult<Any>?)
+                } else {
+                    processError(it.msg)
                 }
+            }
         }
     }
 
@@ -110,7 +121,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
     /**
      * 处理数据
      */
-    protected open fun processData(t: DataResult<Any>?) {
+    protected open fun processData(t: DataResult<out Any>?) {
         if (t == null) {
             setState(value = ViewState.STATE_ERROR)
             return
@@ -136,7 +147,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
      * 初始化页面数据（子类可重写）
      */
     protected open fun initView(
-        listResponseBean: DataResult<Any>?,
+        listResponseBean: DataResult<out Any>?,
         @RequestType.Val requestType: Int
     ) {
         if (listResponseBean?.data is IBaseList) {
@@ -197,7 +208,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
      *
      * @param listResponseBean
      */
-    protected open fun processLoadMoreData(listResponseBean: DataResult<Any>?) {
+    protected open fun processLoadMoreData(listResponseBean: DataResult<out Any>?) {
         if (listResponseBean?.data is IBaseList) {
             val data: IBaseList = listResponseBean?.getData() as IBaseList
             val insertP = mData.size

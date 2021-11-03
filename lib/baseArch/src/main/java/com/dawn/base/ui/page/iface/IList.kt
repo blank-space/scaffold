@@ -10,5 +10,5 @@ import kotlinx.coroutines.flow.Flow
  */
 interface IList {
 
-    fun getList(): Flow<DataResult<Any>?>?
+    fun getList(): Flow<DataResult<out Any>?>?
 }

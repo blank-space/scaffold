@@ -33,8 +33,7 @@ import java.lang.reflect.ParameterizedType
  * @date   : 2020/8/17
  * @desc   :
  */
-abstract class BaseBindingActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatActivity(),
-    IViewState {
+abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatActivity(), IViewState {
     private var mTitleView: ITitleView? = null
     lateinit var mViewModel: VM
     val TAG by lazy { javaClass.simpleName }

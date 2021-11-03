@@ -6,7 +6,7 @@ import com.dawn.base.viewmodel.base.BaseListViewModel
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/9/16
- * @desc   : 最简单的LitView-Fragment,如果布局比较复杂，可以使用[BaseBindingFragment]
+ * @desc   : 最简单的LitView-Fragment,如果布局比较复杂，可以使用[BaseFragment]
  *
  */
 abstract class SimpleListFragment<T : BaseListViewModel> : BaseListFragment<T, BaseRecycerviewBinding>()

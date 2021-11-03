@@ -10,7 +10,7 @@ import com.dawn.base.DataResult
  */
 interface IBaseListViewModel {
 
-    fun fetchListData(@RequestType.Val requestType: Int):LiveData<DataResult<Any>?>?
+    fun fetchListData(@RequestType.Val requestType: Int):LiveData<DataResult<out Any>?>?
 
     fun providerData(): MutableList<Any>
 

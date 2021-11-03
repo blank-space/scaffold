@@ -31,7 +31,7 @@ fun doOnMainThreadIdle(action: () -> Unit, timeout: Long? = null) {
                 queue.removeIdleHandler(idleHandler)
                 action()
                 if (BuildConfig.LOG_DEBUG) {
-                    L.e( "after${timeout}ms invoke action! ")
+                    L.e( "after ${timeout} ms invoke action! ")
                 }
 
             }, timeout)

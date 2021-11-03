@@ -13,6 +13,7 @@ import com.dawn.base.viewmodel.base.BaseViewModel
 import com.dawn.base.viewmodel.iface.RequestType
 import com.drakeet.multitype.MultiTypeAdapter
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
 /**
@@ -21,9 +22,9 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
  * @desc   : 基础列表Activity
  *
  */
-abstract class BaseListActivity<T : BaseViewModel,VB : ViewBinding> : BaseBindingActivity<T, VB>() {
+abstract class BaseListActivity<T : BaseViewModel,VB : ViewBinding> : BaseActivity<T, VB>() {
     private var mListViewDelegate: ListViewDelegateImpl? = null
-
+    var requestType: Int = RequestType.INIT
     private val rv :RecyclerView by lazy {
         binding.root.findViewById(R.id.rv)
     }
@@ -58,7 +59,7 @@ abstract class BaseListActivity<T : BaseViewModel,VB : ViewBinding> : BaseBindin
 
 
     override fun initData() {
-        mListViewDelegate?.loadData(RequestType.INIT)
+        mListViewDelegate?.initData()
     }
 
     override fun initListener() {
@@ -84,14 +85,17 @@ abstract class BaseListActivity<T : BaseViewModel,VB : ViewBinding> : BaseBindin
      */
     protected open fun onGetDataFinish(data: Any?) {}
 
+    @ExperimentalCoroutinesApi
     override fun processLoadMore(refreshLayout: IRefreshLayout?) {
         mListViewDelegate?.loadData(RequestType.LOAD_MORE)
     }
 
+    @ExperimentalCoroutinesApi
     override fun processRefresh(refreshLayout: IRefreshLayout?) {
         mListViewDelegate?.loadData(RequestType.REFRESH)
     }
 
+    @ExperimentalCoroutinesApi
     override fun onPageReload(v: View?) {
         mListViewDelegate?.loadData(RequestType.INIT)
     }

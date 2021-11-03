@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import androidx.annotation.AnimRes
 import androidx.annotation.AnimatorRes
 import androidx.annotation.RequiresApi
-import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -34,7 +33,7 @@ import java.lang.reflect.ParameterizedType
  * @date   : 2020/8/17
  * @desc   :
  */
-abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragment(), IViewState {
+abstract class BaseFragment<T : BaseViewModel, VB : ViewBinding> : Fragment(), IViewState {
     protected var mActivityFragmentManager: FragmentManager? = null
     protected var mAnimationLoaded = false
     var mActivity: WeakReference<Activity>? = null
@@ -201,7 +200,7 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
     fun hideSelf(@AnimatorRes @AnimRes enter: Int, @AnimatorRes @AnimRes exit: Int) {
         this.mActivityFragmentManager?.beginTransaction()?.apply {
             setCustomAnimations(enter, exit)
-            hide(this@BaseBindingFragment)
+            hide(this@BaseFragment)
             commitAllowingStateLoss()
         }
     }
@@ -209,7 +208,7 @@ abstract class BaseBindingFragment<T : BaseViewModel, VB : ViewBinding> : Fragme
     fun showSelf(@AnimatorRes @AnimRes enter: Int, @AnimatorRes @AnimRes exit: Int) {
         this.mActivityFragmentManager?.beginTransaction()?.apply {
             setCustomAnimations(enter, exit)
-            show(this@BaseBindingFragment)
+            show(this@BaseFragment)
             commitAllowingStateLoss()
         }
     }

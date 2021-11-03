@@ -41,6 +41,8 @@ interface IListViewDelegate {
 
     fun getRefreshType(): Int
 
+    fun initData()
+
     fun loadData(@RefreshType.Val requestType: Int)
 
     fun getRecyclerView(): RecyclerView?

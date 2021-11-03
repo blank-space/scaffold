@@ -12,7 +12,7 @@ import com.dawn.base.viewmodel.base.BaseViewModel
  * @update : 2020/11/11
  * @note   : setUserVisibleHint()在androidX放弃， Use [androidx.fragment.app.FragmentTransaction.setMaxLifecycle]
  */
-abstract class LazyFragment<T : BaseViewModel,VB: ViewBinding> : BaseBindingFragment<T,VB>() {
+abstract class LazyFragment<T : BaseViewModel,VB: ViewBinding> : BaseFragment<T,VB>() {
 
     private var mHasInit = false
 

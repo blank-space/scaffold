@@ -12,6 +12,7 @@ import com.dawn.base.viewmodel.base.BaseListViewModel
 import com.dawn.base.viewmodel.iface.RequestType
 import com.drakeet.multitype.MultiTypeAdapter
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**
  * @author : LeeZhaoXing
@@ -19,8 +20,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
  * @desc   : 基础列表fragment
  *
  */
-abstract class BaseListFragment<T : BaseListViewModel, VB : ViewBinding> :
-    BaseBindingFragment<T, VB>() {
+abstract class BaseListFragment<T : BaseListViewModel, VB : ViewBinding> : BaseFragment<T, VB>() {
     private val rv :RecyclerView by lazy {
         binding.root.findViewById(R.id.rv)
     }
@@ -30,7 +30,7 @@ abstract class BaseListFragment<T : BaseListViewModel, VB : ViewBinding> :
 
     //初始化代理
     protected fun setupListViewDelegate() {
-        mListViewDelegate = ListViewDelegateImpl(mViewModel as BaseListViewModel, this)
+        mListViewDelegate = ListViewDelegateImpl(mViewModel as BaseListViewModel, viewLifecycleOwner)
         mListViewDelegate?.setILoadDataFinishListener(object :
             IListViewDelegate.IDoExtendListener {
             override fun onLoadDataFinish(data: Any?) {
@@ -52,7 +52,7 @@ abstract class BaseListFragment<T : BaseListViewModel, VB : ViewBinding> :
     }
 
     protected fun fetchData() {
-        mListViewDelegate?.loadData(RequestType.INIT)
+        mListViewDelegate?.initData()
     }
 
     override fun initData() {
@@ -92,14 +92,17 @@ abstract class BaseListFragment<T : BaseListViewModel, VB : ViewBinding> :
 
     fun getAdapter(): MultiTypeAdapter? = mListViewDelegate?.getAdapter()
 
+    @ExperimentalCoroutinesApi
     override fun processLoadMore(refreshLayout: IRefreshLayout?) {
         mListViewDelegate?.loadData(RequestType.LOAD_MORE)
     }
 
+    @ExperimentalCoroutinesApi
     override fun processRefresh(refreshLayout: IRefreshLayout?) {
         mListViewDelegate?.loadData(RequestType.REFRESH)
     }
 
+    @ExperimentalCoroutinesApi
     override fun onPageReload(v: View?) {
         mListViewDelegate?.loadData(RequestType.INIT)
     }
