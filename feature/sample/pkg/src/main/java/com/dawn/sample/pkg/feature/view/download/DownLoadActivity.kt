@@ -2,8 +2,7 @@ package com.dawn.sample.pkg.feature.view.download
 
 import android.content.Context
 import android.content.Intent
-import com.dawn.base.DataResult
-import com.dawn.base.ui.page.base.BaseBindingActivity
+import com.dawn.base.ui.page.base.BaseActivity
 import com.dawn.base.ui.page.iface.ViewState
 import com.dawn.base.ui.page.iface.ViewStateWithMsg
 import com.dawn.base.utils.GlobalAsyncHandler
@@ -11,7 +10,6 @@ import com.dawn.base.utils.getApplicationScopeViewModel
 import com.dawn.base.utils.onClick
 import com.dawn.base.utils.startActivity
 import com.dawn.sample.pkg.databinding.FeatureSamplePkgActivityDownloadBinding
-import com.dawn.sample.pkg.feature.data.entity.DownloadFile
 import com.dawn.sample.pkg.feature.domain.message.ShareViewModel
 import com.dawn.sample.pkg.feature.viewmodel.DownLoadViewModel
 
@@ -21,7 +19,7 @@ import com.dawn.sample.pkg.feature.viewmodel.DownLoadViewModel
  * @desc   :
  */
 class DownLoadActivity :
-    BaseBindingActivity<DownLoadViewModel, FeatureSamplePkgActivityDownloadBinding>() {
+    BaseActivity<DownLoadViewModel, FeatureSamplePkgActivityDownloadBinding>() {
     private val event: ShareViewModel by lazy {
         getApplicationScopeViewModel()
     }

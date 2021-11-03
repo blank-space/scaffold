@@ -2,6 +2,7 @@ package com.dawn.sample.pkg.feature.viewmodel
 
 import com.dawn.base.DataResult
 import com.dawn.base.BaseListBean
+import com.dawn.base.log.L
 import com.dawn.base.viewmodel.base.BaseListViewModel
 import com.dawn.sample.pkg.feature.data.entity.Article
 import com.dawn.sample.pkg.feature.repository.impl.WanAndroidRepository
@@ -20,7 +21,7 @@ class SampleViewModel : BaseListViewModel() {
         WanAndroidRepository()
     }
 
-    override fun getList(): Flow<DataResult<Any>?>? {
+    override fun getList(): Flow<DataResult<out Any>?>? {
         return flow {
             val response = repository.getTopArticles()
             val data = DataResult<BaseListBean<Article>>()
@@ -30,6 +31,6 @@ class SampleViewModel : BaseListViewModel() {
                 data.msg = "ok"
             }
             emit(data)
-        } as Flow<DataResult<Any>?>?
+        }
     }
 }

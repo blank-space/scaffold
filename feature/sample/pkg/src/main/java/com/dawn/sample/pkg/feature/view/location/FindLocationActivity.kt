@@ -4,14 +4,13 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.LocationManager
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.dawn.base.log.L
-import com.dawn.base.ui.page.base.BaseBindingActivity
+import com.dawn.base.ui.page.base.BaseActivity
 import com.dawn.base.ui.page.iface.ViewState
 import com.dawn.base.ui.page.iface.ViewStateWithMsg
 import com.dawn.base.utils.onClick
@@ -21,7 +20,6 @@ import com.dawn.sample.export.path.SamplePath
 import com.dawn.sample.pkg.databinding.FeatureSamplePkgActivityLocationBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 /**
@@ -30,7 +28,7 @@ import kotlinx.coroutines.launch
  * @desc   :
  */
 @Route(path = SamplePath.A_FIND_LOCATION_ACTIVITY)
-class FindLocationActivity : BaseBindingActivity<StubViewModel, FeatureSamplePkgActivityLocationBinding>() {
+class FindLocationActivity : BaseActivity<StubViewModel, FeatureSamplePkgActivityLocationBinding>() {
 
 
     companion object {
@@ -39,10 +37,9 @@ class FindLocationActivity : BaseBindingActivity<StubViewModel, FeatureSamplePkg
         }
     }
 
-    override fun isNeedInjectARouter()= true
 
     override fun initView() {
-        setTitle("FindLocationActivity")
+        getTitleView()?.setTitleText("FindLocationActivity")
     }
 
     override fun initData() {

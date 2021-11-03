@@ -15,6 +15,10 @@ interface ISampleService : IProvider {
 
      fun startFindLocationActivity()
 
+     fun startSearchActivity()
+
+
+
 }
 
 class SampleParam(var name: String)

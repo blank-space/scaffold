@@ -53,7 +53,6 @@ class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
     private fun startTimer() {
         countDownTimer = object : CountDownTimer(getMaxDuration(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                L.d("onTick：$millisUntilFinished")
                 updateTimerState()
             }
 
@@ -72,7 +71,6 @@ class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
                 duration = data[i]
             }
         }
-        L.d("maxDuration:$duration")
         return duration
     }
 
@@ -95,6 +93,7 @@ class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
 
     override fun initView() {
         super.initView()
+        lifecycle.addObserver(mViewModel)
         getTitleView()?.setTitleText("倒计时列表")
 
     }
@@ -105,11 +104,14 @@ class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
             .addCallback(PlaceholderCallback())
             .setDefaultCallback(PlaceholderCallback::class.java)
             .build()
+
         //注意：上面的只定义了PlaceholderCallback，在转换器回调里是无法使用其他Callback(SuccessCallback是内置的),否则会抛出异常
         getLayoutDelegateImpl()?.let {
             it.loadService = loadSir.register(it.childView, Callback.OnReloadListener {
 
             }, Convertor<ViewState> { v ->
+                L.d("Convertor ViewState:$v")
+                L.d("thread:${Thread.currentThread().name}")
                 val resultCode: Class<out Callback?> = when (v) {
                     ViewState.STATE_LOADING -> PlaceholderCallback::class.java
                     else -> SuccessCallback::class.java

@@ -4,7 +4,7 @@ import android.content.Context
 import com.dawn.base.utils.GlobalAsyncHandler
 import com.dawn.base.ui.page.iface.ViewState
 import com.dawn.base.ui.page.iface.ViewStateWithMsg
-import com.dawn.base.ui.page.base.BaseBindingActivity
+import com.dawn.base.ui.page.base.BaseActivity
 import com.dawn.base.utils.startActivity
 import com.dawn.sample.pkg.R
 import com.dawn.sample.pkg.databinding.FeatureSamplePkgActivityMainBinding
@@ -15,7 +15,7 @@ import com.dawn.sample.pkg.feature.viewmodel.TestViewModel
  * @date   : 2020/10/26
  * @desc   :
  */
-class FirstActivity : BaseBindingActivity<TestViewModel,FeatureSamplePkgActivityMainBinding>() {
+class FirstActivity : BaseActivity<TestViewModel,FeatureSamplePkgActivityMainBinding>() {
     private var isShow = true
     private lateinit var firstFragment: FirstFragment
 

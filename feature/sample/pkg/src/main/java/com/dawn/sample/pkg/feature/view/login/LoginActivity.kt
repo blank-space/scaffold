@@ -4,11 +4,10 @@ import android.content.Context
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import coil.load
 import com.dawn.base.utils.DisplayUtils
 import com.dawn.base.utils.GlobalHandler
-import com.dawn.base.ui.page.base.BaseBindingActivity
+import com.dawn.base.ui.page.base.BaseActivity
 import com.dawn.base.utils.KeyboardUtils
 import com.dawn.base.utils.startActivity
 import com.dawn.base.viewmodel.StubViewModel
@@ -20,7 +19,7 @@ import com.dawn.sample.pkg.databinding.FeatureSamplePkgActivityLoginBinding
  * @date   : 2020/11/4
  * @desc   :
  */
-class LoginActivity : BaseBindingActivity<StubViewModel,FeatureSamplePkgActivityLoginBinding>() {
+class LoginActivity : BaseActivity<StubViewModel,FeatureSamplePkgActivityLoginBinding>() {
 
 
     companion object {

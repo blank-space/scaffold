@@ -8,7 +8,9 @@ import com.dawn.base.utils.intentExtras
 import com.dawn.base.utils.withArguments
 import com.dawn.sample.pkg.feature.constant.BUNDLE_INDEX
 import com.dawn.sample.pkg.feature.constant.BUNDLE_TITLE
+import com.dawn.sample.pkg.feature.itemViewBinder.ArticleItemViewBinder
 import com.dawn.sample.pkg.feature.itemViewBinder.PokemonItemViewBinder
+import com.dawn.sample.pkg.feature.viewmodel.SampleViewModel
 import com.dawn.sample.pkg.feature.viewmodel.TabViewModel
 import com.drakeet.multitype.MultiTypeAdapter
 
@@ -16,12 +18,12 @@ import com.drakeet.multitype.MultiTypeAdapter
  * @author : LeeZhaoXing
  * @date   : 2020/11/10
  */
-class TabFragment : SimpleLazyListFragment<TabViewModel>() {
+class TabFragment : SimpleLazyListFragment<SampleViewModel>() {
     private val title: String? by arguments(BUNDLE_TITLE)
     private val index by arguments(BUNDLE_INDEX, 12)
 
     override fun registerItem(adapter: MultiTypeAdapter?) {
-        adapter?.register(PokemonItemViewBinder())
+        adapter?.register(ArticleItemViewBinder())
         (activity as ViewPagerActivity).getRvPool()?.let {
             getRecyclerView()?.setRecycledViewPool(it)
         }

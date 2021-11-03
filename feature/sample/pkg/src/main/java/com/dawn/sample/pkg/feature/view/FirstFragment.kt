@@ -5,10 +5,9 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import com.dawn.base.log.L
-import com.dawn.base.utils.GlobalAsyncHandler
 import com.dawn.base.ui.page.iface.ViewState
 import com.dawn.base.ui.page.iface.ViewStateWithMsg
-import com.dawn.base.ui.page.base.BaseBindingFragment
+import com.dawn.base.ui.page.base.BaseFragment
 import com.dawn.base.utils.getApplicationScopeViewModel
 import com.dawn.base.utils.onClick
 import com.dawn.sample.pkg.databinding.FeatureSamplePkgFragmentFirstBinding
@@ -21,7 +20,7 @@ import com.dawn.sample.pkg.feature.viewmodel.TestViewModel
  * @date   : 2020/10/26
  * @desc   :
  */
-class FirstFragment : BaseBindingFragment<TestViewModel, FeatureSamplePkgFragmentFirstBinding>() {
+class FirstFragment : BaseFragment<TestViewModel, FeatureSamplePkgFragmentFirstBinding>() {
     private var testEventObserver: Observer<Int>? = null
     private val event: ShareViewModel by lazy {
         mActivity?.get()?.getApplicationScopeViewModel()!!

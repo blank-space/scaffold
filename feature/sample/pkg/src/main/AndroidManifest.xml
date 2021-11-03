@@ -17,6 +17,7 @@
         <activity android:name="com.dawn.sample.pkg.feature.view.countdowm.CountDownActivity" />
         <activity android:name=".feature.view.download.DownLoadActivity" />
         <activity android:name=".feature.view.location.FindLocationActivity" />
+        <activity android:name=".feature.view.search.SearchActivity" />
 
     </application>
 </manifest>

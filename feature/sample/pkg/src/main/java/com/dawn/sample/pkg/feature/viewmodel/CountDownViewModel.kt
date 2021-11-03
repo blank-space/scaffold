@@ -1,6 +1,9 @@
 package com.dawn.sample.pkg.feature.viewmodel
 
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.dawn.base.DataResult
+import com.dawn.base.log.L
 import com.dawn.base.viewmodel.base.BaseListViewModel
 import com.dawn.sample.pkg.feature.data.entity.CountDownList
 import kotlinx.coroutines.flow.Flow
@@ -12,8 +15,12 @@ import kotlinx.coroutines.flow.flow
  * @desc   :
  */
 class CountDownViewModel : BaseListViewModel() {
-    override fun getList(): Flow<DataResult<Any>?> {
+
+
+    override fun getList(): Flow<DataResult<out Any>?> {
+        L.d("getList")
         return flow {
+            kotlinx.coroutines.delay(400)
             val response = arrayListOf<Long>(
                 0,
                 20_000,
@@ -35,6 +42,6 @@ class CountDownViewModel : BaseListViewModel() {
             data.code = "000000"
             data.msg = "ok"
             emit(data)
-        } as Flow<DataResult<Any>?>
+        }
     }
 }

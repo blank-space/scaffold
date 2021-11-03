@@ -28,6 +28,10 @@ class SampleApiImpl : ISampleService {
         ARouter.getInstance().build(SamplePath.A_FIND_LOCATION_ACTIVITY).navigation()
     }
 
+    override fun startSearchActivity() {
+        ARouter.getInstance().build(SamplePath.A_SEARCH_ACTIVITY).navigation()
+    }
+
     override fun init(context: Context?) {
     }
 

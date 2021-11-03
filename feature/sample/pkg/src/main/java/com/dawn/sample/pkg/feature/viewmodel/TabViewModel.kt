@@ -19,7 +19,7 @@ class TabViewModel : BaseListViewModel() {
         PokeRepositoryImpl(PokemonNetwork)
     }
 
-    override fun getList(): Flow<DataResult<Any>?>? {
+    override fun getList(): Flow<DataResult<out Any>?>? {
         return flow {
             val response = repository.fetchPokemonList(pageNo)
             val data = DataResult<PokemonListResponse>()
@@ -29,6 +29,6 @@ class TabViewModel : BaseListViewModel() {
                 data.msg = "ok"
             }
             emit(data)
-        } as Flow<DataResult<Any>?>?
+        }
     }
 }

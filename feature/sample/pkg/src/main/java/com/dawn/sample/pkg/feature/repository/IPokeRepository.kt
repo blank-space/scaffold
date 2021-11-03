@@ -12,4 +12,6 @@ interface IPokeRepository {
 
     fun fetchPokemonList(pageNo: Int): Flow<PokemonListResponse>
 
+    fun mockSearch():Flow<String>
+
 }

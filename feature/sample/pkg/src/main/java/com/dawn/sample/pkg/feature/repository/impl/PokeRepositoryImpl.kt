@@ -33,5 +33,11 @@ class PokeRepositoryImpl(
         }.flowOn(Dispatchers.IO)
     }
 
+    override fun mockSearch(): Flow<String> {
+        return flow {
+            emit("mock search。。。")
+        }.flowOn(Dispatchers.IO)
+    }
+
 
 }

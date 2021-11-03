@@ -1,6 +1,6 @@
 package com.dawn.launch.app
 
-import com.dawn.base.utils.fetchData
+
 import com.dawn.base.viewmodel.base.BaseViewModel
 import com.dawn.sample.pkg.feature.repository.IWanAndroidRepository
 import com.dawn.sample.pkg.feature.repository.impl.WanAndroidRepository

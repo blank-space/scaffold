@@ -10,4 +10,5 @@ import com.dawn.sample.pkg.feature.domain.request.DownloadRequest
  */
 class DownLoadViewModel : BaseViewModel() {
     val downloadRequest = DownloadRequest()
+
 }

@@ -112,6 +112,18 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
         }
     }
 
+    val search = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
+        text = "search"
+        setBackgroundColor(Color.parseColor("#00BCD4"))
+        onClick = {
+            sampleService?.startSearchActivity()
+
+        }
+        this@MainLayout.addView(this, matchParent, 60.dp) {
+            topMargin = 10.dp
+        }
+    }
+
 
     override fun onMeasureChildren(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         forEachAutoMeasure()
@@ -125,6 +137,7 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
         countdown.let { it.layout(listItem.left, webView.bottom + it.marginTop) }
         viewPager2.let { it.layout(listItem.left, countdown.bottom + it.marginTop) }
         location.let{ it.layout(listItem.left, viewPager2.bottom + it.marginTop)}
+        search.let{ it.layout(listItem.left, location.bottom + it.marginTop)}
     }
 }
 

@@ -2,12 +2,14 @@ package com.dawn.sample.pkg.feature.repository.impl
 
 import android.util.Log
 import com.dawn.base.DataResult
+import com.dawn.base.log.L
 import com.dawn.base.utils.simpleSlow
 import com.dawn.sample.pkg.feature.data.entity.Article
 import com.dawn.sample.pkg.feature.data.entity.Banner
 import com.dawn.sample.pkg.feature.data.entity.DownloadFile
 import com.dawn.sample.pkg.feature.repository.IWanAndroidRepository
 import com.dawn.sample.pkg.feature.repository.WanAndroidNetwork
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import java.util.*
 
@@ -19,16 +21,20 @@ import java.util.*
 class WanAndroidRepository : IWanAndroidRepository {
     private val network by lazy { WanAndroidNetwork }
 
+    @ExperimentalCoroutinesApi
     override fun getTopArticles(): Flow<DataResult<List<Article>>> {
-        return simpleSlow { emit(network.getTopArticles()) }
+        return simpleSlow {
+            L.e("getTopArticles from remote source")
+            emit(network.getTopArticles())
+        }
     }
 
+    @ExperimentalCoroutinesApi
     override fun getBanners(): Flow<DataResult<List<Banner>>> {
         return simpleSlow { emit(network.getBanners()) }
     }
 
     override fun downLoadFile(downloadFile: DownloadFile,result: DownloadFile.DownLoadResult) {
-
             val timer = Timer()
             val dataResult = DataResult<DownloadFile>().apply {
                 code ="000000"
@@ -49,7 +55,6 @@ class WanAndroidRepository : IWanAndroidRepository {
                         downloadFile.forgive = false
                         return
                     }
-
                     result.onResult(dataResult)
                 }
             }
