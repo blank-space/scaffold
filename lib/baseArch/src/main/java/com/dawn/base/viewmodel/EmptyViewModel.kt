@@ -7,5 +7,5 @@ import com.dawn.base.viewmodel.base.BaseViewModel
  * @date   : 2020/11/6
  * @desc   : 空实现的ViewModel
  */
-class StubViewModel: BaseViewModel() {
+class EmptyViewModel: BaseViewModel() {
 }

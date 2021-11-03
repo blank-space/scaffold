@@ -19,9 +19,9 @@ open class BaseApp : Application(), ViewModelStoreOwner {
     companion object {
         lateinit var application: Application
     }
-    private lateinit var mAppViewModelStore: ViewModelStore
-    //val callbackPairs = mutableMapOf<ViewState, Class<out Callback>>()
 
+    private lateinit var mAppViewModelStore: ViewModelStore
+    private val loadModuleProxy by lazy { LoadModuleProxy() }
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
@@ -37,6 +37,8 @@ open class BaseApp : Application(), ViewModelStoreOwner {
             ARouter.openDebug()
         }
         ARouter.init(application)
+        loadModuleProxy.onInitSpeed(application)
+        loadModuleProxy.onInitLow(application)
     }
 
     override fun getViewModelStore(): ViewModelStore {

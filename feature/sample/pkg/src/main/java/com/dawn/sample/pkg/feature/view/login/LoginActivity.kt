@@ -10,7 +10,7 @@ import com.dawn.base.utils.GlobalHandler
 import com.dawn.base.ui.page.base.BaseActivity
 import com.dawn.base.utils.KeyboardUtils
 import com.dawn.base.utils.startActivity
-import com.dawn.base.viewmodel.StubViewModel
+import com.dawn.base.viewmodel.EmptyViewModel
 import com.dawn.base.widget.window.KeyboardStatePopupWindow
 import com.dawn.sample.pkg.databinding.FeatureSamplePkgActivityLoginBinding
 
@@ -19,7 +19,7 @@ import com.dawn.sample.pkg.databinding.FeatureSamplePkgActivityLoginBinding
  * @date   : 2020/11/4
  * @desc   :
  */
-class LoginActivity : BaseActivity<StubViewModel,FeatureSamplePkgActivityLoginBinding>() {
+class LoginActivity : BaseActivity<EmptyViewModel,FeatureSamplePkgActivityLoginBinding>() {
 
 
     companion object {

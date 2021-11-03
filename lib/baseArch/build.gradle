@@ -17,7 +17,6 @@ dependencies {
     api Config.permissionx
     api Config.timber
     api Config.aRouter
-    kapt Config.aRouter_compiler
     api Config.loadsir
     api Config.refresh_layout_kernel
     api Config.refresh_layout_footer
@@ -27,4 +26,7 @@ dependencies {
     api Config.unpeek_livedata
     api Config.lifecycleRuntime
     implementation Config.coroutines
+    api Config.autoService
+    kapt Config.aRouter_compiler
+    kapt Config.autoServiceAnnotations
 }

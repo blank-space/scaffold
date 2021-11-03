@@ -11,5 +11,5 @@ dependencies {
     implementation 'com.github.Caij:DGAppStartup:1.0.2'
     implementation Config.lottie
 
-
+    kapt Config.autoServiceAnnotations
 }

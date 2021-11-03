@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import com.dawn.base.ui.page.base.BaseActivity
 import com.dawn.base.utils.startActivity
-import com.dawn.base.viewmodel.StubViewModel
+import com.dawn.base.viewmodel.EmptyViewModel
 import com.dawn.sample.pkg.databinding.FeatureSamplePkgActivityViewpagerBinding
 import com.dawn.sample.pkg.feature.view.FirstFragment
 import com.google.android.material.tabs.TabLayoutMediator
@@ -16,7 +16,7 @@ import com.google.android.material.tabs.TabLayoutMediator
  * @date   : 2020/11/10
  * @desc   : ViewPager+Fragment+RecyclerView+RecyclerViewPool的示例
  */
-class ViewPagerActivity : BaseActivity<StubViewModel, FeatureSamplePkgActivityViewpagerBinding>() {
+class ViewPagerActivity : BaseActivity<EmptyViewModel, FeatureSamplePkgActivityViewpagerBinding>() {
     private val tabs = listOf("tab1", "tab2", "tab3")
     private var recycledViewPool: RecycledViewPool? = RecycledViewPool()
     private val fragments= arrayListOf<Fragment>(TabFragment.newInstance("tab",112),FirstFragment(),FirstFragment())

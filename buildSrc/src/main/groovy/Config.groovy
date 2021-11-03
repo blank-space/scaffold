@@ -55,5 +55,7 @@ class Config {
     static material = "com.google.android.material:material:${Versions.material}"
     static lottie = "com.airbnb.android:lottie:${Versions.lottie}"
     static coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+    static autoService = "com.google.auto.service:auto-service:${Versions.autoService}"
+    static autoServiceAnnotations = "com.google.auto.service:auto-service-annotations:${Versions.autoService}"
 
 }

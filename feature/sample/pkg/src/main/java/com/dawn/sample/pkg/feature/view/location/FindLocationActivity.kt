@@ -15,7 +15,7 @@ import com.dawn.base.ui.page.iface.ViewState
 import com.dawn.base.ui.page.iface.ViewStateWithMsg
 import com.dawn.base.utils.onClick
 import com.dawn.base.utils.startActivity
-import com.dawn.base.viewmodel.StubViewModel
+import com.dawn.base.viewmodel.EmptyViewModel
 import com.dawn.sample.export.path.SamplePath
 import com.dawn.sample.pkg.databinding.FeatureSamplePkgActivityLocationBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
  * @desc   :
  */
 @Route(path = SamplePath.A_FIND_LOCATION_ACTIVITY)
-class FindLocationActivity : BaseActivity<StubViewModel, FeatureSamplePkgActivityLocationBinding>() {
+class FindLocationActivity : BaseActivity<EmptyViewModel, FeatureSamplePkgActivityLocationBinding>() {
 
 
     companion object {

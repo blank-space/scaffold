@@ -48,9 +48,10 @@ class Versions {
     static fragment_ktx = "1.4.0-alpha09"
     static coordinatorlayout = "1.1.0"
     static loadSir = "1.3.8"
-    static unpeek_livedata ="7.2.0-beta1"
-    static lottie ="3.5.0"
-    static coroutines ="1.5.2"
+    static unpeek_livedata = "7.2.0-beta1"
+    static lottie = "3.5.0"
+    static coroutines = "1.5.2"
+    static autoService = "1.0"
 }
 
 

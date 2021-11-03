@@ -18,7 +18,6 @@ import com.caij.app.startup.DGAppStartup
 import com.caij.app.startup.OnProjectListener
 import com.dawn.base.ActivityLifecycleCallback
 import com.dawn.base.BaseApp
-import com.dawn.base.BaseAppInit
 import com.dawn.base.log.L
 import com.dawn.base.ui.callback.EmptyLayoutCallback
 import com.dawn.base.ui.callback.ErrorLayoutCallback
@@ -45,11 +44,9 @@ class App : BaseApp(), ImageLoaderFactory {
     override fun onCreate() {
         super.onCreate()
         initTasks()
-        initSubModulesSpeed()
         registerActivityLifecycleCallbacks(ActivityLifecycleCallback())
         initHookMethods()
         initLoadSir()
-        initSubModulesLow()
         loop()
     }
 
@@ -83,7 +80,6 @@ class App : BaseApp(), ImageLoaderFactory {
     }
 
     private fun initTasks() {
-
         val config = Config()
         config.isStrictMode = BuildConfig.DEBUG
         DGAppStartup.Builder()
@@ -124,29 +120,7 @@ class App : BaseApp(), ImageLoaderFactory {
         }
     }
 
-    private fun initSubModulesSpeed() {
-        PageConfig.initModules.forEach {
-            try {
-                val clazz = Class.forName(it)
-                val moduleInit = clazz.newInstance() as BaseAppInit
-                moduleInit.onInitSpeed(this)
-            } catch (e: Exception) {
-                e.message?.let { it1 -> L.e(it1) }
-            }
-        }
-    }
 
-    private fun initSubModulesLow() {
-        PageConfig.initModules.forEach {
-            try {
-                val clazz = Class.forName(it)
-                val moduleInit = clazz.newInstance() as BaseAppInit
-                moduleInit.onInitLow(this)
-            } catch (e: Exception) {
-                e.message?.let { it1 -> L.e(it1) }
-            }
-        }
-    }
 
     override fun newImageLoader(): ImageLoader {
         return ImageLoader.Builder(this)

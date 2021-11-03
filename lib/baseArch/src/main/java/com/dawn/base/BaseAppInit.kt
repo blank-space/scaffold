@@ -10,8 +10,8 @@ import android.app.Application
 interface BaseAppInit {
 
     /**需要在第一时间被初始化的*/
-    fun onInitSpeed(app:Application):Boolean
+    fun onInitSpeed(app:Application)
 
     /**低优先级初始化*/
-    fun onInitLow(app:Application):Boolean
+    fun onInitLow(app:Application)
 }
