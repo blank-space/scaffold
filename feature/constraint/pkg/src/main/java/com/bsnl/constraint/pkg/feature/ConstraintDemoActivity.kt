@@ -4,9 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.bsnl.base.utils.startActivity
 import com.bsnl.constraint.pkg.R
-import kotlinx.android.synthetic.main.feature_constraint_pkg_activity_main.*
+import com.dawn.base.utils.startActivity
 
 
 class ConstraintDemoActivity : AppCompatActivity() {
@@ -24,7 +23,7 @@ class ConstraintDemoActivity : AppCompatActivity() {
     }
 
     private fun initListener() {
-            tv_center.setOnClickListener {
+           /* tv_center.setOnClickListener {
                 startActivity(
                     Intent(
                         this@ConstraintDemoActivity,
@@ -164,6 +163,6 @@ class ConstraintDemoActivity : AppCompatActivity() {
                         ConstraintSetActivity::class.java
                     )
                 )
-            }
+            }*/
         }
 }

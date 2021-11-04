@@ -33,17 +33,12 @@ class FirstActivity : BaseActivity<TestViewModel,FeatureSamplePkgActivityMainBin
             commit()
         }
 
-        GlobalAsyncHandler.postDelayed(1000) {
-            setState(ViewStateWithMsg(state = ViewState.STATE_COMPLETED))
-        }
     }
 
     override fun initStatusBar() {
         //重写该方法，非纯色沉浸式
     }
 
-
-    override fun initData() {}
 
     override fun initListener() {
         super.initListener()

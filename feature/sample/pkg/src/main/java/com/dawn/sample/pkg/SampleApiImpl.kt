@@ -32,6 +32,10 @@ class SampleApiImpl : ISampleService {
         ARouter.getInstance().build(SamplePath.A_SEARCH_ACTIVITY).navigation()
     }
 
+    override fun startHexStatusManagerActivity() {
+        ARouter.getInstance().build(SamplePath.A_HEX_STATUS_MANAGER_ACTIVITY).navigation()
+    }
+
     override fun init(context: Context?) {
     }
 

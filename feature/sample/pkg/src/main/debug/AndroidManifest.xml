@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.dawn.sample.pkg">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application
+        android:allowBackup="false"
+        android:icon="@drawable/base_icon_error"
+        android:usesCleartextTraffic="true"
+        android:appComponentFactory="sample"
+        android:theme="@style/lib_base_AppTheme"
+        android:name=".bebug.SampleRunAloneApp"
+        tools:replace="android:appComponentFactory,android:theme,android:allowBackup"
+      >
+
+        <activity
+            android:name=".bebug.RunAloneActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="user"
+            android:exported="true"
+            android:windowSoftInputMode="adjustNothing">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

@@ -5,7 +5,7 @@ apply {
 
 kapt {
     arguments {
-        arg("AROUTER_MODULE_NAME", project.getName())
+        arg("AROUTER_MODULE_NAME", project.getParent().getName()+"_"+project.getName())
     }
 }
 

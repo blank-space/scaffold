@@ -46,7 +46,6 @@ class App : BaseApp(), ImageLoaderFactory {
         initTasks()
         registerActivityLifecycleCallbacks(ActivityLifecycleCallback())
         initHookMethods()
-        initLoadSir()
         loop()
     }
 
@@ -68,16 +67,7 @@ class App : BaseApp(), ImageLoaderFactory {
         }
     }
 
-    private fun initLoadSir() {
-        val loadingCallback: ProgressCallback = ProgressCallback.Builder()
-            .setTitle("Loading", R.style.Hint_Title).build()
 
-        LoadSir.beginBuilder()
-            .addCallback(ErrorLayoutCallback())
-            .addCallback(EmptyLayoutCallback())
-            .addCallback(loadingCallback)
-            .commit()
-    }
 
     private fun initTasks() {
         val config = Config()

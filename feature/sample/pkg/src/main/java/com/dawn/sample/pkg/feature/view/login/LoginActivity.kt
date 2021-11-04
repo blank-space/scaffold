@@ -55,6 +55,7 @@ class LoginActivity : BaseActivity<EmptyViewModel,FeatureSamplePkgActivityLoginB
 
 
     override fun initData() {
+        super.initData()
         binding.ivHeader.load(avatar)
     }
 

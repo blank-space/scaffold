@@ -17,7 +17,7 @@ interface ISampleService : IProvider {
 
      fun startSearchActivity()
 
-
+     fun startHexStatusManagerActivity()
 
 }
 

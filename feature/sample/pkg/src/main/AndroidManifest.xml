@@ -18,6 +18,8 @@
         <activity android:name=".feature.view.download.DownLoadActivity" />
         <activity android:name=".feature.view.location.FindLocationActivity" />
         <activity android:name=".feature.view.search.SearchActivity" />
+        <activity android:name=".feature.view.hexStatusManager.HexStatusManagerActivity" />
+
 
     </application>
 </manifest>

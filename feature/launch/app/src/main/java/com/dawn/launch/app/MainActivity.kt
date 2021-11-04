@@ -42,7 +42,5 @@ class MainActivity : BaseActivity<MainViewModel, BaseEmptyActivityBinding>() {
 
     override fun isNeedInjectARouter() = true
 
-    override fun initData() {
-        setState(ViewStateWithMsg(state = ViewState.STATE_LOADING))
-    }
+
 }

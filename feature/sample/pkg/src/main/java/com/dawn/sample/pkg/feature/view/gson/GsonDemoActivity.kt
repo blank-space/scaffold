@@ -24,6 +24,6 @@ class GsonDemoActivity : BaseActivity<EmptyViewModel,FeatureSamplePkgActivityGso
     }
 
     override fun initData() {
-
+        super.initData()
     }
 }

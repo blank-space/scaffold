@@ -26,7 +26,7 @@ class SearchActivity :
     }
 
     override fun initData() {
-        setState(ViewStateWithMsg(state = ViewState.STATE_COMPLETED))
+       super.initData()
         mViewModel.uiState.observe(this@SearchActivity) {
             L.d("fetch data :$it")
         }

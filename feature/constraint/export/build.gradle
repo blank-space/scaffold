@@ -3,6 +3,6 @@ apply from: '../../../buildCommon.gradle'
 
 
 dependencies {
-    api project(':lib:base')
+    api project(':lib:baseArch')
     //kapt Config.aRouter_compiler
 }

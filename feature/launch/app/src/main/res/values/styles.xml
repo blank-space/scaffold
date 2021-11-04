@@ -1,6 +1,3 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Hint_Title">
-        <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:textSize">20sp</item>
-    </style>
+
 </resources>

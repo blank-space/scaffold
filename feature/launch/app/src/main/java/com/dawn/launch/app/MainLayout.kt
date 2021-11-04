@@ -37,8 +37,6 @@ private val MARGIN: Int = 19.dp.toInt()
 
 @SuppressLint("ResourceAsColor")
 class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayout(context) {
-
-
     init {
         setBackgroundColor(Color.parseColor("#11ff0000"))
     }
@@ -80,7 +78,7 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
     }
 
     val countdown = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
-        text = "倒计时列表"
+        text = "countdown"
         onClick = {
             CountDownActivity.actionStart(context)
         }
@@ -124,6 +122,17 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
         }
     }
 
+    val hexStatus = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
+        text = "hexStatus"
+        onClick = {
+            sampleService?.startHexStatusManagerActivity()
+
+        }
+        this@MainLayout.addView(this, matchParent, 60.dp) {
+            topMargin = 10.dp
+        }
+    }
+
 
     override fun onMeasureChildren(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         forEachAutoMeasure()
@@ -138,6 +147,7 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
         viewPager2.let { it.layout(listItem.left, countdown.bottom + it.marginTop) }
         location.let{ it.layout(listItem.left, viewPager2.bottom + it.marginTop)}
         search.let{ it.layout(listItem.left, location.bottom + it.marginTop)}
+        hexStatus.let{ it.layout(listItem.left, search.bottom + it.marginTop)}
     }
 }
 

@@ -35,9 +35,7 @@ class DownLoadActivity :
     }
 
     override fun initData() {
-        GlobalAsyncHandler.postDelayed(1000) {
-            setState(ViewStateWithMsg(state = ViewState.STATE_COMPLETED))
-        }
+        super.initData()
         mViewModel.downloadRequest.downloadLiveData.observe(this) {
             if (it.isSuccessFul) {
                 binding.tvDownLoad.text = "download progress :${it.data.process}%"

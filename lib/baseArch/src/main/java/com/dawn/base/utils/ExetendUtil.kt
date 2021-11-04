@@ -6,13 +6,12 @@ import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.TypedValue
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.dawn.base.BaseApp
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
@@ -23,9 +22,6 @@ import kotlinx.coroutines.flow.flowOn
  * @date   : 2020/8/17
  * @desc   : 高阶函数、内联函数
  */
-
-
-
 inline fun <T, R> T.doWithTry(block: (T) -> R) {
     try {
         block(this)
@@ -33,10 +29,6 @@ inline fun <T, R> T.doWithTry(block: (T) -> R) {
         e.printStackTrace()
     }
 }
-
-
-
-
 
 val Float.dp
     get() = TypedValue.applyDimension(
@@ -57,3 +49,28 @@ val Int.dp
 fun <T> simpleSlow(block: suspend FlowCollector<T>.() -> Unit): Flow<T> = flow(block).flowOn(
     Dispatchers.IO
 )
+
+/** 替代 Handler.post/postDelayed */
+fun LifecycleOwner.postDelayedOnLifecycle(
+    duration: Long,
+    dispatcher: CoroutineDispatcher = Dispatchers.Main,
+    block: () -> Unit
+): Job = lifecycleScope.launch(dispatcher) {
+    delay(duration)
+    block()
+}
+
+
+/** 替代 View.post/postDelayed */
+fun View.postDelayedOnLifecycle(
+    duration: Long,
+    dispatcher: CoroutineDispatcher = Dispatchers.Main,
+    block:() -> Unit
+) : Job? = findViewTreeLifecycleOwner()?.let { lifecycleOwner ->
+    lifecycleOwner.lifecycleScope.launch(dispatcher) {
+        delay(duration)
+        block()
+    }
+}
+
+

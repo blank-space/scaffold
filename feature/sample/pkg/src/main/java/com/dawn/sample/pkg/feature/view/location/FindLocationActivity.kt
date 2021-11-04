@@ -43,7 +43,7 @@ class FindLocationActivity : BaseActivity<EmptyViewModel, FeatureSamplePkgActivi
     }
 
     override fun initData() {
-        setState(ViewStateWithMsg(state = ViewState.STATE_LOADING))
+        super.initData()
     }
 
     @ExperimentalCoroutinesApi

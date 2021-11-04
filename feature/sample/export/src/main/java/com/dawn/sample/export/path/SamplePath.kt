@@ -17,5 +17,7 @@ interface SamplePath {
         const val A_FIND_LOCATION_ACTIVITY = GROUP + "FindLocationActivity"
 
         const val A_SEARCH_ACTIVITY = GROUP + "SearchActivity"
+
+        const val A_HEX_STATUS_MANAGER_ACTIVITY = GROUP +"HexStatusManagerActivity"
     }
 }

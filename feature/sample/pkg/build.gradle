@@ -40,4 +40,9 @@ dependencies {
     api Config.viewpager2
     implementation 'com.google.android.gms:play-services-location:18.0.0'
     kapt Config.autoServiceAnnotations
+    if (sample_runAlone.toBoolean()) {
+        api project(':feature:mock')
+    }else {
+        api project(':feature:constraint:export')
+    }
 }

@@ -96,14 +96,9 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     open fun isNeedInjectARouter() = false
 
     /**
-     * desc:内容区域是否在标题栏之下
+     * 内容区域是否在标题栏之下
      */
     open fun isContentUnderTitleBar() = true
-
-    /**
-     * desc:是否开启evenBus
-     */
-    open fun isNeedEvenBus() = false
 
 
     open fun getTitleView(): ITitleView? {
@@ -212,7 +207,9 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
 
     abstract fun initView()
 
-    abstract fun initData()
+    open fun initData(){
+        setState(ViewStateWithMsg(state = ViewState.STATE_LOADING))
+    }
 
     override fun onDestroy() {
         pageStateChangeListener = null

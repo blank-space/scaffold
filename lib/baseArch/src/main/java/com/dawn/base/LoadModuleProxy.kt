@@ -1,6 +1,7 @@
 package com.dawn.base
 
 import android.app.Application
+import com.dawn.base.utils.doOnMainThreadIdle
 import java.util.*
 
 /**
@@ -20,8 +21,10 @@ class LoadModuleProxy : BaseAppInit {
     }
 
     override fun onInitLow(app: Application) {
-        mLoader.forEach {
-            it.onInitLow(app)
-        }
+        doOnMainThreadIdle({
+            mLoader.forEach {
+                it.onInitLow(app)
+            }
+        },100)
     }
 }
