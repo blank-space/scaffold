@@ -2,6 +2,7 @@ package com.dawn.sample.pkg.feature.view.search
 
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.dawn.base.log.L
 import com.dawn.base.ui.page.base.BaseActivity

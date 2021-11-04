@@ -93,7 +93,6 @@ class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
 
     override fun initView() {
         super.initView()
-        lifecycle.addObserver(mViewModel)
         getTitleView()?.setTitleText("倒计时列表")
 
     }

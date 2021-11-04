@@ -1,5 +1,6 @@
 package com.dawn.network
 
+import com.alibaba.network.BuildConfig
 import com.dawn.network.interceptors.RetryInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -54,18 +55,17 @@ object ServiceCreator {
                 builder.addInterceptor(interceptors[index])
             }
         }
-
         return builder.build()
     }
 
 
 
     private fun getLogInterceptor(): Interceptor {
-       // if (!BuildConfig.DE) {
+        if (!BuildConfig.DEBUG) {
             //Release 时, 让框架不再打印 Http 请求和响应的信息
             return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
-        //} else {
+        } else {
             return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-        //}
+        }
     }
 }
