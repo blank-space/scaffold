@@ -12,7 +12,7 @@ import com.kingja.loadsir.callback.Callback
  */
 class LoadingLayoutCallback : Callback() {
 
-    override fun onCreateView() = R.layout.base_stub_progress_wait
+    override fun onCreateView() = R.layout.base_loading_layout
 
     override fun onReloadEvent(context: Context?, view: View?): Boolean {
         /** 拦截reload，只让ErrorLayoutCallback相应event */

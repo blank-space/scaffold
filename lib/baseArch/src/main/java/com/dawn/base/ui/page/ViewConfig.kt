@@ -14,11 +14,11 @@ data class ViewConfig(
     @LayoutRes
     var titleLayoutId: Int = R.layout.base_toolbar,
     @LayoutRes
-    var loadingLayoutId: Int = R.layout.base_stub_progress_wait,
+    var loadingLayoutId: Int = R.layout.base_loading_layout,
     @LayoutRes
-    var errorLayoutId: Int = R.layout.base_stub_reload_layout,
+    var errorLayoutId: Int = R.layout.base_error_layout,
     @LayoutRes
-    var emptyLayoutId: Int = R.layout.base_stub_no_data,
+    var emptyLayoutId: Int = R.layout.base_empty_layout,
     @DrawableRes
     var emptyDrawableId: Int = -1,
     @DrawableRes

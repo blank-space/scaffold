@@ -1,7 +1,10 @@
 package com.dawn.sample.pkg.feature.view.viewpager
 
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dawn.base.R
 import com.dawn.base.log.L
+import com.dawn.base.ui.callback.ErrorLayoutCallback
 import com.dawn.base.ui.page.base.SimpleLazyListFragment
 import com.dawn.base.utils.arguments
 import com.dawn.base.utils.intentExtras
@@ -47,6 +50,14 @@ class TabFragment : SimpleLazyListFragment<SampleViewModel>() {
             BUNDLE_TITLE to title,
             BUNDLE_INDEX to pageIndex
         )
+    }
+
+    override fun modifyTheCallbackDynamically(msg: String?) {
+        getLayoutDelegateImpl()?.loadService?.setCallBack(ErrorLayoutCallback::class.java) { _, view ->
+            msg?.let {
+                view?.findViewById<TextView>(R.id.tv_msg)?.text = "<<**>>"
+            }
+        }
     }
 }
 

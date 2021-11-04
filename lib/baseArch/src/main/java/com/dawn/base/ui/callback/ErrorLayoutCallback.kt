@@ -10,6 +10,6 @@ import com.kingja.loadsir.callback.Callback
  */
 class ErrorLayoutCallback : Callback() {
     override fun onCreateView() =
-        R.layout.base_stub_reload_layout
+        R.layout.base_error_layout
 
 }

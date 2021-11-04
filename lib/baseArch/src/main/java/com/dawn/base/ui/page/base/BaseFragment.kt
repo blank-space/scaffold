@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.annotation.AnimRes
 import androidx.annotation.AnimatorRes
 import androidx.annotation.RequiresApi
@@ -19,6 +20,7 @@ import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.launcher.ARouter
 import com.dawn.base.BaseApp
 import com.dawn.base.R
+import com.dawn.base.ui.callback.ErrorLayoutCallback
 import com.dawn.base.ui.page.delegate.WrapLayoutDelegateImpl
 import com.dawn.base.ui.page.iface.*
 import com.dawn.base.utils.inflateBindingWithGeneric
@@ -42,9 +44,9 @@ abstract class BaseFragment<T : BaseViewModel, VB : ViewBinding> : Fragment(), I
     private var layoutDelegateImpl: WrapLayoutDelegateImpl? = null
     private var mTitleView: ITitleView? = null
     private var hideOther = true
-    val binding: VB by lazy { inflateBindingWithGeneric(layoutInflater)}
+    val binding: VB by lazy { inflateBindingWithGeneric(layoutInflater) }
     private var mLoadService: LoadService<ViewState>? = null
-    private var  smartRefreshLayout: SmartRefreshLayout?=null
+    private var smartRefreshLayout: SmartRefreshLayout? = null
     private var pageStateChangeListener: PageStateChangeListener? = PageStateChangeListener(this)
 
     override fun onAttach(context: Context) {
@@ -140,7 +142,7 @@ abstract class BaseFragment<T : BaseViewModel, VB : ViewBinding> : Fragment(), I
         return layoutDelegateImpl?.setup()
     }
 
-    protected open fun initListViewDelegate(refreshLayout: SmartRefreshLayout){}
+    protected open fun initListViewDelegate(refreshLayout: SmartRefreshLayout) {}
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -155,15 +157,15 @@ abstract class BaseFragment<T : BaseViewModel, VB : ViewBinding> : Fragment(), I
         //先隐藏
         //view.isInvisible = true
         //实现流畅的转场动画
-      /*  doOnMainThreadIdle({
-            TransitionManager.beginDelayedTransition(
-                view.parent as ViewGroup,
-                Slide(Gravity.BOTTOM).apply {
-                    addTarget(view)
-                })
-            //动画执行结束后显示view
-            view.isInvisible = false
-        }, 100)*/
+        /*  doOnMainThreadIdle({
+              TransitionManager.beginDelayedTransition(
+                  view.parent as ViewGroup,
+                  Slide(Gravity.BOTTOM).apply {
+                      addTarget(view)
+                  })
+              //动画执行结束后显示view
+              view.isInvisible = false
+          }, 100)*/
     }
 
     /**
@@ -244,6 +246,15 @@ abstract class BaseFragment<T : BaseViewModel, VB : ViewBinding> : Fragment(), I
     override fun setState(state: ViewStateWithMsg) {
         state.state?.let {
             layoutDelegateImpl?.showState(it, state.msg)
+            modifyTheCallbackDynamically(state.msg)
+        }
+    }
+
+    override fun modifyTheCallbackDynamically(msg: String?) {
+        getLayoutDelegateImpl()?.loadService?.setCallBack(ErrorLayoutCallback::class.java) { _, view ->
+            msg?.let {
+                view?.findViewById<TextView>(R.id.tv_msg)?.text = it
+            }
         }
     }
 
@@ -253,11 +264,11 @@ abstract class BaseFragment<T : BaseViewModel, VB : ViewBinding> : Fragment(), I
 
     override fun onDestroyView() {
         super.onDestroyView()
-        pageStateChangeListener =null
+        pageStateChangeListener = null
     }
 
     /** 如果[isUseDefaultLoadService]返回false，必须重写该方法去实例化mLoadService，且要使用[LoadSir#register( target,  onReloadListener,convertor)]这个方法去注册*/
-    open fun setupLoadSir(){}
+    open fun setupLoadSir() {}
 
     open fun isUseDefaultLoadService() = true
 

@@ -6,6 +6,7 @@ import android.content.res.Resources
 import android.os.Build
 import android.view.*
 import android.view.ViewGroup.MarginLayoutParams
+import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +31,7 @@ import com.kingja.loadsir.callback.Callback.OnReloadListener
 import com.kingja.loadsir.callback.ProgressCallback
 
 import com.kingja.loadsir.callback.SuccessCallback
+import com.kingja.loadsir.core.Transport
 
 
 /**
@@ -63,8 +65,9 @@ class WrapLayoutDelegateImpl(
     private var mTitleView: View? = null
     private var mContentWrapView: View? = null
     private var smartRefreshLayout: SmartRefreshLayout? = null
-    /** load1000ms后自动转成success*/
+    /** loading1000ms后自动转成success*/
     var delayToChangeLoadingViewToSuccess = 1000L
+    private var errorMessage = ""
 
     init {
         mLayoutInflater = LayoutInflater.from(mContext)
@@ -95,7 +98,7 @@ class WrapLayoutDelegateImpl(
             if (loadService == null && useLoadService) {
                 childView?.let {
                     loadService = LoadSir.getDefault().register(it, OnReloadListener {
-                        loadService?.showCallback(LoadingLayoutCallback::class.java)
+                        loadService?.showCallback(ProgressCallback::class.java)
                         viewStateChangeListener?.onReload(it)
                     }, Convertor<ViewState> { v ->
                         val resultCode: Class<out Callback?> = when (v) {
@@ -113,6 +116,7 @@ class WrapLayoutDelegateImpl(
                         }
                         resultCode
                     }) as LoadService<ViewState>?
+
                 }
             }
         }
@@ -157,7 +161,7 @@ class WrapLayoutDelegateImpl(
         val smartLayoutLp = smartRefreshLayout?.layoutParams as? MarginLayoutParams
         val mlp = mContentWrapView?.layoutParams as MarginLayoutParams
         val titleLp = mTitleView?.layoutParams as MarginLayoutParams
-        if (isImmersionBarEnable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (isImmersionBarEnable) {
             if (!isContentUnderTitleBar) {
                 mlp.topMargin = 0
                 smartLayoutLp?.topMargin = 0
@@ -228,7 +232,7 @@ class WrapLayoutDelegateImpl(
 
     fun showState(
         viewState: ViewState,
-        vararg args: Any?
+        msg: String?
     ) {
         if(loadService==null){
             L.e("loadService==null")
@@ -236,6 +240,8 @@ class WrapLayoutDelegateImpl(
         loadService?.showWithConvertor(viewState)
         mCurrentState = viewState
     }
+
+
 
     override fun getTitleView(
         isImmersionBarEnable: Boolean,

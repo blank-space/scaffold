@@ -18,4 +18,9 @@ interface IViewState {
     fun processRefresh(refreshLayout: IRefreshLayout?) {}
 
     fun processLoadMore(refreshLayout: IRefreshLayout?) {}
+
+    /**
+     * 动态修改状态页(loadSir#CallBack),默认实现ErrorLayoutCallback，如果其他需求，子类复写
+     */
+    fun modifyTheCallbackDynamically(msg:String?)
 }

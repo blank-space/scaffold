@@ -97,6 +97,7 @@ class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
 
     }
 
+
     override fun setupLoadSir() {
         val loadSir = LoadSir
             .Builder()

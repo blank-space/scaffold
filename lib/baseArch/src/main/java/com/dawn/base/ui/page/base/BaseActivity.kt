@@ -8,11 +8,14 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.launcher.ARouter
+import com.dawn.base.R
 import com.dawn.base.manager.KeyboardStateManager
+import com.dawn.base.ui.callback.ErrorLayoutCallback
 import com.dawn.base.ui.page.FragmentStateFixer
 import com.dawn.base.utils.AdaptScreenUtils
 import com.dawn.base.utils.DisplayUtils
@@ -33,7 +36,8 @@ import java.lang.reflect.ParameterizedType
  * @date   : 2020/8/17
  * @desc   :
  */
-abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatActivity(), IViewState {
+abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatActivity(),
+    IViewState {
     private var mTitleView: ITitleView? = null
     lateinit var mViewModel: VM
     val TAG by lazy { javaClass.simpleName }
@@ -179,6 +183,16 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     override fun setState(state: ViewStateWithMsg) {
         state.state?.let {
             layoutDelegateImpl?.showState(it, state.msg)
+            modifyTheCallbackDynamically(state.msg)
+        }
+
+    }
+
+    override fun modifyTheCallbackDynamically(msg: String?) {
+        getLayoutDelegateImpl()?.loadService?.setCallBack(ErrorLayoutCallback::class.java) { _, view ->
+            msg?.let {
+                view?.findViewById<TextView>(R.id.tv_msg)?.text = it
+            }
         }
     }
 
@@ -188,8 +202,8 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
 
     /*利用反射获取类实例*/
     private fun initViewModel(): VM {
-        val persistentClass = (javaClass.genericSuperclass as ParameterizedType).
-        actualTypeArguments[0] as Class<VM>
+        val persistentClass =
+            (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<VM>
         mViewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)
         ).get(persistentClass)

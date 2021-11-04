@@ -3,6 +3,7 @@ package com.dawn.launch.app
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.dawn.base.BaseApp
+import com.dawn.base.databinding.BaseEmptyActivityBinding
 import com.dawn.base.databinding.BaseEmptyLayoutBinding
 import com.dawn.base.ui.page.iface.ViewState
 import com.dawn.base.ui.page.iface.ViewStateWithMsg
@@ -16,7 +17,7 @@ import com.dawn.sample.export.api.ISampleService
  * @date   : 2020/10/19
  * @desc   :
  */
-class MainActivity : BaseActivity<MainViewModel, BaseEmptyLayoutBinding>() {
+class MainActivity : BaseActivity<MainViewModel, BaseEmptyActivityBinding>() {
 
     @Autowired
     @JvmField
