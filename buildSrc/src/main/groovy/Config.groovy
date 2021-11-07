@@ -41,7 +41,6 @@ class Config {
     static room_compiler = "androidx.room:room-compiler:$Versions.room"
     static room_runtime = "androidx.room:room-runtime:${Versions.room}"
     static epic = "me.weishu:epic:${Versions.epic}"
-    static eventbus = "org.greenrobot:eventbus:${Versions.eventBus}"
     static aRouter = "com.alibaba:arouter-api:${Versions.router}"
     static aRouter_compiler = "com.alibaba:arouter-compiler:${Versions.router}"
     static background = "com.noober.background:core:${Versions.background}"
@@ -57,5 +56,8 @@ class Config {
     static coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
     static autoService = "com.google.auto.service:auto-service:${Versions.autoService}"
     static autoServiceAnnotations = "com.google.auto.service:auto-service-annotations:${Versions.autoService}"
+    static moshi_kotlin = "com.squareup.moshi:moshi-kotlin:${Versions.moshi_kotlin}"
+    static moshi_kotlin_codegen ="com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi_kotlin}"
+    static convert_moshi = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
 
 }

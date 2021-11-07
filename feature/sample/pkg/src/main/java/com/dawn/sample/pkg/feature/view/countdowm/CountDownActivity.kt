@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.CountDownTimer
 import android.view.View
 import com.dawn.base.log.L
+import com.dawn.base.ui.callback.EmptyLayoutCallback
+import com.dawn.base.ui.callback.ErrorLayoutCallback
 import com.dawn.base.utils.GlobalAsyncHandler
 import com.dawn.base.ui.page.iface.ViewState
 import com.dawn.base.ui.page.base.SimpleListActivity
@@ -102,6 +104,8 @@ class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
         val loadSir = LoadSir
             .Builder()
             .addCallback(PlaceholderCallback())
+            .addCallback(ErrorLayoutCallback())
+            .addCallback(EmptyLayoutCallback())
             .setDefaultCallback(PlaceholderCallback::class.java)
             .build()
 
@@ -110,8 +114,6 @@ class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
             it.loadService = loadSir.register(it.childView, Callback.OnReloadListener {
 
             }, Convertor<ViewState> { v ->
-                L.d("Convertor ViewState:$v")
-                L.d("thread:${Thread.currentThread().name}")
                 val resultCode: Class<out Callback?> = when (v) {
                     ViewState.STATE_LOADING -> PlaceholderCallback::class.java
                     else -> SuccessCallback::class.java
@@ -167,6 +169,22 @@ class CountDownActivity : SimpleListActivity<CountDownViewModel>() {
                             "$position tv_title".showToast()
                         }
                     }
+                }
+
+                override fun onItemLongClick(
+                    adapter: MultiTypeAdapter?,
+                    view: View?,
+                    position: Int
+                ) {
+                    "$position onItemLongClick".showToast()
+                }
+
+                override fun onItemChildLongClick(
+                    adapter: MultiTypeAdapter?,
+                    view: View?,
+                    position: Int
+                ) {
+                    "$position onItemChildLongClick".showToast()
                 }
             })
     }

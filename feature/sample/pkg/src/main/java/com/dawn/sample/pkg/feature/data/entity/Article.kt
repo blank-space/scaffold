@@ -1,10 +1,13 @@
 package com.dawn.sample.pkg.feature.data.entity
 
+import com.squareup.moshi.JsonClass
+
 /**
  * @author : LeeZhaoXing
  * @date   : 2021/9/15
  * @desc   :
  */
+@JsonClass(generateAdapter = true)
 data class Article(
     var apkLink: String? = null,
     var audit: Int? = null,

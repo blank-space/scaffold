@@ -111,7 +111,7 @@ public class ItemClickSupport {
             int itemViewType = holder != null ? holder.getItemViewType() : -1;
             if(itemViewType != -1 ) {
                 HashSet<Integer> clickViewIds = holder.getChildClickViewIds();
-                if(clickViewIds != null && clickViewIds.size() > 0) {
+                if(clickViewIds.size() > 0) {
                     for (int id : clickViewIds) {
                         View v = holder.getView(id);
                         if(v != null) {
@@ -160,19 +160,13 @@ public class ItemClickSupport {
     }
 
     public static abstract class OnItemClick<T extends MultiTypeAdapter> {
-        public void onItemClick(T adapter, View view, int position) {
-        }
+        public void onItemClick(T adapter, View view, int position) { }
 
-        public void onItemLongClick(T adapter, View view, int position) {
+        public void onItemLongClick(T adapter, View view, int position) { }
 
-        }
+        public void onItemChildClick(T adapter, View view, int position) { }
 
-        public void onItemChildClick(T adapter, View view, int position) {
-
-        }
-
-        public void onItemChildLongClick(T adapter, View view, int position) {
-        }
+        public void onItemChildLongClick(T adapter, View view, int position) { }
     }
 
 }

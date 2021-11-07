@@ -5,15 +5,13 @@ apply from: "../../../buildCommon.gradle"
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':feature:sample:pkg')
-
-    kapt Config.aRouter_compiler
-    debugImplementation Config.leakcanary
-
+    implementation project(':feature:constraint:pkg')
     implementation 'com.github.Caij:DGAppStartup:1.0.2'
     implementation Config.lottie
+    debugImplementation Config.leakcanary
 
     kapt Config.autoServiceAnnotations
-    if(!sample_runAlone.toBoolean()){
-        implementation project(':feature:constraint:pkg')
-    }
+    kapt Config.aRouter_compiler
+
+
 }

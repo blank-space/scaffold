@@ -52,6 +52,7 @@ class Versions {
     static lottie = "3.5.0"
     static coroutines = "1.5.2"
     static autoService = "1.0"
+    static moshi_kotlin="1.12.0"
 }
 
 

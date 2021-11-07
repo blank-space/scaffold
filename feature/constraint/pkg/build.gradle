@@ -1,28 +1,10 @@
-if (constraint_runAlone.toBoolean()) {
-    apply plugin: 'com.android.application'
-} else {
-    apply plugin: 'com.android.library'
-}
+apply plugin: 'com.android.library'
 apply from: "../../../buildCommon.gradle"
 
 
 android {
-    defaultConfig {
-        if (constraint_runAlone.toBoolean()) {
-            applicationId "me.module.constraint"
-            multiDexEnabled true
-        }
-    }
     sourceSets {
         main {
-            if (constraint_runAlone.toBoolean()) {
-                manifest.srcFile 'src/main/debug/AndroidManifest.xml'
-            } else {
-                manifest.srcFile 'src/main/AndroidManifest.xml'
-                java {
-                    exclude 'debug/**'
-                }
-            }
             jniLibs.srcDirs = ['libs']
         }
     }

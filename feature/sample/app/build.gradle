@@ -1,0 +1,22 @@
+apply plugin: 'com.android.application'
+apply from: "../../../buildCommon.gradle"
+
+android {
+    defaultConfig {
+        applicationId "me.module.sample"
+        multiDexEnabled true
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    api project(':feature:sample:pkg')
+    api project(':feature:mock')
+    kapt Config.aRouter_compiler
+
+
+}

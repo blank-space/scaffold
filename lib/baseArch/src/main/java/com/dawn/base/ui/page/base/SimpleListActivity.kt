@@ -10,4 +10,4 @@ import com.dawn.base.viewmodel.base.BaseViewModel
  * @desc   : 最简单的LitView-Activity,如果布局比较复杂，可以使用[BaseListActivity]
  *
  */
-abstract class SimpleListActivity<T : BaseViewModel> : BaseListActivity<T, BaseRecycerviewBinding>()
+abstract class SimpleListActivity<VM : BaseViewModel> : BaseListActivity<VM, BaseRecycerviewBinding>()

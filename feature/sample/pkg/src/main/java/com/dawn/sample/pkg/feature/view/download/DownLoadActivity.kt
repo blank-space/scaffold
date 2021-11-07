@@ -18,8 +18,7 @@ import com.dawn.sample.pkg.feature.viewmodel.DownLoadViewModel
  * @date   : 2021/10/26
  * @desc   :
  */
-class DownLoadActivity :
-    BaseActivity<DownLoadViewModel, FeatureSamplePkgActivityDownloadBinding>() {
+class DownLoadActivity : BaseActivity<DownLoadViewModel, FeatureSamplePkgActivityDownloadBinding>() {
     private val event: ShareViewModel by lazy {
         getApplicationScopeViewModel()
     }

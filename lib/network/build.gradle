@@ -5,5 +5,8 @@ dependencies {
     api Config.gson
     api Config.retrofit_runtime
     api Config.okhttp_logging
-    api Config.convert_gson
+    api Config.convert_moshi
+    api Config.moshi_kotlin
+    kapt Config.moshi_kotlin_codegen
+    //api Config.convert_gson
 }

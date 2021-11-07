@@ -1,4 +1,4 @@
-package com.dawn.sample.pkg.bebug
+package com.sample.app
 
 import com.dawn.base.BaseApp
 

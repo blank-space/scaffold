@@ -19,10 +19,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/9/16
- * @desc   : 基础列表Activity
+ * @desc   : 基础列表Activity,布局中的recyclerView的Id必须叫rv
  *
  */
-abstract class BaseListActivity<T : BaseViewModel,VB : ViewBinding> : BaseActivity<T, VB>() {
+abstract class BaseListActivity<VM : BaseViewModel,VB : ViewBinding> : BaseActivity<VM, VB>() {
     private var mListViewDelegate: ListViewDelegateImpl? = null
     var requestType: Int = RequestType.INIT
     private val rv :RecyclerView by lazy {

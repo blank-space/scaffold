@@ -1,29 +1,9 @@
-if (sample_runAlone.toBoolean()) {
-    apply plugin: 'com.android.application'
-} else {
-    apply plugin: 'com.android.library'
-}
+apply plugin: 'com.android.library'
 apply from: "../../../buildCommon.gradle"
 
-
-
 android {
-    defaultConfig {
-        if (sample_runAlone.toBoolean()) {
-            applicationId "me.module.sample"
-            multiDexEnabled true
-        }
-    }
     sourceSets {
         main {
-            if (sample_runAlone.toBoolean()) {
-                manifest.srcFile 'src/main/debug/AndroidManifest.xml'
-            } else {
-                manifest.srcFile 'src/main/AndroidManifest.xml'
-                java {
-                    exclude 'debug/**'
-                }
-            }
             jniLibs.srcDirs = ['libs']
         }
     }
@@ -33,16 +13,15 @@ dependencies {
     api project(':lib:imageLoader')
     api project(':lib:network')
     api project(':lib:domain')
-    kapt Config.aRouter_compiler
     api project(':feature:sample:export')
+    implementation project(':feature:constraint:export')
     api Config.epic
     api Config.material
     api Config.viewpager2
     implementation 'com.google.android.gms:play-services-location:18.0.0'
+
     kapt Config.autoServiceAnnotations
-    if (sample_runAlone.toBoolean()) {
-        api project(':feature:mock')
-    }else {
-        api project(':feature:constraint:export')
-    }
+    kapt Config.aRouter_compiler
+    kapt Config.moshi_kotlin_codegen
+
 }

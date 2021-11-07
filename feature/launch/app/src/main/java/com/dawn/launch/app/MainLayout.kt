@@ -102,7 +102,7 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
     val location = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
         text = "FindLocation"
         onClick = {
-          sampleService?.startFindLocationActivity()
+            sampleService?.startFindLocationActivity()
 
         }
         this@MainLayout.addView(this, matchParent, 60.dp) {
@@ -125,7 +125,8 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
     val hexStatus = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
         text = "hexStatus"
         onClick = {
-            sampleService?.startHexStatusManagerActivity()
+            (context as MainActivity).login()
+            //  sampleService?.startHexStatusManagerActivity()
 
         }
         this@MainLayout.addView(this, matchParent, 60.dp) {
@@ -145,9 +146,9 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
         webView.let { it.layout(listItem.left, listItem.bottom + it.marginTop) }
         countdown.let { it.layout(listItem.left, webView.bottom + it.marginTop) }
         viewPager2.let { it.layout(listItem.left, countdown.bottom + it.marginTop) }
-        location.let{ it.layout(listItem.left, viewPager2.bottom + it.marginTop)}
-        search.let{ it.layout(listItem.left, location.bottom + it.marginTop)}
-        hexStatus.let{ it.layout(listItem.left, search.bottom + it.marginTop)}
+        location.let { it.layout(listItem.left, viewPager2.bottom + it.marginTop) }
+        search.let { it.layout(listItem.left, location.bottom + it.marginTop) }
+        hexStatus.let { it.layout(listItem.left, search.bottom + it.marginTop) }
     }
 }
 

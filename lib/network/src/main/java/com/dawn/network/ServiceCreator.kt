@@ -2,11 +2,13 @@ package com.dawn.network
 
 import com.alibaba.network.BuildConfig
 import com.dawn.network.interceptors.RetryInterceptor
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 /**
@@ -16,7 +18,7 @@ import java.util.concurrent.TimeUnit
  */
 object ServiceCreator {
     //var BASE_URL = "https://pokeapi.co/api/v2/"
-    var BASE_URL ="https://www.wanandroid.com/"
+    var BASE_URL = "https://www.wanandroid.com/"
     private const val TIME_OUT_SECONDS = 20
 
     //不同的项目或许需要不同的拦截器，自行扩展即可
@@ -31,7 +33,7 @@ object ServiceCreator {
         retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(getClient())
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create())
             .build()
         return retrofit
     }
@@ -45,6 +47,7 @@ object ServiceCreator {
 
     fun getClient(): OkHttpClient {
         val builder = OkHttpClient.Builder()
+            .callTimeout(TIME_OUT_SECONDS.toLong(), TimeUnit.SECONDS)
             .connectTimeout(TIME_OUT_SECONDS.toLong(), TimeUnit.SECONDS)
             .writeTimeout(TIME_OUT_SECONDS.toLong(), TimeUnit.SECONDS)
             .readTimeout(TIME_OUT_SECONDS.toLong(), TimeUnit.SECONDS)
@@ -57,7 +60,6 @@ object ServiceCreator {
         }
         return builder.build()
     }
-
 
 
     private fun getLogInterceptor(): Interceptor {

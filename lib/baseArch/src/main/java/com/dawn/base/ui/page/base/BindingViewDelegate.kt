@@ -3,6 +3,7 @@ package com.dawn.base.ui.page.base
 import android.content.Context
 import android.util.SparseArray
 import android.view.View
+import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import android.view.ViewParent
 import androidx.annotation.CallSuper
@@ -33,13 +34,13 @@ abstract class BindingViewDelegate<T, VB : ViewBinding> : ItemViewDelegate<T, Bi
             mViews.clear()
         }
 
-        fun <T : View?> getView(@IdRes viewId: Int): T? {
+        fun <V : View?> getView(@IdRes viewId: Int): V? {
             var view = mViews[viewId]
             if (view == null) {
                 view = itemView.findViewById(viewId)
                 mViews.put(viewId, view)
             }
-            return view as T?
+            return view as V?
         }
 
         fun getChildClickViewIds(): HashSet<Int?> {

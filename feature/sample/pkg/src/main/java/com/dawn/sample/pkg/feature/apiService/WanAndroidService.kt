@@ -3,7 +3,10 @@ package com.dawn.sample.pkg.feature.apiService
 import com.dawn.base.DataResult
 import com.dawn.sample.pkg.feature.data.entity.Article
 import com.dawn.sample.pkg.feature.data.entity.Banner
-import retrofit2.http.GET
+import com.dawn.sample.pkg.feature.data.entity.UserInfo
+import com.dawn.sample.pkg.feature.data.entity.WanResult
+import okhttp3.RequestBody
+import retrofit2.http.*
 
 /**
  * @author : LeeZhaoXing
@@ -17,5 +20,12 @@ interface WanAndroidService {
 
     @GET("/banner/json")
     suspend fun getBanners(): DataResult<List<Banner>>
+
+    @POST("/user/login")
+    @FormUrlEncoded
+    suspend fun login(
+        @Field("username") username: String,
+        @Field("password") password: String
+    ): WanResult<UserInfo>
 
 }

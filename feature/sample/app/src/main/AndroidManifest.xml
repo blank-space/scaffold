@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.dawn.sample.pkg">
+    package="com.sample.app">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -10,14 +10,14 @@
         android:allowBackup="false"
         android:icon="@drawable/base_icon_error"
         android:usesCleartextTraffic="true"
-        android:appComponentFactory="sample"
+        android:label="sample"
         android:theme="@style/lib_base_AppTheme"
-        android:name=".bebug.SampleRunAloneApp"
-        tools:replace="android:appComponentFactory,android:theme,android:allowBackup"
-      >
+        android:name=".SampleRunAloneApp"
+        tools:replace="android:label"
+        >
 
         <activity
-            android:name=".bebug.RunAloneActivity"
+            android:name=".RunAloneActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="user"
             android:exported="true"

@@ -4,9 +4,7 @@ import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.dawn.base.BaseApp
 import com.dawn.base.databinding.BaseEmptyActivityBinding
-import com.dawn.base.databinding.BaseEmptyLayoutBinding
-import com.dawn.base.ui.page.iface.ViewState
-import com.dawn.base.ui.page.iface.ViewStateWithMsg
+import com.dawn.base.log.L
 import com.dawn.base.ui.page.base.BaseActivity
 import com.dawn.base.utils.doOnMainThreadIdle
 import com.dawn.base.widget.webview.WebViewPool
@@ -26,12 +24,12 @@ class MainActivity : BaseActivity<MainViewModel, BaseEmptyActivityBinding>() {
     private val contentView by lazy { MainLayout(this, sampleService) }
 
     override fun initView() {
-        //计算冷启动
-        reportFullyDrawn()
         getLayoutDelegateImpl()?.delayToChangeLoadingViewToSuccess = 300
         doOnMainThreadIdle({
             WebViewPool.init(BaseApp.application)
         }, 10)
+
+
     }
 
     override fun initStatusBar() {}
@@ -43,4 +41,12 @@ class MainActivity : BaseActivity<MainViewModel, BaseEmptyActivityBinding>() {
     override fun isNeedInjectARouter() = true
 
 
+    fun login() {
+        mViewModel.login().observe(this) {
+            it.let {
+                L.e("登陆成功,$it")
+            }
+        }
+    }
 }
+
