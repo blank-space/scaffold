@@ -65,6 +65,8 @@ android {
     packagingOptions {
         exclude 'META-INF/library_release.kotlin_module'
         exclude "**/module-info.class"
+        exclude 'META-INF/export_debug.kotlin_module'
+        exclude'META-INF/pkg_debug.kotlin_module'
     }
 
     sourceSets {

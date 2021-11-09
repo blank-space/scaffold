@@ -4,7 +4,7 @@ class Config {
     static appName = 'scaffold'
 
     static compileSdkVersion = 31
-    static minSdkVersion = 24
+    static minSdkVersion = 23
     static targetSdkVersion = 29
     static versionCode = 1_0_0
     static versionName = '1.0.0'

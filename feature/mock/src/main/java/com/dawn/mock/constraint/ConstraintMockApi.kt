@@ -1,9 +1,9 @@
 package com.dawn.mock.constraint
 
 import android.content.Context
+import android.widget.Toast
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.bsnl.constraint.export.api.IConstraintService
-import com.dawn.base.utils.showToast
 import com.dawn.mock.MockPath
 
 /**
@@ -14,11 +14,16 @@ import com.dawn.mock.MockPath
 @Route(path = MockPath.S_SERVICE)
 class ConstraintMockApi :IConstraintService {
 
+    private var ctx :Context?=null
     override fun startBarrierActivity() {
-        "mock startBarrierActivity".showToast()
+        ctx?.let {
+            Toast.makeText(it,"startBarrierActivity",Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     override fun init(context: Context?) {
+        ctx = context
     }
 
 }

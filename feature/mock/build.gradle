@@ -3,7 +3,8 @@ apply from: '../../buildCommon.gradle'
 
 
 dependencies {
-    api project(':lib:baseArch')
+    api Config.coreKtx
+    api Config.appcompat
     kapt Config.aRouter_compiler
     api project(':feature:constraint:export')
 }

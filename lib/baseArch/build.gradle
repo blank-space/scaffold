@@ -1,5 +1,6 @@
 apply plugin: "com.android.library"
 apply from: "../../buildCommon.gradle"
+apply plugin: "maven"
 
 
 dependencies {
@@ -30,3 +31,29 @@ dependencies {
     kapt Config.aRouter_compiler
     kapt Config.autoServiceAnnotations
 }
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: 'https://packages.aliyun.com/maven/repository/2125540-release-WsZTHp/') {
+                authentication(
+                        userName: '6108a91cfa25fa3e24d17d9a',
+                        password: 'x4nnL7-BzUaH'
+                )
+            }
+            snapshotRepository(url: 'https://packages.aliyun.com/maven/repository/2125540-snapshot-CNbI0t/') {
+                authentication(
+                        userName: '6108a91cfa25fa3e24d17d9a',
+                        password: 'x4nnL7-BzUaH'
+                )
+            }
+            pom.version = '1.0.2'
+            pom.artifactId = 'baseArch'
+            pom.groupId = 'com.halvie.it'
+        }
+    }
+}
+
+
+

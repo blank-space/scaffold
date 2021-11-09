@@ -12,7 +12,7 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.2'
+        classpath 'com.android.tools.build:gradle:4.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
@@ -32,6 +32,20 @@ allprojects {
         mavenCentral()
         maven {
             url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            credentials {
+                username '6108a91cfa25fa3e24d17d9a'
+                password 'x4nnL7-BzUaH'
+            }
+            url 'https://packages.aliyun.com/maven/repository/2125540-release-WsZTHp/'
+        }
+        maven {
+            credentials {
+                username '6108a91cfa25fa3e24d17d9a'
+                password 'x4nnL7-BzUaH'
+            }
+            url 'https://packages.aliyun.com/maven/repository/2125540-snapshot-CNbI0t/'
         }
     }
 }
