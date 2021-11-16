@@ -10,14 +10,16 @@ android {
 }
 
 dependencies {
+    api project(':lib:baseArch')
     api project(':lib:imageLoader')
     api project(':lib:network')
     api project(':lib:domain')
     api project(':feature:sample:export')
-    implementation project(':feature:constraint:export')
     api Config.epic
     api Config.material
     api Config.viewpager2
+
+    implementation project(':feature:constraint:export')
     implementation 'com.google.android.gms:play-services-location:18.0.0'
 
     kapt Config.autoServiceAnnotations

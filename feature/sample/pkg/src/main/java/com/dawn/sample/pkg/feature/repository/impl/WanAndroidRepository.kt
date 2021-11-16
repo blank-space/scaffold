@@ -46,7 +46,7 @@ class WanAndroidRepository : IWanAndroidRepository {
                 //模拟下载，假设下载一个文件要 10秒、每 100 毫秒下载 1% 并通知 UI 层
                 if (downloadFile.process < 100) {
                     downloadFile.process += 1
-                    Log.d("@@", "下载进度 " + downloadFile.process.toString() + "%")
+                    //.d("@@", "下载进度 " + downloadFile.process.toString() + "%")
                 } else {
                     timer.cancel()
                 }

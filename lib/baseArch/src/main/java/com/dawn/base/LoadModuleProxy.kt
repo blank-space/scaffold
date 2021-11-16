@@ -1,6 +1,7 @@
 package com.dawn.base
 
 import android.app.Application
+import android.util.Log
 import com.dawn.base.utils.doOnMainThreadIdle
 import java.util.*
 
@@ -15,9 +16,12 @@ class LoadModuleProxy : BaseAppInit {
         ServiceLoader.load(BaseAppInit::class.java)
 
     override fun onInitSpeed(app: Application) {
+        var count = 0
         mLoader.forEach {
             it.onInitSpeed(app)
+            count++
         }
+        Log.d("@@","loader count:$count")
     }
 
     override fun onInitLow(app: Application) {
@@ -25,6 +29,6 @@ class LoadModuleProxy : BaseAppInit {
             mLoader.forEach {
                 it.onInitLow(app)
             }
-        },100)
+        },0)
     }
 }

@@ -3,9 +3,6 @@ package com.dawn.sample.pkg.feature.view.download
 import android.content.Context
 import android.content.Intent
 import com.dawn.base.ui.page.base.BaseActivity
-import com.dawn.base.ui.page.iface.ViewState
-import com.dawn.base.ui.page.iface.ViewStateWithMsg
-import com.dawn.base.utils.GlobalAsyncHandler
 import com.dawn.base.utils.getApplicationScopeViewModel
 import com.dawn.base.utils.onClick
 import com.dawn.base.utils.startActivity

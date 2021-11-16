@@ -26,7 +26,7 @@ import com.dawn.sample.pkg.feature.viewmodel.TestViewModel
 class FirstFragment : BaseFragment<TestViewModel, FeatureSamplePkgFragmentFirstBinding>() {
     private var testEventObserver: Observer<Int>? = null
     private val event: ShareViewModel by lazy {
-        mActivity?.get()?.getApplicationScopeViewModel()!!
+        getApplicationScopeViewModel()
     }
     private val actionLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -51,7 +51,7 @@ class FirstFragment : BaseFragment<TestViewModel, FeatureSamplePkgFragmentFirstB
     override fun initData() {
         setState(ViewStateWithMsg(state = ViewState.STATE_LOADING))
         event.countLiveData.observeForever(Observer<Int> {
-            L.d("event value:$it")
+            L.d("fragment 接受数据:$it")
         }.apply {
             testEventObserver = this
         })

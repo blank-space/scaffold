@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dawn.base.BaseApp
+import com.dawn.base.contentProvider.MyContentProvider
 
 /**
  * @author : LeeZhaoXing
@@ -38,8 +39,8 @@ inline fun <reified T : ViewModel> FragmentActivity.getVm(): T {
 }
 
 
-inline fun <reified T : ViewModel> Activity.getApplicationScopeViewModel(): T {
-    return ViewModelProvider(application as BaseApp).get(T::class.java)
+inline fun <reified T : ViewModel> getApplicationScopeViewModel(): T {
+    return ViewModelProvider(MyContentProvider.instance).get(T::class.java)
 }
 
 fun Activity.finishWithResult(vararg pairs: Pair<String, *>) {

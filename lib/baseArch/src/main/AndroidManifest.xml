@@ -3,4 +3,11 @@
     package="com.dawn.base">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <application>
+        <provider
+            android:name=".contentProvider.MyContentProvider"
+            android:authorities="${applicationId}.MyContentProvider"
+            android:exported="false"
+            android:multiprocess="true" />
+    </application>
 </manifest>
