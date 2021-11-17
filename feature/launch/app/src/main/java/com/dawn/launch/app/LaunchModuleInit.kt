@@ -18,6 +18,9 @@ class LaunchModuleInit : BaseAppInit {
     }
 
     override fun onInitLow(app: Application) {
+
         Log.d("@@","LaunchModuleInit#onInitLow")
+
+
     }
 }
