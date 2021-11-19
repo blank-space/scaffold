@@ -5,6 +5,7 @@ import com.bsnl.constraint.export.api.IConstraintService
 import com.dawn.base.ui.page.base.BaseActivity
 import com.dawn.base.utils.onClick
 import com.dawn.base.viewmodel.EmptyViewModel
+import com.dawn.sample.pkg.feature.view.FirstActivity
 import com.sample.app.databinding.AppActivityRunAloneBinding
 
 /**
@@ -20,7 +21,8 @@ class RunAloneActivity : BaseActivity<EmptyViewModel, AppActivityRunAloneBinding
 
     override fun initView() {
         binding.tv.onClick ={
-            sampleService?.startBarrierActivity()
+            //sampleService?.startBarrierActivity()
+            FirstActivity.actionStart(mContext)
         }
     }
 

@@ -1,6 +1,9 @@
 package com.dawn.sample.pkg.feature.view
 
 import android.content.Context
+import androidx.activity.viewModels
+import androidx.lifecycle.SavedStateHandle
+import com.dawn.base.log.L
 import com.dawn.base.utils.GlobalAsyncHandler
 import com.dawn.base.ui.page.iface.ViewState
 import com.dawn.base.ui.page.iface.ViewStateWithMsg
@@ -9,15 +12,20 @@ import com.dawn.base.utils.startActivity
 import com.dawn.sample.pkg.R
 import com.dawn.sample.pkg.databinding.FeatureSamplePkgActivityMainBinding
 import com.dawn.sample.pkg.feature.viewmodel.TestViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/10/26
  * @desc   :
  */
+@AndroidEntryPoint
 class FirstActivity : BaseActivity<TestViewModel,FeatureSamplePkgActivityMainBinding>() {
+    //@Inject lateinit var savedStateHandle: SavedStateHandle
     private var isShow = true
     private lateinit var firstFragment: FirstFragment
+    private val vm : TestViewModel by viewModels()
 
     companion object {
         fun actionStart(context: Context) {
@@ -28,12 +36,15 @@ class FirstActivity : BaseActivity<TestViewModel,FeatureSamplePkgActivityMainBin
 
     override fun initView() {
         firstFragment = FirstFragment()
+        //L.e("save:${mViewModel.plantId}")
         supportFragmentManager.beginTransaction().apply {
             add(R.id.container, firstFragment, "first")
             commit()
         }
-
     }
+
+
+
 
     override fun initStatusBar() {
         //重写该方法，非纯色沉浸式

@@ -4,7 +4,7 @@
  * @desc   :
  */
 object Config {
-    const val applicationId = "com.halvie.it"
+    const val applicationId = "com.scaffold.it"
     const val appName = "GeelyMall"
 
     const val compileSdkVersion = 31

@@ -7,7 +7,7 @@ object Versions {
     const val retrofit = "2.9.0"
     const val okhttpLogging = "3.9.0"
     const val appcompat = "1.2.0"
-    const val coreKtx = "1.6.0"
+    const val coreKtx = "1.7.0"
     const val constraintlayout = "2.0.1"
     const val paging = "3.0.0-alpha02"
     const val timber = "4.7.1"

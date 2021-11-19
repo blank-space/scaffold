@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply from: "../../../buildCommon.gradle"
+apply  plugin: "dagger.hilt.android.plugin"
 
 android {
     sourceSets {
@@ -26,4 +27,10 @@ dependencies {
     kapt Config.aRouter_compiler
     kapt Config.moshi_kotlin_codegen
 
+    implementation 'com.google.dagger:hilt-android:2.40.1'
+    kapt 'com.google.dagger:hilt-android-compiler:2.40.1'
+
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.4.0'
+    implementation 'androidx.activity:activity-ktx:1.4.0'
+    implementation 'androidx.fragment:fragment-ktx:1.4.0'
 }

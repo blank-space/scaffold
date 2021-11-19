@@ -17,12 +17,14 @@ import com.dawn.sample.pkg.databinding.FeatureSamplePkgFragmentFirstBinding
 import com.dawn.sample.pkg.feature.domain.message.ShareViewModel
 import com.dawn.sample.pkg.feature.view.download.DownLoadActivity
 import com.dawn.sample.pkg.feature.viewmodel.TestViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/10/26
  * @desc   :
  */
+@AndroidEntryPoint
 class FirstFragment : BaseFragment<TestViewModel, FeatureSamplePkgFragmentFirstBinding>() {
     private var testEventObserver: Observer<Int>? = null
     private val event: ShareViewModel by lazy {
