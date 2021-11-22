@@ -1,8 +1,12 @@
 package com.dawn.sample.pkg.feature.view
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.bsnl.constraint.export.api.IConstraintService
@@ -10,12 +14,17 @@ import com.dawn.base.log.L
 import com.dawn.base.ui.page.iface.ViewState
 import com.dawn.base.ui.page.iface.ViewStateWithMsg
 import com.dawn.base.ui.page.base.BaseFragment
+import com.dawn.base.utils.arguments
 import com.dawn.base.utils.getApplicationScopeViewModel
 import com.dawn.base.utils.onClick
+import com.dawn.base.utils.withArguments
 import com.dawn.sample.export.api.ISampleService
 import com.dawn.sample.pkg.databinding.FeatureSamplePkgFragmentFirstBinding
+import com.dawn.sample.pkg.feature.constant.BUNDLE_INDEX
+import com.dawn.sample.pkg.feature.constant.BUNDLE_TITLE
 import com.dawn.sample.pkg.feature.domain.message.ShareViewModel
 import com.dawn.sample.pkg.feature.view.download.DownLoadActivity
+import com.dawn.sample.pkg.feature.view.viewpager.TabFragment
 import com.dawn.sample.pkg.feature.viewmodel.TestViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,7 +49,8 @@ class FirstFragment : BaseFragment<TestViewModel, FeatureSamplePkgFragmentFirstB
     @Autowired
     @JvmField
     var sampleService: IConstraintService? = null
-
+    //共享Activity的ViewModel：activityViewModels
+    private val vm : TestViewModel by activityViewModels()
 
     /**
      * 在fragment中，LifecycleOwner不能使用this,而是viewLifecycleOwner。
@@ -59,12 +69,29 @@ class FirstFragment : BaseFragment<TestViewModel, FeatureSamplePkgFragmentFirstB
         })
     }
 
-    override fun initView(view: View) {}
+    //将args传到savedStateHandle。 注：单独使用时生效，与activity共享viewModel时无效
+   /* override fun setArguments(args: Bundle?) {
+        if (args != null) {
+            super.setArguments(Bundle(args))
+        } else {
+            super.setArguments(null)
+        }
+    }*/
+
+    override fun initViewModel(): TestViewModel {
+        return vm
+    }
+
+    override fun initView(view: View) {
+        binding.tv.text = "count:${mViewModel.getCount()}"
+    }
 
     override fun initListener() {
         super.initListener()
         binding.tv.onClick = {
-            context?.let { actionLauncher.launch(Intent(it, DownLoadActivity::class.java)) }
+            mViewModel.add()
+            binding.tv.text = "count:${mViewModel.getCount()}"
+           // context?.let { actionLauncher.launch(Intent(it, DownLoadActivity::class.java)) }
         }
         binding.tvVisit.onClick = {
             sampleService?.startBarrierActivity()
@@ -79,4 +106,11 @@ class FirstFragment : BaseFragment<TestViewModel, FeatureSamplePkgFragmentFirstB
     }
 
     override fun isNeedInjectARouter() = true
+
+    companion object {
+        fun newInstance(title: String, pageIndex: Int) = FirstFragment().withArguments(
+            BUNDLE_TITLE to title,
+            BUNDLE_INDEX to pageIndex
+        )
+    }
 }

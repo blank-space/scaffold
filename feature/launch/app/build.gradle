@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply from: "../../../buildCommon.gradle"
 //apply plugin: 'com.alibaba.arouter'
+apply  plugin: "dagger.hilt.android.plugin"
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -13,5 +14,6 @@ dependencies {
     kapt Config.autoServiceAnnotations
     kapt Config.aRouter_compiler
 
-
+    implementation  Config.hilt
+    kapt  Config.hiltCompile
 }

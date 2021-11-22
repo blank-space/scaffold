@@ -76,4 +76,6 @@ object Config {
     const val dokitx_no_op = "io.github.didi.dokit:dokitx-no-op:${Versions.dokit}"
     const val appStartup = "com.github.Caij:DGAppStartup:1.0.2"
     const val jsbridge = "com.github.lzyzsd:jsbridge:${Versions.jsbridge}"
+    const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
+    const val hiltCompile = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
 }

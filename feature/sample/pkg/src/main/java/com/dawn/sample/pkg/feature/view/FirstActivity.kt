@@ -1,53 +1,53 @@
 package com.dawn.sample.pkg.feature.view
 
 import android.content.Context
+import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
-import androidx.lifecycle.SavedStateHandle
+import androidx.fragment.app.viewModels
 import com.dawn.base.log.L
-import com.dawn.base.utils.GlobalAsyncHandler
-import com.dawn.base.ui.page.iface.ViewState
-import com.dawn.base.ui.page.iface.ViewStateWithMsg
 import com.dawn.base.ui.page.base.BaseActivity
 import com.dawn.base.utils.startActivity
+import com.dawn.base.viewmodel.EmptyViewModel
 import com.dawn.sample.pkg.R
 import com.dawn.sample.pkg.databinding.FeatureSamplePkgActivityMainBinding
+import com.dawn.sample.pkg.feature.constant.BUNDLE_TITLE
 import com.dawn.sample.pkg.feature.viewmodel.TestViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/10/26
  * @desc   :
+ * @note   : 使用SavedStateHandle可以在生命周期重建的时候保存数据，试验activity和fragment使用不同的viewModel,其中fragment
+ * 使用Fragment Scope,无法达到预期结果。 只有让activity和fragment共享同个viewModel才行。
  */
 @AndroidEntryPoint
-class FirstActivity : BaseActivity<TestViewModel,FeatureSamplePkgActivityMainBinding>() {
-    //@Inject lateinit var savedStateHandle: SavedStateHandle
+class FirstActivity : BaseActivity<TestViewModel, FeatureSamplePkgActivityMainBinding>() {
     private var isShow = true
     private lateinit var firstFragment: FirstFragment
     private val vm : TestViewModel by viewModels()
-
     companion object {
         fun actionStart(context: Context) {
             startActivity<FirstActivity>(context)
         }
     }
 
-
     override fun initView() {
-        firstFragment = FirstFragment()
-        //L.e("save:${mViewModel.plantId}")
+        firstFragment = FirstFragment.newInstance("FirstFragment",-1) as FirstFragment
+        Log.d("@@","firstFragment:${firstFragment.hashCode()}")
         supportFragmentManager.beginTransaction().apply {
             add(R.id.container, firstFragment, "first")
             commit()
         }
     }
 
-
-
-
     override fun initStatusBar() {
         //重写该方法，非纯色沉浸式
+    }
+
+    override fun initViewModel(): TestViewModel {
+        return vm
     }
 
 

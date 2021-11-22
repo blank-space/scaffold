@@ -64,7 +64,8 @@ subprojects {
             }
             if (details.requested.group == 'androidx.lifecycle') {
                 if(details.requested.name =='lifecycle-livedata' || details.requested.name =='lifecycle-common'
-                        || details.requested.name =='lifecycle-runtime')
+                        || details.requested.name =='lifecycle-runtime'
+                        || details.requested.name =='lifecycle-viewmodel')
                 details.useVersion "2.4.0"
             }
             if (details.requested.group == 'androidx.appcompat') {

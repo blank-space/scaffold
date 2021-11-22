@@ -52,4 +52,5 @@ object Versions {
     const val moshi_kotlin="1.12.0"
     const val dokit ="3.5.0"
     const val jsbridge = "1.0.4"
+    const val hilt="2.40.1"
 }

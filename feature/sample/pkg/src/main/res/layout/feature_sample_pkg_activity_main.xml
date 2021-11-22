@@ -18,9 +18,10 @@
     <TextView
         android:id="@+id/tv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="200dp"
         android:gravity="center"
         android:text="隐藏"
+        android:layout_gravity="bottom"
         android:textColor="#000"
         android:textSize="20sp" />
 </FrameLayout>

@@ -196,7 +196,7 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     }
 
     /*利用反射获取类实例*/
-    private fun initViewModel(): VM {
+    open fun initViewModel(): VM {
         val persistentClass =
             (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<VM>
         mViewModel = ViewModelProvider(

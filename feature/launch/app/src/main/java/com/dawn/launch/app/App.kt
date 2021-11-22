@@ -18,17 +18,15 @@ import com.caij.app.startup.DGAppStartup
 import com.caij.app.startup.OnProjectListener
 import com.dawn.base.ActivityLifecycleCallback
 import com.dawn.base.BaseApp
+import com.dawn.base.BuildConfig
 import com.dawn.base.log.L
-import com.dawn.base.ui.callback.EmptyLayoutCallback
-import com.dawn.base.ui.callback.ErrorLayoutCallback
 import com.dawn.base.utils.GlobalHandler
 import com.dawn.launch.app.task.InitLogTask
 import com.dawn.launch.app.task.InitMVVMTask
 import com.dawn.launch.app.task.MonitorTaskListener
 import com.dawn.sample.pkg.feature.hook.BitmapsHook
 import com.dawn.sample.pkg.feature.hook.DrawableHook
-import com.kingja.loadsir.callback.ProgressCallback
-import com.kingja.loadsir.core.LoadSir
+import dagger.hilt.android.HiltAndroidApp
 import de.robv.android.xposed.DexposedBridge
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
@@ -38,7 +36,7 @@ import okhttp3.OkHttpClient
  * @date   : 2020/10/21
  * @desc   :
  */
-
+@HiltAndroidApp
 class App : BaseApp(), ImageLoaderFactory {
 
     override fun onCreate() {

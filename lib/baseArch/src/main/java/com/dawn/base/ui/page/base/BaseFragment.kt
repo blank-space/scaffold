@@ -227,7 +227,7 @@ abstract class BaseFragment<T : BaseViewModel, VB : ViewBinding> : Fragment(), I
         return binding.root
     }
 
-    private fun initViewModel(): T {
+    open fun initViewModel(): T {
         val persistentClass =
             (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<T>
         mViewModel = ViewModelProvider(
