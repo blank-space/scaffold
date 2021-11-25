@@ -1,7 +1,10 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
+    ext {
+        compose_version = '1.0.1'
+    }
     ext.kotlin_version = "1.5.31"
-    ext.plugin_version="0.2.7"
+    ext.plugin_version = "0.2.7"
     ext.arouter_register_version = '1.0.2'
 
     repositories {
@@ -59,28 +62,33 @@ subprojects {
             if (details.requested.group == 'androidx.fragment') {
                 details.useVersion "1.4.0"
             }
-            if (details.requested.group == 'androidx.core' && details.requested.name=='core') {
+            if (details.requested.group == 'androidx.activity') {
+                if (details.requested.name == 'activity-ktx' || details.requested.name == 'activity')
+                    details.useVersion "1.4.0"
+            }
+            if (details.requested.group == 'androidx.core' && details.requested.name == 'core') {
                 details.useVersion "1.7.0"
             }
             if (details.requested.group == 'androidx.lifecycle') {
-                if(details.requested.name =='lifecycle-livedata' || details.requested.name =='lifecycle-common'
-                        || details.requested.name =='lifecycle-runtime'
-                        || details.requested.name =='lifecycle-viewmodel')
-                details.useVersion "2.4.0"
+                if (details.requested.name == 'lifecycle-livedata' || details.requested.name == 'lifecycle-common'
+                        || details.requested.name == 'lifecycle-runtime'
+                        || details.requested.name == 'lifecycle-viewmodel'
+                        || details.requested.name == 'lifecycle-viewmodel-ktx')
+                    details.useVersion "2.4.0"
             }
             if (details.requested.group == 'androidx.appcompat') {
                 details.useVersion "1.2.0"
             }
-            if (details.requested.group == 'androidx.core' && details.requested.name=='core-ktx') {
+            if (details.requested.group == 'androidx.core' && details.requested.name == 'core-ktx') {
                 details.useVersion "1.7.0"
             }
-            if (details.requested.group == 'androidx.arch.core' && details.requested.name=='core-common') {
+            if (details.requested.group == 'androidx.arch.core' && details.requested.name == 'core-common') {
                 details.useVersion "2.1.0"
             }
-            if (details.requested.group == 'androidx.annotation' && details.requested.name=='annotation') {
+            if (details.requested.group == 'androidx.annotation' && details.requested.name == 'annotation') {
                 details.useVersion "1.2.0"
             }
-            if (details.requested.group == 'androidx.collection' && details.requested.name=='collection') {
+            if (details.requested.group == 'androidx.collection' && details.requested.name == 'collection') {
                 details.useVersion "1.1.0"
             }
 

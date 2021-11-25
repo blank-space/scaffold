@@ -10,3 +10,6 @@ include ':feature:constraint:pkg'
 include ':feature:constraint:export'
 include ':feature:mock'
 include ':feature:sample:app'
+include ':feature:compose:pkg'
+
+include ':feature:compose:app'

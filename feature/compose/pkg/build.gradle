@@ -1,0 +1,10 @@
+apply plugin: 'com.android.library'
+apply from: "../../../buildCommon.gradle"
+
+
+dependencies {
+    api project(':feature:sample:pkg')
+    api project(':feature:mock')
+    kapt Config.aRouter_compiler
+
+}
