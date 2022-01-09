@@ -103,11 +103,7 @@ class WrapLayoutDelegateImpl(
                     }, Convertor<ViewState> { v ->
                         val resultCode: Class<out Callback?> = when (v) {
                             ViewState.STATE_LOADING -> {
-                                GlobalAsyncHandler.postDelayed(delayToChangeLoadingViewToSuccess) {
-                                    if (mCurrentState == ViewState.STATE_LOADING) {
-                                        loadService?.showWithConvertor(ViewState.STATE_COMPLETED)
-                                    }
-                                }
+
                                 ProgressCallback::class.java
                             }
                             ViewState.STATE_ERROR -> ErrorLayoutCallback::class.java

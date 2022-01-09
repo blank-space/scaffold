@@ -46,7 +46,7 @@ abstract class BaseListActivity<VM : BaseViewModel,VB : ViewBinding> : BaseActiv
         })
         registerItem(mListViewDelegate?.getAdapter())
         mListViewDelegate?.initRecyclerView(rv)
-        mListViewDelegate?.setupRefreshLayout(getLayoutDelegateImpl()?.getRefreshLayout())
+        mListViewDelegate?.setupRefreshLayout(getRefreshLayout())
     }
 
     fun getRecyclerView(): RecyclerView? = mListViewDelegate?.getRecyclerView()

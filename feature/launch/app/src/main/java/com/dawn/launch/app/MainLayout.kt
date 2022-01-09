@@ -125,9 +125,7 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
     val hexStatus = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
         text = "hexStatus"
         onClick = {
-            (context as MainActivity).login()
-            //  sampleService?.startHexStatusManagerActivity()
-
+            sampleService?.startHexStatusManagerActivity()
         }
         this@MainLayout.addView(this, matchParent, 60.dp) {
             topMargin = 10.dp

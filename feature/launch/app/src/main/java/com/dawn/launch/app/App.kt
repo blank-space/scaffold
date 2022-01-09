@@ -18,7 +18,6 @@ import com.caij.app.startup.DGAppStartup
 import com.caij.app.startup.OnProjectListener
 import com.dawn.base.ActivityLifecycleCallback
 import com.dawn.base.BaseApp
-import com.dawn.base.BuildConfig
 import com.dawn.base.log.L
 import com.dawn.base.utils.GlobalHandler
 import com.dawn.launch.app.task.InitLogTask
@@ -132,7 +131,7 @@ class App : BaseApp(), ImageLoaderFactory {
             }
             .crossfade(true)
             .apply {
-                if (com.dawn.base.BuildConfig.DEBUG) {
+                if (BuildConfig.DEBUG) {
                     logger(DebugLogger(Log.VERBOSE))
                 }
             }

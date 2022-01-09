@@ -28,6 +28,7 @@ import com.dawn.sample.pkg.feature.view.FirstActivity
 private val MARGIN = 18.dp.toInt()
 class ArticleLayout(context: Context,attrs: AttributeSet? = null) : CustomLayout(context,attrs) {
 
+
     init {
         onClick = {
             FirstActivity.actionStart(context)

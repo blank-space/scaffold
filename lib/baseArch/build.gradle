@@ -48,7 +48,7 @@ uploadArchives {
                         password: 'x4nnL7-BzUaH'
                 )
             }
-            pom.version = '1.0.2'
+            pom.version = '1.0.3'
             pom.artifactId = 'baseArch'
             pom.groupId = 'com.halvie.it'
         }

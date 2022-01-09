@@ -22,7 +22,7 @@ abstract class BaseViewModel : ViewModel() {
     /**
      * 切换页面状态
      */
-    protected val _viewState = MutableLiveData(ViewStateWithMsg(msg = null, state = null))
+    protected val _viewState = MutableLiveData(ViewStateWithMsg(msg = null, state = ViewState.STATE_COMPLETED))
     val viewState: LiveData<ViewStateWithMsg> = _viewState
 
     fun <T> fetchData(

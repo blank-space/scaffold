@@ -5,8 +5,12 @@ import com.compose.app.data.*
 
 
 class ManageShowcaseViewModel : ViewModel() {
+    private val products = ArrayList<IFeedItem>()
+
+    fun itemSize() = products.size
+
     fun produceItems(): List<IFeedItem> {
-        val products = ArrayList<IFeedItem>()
+
         products.add(
             BannerList(
                 list = listOf(
