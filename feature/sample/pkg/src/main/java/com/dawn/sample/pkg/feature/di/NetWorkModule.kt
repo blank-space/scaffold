@@ -1,7 +1,7 @@
 package com.dawn.sample.pkg.feature.di
 
-import com.dawn.network.ServiceCreator
-import com.dawn.sample.pkg.feature.repository.PokemonNetwork
+import com.dawn.sample.pkg.feature.repository.impl.WanAndroidRepository
+import com.halvie.network.base.BaseNetworkApi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
@@ -14,19 +14,13 @@ object NetWorkModule {
 
 
     fun provideOkHttpClient(): OkHttpClient {
-        return com.dawn.network.ServiceCreator.getClient()
+        return WanAndroidRepository.getCustomOkHttpClient()
     }
 
 
 
     fun provideRetrofit(): Retrofit {
-        return com.dawn.network.ServiceCreator.initRetrofit()
+        return WanAndroidRepository.getRetrofit()
     }
-
-
-    fun providePokemonNetwork(): PokemonNetwork {
-        return PokemonNetwork
-    }
-
 
 }

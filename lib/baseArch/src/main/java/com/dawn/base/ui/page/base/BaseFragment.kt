@@ -20,8 +20,12 @@ import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.launcher.ARouter
 import com.dawn.base.BaseApp
 import com.dawn.base.R
+import com.dawn.base.contentProvider.BaseArchContentProvider
+import com.dawn.base.log.L
+import com.dawn.base.ui.callback.CallbackConfig
 import com.dawn.base.ui.callback.ErrorLayoutCallback
 import com.dawn.base.ui.page.delegate.WrapLayoutDelegateImpl
+import com.dawn.base.ui.page.delegate.iface.PageType
 import com.dawn.base.ui.page.iface.*
 import com.dawn.base.utils.inflateBindingWithGeneric
 import com.dawn.base.viewmodel.base.BaseViewModel
@@ -135,12 +139,18 @@ abstract class BaseFragment<T : BaseViewModel, VB : ViewBinding> : Fragment(), I
         layoutDelegateImpl = WrapLayoutDelegateImpl(
             mFragment = this,
             childView = getLayout(),
-            mRefreshType = getRefreshType(),
+            pageType = getPageType(),
             viewStateChangeListener = pageStateChangeListener,
-            loadService = mLoadService
+            loadService = mLoadService,
+            callbackConfig = getCallbackConfig()
         )
         return layoutDelegateImpl?.setup()
     }
+
+    protected open fun getCallbackConfig(): CallbackConfig? {
+        return null
+    }
+
 
     protected open fun initListViewDelegate(refreshLayout: SmartRefreshLayout) {}
 
@@ -153,19 +163,6 @@ abstract class BaseFragment<T : BaseViewModel, VB : ViewBinding> : Fragment(), I
         smartRefreshLayout?.let { initListViewDelegate(it) }
         initListener()
         initData()
-        if (!isNeedTransition()) return
-        //先隐藏
-        //view.isInvisible = true
-        //实现流畅的转场动画
-        /*  doOnMainThreadIdle({
-              TransitionManager.beginDelayedTransition(
-                  view.parent as ViewGroup,
-                  Slide(Gravity.BOTTOM).apply {
-                      addTarget(view)
-                  })
-              //动画执行结束后显示view
-              view.isInvisible = false
-          }, 100)*/
     }
 
     /**
@@ -181,11 +178,11 @@ abstract class BaseFragment<T : BaseViewModel, VB : ViewBinding> : Fragment(), I
     }
 
     /** 如果有需要ARouter能力的，复写该方法 */
-    open fun isNeedInjectARouter(): Boolean = false
+    open fun isNeedInjectARouter(): Boolean = true
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun initStatusBarColor(colorId: Int) {
-        if (colorId != Color.TRANSPARENT) mActivity?.get()?.window?.setStatusBarColor(colorId)
+        if (colorId != Color.TRANSPARENT) mActivity?.get()?.window?.statusBarColor = colorId
     }
 
     /**
@@ -195,6 +192,13 @@ abstract class BaseFragment<T : BaseViewModel, VB : ViewBinding> : Fragment(), I
 
     protected open fun getRefreshType(): Int {
         return RefreshType.NONE
+    }
+
+    /**
+     * 区分列表页和一般页面
+     */
+    protected open fun getPageType(): Int {
+        return PageType.NORMAL
     }
 
     fun getLayoutDelegateImpl() = layoutDelegateImpl
@@ -219,9 +223,7 @@ abstract class BaseFragment<T : BaseViewModel, VB : ViewBinding> : Fragment(), I
 
     abstract fun initData()
 
-    protected open fun getIntentData() {
-
-    }
+    protected open fun getIntentData() {}
 
     fun getLayout(): View {
         return binding.root
@@ -231,7 +233,7 @@ abstract class BaseFragment<T : BaseViewModel, VB : ViewBinding> : Fragment(), I
         val persistentClass =
             (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<T>
         mViewModel = ViewModelProvider(
-            this, ViewModelProvider.AndroidViewModelFactory.getInstance(BaseApp.application)
+            this, ViewModelProvider.AndroidViewModelFactory.getInstance(BaseArchContentProvider.app)
         ).get(persistentClass)
         return mViewModel
     }
@@ -239,23 +241,24 @@ abstract class BaseFragment<T : BaseViewModel, VB : ViewBinding> : Fragment(), I
 
     protected open fun initListener() {
         mViewModel.viewState.observe(viewLifecycleOwner, {
-            it.let { it1 -> setState(it1) }
+            dispatchPageState(it)
         })
     }
 
     override fun setState(state: ViewStateWithMsg) {
+        mViewModel.viewState.postValue(state)
+    }
+
+    private fun dispatchPageState(state: ViewStateWithMsg) {
         state.state?.let {
+            L.d("fragment  state:${state.state}")
             layoutDelegateImpl?.showState(it, state.msg)
             modifyTheCallbackDynamically(state.msg)
         }
     }
 
     override fun modifyTheCallbackDynamically(msg: String?) {
-        getLayoutDelegateImpl()?.loadService?.setCallBack(ErrorLayoutCallback::class.java) { _, view ->
-            msg?.let {
-                view?.findViewById<TextView>(R.id.tv_msg)?.text = it
-            }
-        }
+
     }
 
     protected open fun getRefreshLayout(): SmartRefreshLayout? {
@@ -266,10 +269,5 @@ abstract class BaseFragment<T : BaseViewModel, VB : ViewBinding> : Fragment(), I
         super.onDestroyView()
         pageStateChangeListener = null
     }
-
-    /** 如果[isUseDefaultLoadService]返回false，必须重写该方法去实例化mLoadService，且要使用[LoadSir#register( target,  onReloadListener,convertor)]这个方法去注册*/
-    open fun setupLoadSir() {}
-
-    open fun isUseDefaultLoadService() = true
 
 }

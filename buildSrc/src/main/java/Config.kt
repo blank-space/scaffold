@@ -71,6 +71,7 @@ object Config {
     const val moshi_kotlin = "com.squareup.moshi:moshi-kotlin:${Versions.moshi_kotlin}"
     const val moshi_kotlin_codegen =
         "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi_kotlin}"
+    const val moshi_adapter = "com.squareup.moshi:moshi-adapters:${Versions.moshi_kotlin}"
     const val convert_moshi = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
     const val dokitx = "io.github.didi.dokit:dokitx:${Versions.dokit}"
     const val dokitx_no_op = "io.github.didi.dokit:dokitx-no-op:${Versions.dokit}"

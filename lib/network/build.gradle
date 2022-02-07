@@ -8,5 +8,5 @@ dependencies {
     api Config.convert_moshi
     api Config.moshi_kotlin
     kapt Config.moshi_kotlin_codegen
-    //api Config.convert_gson
+    api Config.moshi_adapter
 }

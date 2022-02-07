@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.dawn.base.log.L
 import com.dawn.base.viewmodel.base.BaseViewModel
 import com.dawn.sample.pkg.feature.data.entity.Article
-import com.dawn.sample.pkg.feature.repository.PokemonNetwork
 import com.dawn.sample.pkg.feature.repository.impl.PokeRepositoryImpl
 import com.dawn.sample.pkg.feature.repository.impl.WanAndroidRepository
 import com.kunminx.architecture.ui.callback.ProtectedUnPeekLiveData
@@ -33,14 +32,14 @@ class SearchViewModel : BaseViewModel() {
 
     init {
         viewModelScope.launch {
-            WanAndroidRepository().getTopArticles().collect {
+            WanAndroidRepository.getTopArticles().collect {
                 _uiState.value = it.data
             }
         }
     }
 
     private val repository by lazy {
-        WanAndroidRepository()
+        WanAndroidRepository
     }
 
 
@@ -51,7 +50,7 @@ class SearchViewModel : BaseViewModel() {
             return@filter !result.isEmpty()
         }
         .flatMapLatest { // 只显示最后一次搜索的结果，忽略之前的请求
-            PokeRepositoryImpl(PokemonNetwork).mockSearch()
+            PokeRepositoryImpl.mockSearch()
         }
         .catch { throwable ->
             //  异常捕获

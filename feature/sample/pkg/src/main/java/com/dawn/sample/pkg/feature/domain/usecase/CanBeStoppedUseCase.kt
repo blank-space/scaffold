@@ -1,10 +1,8 @@
 package com.dawn.sample.pkg.feature.domain.usecase
 
-import android.app.Activity
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.dawn.base.DataResult
-import com.dawn.base.log.L
 import com.dawn.domain.usecase.UseCase
 import com.dawn.sample.pkg.feature.data.entity.DownloadFile
 import com.dawn.sample.pkg.feature.repository.impl.WanAndroidRepository
@@ -18,7 +16,7 @@ class CanBeStoppedUseCase : UseCase<CanBeStoppedUseCase.InnerRequestValue, CanBe
     ,DefaultLifecycleObserver {
 
     private val downloadFile = DownloadFile()
-    private val repository = WanAndroidRepository()
+    private val repository = WanAndroidRepository
 
     class InnerRequestValue : RequestValues {
 

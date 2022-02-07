@@ -39,7 +39,7 @@ interface IListViewDelegate {
 
     fun getAdapter(): MultiTypeAdapter
 
-    fun getRefreshType(): Int
+
 
     fun initData()
 

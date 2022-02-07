@@ -2,6 +2,7 @@ package com.dawn.base.ui.page.base
 
 import android.view.View
 import androidx.viewbinding.ViewBinding
+import com.dawn.base.ui.page.delegate.iface.PageType
 import com.dawn.base.viewmodel.base.BaseListViewModel
 
 
@@ -30,6 +31,9 @@ abstract class LazyListFragment<T : BaseListViewModel, VB : ViewBinding> : BaseL
         }
     }
 
+    override fun getPageType(): Int {
+        return PageType.LIST
+    }
 
     protected open fun lazyInitListener() {}
 

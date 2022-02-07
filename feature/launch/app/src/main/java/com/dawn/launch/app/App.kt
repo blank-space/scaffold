@@ -36,35 +36,14 @@ import okhttp3.OkHttpClient
  * @desc   :
  */
 @HiltAndroidApp
-class App : BaseApp(), ImageLoaderFactory {
+class App : BaseApp() {
 
     override fun onCreate() {
         super.onCreate()
         initTasks()
         registerActivityLifecycleCallbacks(ActivityLifecycleCallback())
-        initHookMethods()
         loop()
     }
-
-    private fun initHookMethods() {
-        //不用于线上，避免出现兼容问题
-        if (BuildConfig.DEBUG) {
-            DexposedBridge.findAndHookMethod(
-                ImageView::class.java,
-                "setImageBitmap",
-                Bitmap::class.java,
-                BitmapsHook()
-            )
-            DexposedBridge.findAndHookMethod(
-                ImageView::class.java,
-                "setImageDrawable",
-                Drawable::class.java,
-                DrawableHook()
-            )
-        }
-    }
-
-
 
     private fun initTasks() {
         val config = Config()
@@ -109,32 +88,5 @@ class App : BaseApp(), ImageLoaderFactory {
 
 
 
-    override fun newImageLoader(): ImageLoader {
-        return ImageLoader.Builder(this)
-            .componentRegistry {
-                // GIFs
-                if (Build.VERSION.SDK_INT >= 28) {
-                    add(ImageDecoderDecoder(this@App))
-                } else {
-                    add(GifDecoder())
-                }
-                // SVGs
-                add(SvgDecoder(this@App))
-            }
-            .availableMemoryPercentage(0.25)
-            .okHttpClient {
-                val dispatcher = Dispatcher().apply { maxRequestsPerHost = maxRequests }
-                OkHttpClient.Builder()
-                    .cache(CoilUtils.createDefaultCache(this))
-                    .dispatcher(dispatcher)
-                    .build()
-            }
-            .crossfade(true)
-            .apply {
-                if (BuildConfig.DEBUG) {
-                    logger(DebugLogger(Log.VERBOSE))
-                }
-            }
-            .build()
-    }
+
 }

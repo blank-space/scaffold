@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.flow
 class SampleViewModel : BaseListViewModel() {
 
     private val repository by lazy {
-        WanAndroidRepository()
+        WanAndroidRepository
     }
 
     override fun getList(): Flow<DataResult<out Any>?>? {

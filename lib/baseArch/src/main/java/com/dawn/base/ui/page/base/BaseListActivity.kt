@@ -23,9 +23,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
  *
  */
 abstract class BaseListActivity<VM : BaseViewModel,VB : ViewBinding> : BaseActivity<VM, VB>() {
-    private var mListViewDelegate: ListViewDelegateImpl? = null
+    var mListViewDelegate: ListViewDelegateImpl? = null
     var requestType: Int = RequestType.INIT
-    private val rv :RecyclerView by lazy {
+    private val rv: RecyclerView by lazy {
         binding.root.findViewById(R.id.rv)
     }
 
@@ -37,7 +37,8 @@ abstract class BaseListActivity<VM : BaseViewModel,VB : ViewBinding> : BaseActiv
 
     protected fun setupListViewDelegate() {
         //初始化代理
-        mListViewDelegate = ListViewDelegateImpl(mViewModel as BaseListViewModel, this)
+        mListViewDelegate =
+            ListViewDelegateImpl(mViewModel as BaseListViewModel, this, getRefreshType())
         mListViewDelegate?.setILoadDataFinishListener(object :
             IListViewDelegate.IDoExtendListener {
             override fun onLoadDataFinish(data: Any?) {
@@ -49,7 +50,7 @@ abstract class BaseListActivity<VM : BaseViewModel,VB : ViewBinding> : BaseActiv
         mListViewDelegate?.setupRefreshLayout(getRefreshLayout())
     }
 
-    fun getRecyclerView(): RecyclerView? = mListViewDelegate?.getRecyclerView()
+    fun getRecyclerView(): RecyclerView = rv
 
     fun getAdapter(): MultiTypeAdapter? = mListViewDelegate?.getAdapter()
 
@@ -74,30 +75,25 @@ abstract class BaseListActivity<VM : BaseViewModel,VB : ViewBinding> : BaseActiv
      * @return RefreshType
      */
     override fun getRefreshType(): Int {
-        mListViewDelegate?.apply {
-            return getRefreshType()
-        }
         return RefreshType.REFRESH_AND_LOAD_MORE
     }
+
 
     /**
      * 提供给外部做一些额外的处理
      */
     protected open fun onGetDataFinish(data: Any?) {}
 
-    @ExperimentalCoroutinesApi
+
     override fun processLoadMore(refreshLayout: IRefreshLayout?) {
         mListViewDelegate?.loadData(RequestType.LOAD_MORE)
     }
 
-    @ExperimentalCoroutinesApi
     override fun processRefresh(refreshLayout: IRefreshLayout?) {
         mListViewDelegate?.loadData(RequestType.REFRESH)
     }
 
-    @ExperimentalCoroutinesApi
     override fun onPageReload(v: View?) {
         mListViewDelegate?.loadData(RequestType.INIT)
     }
-
 }

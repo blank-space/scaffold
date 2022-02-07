@@ -61,7 +61,6 @@ class FirstFragment : BaseFragment<TestViewModel, FeatureSamplePkgFragmentFirstB
      * 详细见 @see https://mp.weixin.qq.com/s/_2YSV_JsjDJ7CuHJngMbqQ
      */
     override fun initData() {
-        setState(ViewStateWithMsg(state = ViewState.STATE_LOADING))
         event.countLiveData.observeForever(Observer<Int> {
             L.d("fragment 接受数据:$it")
         }.apply {

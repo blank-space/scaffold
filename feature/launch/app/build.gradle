@@ -3,6 +3,7 @@ apply from: "../../../buildCommon.gradle"
 //apply plugin: 'com.alibaba.arouter'
 apply  plugin: "dagger.hilt.android.plugin"
 
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':feature:sample:pkg')

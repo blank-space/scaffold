@@ -15,7 +15,7 @@ import okhttp3.RequestBody
  * @desc   :
  */
 class MainViewModel : BaseViewModel() {
-    private val repository: IWanAndroidRepository by lazy { WanAndroidRepository() }
+    private val repository by lazy { WanAndroidRepository }
 
     @ExperimentalCoroutinesApi
     fun test() = fetchDataWithoutState(repository.getBanners())

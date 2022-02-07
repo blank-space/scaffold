@@ -40,9 +40,7 @@ class ViewPagerActivity : BaseActivity<EmptyViewModel, FeatureSamplePkgActivityV
         return recycledViewPool
     }
 
-    override fun isUseDefaultLoadService(): Boolean {
-        return false
-    }
+
 
     override fun initView() {
         getTitleView()?.setTitleText(TAG)

@@ -8,6 +8,8 @@ import androidx.multidex.MultiDex
 import com.alibaba.android.arouter.launcher.ARouter
 import com.dawn.base.ui.callback.EmptyLayoutCallback
 import com.dawn.base.ui.callback.ErrorLayoutCallback
+import com.dawn.base.ui.callback.LoadingLayoutCallback
+import com.dawn.base.ui.callback.TransparentLoadingLayoutCallback
 import com.dawn.base.ui.page.iface.ViewState
 import com.kingja.loadsir.callback.Callback
 import com.kingja.loadsir.callback.ProgressCallback
@@ -47,13 +49,11 @@ open class BaseApp : Application(), ViewModelStoreOwner {
     }
 
     open fun initLoadSir() {
-        val loadingCallback: ProgressCallback = ProgressCallback.Builder()
-            .setTitle("Loading", R.style.Hint_Title).build()
-
         LoadSir.beginBuilder()
             .addCallback(ErrorLayoutCallback())
             .addCallback(EmptyLayoutCallback())
-            .addCallback(loadingCallback)
+            .addCallback(LoadingLayoutCallback())
+            .addCallback(TransparentLoadingLayoutCallback())
             .commit()
     }
 

@@ -38,7 +38,7 @@ private val MARGIN: Int = 19.dp.toInt()
 @SuppressLint("ResourceAsColor")
 class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayout(context) {
     init {
-        setBackgroundColor(Color.parseColor("#11ff0000"))
+        setBackgroundColor(Color.parseColor("#ffffff"))
     }
 
     private val textStyleId = R.style.feature_launch_app_text

@@ -15,12 +15,14 @@ import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.launcher.ARouter
 import com.dawn.base.R
 import com.dawn.base.manager.KeyboardStateManager
+import com.dawn.base.ui.callback.CallbackConfig
 import com.dawn.base.ui.callback.ErrorLayoutCallback
 import com.dawn.base.ui.page.FragmentStateFixer
 import com.dawn.base.utils.AdaptScreenUtils
 import com.dawn.base.utils.DisplayUtils
 import com.dawn.base.ui.page.iface.*
 import com.dawn.base.ui.page.delegate.WrapLayoutDelegateImpl
+import com.dawn.base.ui.page.delegate.iface.PageType
 import com.dawn.base.utils.KeyboardUtils
 import com.dawn.base.utils.inflateBindingWithGeneric
 import com.dawn.base.viewmodel.base.BaseViewModel
@@ -42,8 +44,8 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     lateinit var mViewModel: VM
     val TAG by lazy { javaClass.simpleName }
     lateinit var mContext: Context
-    var mActivity: WeakReference<Activity>? = null
     private var layoutDelegateImpl: WrapLayoutDelegateImpl? = null
+    var mActivity: WeakReference<Activity>? = null
     private var hideOther = true
     val binding: VB by lazy { inflateBindingWithGeneric(layoutInflater) }
     var mLoadService: LoadService<ViewState>? = null
@@ -59,31 +61,29 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
         getIntentData()
         lifecycle.addObserver(KeyboardStateManager)
         initWrapDelegate()
-        if (!isUseDefaultLoadService()) {
-            setupLoadSir()
-        }
         initView()
         initListener()
         initData()
         initStatusBar()
     }
 
-    /** 如果[isUseDefaultLoadService]返回false，必须重写该方法去实例化mLoadService，且要使用[LoadSir#register( target,  onReloadListener,convertor)]这个方法去注册*/
-    open fun setupLoadSir() {}
-
-    open fun isUseDefaultLoadService() = true
 
     private fun initWrapDelegate() {
         layoutDelegateImpl = WrapLayoutDelegateImpl(
             mActivity = this,
             childView = getLayout(),
-            mRefreshType = getRefreshType(),
+            pageType = getPageType(),
             viewStateChangeListener = pageStateChangeListener,
             loadService = mLoadService,
-            useLoadService = isUseDefaultLoadService()
+            callbackConfig = getCallbackConfig()
         )
         layoutDelegateImpl?.setup()
     }
+
+    protected open fun getCallbackConfig(): CallbackConfig? {
+        return null
+    }
+
 
     private fun injectARoute() {
         if (!isNeedInjectARouter()) {
@@ -93,7 +93,7 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     }
 
     /** 如果有需要ARouter能力的，复写该方法 */
-    open fun isNeedInjectARouter() = false
+    open fun isNeedInjectARouter() = true
 
     /**
      * 内容区域是否在标题栏之下
@@ -125,7 +125,7 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
         }
     }
 
-    protected fun processClickNavIcon() {
+    open fun processClickNavIcon() {
         if (isInterceptBackPressed()) {
             return
         }
@@ -153,13 +153,20 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
         return RefreshType.NONE
     }
 
+    /**
+     * 区分列表页和一般页面
+     */
+    protected open fun getPageType(): Int {
+        return PageType.NORMAL
+    }
+
     protected open fun getRefreshLayout(): SmartRefreshLayout? {
         return null
     }
 
     protected open fun initListener() {
         mViewModel.viewState.observe(this, {
-            setState(it)
+            dispatchPageState(it)
         })
     }
 
@@ -176,19 +183,18 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     fun getLayoutDelegateImpl() = layoutDelegateImpl
 
     override fun setState(state: ViewStateWithMsg) {
+        mViewModel.viewState.postValue(state)
+    }
+
+    private fun dispatchPageState(state: ViewStateWithMsg) {
         state.state?.let {
             layoutDelegateImpl?.showState(it, state.msg)
             modifyTheCallbackDynamically(state.msg)
         }
-
     }
 
     override fun modifyTheCallbackDynamically(msg: String?) {
-        getLayoutDelegateImpl()?.loadService?.setCallBack(ErrorLayoutCallback::class.java) { _, view ->
-            msg?.let {
-                view?.findViewById<TextView>(R.id.tv_msg)?.text = it
-            }
-        }
+
     }
 
     open fun getLayout(): View? {
@@ -207,8 +213,8 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
 
     abstract fun initView()
 
-    open fun initData(){
-        setState(ViewStateWithMsg(state = ViewState.STATE_LOADING))
+    open fun initData() {
+
     }
 
     override fun onDestroy() {

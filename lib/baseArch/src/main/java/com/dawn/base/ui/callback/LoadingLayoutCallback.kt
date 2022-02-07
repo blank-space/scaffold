@@ -10,7 +10,7 @@ import com.kingja.loadsir.callback.Callback
  * @date   : 2021/10/7
  * @desc   :
  */
-class LoadingLayoutCallback : Callback() {
+open class LoadingLayoutCallback : Callback() {
 
     override fun onCreateView() = R.layout.base_loading_layout
 

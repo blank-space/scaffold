@@ -6,17 +6,13 @@ import com.dawn.base.utils.showToast
 import com.dawn.base.DataResult
 import com.dawn.base.constant.DEFAULT_PAGE_SIZE
 import com.dawn.base.constant.DEFAULT_START_PAGE_INDEX
-import com.dawn.base.log.L
 import com.dawn.base.ui.page.iface.IList
-import com.dawn.base.ui.page.iface.RefreshType
 import com.dawn.base.ui.page.iface.ViewState
 import com.dawn.base.ui.page.iface.ViewStateWithMsg
-import com.dawn.base.utils.GlobalAsyncHandler
 import com.dawn.base.viewmodel.iface.IBaseList
 import com.dawn.base.viewmodel.iface.IBaseListViewModel
 import com.dawn.base.viewmodel.iface.RequestType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -262,7 +258,7 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
     }
 
     private fun setState(msg: String? = "", value: ViewState) {
-        _viewState.postValue(ViewStateWithMsg(msg = msg, state = value))
+        viewState.postValue(ViewStateWithMsg(msg = msg, state = value))
     }
 
     override fun providerData(): MutableList<Any> {

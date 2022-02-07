@@ -22,8 +22,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
  * @date   : 2020/11/11
  * @desc   :
  */
-class ListViewDelegateImpl(val viewModel: BaseListViewModel, private val owner: LifecycleOwner) :
-    IListViewDelegate {
+class ListViewDelegateImpl(
+    val viewModel: BaseListViewModel, private val owner: LifecycleOwner,
+    private val refreshType: Int
+) : IListViewDelegate {
 
     private val mAdapter by lazy {
         MultiTypeAdapter(viewModel.providerData())
@@ -37,7 +39,6 @@ class ListViewDelegateImpl(val viewModel: BaseListViewModel, private val owner: 
         RecyclerViewUtil.initRecyclerView(mRecyclerView, mAdapter)
     }
 
-    @ExperimentalCoroutinesApi
     override fun setupRefreshLayout(smartRefreshLayout: SmartRefreshLayout?) {
         if (smartRefreshLayout == null) {
             L.e("smartRefreshLayout cant be null !")
@@ -53,7 +54,7 @@ class ListViewDelegateImpl(val viewModel: BaseListViewModel, private val owner: 
                 }
 
             })
-        processRefreshType(getRefreshType())
+        processRefreshType(refreshType)
     }
 
     override fun setRefreshProxy(proxy: RefreshLayoutProxy?) {
@@ -62,7 +63,7 @@ class ListViewDelegateImpl(val viewModel: BaseListViewModel, private val owner: 
 
     override fun observeLiveDataCallback() {
         //完成刷新
-        viewModel.finishRefresh.observe(owner){
+        viewModel.finishRefresh.observe(owner) {
             if (it) {
                 mRefreshLayout?.finishRefresh()
             }
@@ -75,9 +76,7 @@ class ListViewDelegateImpl(val viewModel: BaseListViewModel, private val owner: 
         }
         //是否能加载更多
         viewModel.enableLoadMore.observe(owner) {
-            if (it) {
-                mRefreshLayout?.setEnableLoadMore(it)
-            }
+            mRefreshLayout?.setEnableLoadMore(it)
 
         }
         //是否没有更多数据
@@ -96,9 +95,9 @@ class ListViewDelegateImpl(val viewModel: BaseListViewModel, private val owner: 
 
     override fun processRefreshType(refreshType: Int) {
         if (mRefreshLayout == null) {
-            L.e("mRefreshLayout == null")
             return
         }
+        L.e("refreshType :$refreshType")
         when (refreshType) {
             RefreshType.REFRESH_AND_LOAD_MORE -> {
                 mRefreshLayout?.setEnableRefresh(true)
@@ -123,22 +122,18 @@ class ListViewDelegateImpl(val viewModel: BaseListViewModel, private val owner: 
         return mAdapter
     }
 
-    override fun getRefreshType(): Int {
-        return RefreshType.REFRESH_AND_LOAD_MORE
-    }
 
     /**
      * initData()在BaseListViewModel#init{}里只执行一次，即使是生命周期重建也不会二次请求
      */
-    override fun initData(){
-        viewModel.resultLiveData?.observe(owner){
+    override fun initData() {
+        viewModel.resultLiveData?.observe(owner) {
             mILoadDataFinishListener?.apply {
                 this.onLoadDataFinish(it?.data)
             }
         }
     }
 
-    @ExperimentalCoroutinesApi
     override fun loadData(requestType: Int) {
         viewModel.fetchListData(requestType)?.observe(owner) {
             mILoadDataFinishListener?.apply {

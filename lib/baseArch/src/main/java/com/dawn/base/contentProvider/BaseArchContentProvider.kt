@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelStoreOwner
  * @desc   :
  */
 @SuppressLint("StaticFieldLeak")
-class MyContentProvider : ContentProvider(), ViewModelStoreOwner {
+class BaseArchContentProvider : ContentProvider(), ViewModelStoreOwner {
     companion object {
         /**
          * Get Context at anywhere
@@ -28,7 +28,7 @@ class MyContentProvider : ContentProvider(), ViewModelStoreOwner {
          */
         lateinit var app: Application
 
-        lateinit var instance: MyContentProvider
+        lateinit var instance: BaseArchContentProvider
 
     }
 

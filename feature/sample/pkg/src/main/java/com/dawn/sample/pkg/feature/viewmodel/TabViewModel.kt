@@ -3,7 +3,6 @@ package com.dawn.sample.pkg.feature.viewmodel
 import com.dawn.base.DataResult
 import com.dawn.base.viewmodel.base.BaseListViewModel
 import com.dawn.sample.pkg.feature.data.model.PokemonListResponse
-import com.dawn.sample.pkg.feature.repository.PokemonNetwork
 import com.dawn.sample.pkg.feature.repository.impl.PokeRepositoryImpl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -16,7 +15,7 @@ import kotlinx.coroutines.flow.flow
  */
 class TabViewModel : BaseListViewModel() {
     val repository by lazy {
-        PokeRepositoryImpl(PokemonNetwork)
+        PokeRepositoryImpl
     }
 
     override fun getList(): Flow<DataResult<out Any>?>? {

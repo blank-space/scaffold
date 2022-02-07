@@ -30,7 +30,7 @@ class MainActivity : BaseActivity<MainViewModel, BaseEmptyActivityBinding>() {
     var sampleService: ISampleService? = null
 
 
-    lateinit var  fragment: FirstFragment
+    lateinit var fragment: FirstFragment
 
     private val contentView by lazy { MainLayout(this, sampleService) }
 

@@ -9,7 +9,8 @@
     android:layout_gravity="center"
     android:background="@color/color_white"
     android:visibility="gone"
-    tools:visibility="visible">
+    tools:visibility="visible"
+    tools:ignore="ResourceName">
 
 
 

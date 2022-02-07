@@ -6,6 +6,7 @@ import android.content.res.Resources
 import android.os.Build
 import android.view.*
 import android.view.ViewGroup.MarginLayoutParams
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
@@ -13,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.dawn.base.R
 import com.dawn.base.log.L
-import com.dawn.base.ui.callback.ErrorLayoutCallback
+import com.dawn.base.ui.callback.*
 import com.dawn.base.ui.page.iface.*
 import com.dawn.base.ui.page.delegate.iface.OnViewStateListener
 import com.dawn.base.ui.page.delegate.iface.IWrapLayoutDelegate
@@ -24,9 +25,10 @@ import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
-import com.dawn.base.ui.callback.EmptyLayoutCallback
-import com.dawn.base.ui.callback.LoadingLayoutCallback
+import com.dawn.base.ui.page.delegate.iface.PageType
 import com.dawn.base.utils.GlobalAsyncHandler
+import com.dawn.base.utils.NetworkUtils
+import com.dawn.base.utils.onClick
 import com.kingja.loadsir.callback.Callback.OnReloadListener
 import com.kingja.loadsir.callback.ProgressCallback
 
@@ -43,10 +45,10 @@ class WrapLayoutDelegateImpl(
     val mActivity: AppCompatActivity? = null,
     val mFragment: Fragment? = null,
     val childView: View? = null,
-    @RefreshType.Val val mRefreshType: Int = RefreshType.NONE,
+    @PageType.Val val pageType: Int = PageType.NORMAL,
     var viewStateChangeListener: OnViewStateListener? = null,
     var loadService: LoadService<ViewState>? = null,
-    var useLoadService: Boolean = true
+    val callbackConfig: CallbackConfig? = null
 
 ) : IWrapLayoutDelegate {
     //当前页面状态
@@ -65,9 +67,7 @@ class WrapLayoutDelegateImpl(
     private var mTitleView: View? = null
     private var mContentWrapView: View? = null
     private var smartRefreshLayout: SmartRefreshLayout? = null
-    /** loading1000ms后自动转成success*/
-    var delayToChangeLoadingViewToSuccess = 1000L
-    private var errorMessage = ""
+    private var errorMessage: String? = null
 
     init {
         mLayoutInflater = LayoutInflater.from(mContext)
@@ -95,33 +95,79 @@ class WrapLayoutDelegateImpl(
                 addChildViewToBaseRootView(mContentWrapView as ViewGroup)
             }
 
-            if (loadService == null && useLoadService) {
-                childView?.let {
-                    loadService = LoadSir.getDefault().register(it, OnReloadListener {
-                        loadService?.showCallback(ProgressCallback::class.java)
-                        viewStateChangeListener?.onReload(it)
-                    }, Convertor<ViewState> { v ->
-                        val resultCode: Class<out Callback?> = when (v) {
-                            ViewState.STATE_LOADING -> {
-
-                                ProgressCallback::class.java
-                            }
-                            ViewState.STATE_ERROR -> ErrorLayoutCallback::class.java
-                            ViewState.STATE_EMPTY -> EmptyLayoutCallback::class.java
-                            else -> SuccessCallback::class.java
-                        }
-                        resultCode
-                    }) as LoadService<ViewState>?
-
-                }
-            }
+            initLoadServiceConfig()
+            modifyTheCallbackDynamically()
         }
 
         return mView
     }
 
+    private fun initLoadServiceConfig(){
+        childView?.let {
+
+            loadService = getLoadSir().register(it, null, Convertor<ViewState> { v ->
+                val resultCode: Class<out Callback?> = when (v) {
+                    ViewState.STATE_LOADING -> getLoadingClass()
+                    ViewState.STATE_COMMIT -> getTransparentLoadingClass()
+                    ViewState.STATE_ERROR -> getErrorClass()
+                    ViewState.STATE_EMPTY -> getEmptyClass()
+                    else -> SuccessCallback::class.java
+                }
+                resultCode
+            }) as LoadService<ViewState>?
+        }
+
+    }
+
+    private fun modifyTheCallbackDynamically(){
+        loadService?.setCallBack(getErrorClass()) { _, view ->
+            view?.let{
+                if (NetworkUtils.isConnected()) {
+                    it.findViewById<ImageView>(R.id.imgv_reload)
+                        ?.setImageResource(R.drawable.base_icon_error)
+                } else {
+                    it.findViewById<ImageView>(R.id.imgv_reload)
+                        ?.setImageResource(R.drawable.base_icon_no_wifi)
+                }
+                it.findViewById<TextView>(R.id.tv_retry)?.onClick ={
+                    viewStateChangeListener?.onReload(it)
+                }
+            }
+
+        }
+    }
+
+    private fun getLoadSir(): LoadSir {
+        if (callbackConfig == null) return LoadSir.getDefault()
+        return LoadSir
+            .Builder()
+            .addCallback(callbackConfig.callbackEmpty)
+            .addCallback(callbackConfig.callbackLoading)
+            .addCallback(callbackConfig.callbackError)
+            .addCallback(callbackConfig.callbackTransparentLoading)
+            .build()
+    }
+
+    private fun getEmptyClass(): Class<out Callback> {
+        return callbackConfig?.callbackEmpty?.javaClass ?: EmptyLayoutCallback::class.java
+    }
+
+    private fun getLoadingClass(): Class<out Callback> {
+        return callbackConfig?.callbackLoading?.javaClass ?: LoadingLayoutCallback::class.java
+    }
+
+    private fun getTransparentLoadingClass(): Class<out Callback> {
+        return callbackConfig?.callbackTransparentLoading?.javaClass
+            ?: TransparentLoadingLayoutCallback::class.java
+    }
+
+    private fun getErrorClass(): Class<out Callback> {
+        return callbackConfig?.callbackError?.javaClass ?: ErrorLayoutCallback::class.java
+    }
+
 
     private fun addChildViewToBaseRootView(parentViewGroup: ViewGroup) {
+        (childView?.parent as ViewGroup?)?.removeView(childView)
         parentViewGroup.addView(childView)
     }
 
@@ -129,7 +175,6 @@ class WrapLayoutDelegateImpl(
         mContentView = childView
         val background = mContentView?.background
         if (background != null) {
-            mContentView?.background = null
             mView?.background = background
         }
     }
@@ -161,7 +206,8 @@ class WrapLayoutDelegateImpl(
             if (!isContentUnderTitleBar) {
                 mlp.topMargin = 0
                 smartLayoutLp?.topMargin = 0
-                titleLp.topMargin = getStatusBarHeight()
+//                titleLp.topMargin = getStatusBarHeight()
+                mTitleView?.setPadding(0, getStatusBarHeight(), 0, 0)
 
             } else {
                 if (smartRefreshLayout == null) {
@@ -212,7 +258,7 @@ class WrapLayoutDelegateImpl(
     }
 
     private fun isNeedRefreshLayout(): Boolean {
-        return mRefreshType != RefreshType.NONE
+        return pageType == PageType.LIST
     }
 
     override fun setTitleLayoutLayout(layoutResId: Int) {
@@ -230,13 +276,13 @@ class WrapLayoutDelegateImpl(
         viewState: ViewState,
         msg: String?
     ) {
-        if(loadService==null){
+        if (loadService == null) {
             L.e("loadService==null")
         }
+        errorMessage = msg
         loadService?.showWithConvertor(viewState)
         mCurrentState = viewState
     }
-
 
 
     override fun getTitleView(
