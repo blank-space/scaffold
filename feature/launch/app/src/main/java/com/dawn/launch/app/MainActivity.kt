@@ -1,6 +1,7 @@
 package com.dawn.launch.app
 
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.dawn.base.BaseApp
 import com.dawn.base.databinding.BaseEmptyActivityBinding
@@ -14,7 +15,11 @@ import com.dawn.base.widget.webview.WebViewPool
 import com.dawn.sample.export.api.ISampleService
 import com.dawn.sample.pkg.feature.view.FirstFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.coroutines.*
 
 /**
  * @author : LeeZhaoXing
@@ -42,6 +47,26 @@ class MainActivity : BaseActivity<MainViewModel, BaseEmptyActivityBinding>() {
         }, 10)
 
 
+        val continuation = suspend {
+            L.d("In coroutine.")
+            5
+        }.createCoroutine(object :Continuation<Int>{
+            override val context: CoroutineContext
+                get() = EmptyCoroutineContext
+
+            override fun resumeWith(result: Result<Int>) {
+                L.d("coroutine  end $result")
+            }
+        })
+
+        continuation.resume(Unit)
+    }
+
+    private suspend fun funA() = withContext(Dispatchers.IO){
+        L.e("funA()")
+    }
+    private suspend fun funB() = withContext(Dispatchers.IO){
+        L.e("funB()")
     }
 
     override fun initStatusBar() {}
