@@ -16,12 +16,9 @@ class LoadModuleProxy : BaseAppInit {
         ServiceLoader.load(BaseAppInit::class.java)
 
     override fun onInitSpeed(app: Application) {
-        var count = 0
         mLoader.forEach {
             it.onInitSpeed(app)
-            count++
         }
-        Log.d("@@","loader count:$count")
     }
 
     override fun onInitLow(app: Application) {

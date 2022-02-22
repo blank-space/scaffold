@@ -2,6 +2,7 @@ rootProject.name = "scaffold"
 include ':feature:launch:app'
 include ':feature:sample:pkg'
 include ':feature:sample:export'
+include ':feature:sample:app'
 include ':lib:baseArch'
 include ':lib:imageLoader'
 include ':lib:network'

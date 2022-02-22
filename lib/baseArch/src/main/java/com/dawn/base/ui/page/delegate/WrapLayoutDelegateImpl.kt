@@ -104,7 +104,6 @@ class WrapLayoutDelegateImpl(
 
     private fun initLoadServiceConfig(){
         childView?.let {
-
             loadService = getLoadSir().register(it, null, Convertor<ViewState> { v ->
                 val resultCode: Class<out Callback?> = when (v) {
                     ViewState.STATE_LOADING -> getLoadingClass()
@@ -116,7 +115,6 @@ class WrapLayoutDelegateImpl(
                 resultCode
             }) as LoadService<ViewState>?
         }
-
     }
 
     private fun modifyTheCallbackDynamically(){

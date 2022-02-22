@@ -21,6 +21,7 @@ import com.dawn.base.utils.dp
 import com.dawn.base.utils.onClick
 import com.dawn.sample.export.api.ISampleService
 import com.dawn.sample.export.path.SamplePath
+import com.dawn.sample.pkg.feature.view.coroutine.CoroutineActivity
 import com.dawn.sample.pkg.feature.view.countdowm.CountDownActivity
 import com.dawn.sample.pkg.feature.view.download.DownLoadActivity
 import com.dawn.sample.pkg.feature.view.gson.GsonDemoActivity
@@ -67,10 +68,10 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
         }
     }
 
-    val gson = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
-        text = "Gson解析"
+    val coroutineActivity = AppCompatTextView(ContextThemeWrapper(context, textStyleId)).apply {
+        text = "coroutineActivity"
         onClick = {
-            GsonDemoActivity.actionStart(context)
+            CoroutineActivity.actionStart(context)
         }
         this@MainLayout.addView(this, matchParent, 60.dp) {
             topMargin = 10.dp
@@ -142,7 +143,8 @@ class MainLayout(context: Context, sampleService: ISampleService?) : CustomLayou
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         listItem.layout(0, 40.dp)
         webView.let { it.layout(listItem.left, listItem.bottom + it.marginTop) }
-        countdown.let { it.layout(listItem.left, webView.bottom + it.marginTop) }
+        coroutineActivity.let { it.layout(listItem.left, webView.bottom + it.marginTop) }
+        countdown.let { it.layout(listItem.left, coroutineActivity.bottom + it.marginTop) }
         viewPager2.let { it.layout(listItem.left, countdown.bottom + it.marginTop) }
         location.let { it.layout(listItem.left, viewPager2.bottom + it.marginTop) }
         search.let { it.layout(listItem.left, location.bottom + it.marginTop) }

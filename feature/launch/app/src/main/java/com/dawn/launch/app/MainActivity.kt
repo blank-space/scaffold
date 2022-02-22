@@ -46,28 +46,9 @@ class MainActivity : BaseActivity<MainViewModel, BaseEmptyActivityBinding>() {
             WebViewPool.init(BaseApp.application)
         }, 10)
 
-
-        val continuation = suspend {
-            L.d("In coroutine.")
-            5
-        }.createCoroutine(object :Continuation<Int>{
-            override val context: CoroutineContext
-                get() = EmptyCoroutineContext
-
-            override fun resumeWith(result: Result<Int>) {
-                L.d("coroutine  end $result")
-            }
-        })
-
-        continuation.resume(Unit)
     }
 
-    private suspend fun funA() = withContext(Dispatchers.IO){
-        L.e("funA()")
-    }
-    private suspend fun funB() = withContext(Dispatchers.IO){
-        L.e("funB()")
-    }
+
 
     override fun initStatusBar() {}
 

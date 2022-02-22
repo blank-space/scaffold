@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.bsnl.constraint.export.api.IConstraintService
 import com.dawn.base.log.L
@@ -27,6 +28,7 @@ import com.dawn.sample.pkg.feature.view.download.DownLoadActivity
 import com.dawn.sample.pkg.feature.view.viewpager.TabFragment
 import com.dawn.sample.pkg.feature.viewmodel.TestViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 /**
  * @author : LeeZhaoXing

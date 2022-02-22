@@ -19,12 +19,14 @@ import kotlinx.coroutines.flow.onStart
  * @desc   :
  */
 abstract class BaseViewModel : ViewModel() {
-    /**
-     * 切换页面状态
-     */
+
+    /** 切换页面状态 */
     val viewState = MutableLiveData(ViewStateWithMsg(msg = null, state = ViewState.STATE_COMPLETED))
 
 
+    /**
+     * 请求数据显示带白色背景的Loading
+     */
     fun <T> fetchData(
         flow: Flow<DataResult<T>>,
         viewState: MutableLiveData<ViewStateWithMsg>,
@@ -40,6 +42,9 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
+    /**
+     * 只请求数据，不处理页面状态
+     */
     @ExperimentalCoroutinesApi
     fun <T> fetchDataWithoutState(
         flow: Flow<DataResult<T>>,
@@ -48,6 +53,36 @@ abstract class BaseViewModel : ViewModel() {
             handleTheCatchException(it.message, null)
         }.collectLatest {
             handleCollections(it, null)
+        }
+    }
+
+    /**
+     * 提交数据过程中显示透明背景的loading
+     */
+    fun <T> commitDataWithLoading(
+        flow: Flow<DataResult<T>>,
+        viewState: MutableLiveData<ViewStateWithMsg>,
+    ): LiveData<T?> = liveData {
+        flow.onStart {
+            viewState.postValue(
+                ViewStateWithMsg(state = ViewState.STATE_COMMIT)
+            )
+        }.catch {
+            viewState.postValue(ViewStateWithMsg(state = ViewState.STATE_COMPLETED))
+            if (!NetworkUtils.isConnected()) {
+                "无法联网，请检查网络".showToast()
+            } else {
+                it.message?.showToast()
+            }
+        }.collectLatest {
+            viewState.postValue(
+                ViewStateWithMsg(state = ViewState.STATE_COMPLETED)
+            )
+            if (it.isSuccessFul) {
+                emit(it.data)
+            } else {
+                it.msg?.showToast()
+            }
         }
     }
 

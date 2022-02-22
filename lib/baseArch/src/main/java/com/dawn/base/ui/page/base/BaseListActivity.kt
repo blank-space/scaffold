@@ -78,7 +78,6 @@ abstract class BaseListActivity<VM : BaseViewModel,VB : ViewBinding> : BaseActiv
         return RefreshType.REFRESH_AND_LOAD_MORE
     }
 
-
     /**
      * 提供给外部做一些额外的处理
      */

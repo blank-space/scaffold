@@ -33,14 +33,14 @@ object MMKVUtil {
     }
 
     fun getString(k: String?, def: String?): String {
-        return mKv.decodeString(k, def)
+        return mKv.decodeString(k, def) ?: ""
     }
 
     fun getInt(k: String?): Int {
         return mKv.decodeInt(k, 0)
     }
 
-    fun getInt(k: String?,v :Int): Int {
+    fun getInt(k: String?, v: Int): Int {
         return mKv.decodeInt(k, v)
     }
 
@@ -60,7 +60,7 @@ object MMKVUtil {
         return mKv.decodeDouble(k)
     }
 
-    fun <T : Parcelable> getParcelable(k: String?, clz: Class<T>): T {
+    fun <T : Parcelable> getParcelable(k: String?, clz: Class<T>): T? {
         return mKv.decodeParcelable(k, clz)
     }
 

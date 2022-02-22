@@ -20,7 +20,6 @@ object WanAndroidRepository : BaseNetworkApi<WanAndroidService>() {
     @ExperimentalCoroutinesApi
      fun getTopArticles(): Flow<DataResult<List<Article>>> {
         return simpleSlow {
-            L.e("getTopArticles from remote source")
             emit(service.getTopArticles())
         }
     }

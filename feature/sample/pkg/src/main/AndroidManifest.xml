@@ -19,6 +19,7 @@
         <activity android:name=".feature.view.location.FindLocationActivity" />
         <activity android:name=".feature.view.search.SearchActivity" />
         <activity android:name=".feature.view.hexStatusManager.HexStatusManagerActivity" />
+        <activity android:name=".feature.view.coroutine.CoroutineActivity" />
 
 
     </application>
