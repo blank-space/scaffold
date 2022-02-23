@@ -8,11 +8,11 @@
 
 
 
-<img src="/Users/leezhaoxing/mine/scaffold/images/gradle03.png" alt="gradle03"  />
+<img src="https://upload-images.jianshu.io/upload_images/1634465-30a48ff9cd905714.png?imageMogr2/auto-orient/strip|imageView2/2/w/424/format/webp" alt="gradle03"  />
 
 
 
-<img src="/Users/leezhaoxing/mine/scaffold/images/gradle04.png" alt="gradle04"  />
+<img src="https://upload-images.jianshu.io/upload_images/1634465-db1ff87c680fb65d.png?imageMogr2/auto-orient/strip|imageView2/2/w/729/format/webp" alt="gradle04"  />
 
 
 
@@ -22,7 +22,7 @@
 
 
 
-![arch01](/Users/leezhaoxing/mine/scaffold/images/arch01.png)
+![](https://upload-images.jianshu.io/upload_images/1634465-2d57640f5408e9d1.png?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp)
 
 ### 组件单独调试
 
@@ -44,11 +44,11 @@ include ':feature:sample:app'
 
 
 
-<img src="/Users/leezhaoxing/mine/scaffold/images/gradle02.png" alt="gradle02" style="zoom:100%;" />
+<img src="https://upload-images.jianshu.io/upload_images/1634465-68d1cdc133da409e.png?imageMogr2/auto-orient/strip|imageView2/2/w/477/format/webp" alt="gradle02" style="zoom:100%;" />
 
 如上图所示，我有多个 feature,在gradle同步完毕后，便能看如下的运行选项，每个feature都可以独立运行
 
-<img src="/Users/leezhaoxing/mine/scaffold/images/gradle01.png" alt="gradle01" style="zoom:100%;" />
+<img src="https://upload-images.jianshu.io/upload_images/1634465-cad902a51877d1fb.png?imageMogr2/auto-orient/strip|imageView2/2/w/306/format/webp" alt="gradle01" style="zoom:100%;" />
 
 
 
@@ -58,19 +58,19 @@ include ':feature:sample:app'
 
 在架构图中说了：export层包含要对外导出的api和bean。新建一个对外暴露的接口（继承IProvide），同时将所需要序列化的对象写到一起，同时对外提供路由的路径。具体如下图所示：
 
-<img src="/Users/leezhaoxing/mine/scaffold/images/arout01.png" alt="arout01" style="zoom:100%;" />
+<img src="https://upload-images.jianshu.io/upload_images/1634465-d38d6f40258b40a8.png?imageMogr2/auto-orient/strip|imageView2/2/w/1038/format/webp" alt="arout01" style="zoom:100%;" />
 
 在所属的feature#pkg层完成路由跳转的具体实现：
 
-<img src="/Users/leezhaoxing/mine/scaffold/images/arout02.png" alt="arout02" style="zoom:100%;" />
+<img src="https://upload-images.jianshu.io/upload_images/1634465-b0681e81a04fd29d.png?imageMogr2/auto-orient/strip|imageView2/2/w/885/format/webp" alt="arout02" style="zoom:100%;" />
 
 在集成全部组件一起调试之前，如果组件与组件之间有相互调用关系（例如featureA依赖FeatureB），可以先借助mock层实现一些简单的回调，如下所示：
 
-<img src="/Users/leezhaoxing/mine/scaffold/images/arout03.png" alt="arout03" style="zoom:100%;" />
+<img src="https://upload-images.jianshu.io/upload_images/1634465-28fc3c72802c3adc.png?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp" alt="arout03" style="zoom:100%;" />
 
 然后在pkg模块依赖FeatureB#export模块，如下所示：
 
-<img src="/Users/leezhaoxing/mine/scaffold/images/arout04.png" alt="arout04" style="zoom:100%;" />
+<img src="https://upload-images.jianshu.io/upload_images/1634465-e3366aa420c90f77.png?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp" alt="arout04" style="zoom:100%;" />
 
 ### 组件内第三方库初始化
 
