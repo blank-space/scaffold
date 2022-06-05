@@ -1,29 +1,18 @@
 package com.halvie.network.base
 
 import com.alibaba.network.BuildConfig
-import com.halvie.network.adapter.BigDecimalAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
-import de.stefanmedack.adapter.DefaultOnDataMismatchAdapter
-import de.stefanmedack.adapter.FilterNullValuesFromListAdapter
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.reflect.ParameterizedType
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 private const val TIME_OUT = 20L
 
 abstract class BaseNetworkApi<I>(private val baseUrl: String = "https://www.wanandroid.com/") :
     IService<I> {
-    val moshi = Moshi.Builder().add(BigDecimalAdapter)
-        .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
-        .add(DefaultOnDataMismatchAdapter.newFactory(Any::class.java, null))
-        .add(FilterNullValuesFromListAdapter.newFactory(Any::class.java))
-        .build()
 
     protected val service: I by lazy {
         getRetrofit().create(getServiceClass())
@@ -33,7 +22,7 @@ abstract class BaseNetworkApi<I>(private val baseUrl: String = "https://www.wana
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(getOkHttpClient())
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 

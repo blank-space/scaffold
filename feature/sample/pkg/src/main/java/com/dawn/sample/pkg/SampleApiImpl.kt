@@ -16,10 +16,6 @@ import com.dawn.sample.pkg.feature.constant.BUNDLE_URL
 @Route(path = SamplePath.S_SAMPLE_SERVICE)
 class SampleApiImpl : ISampleService {
 
-    override fun startWebViewActivity( url: String) {
-        ARouter.getInstance().build(SamplePath.A_WEBVIEW_ACTIVITY).withString(BUNDLE_URL,url).navigation()
-    }
-
     override fun startListViewActivity() {
         ARouter.getInstance().build(SamplePath.A_LISTVIEW_ACTIVITY).navigation()
     }

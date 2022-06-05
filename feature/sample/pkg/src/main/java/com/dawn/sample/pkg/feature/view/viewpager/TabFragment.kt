@@ -26,7 +26,7 @@ class TabFragment : SimpleLazyListFragment<SampleViewModel>() {
     private val index by arguments(BUNDLE_INDEX, 12)
 
     override fun registerItem(adapter: MultiTypeAdapter?) {
-        adapter?.register(ArticleItemViewBinder())
+        adapter?.register(ArticleItemViewBinder(null))
         (activity as ViewPagerActivity).getRvPool()?.let {
             getRecyclerView()?.setRecycledViewPool(it)
         }

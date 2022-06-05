@@ -1,14 +1,12 @@
 package com.dawn.sample.pkg.feature.view.coroutine
 
 import android.content.Context
-import android.os.Message
 import com.dawn.base.log.L
 import com.dawn.base.ui.page.base.BaseActivity
 import com.dawn.base.utils.onClick
 import com.dawn.base.utils.startActivity
 import com.dawn.base.viewmodel.EmptyViewModel
 import com.dawn.sample.pkg.databinding.FeatureSamplePkgActivityCoroutineBinding
-import com.dawn.sample.pkg.feature.view.countdowm.CountDownActivity
 import kotlinx.coroutines.*
 import kotlin.system.measureTimeMillis
 

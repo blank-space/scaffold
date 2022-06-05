@@ -1,34 +1,20 @@
 package com.dawn.sample.pkg.feature.view
 
-import android.content.Intent
-import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.bsnl.constraint.export.api.IConstraintService
 import com.dawn.base.log.L
-import com.dawn.base.ui.page.iface.ViewState
-import com.dawn.base.ui.page.iface.ViewStateWithMsg
 import com.dawn.base.ui.page.base.BaseFragment
-import com.dawn.base.utils.arguments
 import com.dawn.base.utils.getApplicationScopeViewModel
 import com.dawn.base.utils.onClick
 import com.dawn.base.utils.withArguments
-import com.dawn.sample.export.api.ISampleService
 import com.dawn.sample.pkg.databinding.FeatureSamplePkgFragmentFirstBinding
 import com.dawn.sample.pkg.feature.constant.BUNDLE_INDEX
 import com.dawn.sample.pkg.feature.constant.BUNDLE_TITLE
 import com.dawn.sample.pkg.feature.domain.message.ShareViewModel
-import com.dawn.sample.pkg.feature.view.download.DownLoadActivity
-import com.dawn.sample.pkg.feature.view.viewpager.TabFragment
 import com.dawn.sample.pkg.feature.viewmodel.TestViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 /**
  * @author : LeeZhaoXing
@@ -48,9 +34,7 @@ class FirstFragment : BaseFragment<TestViewModel, FeatureSamplePkgFragmentFirstB
             L.d("code:$code,data:$data")
         }
 
-    @Autowired
-    @JvmField
-    var sampleService: IConstraintService? = null
+
     //共享Activity的ViewModel：activityViewModels
     private val vm : TestViewModel by activityViewModels()
 
@@ -95,7 +79,7 @@ class FirstFragment : BaseFragment<TestViewModel, FeatureSamplePkgFragmentFirstB
            // context?.let { actionLauncher.launch(Intent(it, DownLoadActivity::class.java)) }
         }
         binding.tvVisit.onClick = {
-            sampleService?.startBarrierActivity()
+
         }
     }
 

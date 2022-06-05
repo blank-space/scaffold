@@ -1,8 +1,6 @@
 package com.dawn.launch.app.task
 
 import com.caij.app.startup.Task
-import com.dawn.base.BaseApp
-import com.dawn.base.widget.webview.WebViewPool
 
 /**
  * @author : LeeZhaoXing

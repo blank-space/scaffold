@@ -3,7 +3,6 @@ package com.dawn.mock.sample
 import android.content.Context
 import android.widget.Toast
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.bsnl.constraint.export.api.IConstraintService
 import com.dawn.mock.MockPath
 import com.dawn.sample.export.api.ISampleService
 
@@ -16,11 +15,7 @@ import com.dawn.sample.export.api.ISampleService
 class SampleMockApi : ISampleService {
 
     private var ctx: Context? = null
-    override fun startWebViewActivity(url: String) {
-        ctx?.let {
-            Toast.makeText(it, "startWebViewActivity", Toast.LENGTH_SHORT).show()
-        }
-    }
+
 
     override fun startListViewActivity() {
         ctx?.let {

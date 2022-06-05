@@ -3,43 +3,38 @@ package com.dawn.base.ui.page.base
 import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Color
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
-import android.view.WindowManager
 import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.launcher.ARouter
-import com.dawn.base.R
 import com.dawn.base.manager.KeyboardStateManager
 import com.dawn.base.ui.callback.CallbackConfig
-import com.dawn.base.ui.callback.ErrorLayoutCallback
 import com.dawn.base.ui.page.FragmentStateFixer
-import com.dawn.base.utils.AdaptScreenUtils
-import com.dawn.base.utils.DisplayUtils
-import com.dawn.base.ui.page.iface.*
 import com.dawn.base.ui.page.delegate.WrapLayoutDelegateImpl
 import com.dawn.base.ui.page.delegate.iface.PageType
+import com.dawn.base.ui.page.iface.*
+import com.dawn.base.utils.AdaptScreenUtils
+import com.dawn.base.utils.DisplayUtils
 import com.dawn.base.utils.KeyboardUtils
 import com.dawn.base.utils.inflateBindingWithGeneric
 import com.dawn.base.viewmodel.base.BaseViewModel
-import com.jaeger.library.StatusBarUtil
+import com.dawn.statusbar.*
 import com.kingja.loadsir.core.LoadService
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import java.lang.ref.WeakReference
 import java.lang.reflect.ParameterizedType
-
 
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/8/17
  * @desc   :
  */
-abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatActivity(),
-    IViewState {
+abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatActivity(), IViewState {
     private var mTitleView: ITitleView? = null
     lateinit var mViewModel: VM
     val TAG by lazy { javaClass.simpleName }
@@ -58,13 +53,14 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
         mContext = this
         mActivity = WeakReference(this)
         mViewModel = initViewModel()
+        initStatusBar()
         getIntentData()
         lifecycle.addObserver(KeyboardStateManager)
         initWrapDelegate()
         initView()
         initListener()
         initData()
-        initStatusBar()
+
     }
 
 
@@ -165,19 +161,24 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     }
 
     protected open fun initListener() {
-        mViewModel.viewState.observe(this, {
+        mViewModel.viewState.observe(this) {
             dispatchPageState(it)
-        })
+        }
     }
 
-    open fun initStatusBar() {
-        if (isTranslucentForHeader()) {
-            window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
-            StatusBarUtil.setTranslucentForImageView(this, 0, null)
-            return
-        }
-        StatusBarUtil.setLightMode(this)
-        StatusBarUtil.setTransparent(this)
+    private fun initStatusBar() {
+        immersiveStatusBar()
+        immersiveNavigationBar()
+        customStatusBar()
+    }
+
+    /**
+     * 自定义状态栏的具体样式
+     */
+    open fun customStatusBar() {
+        fitStatusBar(true)
+        setStatusBarColor(Color.parseColor("#00000000"))
+        setLightStatusBar(true)
     }
 
     fun getLayoutDelegateImpl() = layoutDelegateImpl

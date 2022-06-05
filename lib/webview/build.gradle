@@ -1,0 +1,14 @@
+apply plugin: "com.android.library"
+apply from: "../../buildCommon.gradle"
+
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    api Config.constraintlayout
+    api Config.kotlin
+    api Config.coreKtx
+    api Config.appcompat
+    api Config.aRouter
+    kapt Config.aRouter_compiler
+    api project(':lib:statusBar')
+}

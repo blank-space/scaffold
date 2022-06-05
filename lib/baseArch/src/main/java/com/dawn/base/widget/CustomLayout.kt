@@ -15,7 +15,7 @@ import androidx.core.view.*
  * @desc   :
  */
 abstract class CustomLayout @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ViewGroup(context, attrs, defStyleAttr) {
     protected val View.measuredWidthWithMargins get() = (measuredWidth + marginLeft + marginRight)
     protected val View.measuredHeightWithMargins get() = (measuredHeight + marginTop + marginBottom)
@@ -118,11 +118,4 @@ fun View.transparentBackground() {
 
 val View.parentView get() = parent as ViewGroup
 
-fun View?.performHapticFeedbackSafely() {
-    try {
-        this?.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
-    } catch (t: Throwable) {
-        t.message?.let { Log.e("@@", it) }
-    }
-}
 

@@ -7,14 +7,12 @@ apply  plugin: "dagger.hilt.android.plugin"
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':feature:sample:pkg')
-    implementation project(':feature:constraint:pkg')
+    implementation project(':feature:compose:pkg')
+    implementation project(':lib:webview')
     implementation 'com.github.Caij:DGAppStartup:1.0.2'
     implementation Config.lottie
-    debugImplementation Config.leakcanary
-
+    implementation  Config.hilt
     kapt Config.autoServiceAnnotations
     kapt Config.aRouter_compiler
-
-    implementation  Config.hilt
     kapt  Config.hiltCompile
 }

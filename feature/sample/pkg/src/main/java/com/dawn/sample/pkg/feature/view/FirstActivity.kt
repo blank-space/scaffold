@@ -42,9 +42,7 @@ class FirstActivity : BaseActivity<TestViewModel, FeatureSamplePkgActivityMainBi
         }
     }
 
-    override fun initStatusBar() {
-        //重写该方法，非纯色沉浸式
-    }
+
 
     override fun initViewModel(): TestViewModel {
         return vm

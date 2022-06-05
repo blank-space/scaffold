@@ -9,7 +9,6 @@ import com.alibaba.android.arouter.facade.template.IProvider
  */
 interface ISampleService : IProvider {
 
-     fun startWebViewActivity(url: String)
 
      fun startListViewActivity()
 

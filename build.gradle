@@ -18,11 +18,10 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.2.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21"
         classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
         classpath "com.alibaba:arouter-register:$arouter_register_version"
-        classpath "com.github.wuyr.incrementalcompiler:plugin:1.0.0"
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.40.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -58,7 +57,6 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: 'com.github.wuyr.incrementalcompiler'
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
             if (details.requested.group == 'androidx.fragment') {

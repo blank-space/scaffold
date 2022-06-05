@@ -22,7 +22,6 @@ dependencies {
     api Config.refresh_layout_kernel
     api Config.refresh_layout_footer
     api Config.refresh_layout_header
-    api Config.statusbarutil
     api Config.multitype
     api Config.unpeek_livedata
     api Config.lifecycleRuntime
@@ -30,6 +29,8 @@ dependencies {
     api Config.autoService
     kapt Config.aRouter_compiler
     kapt Config.autoServiceAnnotations
+
+    api project(':lib:statusBar')
 }
 
 

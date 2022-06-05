@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.annotation.AnimRes
 import androidx.annotation.AnimatorRes
 import androidx.annotation.RequiresApi
@@ -18,12 +17,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.launcher.ARouter
-import com.dawn.base.BaseApp
 import com.dawn.base.R
 import com.dawn.base.contentProvider.BaseArchContentProvider
 import com.dawn.base.log.L
 import com.dawn.base.ui.callback.CallbackConfig
-import com.dawn.base.ui.callback.ErrorLayoutCallback
 import com.dawn.base.ui.page.delegate.WrapLayoutDelegateImpl
 import com.dawn.base.ui.page.delegate.iface.PageType
 import com.dawn.base.ui.page.iface.*

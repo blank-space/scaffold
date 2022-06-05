@@ -7,7 +7,7 @@
     android:layout_alignParentLeft="true"
     android:layout_alignParentTop="true"
     android:id="@+id/toolbar"
-    android:background="@color/lib_common_background_color"
+
     android:orientation="vertical">
 
     <RelativeLayout
@@ -31,7 +31,7 @@
                 android:layout_marginLeft="8dp"
                 android:clickable="true"
                 android:scaleType="center"
-                android:src="@drawable/base_icon_nav_back"
+                android:src="@drawable/mall_ic_arrow_back_black_23"
                 android:tag="@string/lib_common_component_dispatch"
                 android:visibility="visible" />
 
@@ -69,9 +69,9 @@
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
             android:singleLine="true"
-            android:textColor="@color/color_white"
+            android:textColor="#333333"
             android:textSize="17sp"
-            android:textStyle="normal"
+            android:fontFamily="sans-serif-medium"
             tools:text="标题" />
 
         <ViewStub

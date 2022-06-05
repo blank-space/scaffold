@@ -1,7 +1,0 @@
-apply plugin: 'com.android.library'
-apply from: '../../../buildCommon.gradle'
-
-
-dependencies {
-    api Config.aRouter
-}

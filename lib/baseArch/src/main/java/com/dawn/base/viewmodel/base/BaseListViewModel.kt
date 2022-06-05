@@ -6,6 +6,7 @@ import com.dawn.base.utils.showToast
 import com.dawn.base.DataResult
 import com.dawn.base.constant.DEFAULT_PAGE_SIZE
 import com.dawn.base.constant.DEFAULT_START_PAGE_INDEX
+import com.dawn.base.log.L
 import com.dawn.base.ui.page.iface.IList
 import com.dawn.base.ui.page.iface.ViewState
 import com.dawn.base.ui.page.iface.ViewStateWithMsg
@@ -84,7 +85,8 @@ abstract class BaseListViewModel : BaseViewModel(), IList, IBaseListViewModel {
         return liveData {
             getList()?.
             catch {
-                processError("网络似乎出现了问题")
+                L.e("出现了问题:${it.message}")
+                processError("网络似乎出现了问题:${it.message}")
             }?.collectLatest {
                 if (it?.isSuccessFul!!) {
                     processData(it)

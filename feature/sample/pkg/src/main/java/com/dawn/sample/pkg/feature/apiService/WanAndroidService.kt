@@ -2,10 +2,7 @@ package com.dawn.sample.pkg.feature.apiService
 
 import com.dawn.base.DataResult
 import com.dawn.sample.pkg.feature.data.entity.Article
-import com.dawn.sample.pkg.feature.data.entity.Banner
-import com.dawn.sample.pkg.feature.data.entity.UserInfo
-import com.dawn.sample.pkg.feature.data.entity.WanResult
-import okhttp3.RequestBody
+import com.dawn.sample.pkg.feature.data.entity.*
 import retrofit2.http.*
 
 /**
@@ -14,9 +11,13 @@ import retrofit2.http.*
  * @desc   :
  */
 interface WanAndroidService {
-
+    // 置顶
     @GET("/article/top/json")
-    suspend fun getTopArticles(): DataResult<List<Article>>
+    suspend fun getTopArticles(): WanResult<List<Article>>
+
+    // 首页
+    @GET("/article/list/{page}/json")
+    suspend fun getIndexList(@Path("page") page: Int): WanResult<ListWrapper<Article>>
 
     @GET("/banner/json")
     suspend fun getBanners(): DataResult<List<Banner>>

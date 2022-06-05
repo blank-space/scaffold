@@ -15,18 +15,18 @@ dependencies {
     api project(':lib:imageLoader')
     api project(':lib:network')
     api project(':lib:domain')
+    api project(':lib:webview')
+    api project(':lib:statusBar')
     api project(':feature:sample:export')
     api Config.epic
     api Config.material
     api Config.viewpager2
 
-    implementation project(':feature:constraint:export')
-    implementation 'com.google.android.gms:play-services-location:18.0.0'
-
     kapt Config.autoServiceAnnotations
     kapt Config.aRouter_compiler
-    kapt Config.moshi_kotlin_codegen
 
+
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
     implementation 'com.google.dagger:hilt-android:2.40.1'
     kapt 'com.google.dagger:hilt-android-compiler:2.40.1'
 

@@ -6,6 +6,5 @@ dependencies {
     api Config.coreKtx
     api Config.appcompat
     kapt Config.aRouter_compiler
-    api project(':feature:constraint:export')
     api project(':feature:sample:export')
 }
