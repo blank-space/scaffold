@@ -2,8 +2,9 @@ apply plugin: "com.android.library"
 apply from: "../../buildCommon.gradle"
 
 dependencies {
-    api Config.coil
-    api Config.coil_gif
-    api Config.coil_svg
+    api libs.coil
+    api libs.coilgif
+    api libs.coilsvg
     compileOnly( project(':lib:baseArch'))
+    implementation( project(':lib:network'))
 }

@@ -2,6 +2,6 @@ apply plugin: 'com.android.library'
 apply from: "../../../buildCommon.gradle"
 
 dependencies {
-    api Config.aRouter
+    api libs.arouter
     //kapt Config.aRouter_compiler
 }

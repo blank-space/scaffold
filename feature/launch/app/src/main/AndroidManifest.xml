@@ -9,7 +9,7 @@
     <application
         android:allowBackup="false"
         android:icon="@drawable/feature_launch_app_ic_logo"
-        android:label="小锤子"
+        android:label="玩安卓"
         android:name="com.dawn.launch.app.App"
         tools:replace="android:label"
         android:usesCleartextTraffic="true"

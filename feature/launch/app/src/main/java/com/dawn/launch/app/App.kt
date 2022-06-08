@@ -1,18 +1,7 @@
 package com.dawn.launch.app
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Looper
 import android.util.Log
-import android.widget.ImageView
-import coil.ImageLoader
-import coil.ImageLoaderFactory
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
-import coil.decode.SvgDecoder
-import coil.util.CoilUtils
-import coil.util.DebugLogger
 import com.caij.app.startup.Config
 import com.caij.app.startup.DGAppStartup
 import com.caij.app.startup.OnProjectListener
@@ -23,19 +12,13 @@ import com.dawn.base.utils.GlobalHandler
 import com.dawn.launch.app.task.InitLogTask
 import com.dawn.launch.app.task.InitMVVMTask
 import com.dawn.launch.app.task.MonitorTaskListener
-import com.dawn.sample.pkg.feature.hook.BitmapsHook
-import com.dawn.sample.pkg.feature.hook.DrawableHook
-import dagger.hilt.android.HiltAndroidApp
-import de.robv.android.xposed.DexposedBridge
-import okhttp3.Dispatcher
-import okhttp3.OkHttpClient
 
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/10/21
  * @desc   :
  */
-@HiltAndroidApp
+
 class App : BaseApp() {
 
     override fun onCreate() {

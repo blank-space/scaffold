@@ -14,14 +14,13 @@ import com.dawn.sample.pkg.feature.constant.BUNDLE_INDEX
 import com.dawn.sample.pkg.feature.constant.BUNDLE_TITLE
 import com.dawn.sample.pkg.feature.domain.message.ShareViewModel
 import com.dawn.sample.pkg.feature.viewmodel.TestViewModel
-import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/10/26
  * @desc   :
  */
-@AndroidEntryPoint
+
 class FirstFragment : BaseFragment<TestViewModel, FeatureSamplePkgFragmentFirstBinding>() {
     private var testEventObserver: Observer<Int>? = null
     private val event: ShareViewModel by lazy {

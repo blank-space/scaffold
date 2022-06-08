@@ -12,16 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-         
-
-    <ProgressBar
+   <ProgressBar
         android:id="@+id/pb_web"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="3dp" />
-
-
-             
 
 
 </FrameLayout>

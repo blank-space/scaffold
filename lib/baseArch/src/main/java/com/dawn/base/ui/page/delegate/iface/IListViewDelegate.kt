@@ -2,6 +2,7 @@ package com.dawn.base.ui.page.delegate.iface
 
 import androidx.recyclerview.widget.RecyclerView
 import com.dawn.base.ui.page.iface.RefreshType
+import com.dawn.base.viewmodel.iface.RequestType
 import com.dawn.base.widget.refreshLayout.RefreshLayoutProxy
 import com.drakeet.multitype.MultiTypeAdapter
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -34,7 +35,7 @@ interface IListViewDelegate {
     /**
      *  根据刷新类型设置是否可以刷新或加载更多
      */
-    fun processRefreshType(@RefreshType.Val refreshType: Int)
+    fun processRefreshType(@RequestType.Val refreshType: Int)
 
 
     fun getAdapter(): MultiTypeAdapter
@@ -43,7 +44,7 @@ interface IListViewDelegate {
 
     fun initData()
 
-    fun loadData(@RefreshType.Val requestType: Int)
+    fun loadData(@RequestType.Val requestType: Int)
 
     fun getRecyclerView(): RecyclerView?
 

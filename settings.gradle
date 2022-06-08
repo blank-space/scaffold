@@ -1,3 +1,34 @@
+pluginManagement {
+    repositories {
+        maven { url "https://jitpack.io" }
+        mavenCentral()
+        maven {
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        gradlePluginPortal()
+        google()
+
+    }
+}
+enableFeaturePreview('VERSION_CATALOGS')
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        maven { url "https://jitpack.io" }
+        maven {
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        google()
+        mavenCentral()
+    }
+    versionCatalogs {
+        libs {
+            from(files("libs.versions.toml"))
+        }
+    }
+
+}
+
 rootProject.name = "scaffold"
 include ':feature:launch:app'
 include ':feature:sample:pkg'
@@ -9,7 +40,7 @@ include ':lib:network'
 include ':lib:domain'
 //include ':feature:mock'
 include ':feature:sample:app'
-include ':feature:compose:pkg'
-include ':feature:compose:app'
+/*include ':feature:compose:pkg'
+include ':feature:compose:app'*/
 include ':lib:webview'
 include ':lib:statusBar'

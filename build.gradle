@@ -1,100 +1,16 @@
-
-
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        compose_version = '1.0.1'
-    }
-    ext.kotlin_version = "1.5.31"
-    ext.plugin_version = "0.2.7"
-    ext.arouter_register_version = '1.0.2'
-
-    repositories {
-        google()
-        mavenCentral()
-        maven { url 'https://jitpack.io' }
-        maven { url 'https://maven.aliyun.com/nexus/content/repositories/gradle-plugin' }
-
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21"
-        classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlin_version"
-        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
-        classpath "com.alibaba:arouter-register:$arouter_register_version"
-        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.40.1'
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-
-
-}
-
-allprojects {
-    repositories {
-        maven() { url uri("${project.rootDir.path}/mavenLocal") }
-        maven { url "https://jitpack.io" }
-        google()
-        mavenCentral()
-        maven {
-            url 'https://maven.aliyun.com/repository/public'
-        }
-        maven {
-            credentials {
-                username '6108a91cfa25fa3e24d17d9a'
-                password 'x4nnL7-BzUaH'
-            }
-            url 'https://packages.aliyun.com/maven/repository/2125540-release-WsZTHp/'
-        }
-        maven {
-            credentials {
-                username '6108a91cfa25fa3e24d17d9a'
-                password 'x4nnL7-BzUaH'
-            }
-            url 'https://packages.aliyun.com/maven/repository/2125540-snapshot-CNbI0t/'
-        }
+        compose_version = '1.0.5'
     }
 }
 
-subprojects {
-    configurations.all {
-        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-            if (details.requested.group == 'androidx.fragment') {
-                details.useVersion "1.4.0"
-            }
-            if (details.requested.group == 'androidx.activity') {
-                if (details.requested.name == 'activity-ktx' || details.requested.name == 'activity')
-                    details.useVersion "1.4.0"
-            }
-            if (details.requested.group == 'androidx.core' && details.requested.name == 'core') {
-                details.useVersion "1.7.0"
-            }
-            if (details.requested.group == 'androidx.lifecycle') {
-                if (details.requested.name == 'lifecycle-livedata' || details.requested.name == 'lifecycle-common'
-                        || details.requested.name == 'lifecycle-runtime'
-                        || details.requested.name == 'lifecycle-viewmodel'
-                        || details.requested.name == 'lifecycle-viewmodel-ktx')
-                    details.useVersion "2.4.0"
-            }
-            if (details.requested.group == 'androidx.appcompat') {
-                details.useVersion "1.2.0"
-            }
-            if (details.requested.group == 'androidx.core' && details.requested.name == 'core-ktx') {
-                details.useVersion "1.7.0"
-            }
-            if (details.requested.group == 'androidx.arch.core' && details.requested.name == 'core-common') {
-                details.useVersion "2.1.0"
-            }
-            if (details.requested.group == 'androidx.annotation' && details.requested.name == 'annotation') {
-                details.useVersion "1.2.0"
-            }
-            if (details.requested.group == 'androidx.collection' && details.requested.name == 'collection') {
-                details.useVersion "1.1.0"
-            }
 
-        }
-    }
+plugins {
+    id 'com.android.application' version '7.2.1' apply false
+    id 'com.android.library' version '7.2.1' apply false
+    id 'org.jetbrains.kotlin.android' version '1.5.31' apply false
 }
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir

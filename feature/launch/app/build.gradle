@@ -1,18 +1,13 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+}
 apply from: "../../../buildCommon.gradle"
-//apply plugin: 'com.alibaba.arouter'
-apply  plugin: "dagger.hilt.android.plugin"
-
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':feature:sample:pkg')
-    implementation project(':feature:compose:pkg')
+   // implementation project(':feature:compose:pkg')
     implementation project(':lib:webview')
     implementation 'com.github.Caij:DGAppStartup:1.0.2'
-    implementation Config.lottie
-    implementation  Config.hilt
-    kapt Config.autoServiceAnnotations
-    kapt Config.aRouter_compiler
-    kapt  Config.hiltCompile
+
 }

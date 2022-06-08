@@ -7,8 +7,8 @@ import androidx.annotation.IntDef
  * @date   : 2020/8/18
  * @desc   : 请求类型
  */
-open interface RequestType {
-    @IntDef(value = [INIT, REFRESH, LOAD_MORE])
+interface RequestType {
+    @IntDef(value = [INIT, REFRESH, LOAD_MORE, SILENT_REFRESH])
     annotation class Val
     companion object {
 

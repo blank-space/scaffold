@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply from: "../../../buildCommon.gradle"
-apply  plugin: "dagger.hilt.android.plugin"
+
 
 android {
     defaultConfig {
@@ -17,8 +17,8 @@ android {
 dependencies {
     api project(':feature:sample:pkg')
     //api project(':feature:mock')
-    kapt Config.aRouter_compiler
+    kapt libs.aroutercompiler
 
-    implementation  Config.hilt
-    kapt  Config.hiltCompile
+    implementation  libs.hilt
+    kapt  libs.hiltCompile
 }

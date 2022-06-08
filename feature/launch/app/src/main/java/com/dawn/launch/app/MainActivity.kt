@@ -12,7 +12,7 @@ import com.dawn.sample.export.api.ISampleService
 import com.dawn.sample.pkg.feature.view.FirstFragment
 import com.dawn.statusbar.*
 import com.dawn.webview.view.WebViewPool
-import dagger.hilt.android.AndroidEntryPoint
+
 
 /**
  * @author : LeeZhaoXing
@@ -20,7 +20,6 @@ import dagger.hilt.android.AndroidEntryPoint
  * @desc   :
  */
 
-@AndroidEntryPoint
 class MainActivity : BaseActivity<MainViewModel, BaseEmptyActivityBinding>() {
 
     @Autowired
@@ -53,13 +52,5 @@ class MainActivity : BaseActivity<MainViewModel, BaseEmptyActivityBinding>() {
 
     override fun isNeedInjectARouter() = true
 
-
-    fun login() {
-        mViewModel.login().observe(this) {
-            it.let {
-                L.e("登陆成功,$it")
-            }
-        }
-    }
 }
 

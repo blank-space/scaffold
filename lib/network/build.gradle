@@ -2,8 +2,8 @@ apply plugin: "com.android.library"
 apply from: "../../buildCommon.gradle"
 
 dependencies {
-    api Config.gson
-    api Config.retrofit_runtime
-    api Config.okhttp_logging
-    api Config.convert_gson
+    api libs.gson
+    api libs.retrofitruntime
+    api libs.okhttplogging
+    api libs.convertgson
 }

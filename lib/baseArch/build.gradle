@@ -1,60 +1,38 @@
-apply plugin: "com.android.library"
+plugins { id 'com.android.library' }
 apply from: "../../buildCommon.gradle"
-apply plugin: "maven"
+
 
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    api Config.kotlin
-    api Config.coreKtx
-    api Config.appcompat
-    api Config.multidex
-    api Config.constraintlayout
-    api Config.recyclerview
-    api Config.viewModel
-    api Config.liveData
-    api Config.commonJava8
-    api Config.mmkv
-    api Config.permissionx
-    api Config.timber
-    api Config.aRouter
-    api Config.loadsir
-    api Config.refresh_layout_kernel
-    api Config.refresh_layout_footer
-    api Config.refresh_layout_header
-    api Config.multitype
-    api Config.unpeek_livedata
-    api Config.lifecycleRuntime
-    implementation Config.coroutines
-    api Config.autoService
-    kapt Config.aRouter_compiler
-    kapt Config.autoServiceAnnotations
+    api libs.kotlin
+    api libs.coreKtx
+    api libs.appcompat
+    api libs.multidex
+    api libs.constraintlayout
+    api libs.recyclerview
+    api libs.viewModel
+    api libs.liveData
+    api libs.commonJava8
+    api libs.mmkv
+    api libs.permissionx
+    api libs.timber
+    api libs.arouter
+    api libs.loadsir
+    api libs.refreshlayoutkernel
+    api libs.refreshlayoutfooter
+    api libs.refreshlayoutheader
+    api libs.multitype
+    api libs.unpeeklivedata
+    api libs.lifecycleRuntime
+    implementation libs.coroutines
+    api libs.autoService
+    kapt libs.aroutercompiler
+    kapt libs.autoServiceAnnotations
 
     api project(':lib:statusBar')
 }
 
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: 'https://packages.aliyun.com/maven/repository/2125540-release-WsZTHp/') {
-                authentication(
-                        userName: '6108a91cfa25fa3e24d17d9a',
-                        password: 'x4nnL7-BzUaH'
-                )
-            }
-            snapshotRepository(url: 'https://packages.aliyun.com/maven/repository/2125540-snapshot-CNbI0t/') {
-                authentication(
-                        userName: '6108a91cfa25fa3e24d17d9a',
-                        password: 'x4nnL7-BzUaH'
-                )
-            }
-            pom.version = '1.0.3'
-            pom.artifactId = 'baseArch'
-            pom.groupId = 'com.halvie.it'
-        }
-    }
-}
 
 
 

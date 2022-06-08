@@ -1,7 +1,5 @@
-apply {
-    plugin "kotlin-android"
-    plugin 'kotlin-kapt'
-}
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 kapt {
     arguments {
@@ -11,16 +9,16 @@ kapt {
 
 
 android {
-    compileSdkVersion Config.compileSdkVersion
+    compileSdkVersion 32
     resourcePrefix suffix
 
     defaultConfig {
         if (project.name == "app") {
-            applicationId Config.applicationId
+            applicationId "com.dawn.scaffold"
             multiDexEnabled true
         }
-
-        minSdkVersion Config.minSdkVersion
+        targetSdkVersion 32
+        minSdkVersion 22
         versionCode 1
         versionName "1.0"
 
@@ -59,22 +57,28 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
-        dataBinding = true
+        viewBinding  true
+        dataBinding true
+        //compose true
     }
+
+    /*composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }*/
 
     packagingOptions {
         exclude 'META-INF/library_release.kotlin_module'
         exclude "**/module-info.class"
         exclude 'META-INF/export_debug.kotlin_module'
         exclude'META-INF/pkg_debug.kotlin_module'
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
     }
 
     sourceSets {
         main.jniLibs.srcDirs = ['libs']
     }
-
-
 }
 
 /**

@@ -4,8 +4,6 @@ import android.content.Context
 import android.net.Uri
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
-import coil.ImageLoader
-import coil.load
 import coil.request.Disposable
 import coil.request.ImageRequest
 import coil.transform.Transformation

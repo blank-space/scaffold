@@ -1,13 +1,16 @@
+
 package com.dawn.launch.app.task
 
 import com.caij.app.startup.Task
 import com.dawn.base.log.L
+
 
 /**
  * @author : LeeZhaoXing
  * @date   : 2020/11/9
  * @desc   :
  */
+
 class InitLogTask : Task(){
     override fun run() {
         //日志框架

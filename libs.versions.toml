@@ -1,0 +1,118 @@
+[versions]
+applicationId = "com.scaffold.it"
+appName = "scaffold"
+compileSdkVersion = "31"
+minSdkVersion = "23"
+targetSdkVersion = "31"
+versionCode = "1_0_0"
+versionName = "1.0.0"
+retrofit = "2.9.0"
+okhttpLogging = "3.9.0"
+appcompat = "1.2.0"
+coreKtx = "1.7.0"
+constraintlayout = "2.0.1"
+paging = "3.0.0-alpha02"
+timber = "4.7.1"
+kotlin = "1.5.31"
+work = "2.2.0"
+room = "2.3.0-alpha01"
+cardview = "1.0.0"
+recyclerview = "1.1.0"
+fragment = "1.3.0-alpha06"
+anko = "0.10.8"
+swiperefreshlayout = "1.0.0"
+hit = "2.28-alpha"
+hitViewModule = "1.0.0-alpha01"
+material = "1.4.0"
+glide = "4.11.0"
+viewpager2 = "1.0.0"
+lifecycle_version = "2.4.0"
+mmkv = "1.2.12"
+permissionx = "1.4.0"
+liveEventBus = "1.7.2"
+leakCanary = "2.7"
+gson = "2.8.8"
+multidex = "2.0.1"
+multitype = "4.2.0"
+smartRefreshLayout = "2.0.1"
+statusBarUtil = "1.5.1"
+epic = "0.11.0"
+eventBus = "3.2.0"
+router = "1.5.1"
+background = "1.6.5"
+xpop = "2.4.3"
+coil = "1.4.0"
+convex = "1.0.0"
+activity_ktx = "1.4.0-alpha02"
+fragment_ktx = "1.4.0-alpha09"
+coordinatorlayout = "1.1.0"
+loadSir = "1.3.8"
+unpeek_livedata = "7.2.0-beta1"
+lottie = "3.5.0"
+coroutines = "1.5.2"
+autoService = "1.0"
+moshi_kotlin="1.12.0"
+dokit ="3.5.0"
+jsbridge = "1.0.4"
+hilt="2.40.1"
+
+
+[libraries]
+multidex = "androidx.multidex:multidex:2.0.1"
+appcompat = "androidx.appcompat:appcompat:1.2.0"
+coreKtx = "androidx.core:core-ktx:1.7.0"
+constraintlayout ="androidx.constraintlayout:constraintlayout:2.0.1"
+recyclerview = "androidx.recyclerview:recyclerview:1.1.0"
+viewpager2 = "androidx.viewpager2:viewpager2:1.0.0"
+viewModel = { module ="androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle_version" }
+liveData = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycle_version" }
+lifecycleRuntime ={ module ="androidx.lifecycle:lifecycle-runtime-ktx" , version.ref = "lifecycle_version" }
+commonJava8 ={ module ="androidx.lifecycle:lifecycle-common-java8", version.ref = "lifecycle_version" }
+glide_runtime = { module ="com.github.bumptech.glide:glide", version.ref = "glide" }
+glide_compiler = { module ="com.github.bumptech.glide:compiler", version.ref = "glide" }
+kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31"
+retrofitruntime = { module ="com.squareup.retrofit2:retrofit",    version.ref = "retrofit" }
+convertgson = { module ="com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+okhttplogging = "com.squareup.okhttp3:logging-interceptor:3.9.0"
+permissionx = "com.permissionx.guolindev:permissionx:1.4.0"
+timber = "com.jakewharton.timber:timber:4.7.1"
+mmkv = "com.tencent:mmkv:1.2.12"
+leakcanary = "com.squareup.leakcanary:leakcanary-android:2.7"
+gson = "com.google.code.gson:gson:2.8.8"
+commons_io = "commons-io:commons-io:2.6"
+test_junit = "junit:junit:4.12"
+multitype = "com.drakeet.multitype:multitype:4.2.0"
+refreshlayoutkernel = "com.scwang.smart:refresh-layout-kernel:2.0.1"
+refreshlayoutheader ={ module ="com.scwang.smart:refresh-header-classics", version.ref = "smartRefreshLayout" }
+refreshlayoutfooter ={ module ="com.scwang.smart:refresh-footer-classics", version.ref = "smartRefreshLayout" }
+room_ktx = { module ="androidx.room:room-ktx", version.ref = "room" }
+room_compiler = { module ="androidx.room:room-compiler", version.ref = "room" }
+room_runtime ={ module = "androidx.room:room-runtime", version.ref = "room" }
+epic = "me.weishu:epic:0.11.0"
+arouter = { module ="com.alibaba:arouter-api", version.ref = "router" }
+aroutercompiler = { module ="com.alibaba:arouter-compiler", version.ref = "router" }
+background = "com.noober.background:core:1.6.5"
+xpopup = "com.github.li-xiaojun:XPopup:2.4.3"
+coil = { module ="io.coil-kt:coil", version.ref = "coil" }
+coilgif = { module ="io.coil-kt:coil-gif", version.ref = "coil" }
+coilsvg = { module ="io.coil-kt:coil-svg", version.ref = "coil" }
+
+loadsir = "com.kingja.loadsir:loadsir:1.3.8"
+unpeeklivedata = "com.kunminx.arch:unpeek-livedata:7.2.0-beta1"
+material = "com.google.android.material:material:1.4.0"
+lottie = "com.airbnb.android:lottie:3.5.0"
+coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
+autoService = { module ="com.google.auto.service:auto-service", version.ref = "autoService" }
+autoServiceAnnotations = { module = "com.google.auto.service:auto-service-annotations", version.ref = "autoService" }
+appStartup = "com.github.Caij:DGAppStartup:1.0.2"
+jsbridge = "com.github.lzyzsd:jsbridge:1.0.4"
+hilt = { module ="com.google.dagger:hilt-android", version.ref = "hilt" }
+hiltCompile = { module ="com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+
+[bundles]
+
+[plugins]
+
+
+
+
